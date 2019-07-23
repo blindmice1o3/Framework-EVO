@@ -1,3 +1,7 @@
+package com.evo.gfx;
+
+import com.evo.Utils;
+
 import java.awt.image.BufferedImage;
 
 public class Assets {
@@ -18,5 +22,7 @@ public class Assets {
         chapter1Intro = spriteSheetChapterIntroAndWorldMap.getSubimage(146, 6, 255, 221);
         chapter2Intro = spriteSheetChapterIntroAndWorldMap.getSubimage(146, 232, 255, 211);
 
+
     }
+
 }

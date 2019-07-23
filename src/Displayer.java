@@ -32,7 +32,7 @@ public class Displayer {
     class MyPanel extends JPanel {
         @Override
         public void paintComponent(Graphics g) {
-            g.drawImage(Assets.spriteSheetChapterIntroAndWorldMap, 0, 0, null);
+            g.drawImage(Assets.chapter2Intro, 0, 0, getWidth(), getHeight(), null);
         }
     }
 

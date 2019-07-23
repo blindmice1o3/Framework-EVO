@@ -15,7 +15,8 @@ public class Assets {
         spriteSheetChapterIntroAndWorldMap = Utils.loadImage("/SNES - EVO Search for Eden - Maps & Chapter Images.png");
 
         //BACKGROUNDS
-
+        chapter1Intro = spriteSheetChapterIntroAndWorldMap.getSubimage(146, 6, 255, 221);
+        chapter2Intro = spriteSheetChapterIntroAndWorldMap.getSubimage(146, 232, 255, 211);
 
     }
 }

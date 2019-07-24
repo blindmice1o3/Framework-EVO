@@ -21,6 +21,7 @@ public class WorldMapState implements IState {
 
     @Override
     public void render(Graphics g) {
+        //g.drawImage(Assets.chapter1WorldMap, 0, 0, Game.WIDTH, Game.HEIGHT, null);
         g.drawImage(Assets.chapter1WorldMap, 0, 0, handler.panelWidth, handler.panelHeight, null);
     }
 

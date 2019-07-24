@@ -38,13 +38,7 @@ public class Displayer extends JFrame {
     class MyPanel extends JPanel {
         @Override
         public void paintComponent(Graphics g) {
-            if (handler.getGame().getStateManager().getCurrentState() != null) {
-                handler.getGame().getStateManager().getCurrentState().render(g);
-            } else {
-                g.setColor(Color.GREEN);
-                g.fillRect(25, 25, 100, 200);
-            }
-            //g.drawImage(com.evo.gfx.evo.Assets.chapter2Intro, 0, 0, getWidth(), getHeight(), null);
+            handler.getGame().getStateManager().render(g);
         }
     }
 

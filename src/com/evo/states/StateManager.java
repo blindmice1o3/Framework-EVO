@@ -33,7 +33,9 @@ public class StateManager {
     }
 
     public void render(Graphics g) {
-        currentState.render(g);
+        if (currentState != null) {
+            currentState.render(g);
+        }
     }
 
     public void changeIState(State key, Object[] args) {

@@ -12,7 +12,9 @@ public class Game implements Runnable {
     private static final long UPDATE_PERIOD_NSEC = 1000000000L / UPDATES_PER_SEC; // timeAllotted (in nanoseconds)
 
     //MEMBER FIELDS
+    private Handler handler;
     private Displayer displayer;
+    private StateManager stateManager;
 
     public Game() {
 
@@ -31,9 +33,16 @@ public class Game implements Runnable {
 
     private void initGame() {
         Assets.init();
-        StateManager.init();
+        stateManager = new StateManager();
 
-        displayer = new Displayer("EVO: Search for Eden", WIDTH, HEIGHT);
+        handler = new Handler(this);
+
+        displayer = new Displayer("EVO: Search for Eden", WIDTH, HEIGHT, handler);
+
+        ////////////////////////////
+        handler.init();
+        stateManager.init(handler);
+        ////////////////////////////
     }
 
     private void gameLoop() {
@@ -91,12 +100,21 @@ public class Game implements Runnable {
 
     private void tick() {
         //System.out.println("Game.tick()");
-        StateManager.tick();
+        stateManager.tick();
     }
 
     private void render() {
         //System.out.println("Game.render()");
         displayer.getPanel().repaint();
+    }
+
+    // GETTERS AND SETTERS
+    public Displayer getDisplayer() {
+        return displayer;
+    }
+
+    public StateManager getStateManager() {
+        return stateManager;
     }
 
 } // **** end Game class ****

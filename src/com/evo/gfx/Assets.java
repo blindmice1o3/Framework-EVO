@@ -6,23 +6,26 @@ import java.awt.image.BufferedImage;
 
 public class Assets {
 
-    //SPRITE SHEETS
+    // SPRITE SHEETS
     public static BufferedImage spriteSheetChapterIntroAndWorldMap;
 
-    //BACKGROUNDS
+    // BACKGROUNDS - INTRO
     public static BufferedImage chapter1Intro, chapter2Intro, chapter3Intro, chapter4Intro, chapter5Intro;
 
-    //Initialization
-    public static void init() {
+    // BACKGROUNDS - WORLD MAP
+    public static BufferedImage chapter1WorldMap, chapter2WorldMap, chapter3WorldMap, chapter4WorldMap, chapter5WorldMap;
 
-        //SPRITE SHEETS
+    // Initialization
+    public static void init() {
+        // SPRITE SHEETS
         spriteSheetChapterIntroAndWorldMap = Utils.loadImage("/SNES - EVO Search for Eden - Maps & Chapter Images.png");
 
-        //BACKGROUNDS
+        // INTRO
         chapter1Intro = spriteSheetChapterIntroAndWorldMap.getSubimage(146, 6, 255, 221);
         chapter2Intro = spriteSheetChapterIntroAndWorldMap.getSubimage(146, 232, 255, 211);
 
-
+        // WORLD MAP
+        chapter1WorldMap = spriteSheetChapterIntroAndWorldMap.getSubimage(407, 6, 255, 221);
     }
 
 }

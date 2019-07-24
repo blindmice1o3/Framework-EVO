@@ -8,10 +8,12 @@ import java.awt.*;
 public class Displayer extends JFrame {
 
     //MEMBER FIELDS
+    private Handler handler;
     private JPanel panel;
 
     //CONSTRUCTOR
-    public Displayer(String title, int width, int height) {
+    public Displayer(String title, int width, int height, Handler handler) {
+        this.handler = handler;
         setTitle(title);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(width, height));
@@ -36,7 +38,12 @@ public class Displayer extends JFrame {
     class MyPanel extends JPanel {
         @Override
         public void paintComponent(Graphics g) {
-            StateManager.getCurrentState().render(g);
+            if (handler.getGame().getStateManager().getCurrentState() != null) {
+                handler.getGame().getStateManager().getCurrentState().render(g);
+            } else {
+                g.setColor(Color.GREEN);
+                g.fillRect(25, 25, 100, 200);
+            }
             //g.drawImage(com.evo.gfx.evo.Assets.chapter2Intro, 0, 0, getWidth(), getHeight(), null);
         }
     }

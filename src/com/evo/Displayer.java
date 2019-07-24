@@ -22,10 +22,13 @@ public class Displayer extends JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
 
-        panel = new MyPanel();
+        addKeyListener(handler.getGame().getKeyManager());
 
+        panel = new MyPanel();
         setContentPane(panel);
 
+        setFocusable(true);
+        requestFocus();
         setVisible(true);
     }
 
@@ -36,6 +39,12 @@ public class Displayer extends JFrame {
 
     //INNER-CLASS
     class MyPanel extends JPanel {
+
+        public MyPanel() {
+            setDoubleBuffered(true);
+            setFocusable(false);
+        }
+
         @Override
         public void paintComponent(Graphics g) {
             handler.getGame().getStateManager().render(g);

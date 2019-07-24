@@ -1,6 +1,7 @@
 package com.evo;
 
 import com.evo.gfx.Assets;
+import com.evo.input.KeyManager;
 import com.evo.states.StateManager;
 
 public class Game implements Runnable {
@@ -13,6 +14,7 @@ public class Game implements Runnable {
 
     //MEMBER FIELDS
     private Handler handler;
+    private KeyManager keyManager;
     private Displayer displayer;
     private StateManager stateManager;
 
@@ -36,7 +38,7 @@ public class Game implements Runnable {
         stateManager = new StateManager();
 
         handler = new Handler(this);
-
+        keyManager = new KeyManager();
         displayer = new Displayer("EVO: Search for Eden", WIDTH, HEIGHT, handler);
 
         ////////////////////////////
@@ -100,6 +102,7 @@ public class Game implements Runnable {
 
     private void tick() {
         //System.out.println("Game.tick()");
+        keyManager.tick();
         stateManager.tick();
     }
 
@@ -109,6 +112,8 @@ public class Game implements Runnable {
     }
 
     // GETTERS AND SETTERS
+    public KeyManager getKeyManager() { return keyManager; }
+
     public Displayer getDisplayer() {
         return displayer;
     }

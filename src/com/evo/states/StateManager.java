@@ -42,9 +42,9 @@ public class StateManager {
         }
     }
 
-    public void changeIState(State key, Object[] args) {
+    public void changeIState(State state, Object[] args) {
         currentState.exit();
-        currentState = states.get(key);
+        currentState = states.get(state);
         currentState.enter(args);
     }
 
@@ -55,4 +55,5 @@ public class StateManager {
 
     public Chapter getCurrentChapter() { return currentChapter; }
 
+    public void setCurrentChapter(Chapter chapter) { currentChapter = chapter; }
 }

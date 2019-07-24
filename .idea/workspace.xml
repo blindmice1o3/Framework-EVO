@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2bcc4a98-1f2c-4e1b-a19b-f51f53d66850" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/evo/entities/Entity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/evo/entities/EntityManager.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/res/46okunenscreen.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/res/E.V.O._-_Search_for_Eden_Coverart.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/res/EVO_dinosaur_bite.jpg" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/coordinate notes (SNES - EVO Search for Eden - Maps &amp; Chapter Images).txt" afterPath="$PROJECT_DIR$/res/coordinate notes (SNES - EVO Search for Eden - Maps &amp; Chapter Images).txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/gfx/Assets.java" afterPath="$PROJECT_DIR$/src/com/evo/gfx/Assets.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/states/ChapterState.java" afterPath="$PROJECT_DIR$/src/com/evo/states/ChapterState.java" />
@@ -28,8 +23,8 @@
       <file leaf-file-name="Assets.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/evo/gfx/Assets.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="44" column="98" lean-forward="false" selection-start-line="44" selection-start-column="98" selection-end-line="44" selection-end-column="98" />
+            <state relative-caret-position="442">
+              <caret line="51" column="94" lean-forward="false" selection-start-line="51" selection-start-column="94" selection-end-line="51" selection-end-column="94" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -40,12 +35,10 @@
       <file leaf-file-name="IntroState.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/evo/states/IntroState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="32" column="9" lean-forward="true" selection-start-line="32" selection-start-column="9" selection-end-line="32" selection-end-column="9" />
+            <state relative-caret-position="527">
+              <caret line="95" column="0" lean-forward="false" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#321#322#0" expanded="true" />
-                <element signature="e#347#348#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -54,25 +47,12 @@
       <file leaf-file-name="StateManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/evo/states/StateManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="19" column="4" lean-forward="false" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
+            <state relative-caret-position="255">
+              <caret line="45" column="28" lean-forward="true" selection-start-line="45" selection-start-column="28" selection-end-line="45" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="KeyManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/evo/input/KeyManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="748">
-              <caret line="47" column="40" lean-forward="false" selection-start-line="47" selection-start-column="40" selection-end-line="47" selection-end-column="40" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1277#1278#0" expanded="true" />
-                <element signature="e#1320#1321#0" expanded="true" />
-                <element signature="e#1419#1420#0" expanded="true" />
+                <element signature="e#914#915#0" expanded="true" />
+                <element signature="e#949#950#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -81,8 +61,8 @@
       <file leaf-file-name="WorldMapState.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/evo/states/WorldMapState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="67" column="0" lean-forward="true" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
+            <state relative-caret-position="527">
+              <caret line="99" column="0" lean-forward="true" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -93,46 +73,8 @@
       <file leaf-file-name="ChapterState.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/evo/states/ChapterState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="57" column="65" lean-forward="false" selection-start-line="57" selection-start-column="65" selection-end-line="57" selection-end-column="65" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#326#327#0" expanded="true" />
-                <element signature="e#352#353#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Handler.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/evo/Handler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="17" column="62" lean-forward="false" selection-start-line="17" selection-start-column="62" selection-end-line="17" selection-end-column="62" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#830#831#0" expanded="true" />
-                <element signature="e#872#873#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="IState.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/evo/states/IState.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="4" lean-forward="false" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Game.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/evo/Game.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1734">
-              <caret line="104" column="26" lean-forward="false" selection-start-line="104" selection-start-column="26" selection-end-line="104" selection-end-column="26" />
+            <state relative-caret-position="527">
+              <caret line="74" column="0" lean-forward="false" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -184,8 +126,8 @@
         <option value="$PROJECT_DIR$/src/com/evo/Handler.java" />
         <option value="$PROJECT_DIR$/src/com/evo/entities/Entity.java" />
         <option value="$PROJECT_DIR$/src/com/evo/entities/EntityManager.java" />
-        <option value="$PROJECT_DIR$/src/com/evo/gfx/Assets.java" />
         <option value="$PROJECT_DIR$/src/com/evo/states/StateManager.java" />
+        <option value="$PROJECT_DIR$/src/com/evo/gfx/Assets.java" />
         <option value="$PROJECT_DIR$/src/com/evo/states/IntroState.java" />
         <option value="$PROJECT_DIR$/src/com/evo/states/ChapterState.java" />
         <option value="$PROJECT_DIR$/src/com/evo/states/WorldMapState.java" />
@@ -502,6 +444,8 @@
           <caret line="44" column="5" lean-forward="true" selection-start-line="44" selection-start-column="5" selection-end-line="44" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#914#915#0" expanded="true" />
+            <element signature="e#949#950#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -545,8 +489,6 @@
           <caret line="27" column="43" lean-forward="false" selection-start-line="27" selection-start-column="43" selection-end-line="27" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#326#327#0" expanded="true" />
-            <element signature="e#352#353#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -587,8 +529,6 @@
           <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#321#322#0" expanded="true" />
-            <element signature="e#347#348#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -609,6 +549,8 @@
           <caret line="10" column="68" lean-forward="true" selection-start-line="10" selection-start-column="68" selection-end-line="10" selection-end-column="68" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#914#915#0" expanded="true" />
+            <element signature="e#949#950#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -663,8 +605,6 @@
           <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#321#322#0" expanded="true" />
-            <element signature="e#347#348#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -675,6 +615,8 @@
           <caret line="19" column="47" lean-forward="false" selection-start-line="19" selection-start-column="47" selection-end-line="19" selection-end-column="47" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#914#915#0" expanded="true" />
+            <element signature="e#949#950#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -695,8 +637,6 @@
           <caret line="16" column="72" lean-forward="false" selection-start-line="16" selection-start-column="72" selection-end-line="16" selection-end-column="72" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#321#322#0" expanded="true" />
-            <element signature="e#347#348#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -739,6 +679,8 @@
           <caret line="19" column="47" lean-forward="false" selection-start-line="19" selection-start-column="47" selection-end-line="19" selection-end-column="47" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#914#915#0" expanded="true" />
+            <element signature="e#949#950#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -749,8 +691,6 @@
           <caret line="16" column="72" lean-forward="false" selection-start-line="16" selection-start-column="72" selection-end-line="16" selection-end-column="72" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#321#322#0" expanded="true" />
-            <element signature="e#347#348#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -855,16 +795,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/evo/Game.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1734">
-          <caret line="104" column="26" lean-forward="false" selection-start-line="104" selection-start-column="26" selection-end-line="104" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/evo/states/IState.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -912,10 +842,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/evo/gfx/Assets.java">
+    <entry file="file://$PROJECT_DIR$/src/com/evo/Game.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="44" column="98" lean-forward="false" selection-start-line="44" selection-start-column="98" selection-end-line="44" selection-end-column="98" />
+        <state relative-caret-position="425">
+          <caret line="105" column="28" lean-forward="false" selection-start-line="105" selection-start-column="28" selection-end-line="105" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -924,18 +854,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/evo/states/StateManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="4" lean-forward="false" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
+        <state relative-caret-position="255">
+          <caret line="45" column="28" lean-forward="true" selection-start-line="45" selection-start-column="28" selection-end-line="45" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#914#915#0" expanded="true" />
+            <element signature="e#949#950#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/evo/states/WorldMapState.java">
+    <entry file="file://$PROJECT_DIR$/src/com/evo/gfx/Assets.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="67" column="0" lean-forward="true" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
+        <state relative-caret-position="442">
+          <caret line="51" column="94" lean-forward="false" selection-start-line="51" selection-start-column="94" selection-end-line="51" selection-end-column="94" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -944,24 +876,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/evo/states/ChapterState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="57" column="65" lean-forward="false" selection-start-line="57" selection-start-column="65" selection-end-line="57" selection-end-column="65" />
+        <state relative-caret-position="527">
+          <caret line="74" column="0" lean-forward="false" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#326#327#0" expanded="true" />
-            <element signature="e#352#353#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/evo/states/WorldMapState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="99" column="0" lean-forward="true" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/evo/states/IntroState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="32" column="9" lean-forward="true" selection-start-line="32" selection-start-column="9" selection-end-line="32" selection-end-column="9" />
+        <state relative-caret-position="527">
+          <caret line="95" column="0" lean-forward="false" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#321#322#0" expanded="true" />
-            <element signature="e#347#348#0" expanded="true" />
           </folding>
         </state>
       </provider>

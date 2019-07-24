@@ -21,18 +21,40 @@ public class IntroState implements IState {
 
     @Override
     public void getInput() {
+        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
+            handler.getStateManager().changeIState(StateManager.State.CHAPTER, null);
+        }
+
         switch (handler.getStateManager().getCurrentChapter()) {
             case ONE:
-                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
-                    handler.getStateManager().changeIState(StateManager.State.CHAPTER, null);
-                }
-
-                System.out.println("IntroState.getInput() =====> " + handler.getStateManager().getCurrentChapter());
                 break;
             case TWO:
+                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
+                    handler.getStateManager().setCurrentChapter(StateManager.Chapter.ONE);
+                    handler.getStateManager().changeIState(StateManager.State.WORLD_MAP, null);
+                }
+
+                break;
             case THREE:
+                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
+                    handler.getStateManager().setCurrentChapter(StateManager.Chapter.TWO);
+                    handler.getStateManager().changeIState(StateManager.State.WORLD_MAP, null);
+                }
+
+                break;
             case FOUR:
+                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
+                    handler.getStateManager().setCurrentChapter(StateManager.Chapter.THREE);
+                    handler.getStateManager().changeIState(StateManager.State.WORLD_MAP, null);
+                }
+
+                break;
             case FIVE:
+                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
+                    handler.getStateManager().setCurrentChapter(StateManager.Chapter.FOUR);
+                    handler.getStateManager().changeIState(StateManager.State.WORLD_MAP, null);
+                }
+
                 break;
             default:
                 break;
@@ -41,22 +63,54 @@ public class IntroState implements IState {
 
     @Override
     public void render(Graphics g) {
+        Graphics2D g2d = (Graphics2D)g;
+        float opacity = 1.0f;
+
         switch (handler.getStateManager().getCurrentChapter()) {
             case ONE:
-                g.drawImage(Assets.chapter1Intro, 0, 0, handler.panelWidth, handler.panelHeight, null);
+                g2d.drawImage(Assets.chapter1Intro, 0, 0, handler.panelWidth, handler.panelHeight, null);
 
                 // CHANGING OPACITY OF NEXT IMAGE
-                float opacity = 0.25f;
-                Graphics2D g2d = (Graphics2D)g;
+                opacity = 0.25f;
                 g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
                 g2d.drawImage(Assets.chapter1Wave, 0, 0, handler.panelWidth, handler.panelHeight, null);
 
-                System.out.println("IntroState.render(Graphics) =====> " + handler.getStateManager().getCurrentChapter());
                 break;
             case TWO:
+                g2d.drawImage(Assets.chapter2Intro, 0, 0, handler.panelWidth, handler.panelHeight, null);
+
+                // CHANGING OPACITY OF NEXT IMAGE
+                opacity = 0.25f;
+                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
+                g2d.drawImage(Assets.chapter2Wave, 0, 0, handler.panelWidth, handler.panelHeight, null);
+
+                break;
             case THREE:
+                g2d.drawImage(Assets.chapter3Intro, 0, 0, handler.panelWidth, handler.panelHeight, null);
+
+                // CHANGING OPACITY OF NEXT IMAGE
+                opacity = 0.25f;
+                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
+                g2d.drawImage(Assets.chapter3Wave, 0, 0, handler.panelWidth, handler.panelHeight, null);
+
+                break;
             case FOUR:
+                g2d.drawImage(Assets.chapter4Intro, 0, 0, handler.panelWidth, handler.panelHeight, null);
+
+                // CHANGING OPACITY OF NEXT IMAGE
+                opacity = 0.25f;
+                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
+                g2d.drawImage(Assets.chapter4Wave, 0, 0, handler.panelWidth, handler.panelHeight, null);
+
+                break;
             case FIVE:
+                g2d.drawImage(Assets.chapter5Intro, 0, 0, handler.panelWidth, handler.panelHeight, null);
+
+                // CHANGING OPACITY OF NEXT IMAGE
+                opacity = 0.25f;
+                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
+                g2d.drawImage(Assets.chapter5Wave, 0, 0, handler.panelWidth, handler.panelHeight, null);
+
                 break;
             default:
                 break;

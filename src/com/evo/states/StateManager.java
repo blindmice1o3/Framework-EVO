@@ -9,13 +9,16 @@ import java.util.Map;
 public class StateManager {
 
     public static enum State { INTRO, CHAPTER, WORLD_MAP, GAME_STAGE, MENU; }
+    public static enum Chapter { ONE, TWO, THREE, FOUR, FIVE; }
 
     private Handler handler;
     private Map<State, IState> states;
     private IState currentState;
+    private Chapter currentChapter;
 
     public StateManager() {
         currentState = null;
+        currentChapter = Chapter.ONE;
     }
 
     public void init(Handler handler) {
@@ -49,5 +52,7 @@ public class StateManager {
     public IState getCurrentState() {
         return currentState;
     }
+
+    public Chapter getCurrentChapter() { return currentChapter; }
 
 }

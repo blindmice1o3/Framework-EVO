@@ -1,8 +1,12 @@
 package com.evo;
 
+import com.evo.input.KeyManager;
+import com.evo.states.StateManager;
+
 public class Handler {
 
     private Game game;
+
     public int panelWidth;
     public int panelHeight;
 
@@ -18,6 +22,18 @@ public class Handler {
 
     public Game getGame() {
         return game;
+    }
+
+    public KeyManager getKeyManager() {
+        return game.getKeyManager();
+    }
+
+    public StateManager getStateManager() {
+        return game.getStateManager();
+    }
+
+    public Displayer getDisplayer() {
+        return game.getDisplayer();
     }
 
 } // **** end Handler class ****

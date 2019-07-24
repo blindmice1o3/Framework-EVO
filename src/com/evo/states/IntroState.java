@@ -1,10 +1,10 @@
 package com.evo.states;
 
-import com.evo.Game;
 import com.evo.Handler;
 import com.evo.gfx.Assets;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class IntroState implements IState {
 
@@ -16,7 +16,16 @@ public class IntroState implements IState {
 
     @Override
     public void tick() {
+        getInput();
+    }
 
+    @Override
+    public void getInput() {
+        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
+            System.out.println("IntroState.getInput(): KEY-JUST-PRESSED =====> VK_COMMA");
+
+            handler.getStateManager().changeIState(StateManager.State.CHAPTER, null);
+        }
     }
 
     @Override

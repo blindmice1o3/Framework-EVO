@@ -51,8 +51,13 @@ public class WorldMapState implements IState {
 
     @Override
     public void render(Graphics g) {
-        //g.drawImage(Assets.chapter1WorldMap, 0, 0, Game.WIDTH, Game.HEIGHT, null);
         g.drawImage(Assets.chapter1WorldMap, 0, 0, handler.panelWidth, handler.panelHeight, null);
+
+        // CHANGING OPACITY OF NEXT IMAGE
+        float opacity = 0.25f;
+        Graphics2D g2d = (Graphics2D)g;
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
+        g2d.drawImage(Assets.chapter1Wave, 0, 0, handler.panelWidth, handler.panelHeight, null);
     }
 
     @Override

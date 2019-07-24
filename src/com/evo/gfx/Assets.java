@@ -18,6 +18,9 @@ public class Assets {
     // BACKGROUNDS - WORLD MAP
     public static BufferedImage chapter1WorldMap, chapter2WorldMap, chapter3WorldMap, chapter4WorldMap, chapter5WorldMap;
 
+    // BACKGROUND - WAVE
+    public static BufferedImage chapter1Wave, chapter2Wave, chapter3Wave, chapter4Wave, chapter5Wave;
+
     // Initialization
     public static void init() {
         // SPRITE SHEETS
@@ -33,6 +36,9 @@ public class Assets {
 
         // WORLD MAP
         chapter1WorldMap = spriteSheetChapterIntroAndWorldMap.getSubimage(407, 6, 255+1, 221+1);
+
+        // WAVE
+        chapter1Wave = spriteSheetChapterIntroAndWorldMap.getSubimage(667, 4, 255+1, 223+1);
     }
 
 }

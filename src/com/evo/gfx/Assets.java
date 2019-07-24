@@ -24,15 +24,15 @@ public class Assets {
         spriteSheetChapterIntroAndWorldMap = Utils.loadImage("/SNES - EVO Search for Eden - Maps & Chapter Images.png");
 
         // INTRO
-        chapter1Intro = spriteSheetChapterIntroAndWorldMap.getSubimage(6, 6, 133, 85);
-        chapter2Intro = spriteSheetChapterIntroAndWorldMap.getSubimage(6, 232, 133, 85);
+        chapter1Intro = spriteSheetChapterIntroAndWorldMap.getSubimage(6, 6, 133+1, 85+1);
+        chapter2Intro = spriteSheetChapterIntroAndWorldMap.getSubimage(6, 232, 133+1, 85+1);
 
         // CHAPTER
-        chapter1Chapter = spriteSheetChapterIntroAndWorldMap.getSubimage(146, 6, 255, 221);
-        chapter2Chapter = spriteSheetChapterIntroAndWorldMap.getSubimage(146, 232, 255, 211);
+        chapter1Chapter = spriteSheetChapterIntroAndWorldMap.getSubimage(146, 6, 255+1, 221+1);
+        chapter2Chapter = spriteSheetChapterIntroAndWorldMap.getSubimage(146, 232, 255+1, 211+1);
 
         // WORLD MAP
-        chapter1WorldMap = spriteSheetChapterIntroAndWorldMap.getSubimage(407, 6, 255, 221);
+        chapter1WorldMap = spriteSheetChapterIntroAndWorldMap.getSubimage(407, 6, 255+1, 221+1);
     }
 
 }

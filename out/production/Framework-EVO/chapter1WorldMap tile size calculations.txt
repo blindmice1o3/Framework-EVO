@@ -12,3 +12,14 @@ Chapter1WorldMap (in tile):
 widthInTile - 16 tiles
 heightInTile - 14 tiles
 
+
+
+
+
+CONVERSION RATIO (destinationScreen vs sourceImagePixel)
+=====================================
+JPanel width and height: 634, 452
+WorldMap width and height: 256, 224
+
+widthRatio: 634 / 256 = 2.4765625
+heightRatio: 452 / 224 = 2.017857142857143

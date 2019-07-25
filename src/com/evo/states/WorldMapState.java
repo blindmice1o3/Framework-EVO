@@ -72,7 +72,16 @@ public class WorldMapState implements IState {
 
         switch (handler.getStateManager().getCurrentChapter()) {
             case ONE:
-                g2d.drawImage(Assets.chapter1WorldMap, 0, 0, handler.panelWidth, handler.panelHeight, null);
+                g2d.drawImage(Assets.chapter1WorldMap, 0, 0, handler.panelWidth, handler.panelHeight,
+                        0, 0, Assets.chapter1WorldMap.getWidth(), Assets.chapter1WorldMap.getHeight(),
+                        null);
+
+                //////////////////// TOKEN /////////////////
+                g2d.drawImage(Assets.upOverworld0, (int)((6.25 * 16) * 2.4765625), (int)((11 * 16) * 2.017857142857143),
+                        (int)(((6.25 * 16) * 2.4765625) + (Assets.upOverworld0.getWidth() * 2.4765625)),
+                        (int)(((11 * 16) * 2.017857142857143) + (Assets.upOverworld0.getHeight() * 2.017857142857143)),
+                        0, 0, Assets.upOverworld0.getWidth(), Assets.upOverworld0.getHeight(), null);
+                ////////////////////////////////////////////
 
                 // CHANGING OPACITY OF NEXT IMAGE
                 opacity = 0.25f;

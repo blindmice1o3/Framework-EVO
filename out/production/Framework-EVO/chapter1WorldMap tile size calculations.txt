@@ -1,0 +1,14 @@
+Chapter1WorldMap (in pixel):
+widthInPixel - 256 pixels
+heightInPixel - 224 pixels
+
+
+EACH TILE IS:
+widthTile - 16 pixels
+heightTile - 16 pixels
+
+
+Chapter1WorldMap (in tile):
+widthInTile - 16 tiles
+heightInTile - 14 tiles
+

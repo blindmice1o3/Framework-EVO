@@ -7,7 +7,11 @@ import java.awt.image.BufferedImage;
 public class Assets {
 
     // SPRITE SHEETS
-    public static BufferedImage spriteSheetChapterIntroAndWorldMap;
+    public static BufferedImage spriteSheetChapterIntroAndWorldMap, spriteSheetChapter1Creatures;
+
+    // OVERWORLD - TOKEN
+    public static BufferedImage upOverworld0, upOverworld1, downOverworld0, downOverworld1,
+            leftOverworld0, leftOverworld1, rightOverworld0, rightOverworld1;
 
     // BACKGROUNDS - INTRO
     public static BufferedImage chapter1Intro, chapter2Intro, chapter3Intro, chapter4Intro, chapter5Intro;
@@ -25,6 +29,17 @@ public class Assets {
     public static void init() {
         // SPRITE SHEETS
         spriteSheetChapterIntroAndWorldMap = Utils.loadImage("/SNES - EVO Search for Eden - Maps & Chapter Images.png");
+        spriteSheetChapter1Creatures = Utils.loadImage("/SNES - EVO Search for Eden - Chapter 1 Creatures.png");
+
+        // OVERWORLD - TOEN
+        upOverworld0 = spriteSheetChapter1Creatures.getSubimage(149, 113, 9, 16);
+        upOverworld1 = spriteSheetChapter1Creatures.getSubimage(158, 113, 9, 16);
+        downOverworld0 = spriteSheetChapter1Creatures.getSubimage(148, 129, 9, 16);
+        downOverworld1 = spriteSheetChapter1Creatures.getSubimage(158, 129, 9, 16);
+        leftOverworld0 = spriteSheetChapter1Creatures.getSubimage(182, 113, 16, 9);
+        leftOverworld1 = spriteSheetChapter1Creatures.getSubimage(199, 113, 16, 9);
+        rightOverworld0 = spriteSheetChapter1Creatures.getSubimage(182, 123, 16, 9);
+        rightOverworld1 = spriteSheetChapter1Creatures.getSubimage(199, 123, 16, 9);
 
         // INTRO
         chapter1Intro = spriteSheetChapterIntroAndWorldMap.getSubimage(6, 6, 133+1, 85+1);

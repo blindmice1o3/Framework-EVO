@@ -1,0 +1,16 @@
+upOverworld0
+149, 113, 9, 16
+upOverworld1
+158, 113, 9, 16
+downOverworld0
+148, 129, 9, 16
+downOverworld1
+158, 129, 9, 16
+leftOverworld0
+182, 113, 16, 9
+leftOverworld1
+199, 113, 16, 9
+rightOverworld0
+182, 123, 16, 9
+rightOverworld1
+199, 123, 16, 9

@@ -1,6 +1,7 @@
 package com.evo.states;
 
 import com.evo.Handler;
+import com.evo.entities.moveable.OverWorldCursor;
 import com.evo.gfx.Assets;
 
 import java.awt.*;
@@ -10,11 +11,14 @@ public class WorldMapState implements IState {
 
     private Handler handler;
 
+    private OverWorldCursor overWorldCursor;
     private int index;
 
     public WorldMapState(Handler handler) {
         this.handler = handler;
 
+        overWorldCursor = new OverWorldCursor(  0, 0,
+                Assets.leftOverworld0.getWidth(), Assets.leftOverworld0.getHeight() );
         index = 0;
     }
 
@@ -82,6 +86,10 @@ public class WorldMapState implements IState {
                         (int)(((11 * 16) * 2.017857142857143) + (Assets.upOverworld0.getHeight() * 2.017857142857143)),
                         0, 0, Assets.upOverworld0.getWidth(), Assets.upOverworld0.getHeight(), null);
                 ////////////////////////////////////////////
+
+                /////OVERWORLDCURSOR//////
+                overWorldCursor.render(g);
+                //////////////////////////
 
                 // CHANGING OPACITY OF NEXT IMAGE
                 opacity = 0.25f;

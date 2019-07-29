@@ -8,40 +8,18 @@ import java.awt.image.BufferedImage;
 
 public class Fish extends Creature {
 
-    private enum Jaws { ORIGINAL, KURASELACHES, ZINICHTHY, SWORDFISH; }
-    private enum Horn { ORIGINAL, SPIRALED, ANGLER, SWORDFISH; }
-    private enum BodyTexture { SLICK, SCALY, SHELL; }
-    private enum BodySize { ORIGINAL, LARGE; }
-    private enum FinPectoral { ORIGINAL, COELAFISH, TACKLE; }
-    private enum FinDorsal { ORIGINAL, SAILING, KURASELACHE; }
-    private enum Tail { ORIGINAL, COELAFISH, TERATISU, ZINICHTHY, KURASELACHE; }
+    public enum DirectionFacing { UP, DOWN, LEFT, RIGHT; }
 
-    private enum DirectionFacing { UP, DOWN, LEFT, RIGHT; }
-
-    private Jaws jaws;
-    private Horn horn;
-    private BodyTexture bodyTexture;
-    private BodySize bodySize;
-    private FinPectoral finPectoral;
-    private FinDorsal finDorsal;
-    private Tail tail;
-
+    private FishStateManager fishStateManager;
     private DirectionFacing directionFacing;
 
     public Fish(Handler handler, BufferedImage image, int x, int y) {
         //super(image, x, y, (2 * Tile.WIDTH), Tile.HEIGHT);
         super(handler, image, x, y, 100, 50);
 
-        jaws = Jaws.ORIGINAL;
-        horn =  Horn.ORIGINAL;
-        bodyTexture = BodyTexture.SLICK;
-        bodySize = BodySize.ORIGINAL;
-        finPectoral = FinPectoral.ORIGINAL;
-        finDorsal = FinDorsal.ORIGINAL;
-        tail = Tail.ORIGINAL;
-
+        fishStateManager = new FishStateManager();
         directionFacing = DirectionFacing.UP;
-    }
+    } // **** end Fish(Handler, BufferedImage, int, int) constructor ****
 
     public void tick() {
 
@@ -51,4 +29,4 @@ public class Fish extends Creature {
 
     }
 
-}
+} // **** end Fish class ****

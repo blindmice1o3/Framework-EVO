@@ -9,17 +9,28 @@ import java.awt.event.KeyEvent;
 
 public class WorldMapState implements IState {
 
-    private Handler handler;
+    public final static int TILE_WIDTH = 16;
+    public final static int TILE_HEIGHT = 16;
 
+    private Handler handler;
+    public final double X_CONVERSION_FACTOR;
+    public final double Y_CONVERSION_FACTOR;
+
+    private Object[] stages;
     private OverWorldCursor overWorldCursor;
     private int index;
 
     public WorldMapState(Handler handler) {
         this.handler = handler;
 
-        overWorldCursor = new OverWorldCursor(  0, 0,
-                Assets.leftOverworld0.getWidth(), Assets.leftOverworld0.getHeight() );
+        overWorldCursor = new OverWorldCursor(handler, Assets.upOverworld0, 0, 0);
         index = 0;
+        stages = new Object[7];
+
+        X_CONVERSION_FACTOR = ((double)handler.panelWidth / Assets.chapter1WorldMap.getWidth());
+        Y_CONVERSION_FACTOR = ((double)handler.panelHeight / Assets.chapter1WorldMap.getHeight());
+        System.out.println("WorldMapState.X_CONVERSION_FACTOR: " + X_CONVERSION_FACTOR);
+        System.out.println("WorldMapState.Y_CONVERSION_FACTOR: " + Y_CONVERSION_FACTOR);
     }
 
     @Override
@@ -39,6 +50,57 @@ public class WorldMapState implements IState {
                     handler.getStateManager().setCurrentChapter(StateManager.Chapter.TWO);
                     handler.getStateManager().changeIState(StateManager.State.INTRO, null);
                 }
+                else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_W)) {
+                    index++;
+
+                    if (index > (stages.length - 1)) {
+                        index = 0;
+                    }
+                }
+                else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_S)) {
+                    index--;
+
+                    if (index < 0) {
+                        index = (stages.length - 1);
+                    }
+                }
+
+                switch (index) {
+                    case 0:
+                        overWorldCursor.setX((int)(6.25 * TILE_WIDTH));
+                        overWorldCursor.setY((int)(11 * TILE_HEIGHT));
+                        break;
+                    case 1:
+                        overWorldCursor.setX((int)(4.85 * TILE_WIDTH));
+                        overWorldCursor.setY((int)(8 * TILE_HEIGHT));
+                        break;
+                    case 2:
+                        overWorldCursor.setX((int)(4.95 * TILE_WIDTH));
+                        overWorldCursor.setY((int)(5.35 * TILE_HEIGHT));
+                        break;
+                    case 3:
+                        overWorldCursor.setX((int)(8.6 * TILE_WIDTH));
+                        overWorldCursor.setY((int)(5.35 * TILE_HEIGHT));
+                        break;
+                    case 4:
+                        overWorldCursor.setX((int)(10.5 * TILE_WIDTH));
+                        overWorldCursor.setY((int)(6.7 * TILE_HEIGHT));
+                        break;
+                    case 5:
+                        overWorldCursor.setX((int)(12.35 * TILE_WIDTH));
+                        overWorldCursor.setY((int)(5.35 * TILE_HEIGHT));
+                        break;
+                    case 6:
+                        overWorldCursor.setX((int)(5.6 * TILE_WIDTH));
+                        overWorldCursor.setY((int)(2.95 * TILE_HEIGHT));
+                        break;
+                    default:
+                        overWorldCursor.setX((int)(6.25 * TILE_WIDTH));
+                        overWorldCursor.setY((int)(11 * TILE_HEIGHT));
+                        break;
+                }
+
+                //overWorldCursor.tick();
 
                 break;
             case TWO:
@@ -79,14 +141,14 @@ public class WorldMapState implements IState {
                 g2d.drawImage(Assets.chapter1WorldMap, 0, 0, handler.panelWidth, handler.panelHeight,
                         0, 0, Assets.chapter1WorldMap.getWidth(), Assets.chapter1WorldMap.getHeight(),
                         null);
-
+/*
                 //////////////////// TOKEN /////////////////
                 g2d.drawImage(Assets.upOverworld0, (int)((6.25 * 16) * 2.4765625), (int)((11 * 16) * 2.017857142857143),
                         (int)(((6.25 * 16) * 2.4765625) + (Assets.upOverworld0.getWidth() * 2.4765625)),
                         (int)(((11 * 16) * 2.017857142857143) + (Assets.upOverworld0.getHeight() * 2.017857142857143)),
                         0, 0, Assets.upOverworld0.getWidth(), Assets.upOverworld0.getHeight(), null);
                 ////////////////////////////////////////////
-
+*/
                 /////OVERWORLDCURSOR//////
                 overWorldCursor.render(g);
                 //////////////////////////
@@ -146,6 +208,10 @@ public class WorldMapState implements IState {
     @Override
     public void exit() {
 
+    }
+
+    public int getIndex() {
+        return index;
     }
 
 }

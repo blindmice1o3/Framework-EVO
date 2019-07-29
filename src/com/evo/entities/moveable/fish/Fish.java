@@ -1,5 +1,6 @@
 package com.evo.entities.moveable.fish;
 
+import com.evo.Handler;
 import com.evo.entities.moveable.Creature;
 
 import java.awt.*;
@@ -27,9 +28,9 @@ public class Fish extends Creature {
 
     private DirectionFacing directionFacing;
 
-    public Fish(BufferedImage image, int x, int y) {
+    public Fish(Handler handler, BufferedImage image, int x, int y) {
         //super(image, x, y, (2 * Tile.WIDTH), Tile.HEIGHT);
-        super(image, x, y, 100, 50);
+        super(handler, image, x, y, 100, 50);
 
         jaws = Jaws.ORIGINAL;
         horn =  Horn.ORIGINAL;

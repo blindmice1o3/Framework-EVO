@@ -39,10 +39,27 @@ public class Assets {
         eatFrames = new BufferedImage[FishStateManager.BodySize.values().length]
                 [FishStateManager.BodyTexture.values().length]
                 [FishStateManager.Jaws.values().length]
-                [FishStateManager.ActionState.values().length-1] //minus 1 because NONE doesn't count.
+                [FishStateManager.ActionState.values().length-1] //minus 1 because ActionState.NONE doesn't count.
                 [3];
-        biteFrames = new BufferedImage[FishStateManager.BodySize.values().length][FishStateManager.BodyTexture.values().length][FishStateManager.Jaws.values().length][FishStateManager.ActionState.values().length-1][3];
-        hurtFrames = new BufferedImage[FishStateManager.BodySize.values().length][FishStateManager.BodyTexture.values().length][FishStateManager.Jaws.values().length][FishStateManager.ActionState.values().length-1][2];
+        biteFrames = new BufferedImage[FishStateManager.BodySize.values().length]
+                [FishStateManager.BodyTexture.values().length]
+                [FishStateManager.Jaws.values().length]
+                [FishStateManager.ActionState.values().length-1]
+                [3];
+        hurtFrames = new BufferedImage[FishStateManager.BodySize.values().length]
+                [FishStateManager.BodyTexture.values().length]
+                [FishStateManager.Jaws.values().length]
+                [FishStateManager.ActionState.values().length-1]
+                [2];
+
+        //DECREASE-SLICK-ORIGINAL
+        pullFishImageSubset(FishStateManager.BodySize.DECREASE, FishStateManager.BodyTexture.SLICK,
+                FishStateManager.Jaws.ORIGINAL, 2, 166, 1, 1, 14, 14);
+        //DECREASE-SLICK-KURASELACHES //TODO: ISSUE WITH THESE xOffset and yOffset values! Sprites placement not uniform.
+        pullFishImageSubset(FishStateManager.BodySize.DECREASE, FishStateManager.BodyTexture.SLICK,
+                FishStateManager.Jaws.KURASELACHES, 2, 211, 1, 1, 14, 14);
+        //DECREASE-SLICK-ZINICHTHY
+
 
 
 
@@ -87,6 +104,66 @@ public class Assets {
         rightOverworld0 = spriteSheetChapter1Creatures.getSubimage(182, 123, 16, 9);
         rightOverworld1 = spriteSheetChapter1Creatures.getSubimage(199, 123, 16, 9);
 
+    }
+
+    public static void pullFishImageSubset(FishStateManager.BodySize bodySize, FishStateManager.BodyTexture bodyTexture,
+                                    FishStateManager.Jaws jaws, int xStart, int yStart, int xOffset, int yOffset,
+                                    int width, int height) {
+
+        //minus 1 because ActionState.NONE doesn't count.
+        for (int row = 0; row < (FishStateManager.ActionState.values().length-1); row++) {
+
+            int xStartLocal = xStart;
+            int yStartLocal = yStart;
+            int xOffsetLocal = xOffset;
+            int yOffsetLocal = yOffset;
+            int widthLocal = width;
+            int heightLocal = height;
+
+            if (row == FishStateManager.ActionState.EAT.ordinal()) {
+
+                yStartLocal = yStartLocal + (row * heightLocal) + (row * yOffsetLocal);
+
+                for (int col = 0; col < eatFrames.length; col++) {
+                    eatFrames[bodySize.ordinal()]
+                            [bodyTexture.ordinal()]
+                            [jaws.ordinal()]
+                            [FishStateManager.ActionState.EAT.ordinal()]
+                            [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, widthLocal, heightLocal);
+
+                    xStartLocal = xStartLocal + widthLocal + xOffsetLocal;
+                }
+
+            } else if (row == FishStateManager.ActionState.BITE.ordinal()) {
+
+                yStartLocal = yStartLocal + (row * heightLocal) + (row * yOffsetLocal);
+
+                for (int col = 0; col < biteFrames.length; col++) {
+                    biteFrames[bodySize.ordinal()]
+                            [bodyTexture.ordinal()]
+                            [jaws.ordinal()]
+                            [FishStateManager.ActionState.BITE.ordinal()]
+                            [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, widthLocal, heightLocal);
+
+                    xStartLocal = xStartLocal + widthLocal + xOffsetLocal;
+                }
+
+            } else if (row == FishStateManager.ActionState.HURT.ordinal()) {
+
+                yStartLocal = yStartLocal + (row * heightLocal) + (row * yOffsetLocal);
+
+                for (int col = 0; col < hurtFrames.length; col++) {
+                    hurtFrames[bodySize.ordinal()]
+                            [bodyTexture.ordinal()]
+                            [jaws.ordinal()]
+                            [FishStateManager.ActionState.HURT.ordinal()]
+                            [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, widthLocal, heightLocal);
+
+                    xStartLocal = xStartLocal + widthLocal + xOffsetLocal;
+                }
+
+            }
+        }
     }
 
 }

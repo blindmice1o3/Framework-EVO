@@ -5,7 +5,7 @@ public class FishStateManager {
     ////////////////////////////////////////////////////////////
 
     //ACTION STATES
-    public enum ActionState { EAT, ATTACK, HURT, NONE; }
+    public enum ActionState { EAT, BITE, HURT, NONE; }
 
     //BODY SIZE and BODY TEXTURE determine the images of HEAD and BODY to use.
     public enum BodySize { DECREASE, INCREASE; }

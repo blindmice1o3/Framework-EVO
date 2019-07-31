@@ -29,6 +29,9 @@ public class Assets {
     // ENTITY - Chapter 1: FISH HEAD (AND ATTACHMENTS)
     public static BufferedImage[][][][][] eatFrames, biteFrames, hurtFrames;
 
+    // ENTITY - Chapter 1: FISH BODY (AND ATTACHMENTS)
+    public static BufferedImage[][][][][] tailOriginal, tailCoelafish, tailTeratisu, tailZinichthy, tailKuraselache;
+
     // Initialization
     public static void init() {
         // SPRITE SHEETS
@@ -52,75 +55,81 @@ public class Assets {
                 [FishStateManager.ActionState.values().length-1]
                 [2];
 
+        tailOriginal = new BufferedImage[FishStateManager.BodySize.values().length]
+                [FishStateManager.BodyTexture.values().length]
+                [FishStateManager.FinPectoral.values().length]
+                [FishStateManager.Tail.values().length]
+                [3];
+
         //DECREASE-SLICK-ORIGINAL
-        pullFishImageSubset(FishStateManager.BodySize.DECREASE, FishStateManager.BodyTexture.SLICK,
+        pullFishHeadImageSubset(FishStateManager.BodySize.DECREASE, FishStateManager.BodyTexture.SLICK,
                 FishStateManager.Jaws.ORIGINAL, 2, 166, 15, 15);
         //DECREASE-SLICK-KURASELACHES
-        pullFishImageSubset(FishStateManager.BodySize.DECREASE, FishStateManager.BodyTexture.SLICK,
+        pullFishHeadImageSubset(FishStateManager.BodySize.DECREASE, FishStateManager.BodyTexture.SLICK,
                 FishStateManager.Jaws.KURASELACHES, 2, 211, 15, 15);
         //DECREASE-SLICK-ZINICHTHY
-        pullFishImageSubset(FishStateManager.BodySize.DECREASE, FishStateManager.BodyTexture.SLICK,
+        pullFishHeadImageSubset(FishStateManager.BodySize.DECREASE, FishStateManager.BodyTexture.SLICK,
                 FishStateManager.Jaws.ZINICHTHY, 2, 256, 15, 15);
         //DECREASE-SLICK-SWORDFISH
                 // TODO: DECREASE-SLICK-SWORDFISH jaws have much longer width, to-figure-out.
 
         //DECREASE-SCALY-ORIGINAL
-        pullFishImageSubset(FishStateManager.BodySize.DECREASE, FishStateManager.BodyTexture.SCALY,
+        pullFishHeadImageSubset(FishStateManager.BodySize.DECREASE, FishStateManager.BodyTexture.SCALY,
                 FishStateManager.Jaws.ORIGINAL, 80, 166, 15, 15);
         //DECREASE-SCALY-KURASELACHES
-        pullFishImageSubset(FishStateManager.BodySize.DECREASE, FishStateManager.BodyTexture.SCALY,
+        pullFishHeadImageSubset(FishStateManager.BodySize.DECREASE, FishStateManager.BodyTexture.SCALY,
                 FishStateManager.Jaws.KURASELACHES, 80, 211, 15, 15);
         //DECREASE-SCALY-ZINICHTHY
-        pullFishImageSubset(FishStateManager.BodySize.DECREASE, FishStateManager.BodyTexture.SCALY,
+        pullFishHeadImageSubset(FishStateManager.BodySize.DECREASE, FishStateManager.BodyTexture.SCALY,
                 FishStateManager.Jaws.ZINICHTHY, 80, 256, 15, 15);
         //DECREASE-SCALY-SWORDFISH
                 // TODO: DECREASE-SCALY-SWORDFISH jaws have much longer width, to-figure-out.
 
         //DECREASE-SHELL-ORIGINAL
-        pullFishImageSubset(FishStateManager.BodySize.DECREASE, FishStateManager.BodyTexture.SHELL,
+        pullFishHeadImageSubset(FishStateManager.BodySize.DECREASE, FishStateManager.BodyTexture.SHELL,
                 FishStateManager.Jaws.ORIGINAL, 158, 166, 15, 15);
         //DECREASE-SHELL-KURASELACHES
-        pullFishImageSubset(FishStateManager.BodySize.DECREASE, FishStateManager.BodyTexture.SHELL,
+        pullFishHeadImageSubset(FishStateManager.BodySize.DECREASE, FishStateManager.BodyTexture.SHELL,
                 FishStateManager.Jaws.KURASELACHES, 158, 211, 15, 15);
         //DECREASE-SHELL-ZINICHTHY
-        pullFishImageSubset(FishStateManager.BodySize.DECREASE, FishStateManager.BodyTexture.SHELL,
+        pullFishHeadImageSubset(FishStateManager.BodySize.DECREASE, FishStateManager.BodyTexture.SHELL,
                 FishStateManager.Jaws.ZINICHTHY, 158, 256, 15, 15);
         //DECREASE-SHELL-SWORDFISH
                 // TODO: DECREASE-SHELL-SWORDFISH jaws have much longer width, to-figure-out.
 
 
         //INCREASE-SLICK-ORIGINAL
-        pullFishImageSubset(FishStateManager.BodySize.INCREASE, FishStateManager.BodyTexture.SLICK,
+        pullFishHeadImageSubset(FishStateManager.BodySize.INCREASE, FishStateManager.BodyTexture.SLICK,
                 FishStateManager.Jaws.ORIGINAL, 236, 153, 15, 15);
         //INCREASE-SLICK-KURASELACHES
-        pullFishImageSubset(FishStateManager.BodySize.INCREASE, FishStateManager.BodyTexture.SLICK,
+        pullFishHeadImageSubset(FishStateManager.BodySize.INCREASE, FishStateManager.BodyTexture.SLICK,
                 FishStateManager.Jaws.KURASELACHES, 236, 198, 15, 15);
         //INCREASE-SLICK-ZINICHTHY
-        pullFishImageSubset(FishStateManager.BodySize.INCREASE, FishStateManager.BodyTexture.SLICK,
+        pullFishHeadImageSubset(FishStateManager.BodySize.INCREASE, FishStateManager.BodyTexture.SLICK,
                 FishStateManager.Jaws.ZINICHTHY, 281, 153, 15, 15);
         //INCREASE-SLICK-SWORDFISH
                 // TODO: INCREASE-SHELL-SWORDFISH jaws have much longer width, to-figure-out.
 
         //INCREASE-SCALY-ORIGINAL
-        pullFishImageSubset(FishStateManager.BodySize.INCREASE, FishStateManager.BodyTexture.SCALY,
+        pullFishHeadImageSubset(FishStateManager.BodySize.INCREASE, FishStateManager.BodyTexture.SCALY,
                 FishStateManager.Jaws.ORIGINAL, 338, 153, 15, 15);
         //INCREASE-SCALY-KURASELACHES
-        pullFishImageSubset(FishStateManager.BodySize.INCREASE, FishStateManager.BodyTexture.SCALY,
+        pullFishHeadImageSubset(FishStateManager.BodySize.INCREASE, FishStateManager.BodyTexture.SCALY,
                 FishStateManager.Jaws.KURASELACHES, 338, 198, 15, 15);
         //INCREASE-SCALY-ZINICHTHY
-        pullFishImageSubset(FishStateManager.BodySize.INCREASE, FishStateManager.BodyTexture.SCALY,
+        pullFishHeadImageSubset(FishStateManager.BodySize.INCREASE, FishStateManager.BodyTexture.SCALY,
                 FishStateManager.Jaws.ZINICHTHY, 383, 153, 15, 15);
         //INCREASE-SCALY-SWORDFISH
                 // TODO: INCREASE-SHELL-SWORDFISH jaws have much longer width, to-figure-out.
 
         //INCREASE-SHELL-ORIGINAL
-        pullFishImageSubset(FishStateManager.BodySize.INCREASE, FishStateManager.BodyTexture.SHELL,
+        pullFishHeadImageSubset(FishStateManager.BodySize.INCREASE, FishStateManager.BodyTexture.SHELL,
                 FishStateManager.Jaws.ORIGINAL, 440, 153, 15, 15);
         //INCREASE-SHELL-KURASELACHES
-        pullFishImageSubset(FishStateManager.BodySize.INCREASE, FishStateManager.BodyTexture.SHELL,
+        pullFishHeadImageSubset(FishStateManager.BodySize.INCREASE, FishStateManager.BodyTexture.SHELL,
                 FishStateManager.Jaws.KURASELACHES, 440, 198, 15, 15);
         //INCREASE-SHELL-ZINICHTHY
-        pullFishImageSubset(FishStateManager.BodySize.INCREASE, FishStateManager.BodyTexture.SHELL,
+        pullFishHeadImageSubset(FishStateManager.BodySize.INCREASE, FishStateManager.BodyTexture.SHELL,
                 FishStateManager.Jaws.ZINICHTHY, 485, 153, 15, 15);
         //INCREASE-SHELL-SWORDFISH
                 // TODO: INCREASE-SHELL-SWORDFISH jaws have much longer width, to-figure-out.
@@ -128,7 +137,15 @@ public class Assets {
 
 
 
+        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         // ENTITY - Chapter 1: FISH BODY (AND ATTACHMENTS)
+        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        //DECREASE-SLICK-ORIGINAL
+        pullFishBodyImageSubset(FishStateManager.BodySize.DECREASE, FishStateManager.BodyTexture.SLICK,
+                FishStateManager.FinPectoral.ORIGINAL, 6, 358);
+
+
+
 
 
         // BACKGROUND - IntroState
@@ -171,8 +188,8 @@ public class Assets {
 
     }
 
-    public static void pullFishImageSubset(FishStateManager.BodySize bodySize, FishStateManager.BodyTexture bodyTexture,
-                                    FishStateManager.Jaws jaws, int xStart, int yStart, int width, int height) {
+    public static void pullFishHeadImageSubset(FishStateManager.BodySize bodySize, FishStateManager.BodyTexture bodyTexture,
+                                               FishStateManager.Jaws jaws, int xStart, int yStart, int width, int height) {
 
         //minus 1 because ActionState.NONE doesn't count.
         for (int row = 0; row < (FishStateManager.ActionState.values().length-1); row++) {
@@ -226,6 +243,40 @@ public class Assets {
 
             }
         }
+    }
+
+    public static void pullFishBodyImageSubset(FishStateManager.BodySize bodySize, FishStateManager.BodyTexture bodyTexture,
+                                               FishStateManager.FinPectoral finPectoral, int xStart, int yStart) {
+
+        for (int row = 0; row < FishStateManager.Tail.values().length; row++) {
+
+            int xStartLocal = xStart;
+            int yStartLocal = yStart;
+            int width = 0;
+            int height = 0;
+
+            if (row == FishStateManager.Tail.ORIGINAL.ordinal()) {
+
+                for (int col = 0; col < 3; col++) {
+                    tailOriginal[bodySize.ordinal()]
+                            [bodyTexture.ordinal()]
+                            [finPectoral.ordinal()]
+                            [FishStateManager.Tail.ORIGINAL.ordinal()]
+                            [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, )
+                }
+
+            } else if (row == FishStateManager.Tail.COELAFISH.ordinal()) {
+
+            } else if (row == FishStateManager.Tail.TERATISU.ordinal()) {
+
+            } else if (row == FishStateManager.Tail.ZINICHTHY.ordinal()) {
+
+            } else if (row == FishStateManager.Tail.KURASELACHE.ordinal()) {
+
+            }
+
+        }
+
     }
 
 }

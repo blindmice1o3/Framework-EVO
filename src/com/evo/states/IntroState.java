@@ -1,6 +1,7 @@
 package com.evo.states;
 
 import com.evo.Handler;
+import com.evo.entities.moveable.fish.Fish;
 import com.evo.entities.moveable.fish.FishStateManager;
 import com.evo.gfx.Assets;
 
@@ -64,10 +65,79 @@ public class IntroState implements IState {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.eatFrames[FishStateManager.BodySize.DECREASE.ordinal()]
-                [FishStateManager.BodyTexture.SLICK.ordinal()]
-                [FishStateManager.Jaws.ORIGINAL.ordinal()][FishStateManager.ActionState.EAT.ordinal()]
-                [0], 10, 50, null);
+        int xOffset = 0;
+        int yOffset = 0;
+
+        for (FishStateManager.BodySize bodySize : FishStateManager.BodySize.values()) {
+            for (FishStateManager.BodyTexture bodyTexture : FishStateManager.BodyTexture.values()) {
+                for (FishStateManager.Jaws jaws : FishStateManager.Jaws.values()) {
+                    for (FishStateManager.ActionState actionState : FishStateManager.ActionState.values()) {
+
+                        if (actionState.ordinal() < FishStateManager.ActionState.values().length-1) {
+                            for (int index = 0; index < Assets.eatFrames[bodySize.ordinal()][bodyTexture.ordinal()]
+                                    [jaws.ordinal()][actionState.ordinal()].length; index++) {
+                                if (xOffset < handler.panelWidth - 16) {
+                                    g.drawImage(Assets.eatFrames[bodySize.ordinal()]
+                                            [bodyTexture.ordinal()]
+                                            [jaws.ordinal()]
+                                            [actionState.ordinal()]
+                                            [index], xOffset, yOffset, null);
+
+                                    xOffset += 16;
+
+                                    if (xOffset >= handler.panelWidth - 16) {
+                                        xOffset = 0;
+                                        if (yOffset < handler.panelHeight) {
+                                            yOffset += 16;
+                                        }
+                                    }
+                                }
+                            }
+                            /////////////////////////////////////////////////////////////////////////////
+                            for (int index = 0; index < Assets.biteFrames[bodySize.ordinal()][bodyTexture.ordinal()]
+                                    [jaws.ordinal()][actionState.ordinal()].length; index++) {
+                                if (xOffset < handler.panelWidth - 16) {
+                                    g.drawImage(Assets.biteFrames[bodySize.ordinal()]
+                                            [bodyTexture.ordinal()]
+                                            [jaws.ordinal()]
+                                            [actionState.ordinal()]
+                                            [index], xOffset, yOffset, null);
+
+                                    xOffset += 16;
+
+                                    if (xOffset >= handler.panelWidth - 16) {
+                                        xOffset = 0;
+                                        if (yOffset < handler.panelHeight) {
+                                            yOffset += 16;
+                                        }
+                                    }
+                                }
+                            }
+                            //////////////////////////////////////////////////////////////////////////////
+                            for (int index = 0; index < Assets.hurtFrames[bodySize.ordinal()][bodyTexture.ordinal()]
+                                    [jaws.ordinal()][actionState.ordinal()].length; index++) {
+                                if (xOffset < handler.panelWidth - 16) {
+                                    g.drawImage(Assets.hurtFrames[bodySize.ordinal()]
+                                            [bodyTexture.ordinal()]
+                                            [jaws.ordinal()]
+                                            [actionState.ordinal()]
+                                            [index], xOffset, yOffset, null);
+
+                                    xOffset += 16;
+
+                                    if (xOffset >= handler.panelWidth - 16) {
+                                        xOffset = 0;
+                                        if (yOffset < handler.panelHeight) {
+                                            yOffset += 16;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
 
 

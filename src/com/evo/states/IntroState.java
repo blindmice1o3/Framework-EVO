@@ -1,6 +1,7 @@
 package com.evo.states;
 
 import com.evo.Handler;
+import com.evo.entities.moveable.fish.FishStateManager;
 import com.evo.gfx.Assets;
 
 import java.awt.*;
@@ -63,6 +64,14 @@ public class IntroState implements IState {
 
     @Override
     public void render(Graphics g) {
+        g.drawImage(Assets.eatFrames[FishStateManager.BodySize.DECREASE.ordinal()]
+                [FishStateManager.BodyTexture.SLICK.ordinal()]
+                [FishStateManager.Jaws.ORIGINAL.ordinal()][FishStateManager.ActionState.EAT.ordinal()]
+                [0], 10, 50, null);
+
+
+
+        /*
         Graphics2D g2d = (Graphics2D)g;
         float opacity = 1.0f;
 
@@ -115,6 +124,7 @@ public class IntroState implements IState {
             default:
                 break;
         }
+        */
     }
 
     @Override

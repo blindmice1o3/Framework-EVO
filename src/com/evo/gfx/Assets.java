@@ -1,6 +1,7 @@
 package com.evo.gfx;
 
 import com.evo.Utils;
+import com.evo.entities.moveable.fish.Fish;
 import com.evo.entities.moveable.fish.FishStateManager;
 
 import java.awt.image.BufferedImage;
@@ -199,49 +200,60 @@ public class Assets {
             int widthLocal = width;
             int heightLocal = height;
 
-            if (row == FishStateManager.ActionState.EAT.ordinal()) {
+            FishStateManager.ActionState[] actionsArray = FishStateManager.ActionState.values();
 
-                yStartLocal = yStartLocal + (row * heightLocal);
+            switch (actionsArray[row]) {
 
-                for (int col = 0; col < eatFrames[0][0][0][0].length; col++) {
-                    eatFrames[bodySize.ordinal()]
-                            [bodyTexture.ordinal()]
-                            [jaws.ordinal()]
-                            [FishStateManager.ActionState.EAT.ordinal()]
-                            [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, widthLocal, heightLocal);
+                case EAT:
+                    yStartLocal = yStartLocal + (row * heightLocal);
 
-                    xStartLocal = xStartLocal + widthLocal;
-                }
+                    for (int col = 0; col < eatFrames[0][0][0][0].length; col++) {
+                        eatFrames[bodySize.ordinal()]
+                                [bodyTexture.ordinal()]
+                                [jaws.ordinal()]
+                                [FishStateManager.ActionState.EAT.ordinal()]
+                                [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, widthLocal, heightLocal);
 
-            } else if (row == FishStateManager.ActionState.BITE.ordinal()) {
+                        xStartLocal = xStartLocal + widthLocal;
+                    }
 
-                yStartLocal = yStartLocal + (row * heightLocal);
+                    break;
 
-                for (int col = 0; col < biteFrames[0][0][0][1].length; col++) {
-                    biteFrames[bodySize.ordinal()]
-                            [bodyTexture.ordinal()]
-                            [jaws.ordinal()]
-                            [FishStateManager.ActionState.BITE.ordinal()]
-                            [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, widthLocal, heightLocal);
+                case BITE:
+                    yStartLocal = yStartLocal + (row * heightLocal);
 
-                    xStartLocal = xStartLocal + widthLocal;
-                }
+                    for (int col = 0; col < biteFrames[0][0][0][1].length; col++) {
+                        biteFrames[bodySize.ordinal()]
+                                [bodyTexture.ordinal()]
+                                [jaws.ordinal()]
+                                [FishStateManager.ActionState.BITE.ordinal()]
+                                [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, widthLocal, heightLocal);
 
-            } else if (row == FishStateManager.ActionState.HURT.ordinal()) {
+                        xStartLocal = xStartLocal + widthLocal;
+                    }
 
-                yStartLocal = yStartLocal + (row * heightLocal);
+                    break;
 
-                for (int col = 0; col < hurtFrames[0][0][0][2].length; col++) {
-                    hurtFrames[bodySize.ordinal()]
-                            [bodyTexture.ordinal()]
-                            [jaws.ordinal()]
-                            [FishStateManager.ActionState.HURT.ordinal()]
-                            [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, widthLocal, heightLocal);
+                case HURT:
+                    yStartLocal = yStartLocal + (row * heightLocal);
 
-                    xStartLocal = xStartLocal + widthLocal;
-                }
+                    for (int col = 0; col < hurtFrames[0][0][0][2].length; col++) {
+                        hurtFrames[bodySize.ordinal()]
+                                [bodyTexture.ordinal()]
+                                [jaws.ordinal()]
+                                [FishStateManager.ActionState.HURT.ordinal()]
+                                [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, widthLocal, heightLocal);
+
+                        xStartLocal = xStartLocal + widthLocal;
+                    }
+
+                    break;
+
+                default:
+                    break;
 
             }
+
         }
     }
 

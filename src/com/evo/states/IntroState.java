@@ -109,6 +109,66 @@ public class IntroState implements IState {
                     0, 32, null);
         }
 
+        //tail: ORIGINAL
+        int x = 0;
+        int y = 50;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailOriginal[bodySizeIndex][bodyTextureIndex]
+                    [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
+                            [0][col],
+                    x, y, null);
+            x += 25;
+        }
+
+        //tail: COELAFISH
+        x = 0;
+        y += 20;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailCoelafish[bodySizeIndex][bodyTextureIndex]
+                            [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
+                            [1][col],
+                    x, y, null);
+            x += 25;
+        }
+
+        //tail: TERATISU
+        x = 0;
+        y += 20;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailTeratisu[bodySizeIndex][bodyTextureIndex]
+                            [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
+                            [2][col],
+                    x, y, null);
+            x += 25;
+        }
+
+        //tail: ZINICHTHY
+        x = 0;
+        y += 20;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailZinichthy[bodySizeIndex][bodyTextureIndex]
+                            [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
+                            [3][col],
+                    x, y, null);
+            x += 25;
+        }
+
+        //tail: KURASELACHE
+        x = 0;
+        y += 20;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailKuraselache[bodySizeIndex][bodyTextureIndex]
+                            [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
+                            [4][col],
+                    x, y, null);
+            x += 25;
+        }
+
 /*
         int xOffset = 0;
         int yOffset = 0;

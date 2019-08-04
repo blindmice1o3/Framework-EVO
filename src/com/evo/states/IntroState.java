@@ -99,6 +99,7 @@ public class IntroState implements IState {
 
     @Override
     public void render(Graphics g) {
+        //@@@@@HEAD@@@@@
 
         g.drawImage(Assets.eatFrames[bodySizeIndex][bodyTextureIndex][jawsIndex][0][frameNumberIndex],
             0, 0, null);
@@ -109,16 +110,26 @@ public class IntroState implements IState {
                     0, 32, null);
         }
 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////
+        //@@@@@BODY@@@@@
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //DECREASE-SLICK-ORIGINAL
         //tail: ORIGINAL
         int x = 0;
-        int y = 50;
+        int y = 60;
 
         for (int col = 0; col < 3; col++) {
-            g.drawImage(Assets.tailOriginal[bodySizeIndex][bodyTextureIndex]
+            g.drawImage(Assets.tailOriginal[bodySizeIndex][FishStateManager.BodyTexture.SLICK.ordinal()]
                     [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
                             [0][col],
                     x, y, null);
-            x += 25;
+
+            if (col == 0) {
+                x += 18;
+            } else if (col == 1) {
+                x += 25;
+            }
         }
 
         //tail: COELAFISH
@@ -126,11 +137,16 @@ public class IntroState implements IState {
         y += 20;
 
         for (int col = 0; col < 3; col++) {
-            g.drawImage(Assets.tailCoelafish[bodySizeIndex][bodyTextureIndex]
+            g.drawImage(Assets.tailCoelafish[bodySizeIndex][FishStateManager.BodyTexture.SLICK.ordinal()]
                             [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
                             [1][col],
                     x, y, null);
-            x += 25;
+
+            if (col == 0) {
+                x += 18;
+            } else if (col == 1) {
+                x += 25;
+            }
         }
 
         //tail: TERATISU
@@ -138,11 +154,16 @@ public class IntroState implements IState {
         y += 20;
 
         for (int col = 0; col < 3; col++) {
-            g.drawImage(Assets.tailTeratisu[bodySizeIndex][bodyTextureIndex]
+            g.drawImage(Assets.tailTeratisu[bodySizeIndex][FishStateManager.BodyTexture.SLICK.ordinal()]
                             [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
                             [2][col],
                     x, y, null);
-            x += 25;
+
+            if (col == 0) {
+                x += 18;
+            } else if (col == 1) {
+                x += 25;
+            }
         }
 
         //tail: ZINICHTHY
@@ -150,11 +171,16 @@ public class IntroState implements IState {
         y += 20;
 
         for (int col = 0; col < 3; col++) {
-            g.drawImage(Assets.tailZinichthy[bodySizeIndex][bodyTextureIndex]
+            g.drawImage(Assets.tailZinichthy[bodySizeIndex][FishStateManager.BodyTexture.SLICK.ordinal()]
                             [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
                             [3][col],
                     x, y, null);
-            x += 25;
+
+            if (col == 0) {
+                x += 18;
+            } else if (col == 1) {
+                x += 25;
+            }
         }
 
         //tail: KURASELACHE
@@ -162,12 +188,459 @@ public class IntroState implements IState {
         y += 20;
 
         for (int col = 0; col < 3; col++) {
-            g.drawImage(Assets.tailKuraselache[bodySizeIndex][bodyTextureIndex]
+            g.drawImage(Assets.tailKuraselache[bodySizeIndex][FishStateManager.BodyTexture.SLICK.ordinal()]
                             [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
                             [4][col],
                     x, y, null);
-            x += 25;
+
+            if (col == 0) {
+                x += 18;
+            } else if (col == 1) {
+                x += 25;
+            }
         }
+
+
+        //DECREASE-SCALY-ORIGINAL
+        //tail: ORIGINAL
+        x = 75;
+        y = 60;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailOriginal[bodySizeIndex][FishStateManager.BodyTexture.SCALY.ordinal()]
+                            [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
+                            [0][col],
+                    x, y, null);
+
+            if (col == 0) {
+                x += 18;
+            } else if (col == 1) {
+                x += 25;
+            }
+        }
+
+        //tail: COELAFISH
+        x = 75;
+        y += 20;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailCoelafish[bodySizeIndex][FishStateManager.BodyTexture.SCALY.ordinal()]
+                            [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
+                            [1][col],
+                    x, y, null);
+
+            if (col == 0) {
+                x += 18;
+            } else if (col == 1) {
+                x += 25;
+            }
+        }
+
+        //tail: TERATISU
+        x = 75;
+        y += 20;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailTeratisu[bodySizeIndex][FishStateManager.BodyTexture.SCALY.ordinal()]
+                            [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
+                            [2][col],
+                    x, y, null);
+
+            if (col == 0) {
+                x += 18;
+            } else if (col == 1) {
+                x += 25;
+            }
+        }
+
+        //tail: ZINICHTHY
+        x = 75;
+        y += 20;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailZinichthy[bodySizeIndex][FishStateManager.BodyTexture.SCALY.ordinal()]
+                            [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
+                            [3][col],
+                    x, y, null);
+
+            if (col == 0) {
+                x += 18;
+            } else if (col == 1) {
+                x += 25;
+            }
+        }
+
+        //tail: KURASELACHE
+        x = 75;
+        y += 20;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailKuraselache[bodySizeIndex][FishStateManager.BodyTexture.SCALY.ordinal()]
+                            [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
+                            [4][col],
+                    x, y, null);
+
+            if (col == 0) {
+                x += 18;
+            } else if (col == 1) {
+                x += 25;
+            }
+        }
+
+
+
+        //DECREASE-SHELL-ORIGINAL
+        //tail: ORIGINAL
+        x = 150;
+        y = 60;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailOriginal[bodySizeIndex][FishStateManager.BodyTexture.SHELL.ordinal()]
+                            [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
+                            [0][col],
+                    x, y, null);
+
+            if (col == 0) {
+                x += 18;
+            } else if (col == 1) {
+                x += 25;
+            }
+        }
+
+        //tail: COELAFISH
+        x = 150;
+        y += 20;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailCoelafish[bodySizeIndex][FishStateManager.BodyTexture.SHELL.ordinal()]
+                            [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
+                            [1][col],
+                    x, y, null);
+
+            if (col == 0) {
+                x += 18;
+            } else if (col == 1) {
+                x += 25;
+            }
+        }
+
+        //tail: TERATISU
+        x = 150;
+        y += 20;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailTeratisu[bodySizeIndex][FishStateManager.BodyTexture.SHELL.ordinal()]
+                            [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
+                            [2][col],
+                    x, y, null);
+
+            if (col == 0) {
+                x += 18;
+            } else if (col == 1) {
+                x += 25;
+            }
+        }
+
+        //tail: ZINICHTHY
+        x = 150;
+        y += 20;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailZinichthy[bodySizeIndex][FishStateManager.BodyTexture.SHELL.ordinal()]
+                            [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
+                            [3][col],
+                    x, y, null);
+
+            if (col == 0) {
+                x += 18;
+            } else if (col == 1) {
+                x += 25;
+            }
+        }
+
+        //tail: KURASELACHE
+        x = 150;
+        y += 20;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailKuraselache[bodySizeIndex][FishStateManager.BodyTexture.SHELL.ordinal()]
+                            [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
+                            [4][col],
+                    x, y, null);
+
+            if (col == 0) {
+                x += 18;
+            } else if (col == 1) {
+                x += 25;
+            }
+        }
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        //DECREASE-SLICK-COELAFISH
+        //tail: ORIGINAL
+        x = 0;
+        y = 170;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailOriginal[bodySizeIndex][FishStateManager.BodyTexture.SLICK.ordinal()]
+                            [FishStateManager.FinPectoral.COELAFISH.ordinal()]
+                            [0][col],
+                    x, y, null);
+
+            if (col == 0) {
+                x += 22;
+            } else if (col == 1) {
+                x += 25;
+            }
+        }
+
+        //tail: COELAFISH
+        x = 0;
+        y += 22;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailCoelafish[bodySizeIndex][FishStateManager.BodyTexture.SLICK.ordinal()]
+                            [FishStateManager.FinPectoral.COELAFISH.ordinal()]
+                            [1][col],
+                    x, y, null);
+
+            if (col == 0) {
+                x += 22;
+            } else if (col == 1) {
+                x += 25;
+            }
+        }
+
+        //tail: TERATISU
+        x = 0;
+        y += 22;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailTeratisu[bodySizeIndex][FishStateManager.BodyTexture.SLICK.ordinal()]
+                            [FishStateManager.FinPectoral.COELAFISH.ordinal()]
+                            [2][col],
+                    x, y, null);
+
+            if (col == 0) {
+                x += 22;
+            } else if (col == 1) {
+                x += 25;
+            }
+        }
+
+        //tail: ZINICHTHY
+        x = 0;
+        y += 22;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailZinichthy[bodySizeIndex][FishStateManager.BodyTexture.SLICK.ordinal()]
+                            [FishStateManager.FinPectoral.COELAFISH.ordinal()]
+                            [3][col],
+                    x, y, null);
+
+            if (col == 0) {
+                x += 22;
+            } else if (col == 1) {
+                x += 25;
+            }
+        }
+
+        //tail: KURASELACHE
+        x = 0;
+        y += 22;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailKuraselache[bodySizeIndex][FishStateManager.BodyTexture.SLICK.ordinal()]
+                            [FishStateManager.FinPectoral.COELAFISH.ordinal()]
+                            [4][col],
+                    x, y, null);
+
+            if (col == 0) {
+                x += 22;
+            } else if (col == 1) {
+                x += 25;
+            }
+        }
+
+
+        //DECREASE-SCALY-COELAFISH
+        //tail: ORIGINAL
+        x = 75;
+        y = 170;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailOriginal[bodySizeIndex][FishStateManager.BodyTexture.SCALY.ordinal()]
+                            [FishStateManager.FinPectoral.COELAFISH.ordinal()]
+                            [0][col],
+                    x, y, null);
+
+            if (col == 0) {
+                x += 22;
+            } else if (col == 1) {
+                x += 25;
+            }
+        }
+
+        //tail: COELAFISH
+        x = 75;
+        y += 22;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailCoelafish[bodySizeIndex][FishStateManager.BodyTexture.SCALY.ordinal()]
+                            [FishStateManager.FinPectoral.COELAFISH.ordinal()]
+                            [1][col],
+                    x, y, null);
+
+            if (col == 0) {
+                x += 22;
+            } else if (col == 1) {
+                x += 25;
+            }
+        }
+
+        //tail: TERATISU
+        x = 75;
+        y += 22;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailTeratisu[bodySizeIndex][FishStateManager.BodyTexture.SCALY.ordinal()]
+                            [FishStateManager.FinPectoral.COELAFISH.ordinal()]
+                            [2][col],
+                    x, y, null);
+
+            if (col == 0) {
+                x += 22;
+            } else if (col == 1) {
+                x += 25;
+            }
+        }
+
+        //tail: ZINICHTHY
+        x = 75;
+        y += 22;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailZinichthy[bodySizeIndex][FishStateManager.BodyTexture.SCALY.ordinal()]
+                            [FishStateManager.FinPectoral.COELAFISH.ordinal()]
+                            [3][col],
+                    x, y, null);
+
+            if (col == 0) {
+                x += 22;
+            } else if (col == 1) {
+                x += 25;
+            }
+        }
+
+        //tail: KURASELACHE
+        x = 75;
+        y += 22;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailKuraselache[bodySizeIndex][FishStateManager.BodyTexture.SCALY.ordinal()]
+                            [FishStateManager.FinPectoral.COELAFISH.ordinal()]
+                            [4][col],
+                    x, y, null);
+
+            if (col == 0) {
+                x += 22;
+            } else if (col == 1) {
+                x += 25;
+            }
+        }
+
+
+
+        //DECREASE-SHELL-COELAFISH
+        //tail: ORIGINAL
+        x = 150;
+        y = 170;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailOriginal[bodySizeIndex][FishStateManager.BodyTexture.SHELL.ordinal()]
+                            [FishStateManager.FinPectoral.COELAFISH.ordinal()]
+                            [0][col],
+                    x, y, null);
+
+            if (col == 0) {
+                x += 22;
+            } else if (col == 1) {
+                x += 25;
+            }
+        }
+
+        //tail: COELAFISH
+        x = 150;
+        y += 22;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailCoelafish[bodySizeIndex][FishStateManager.BodyTexture.SHELL.ordinal()]
+                            [FishStateManager.FinPectoral.COELAFISH.ordinal()]
+                            [1][col],
+                    x, y, null);
+
+            if (col == 0) {
+                x += 22;
+            } else if (col == 1) {
+                x += 25;
+            }
+        }
+
+        //tail: TERATISU
+        x = 150;
+        y += 22;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailTeratisu[bodySizeIndex][FishStateManager.BodyTexture.SHELL.ordinal()]
+                            [FishStateManager.FinPectoral.COELAFISH.ordinal()]
+                            [2][col],
+                    x, y, null);
+
+            if (col == 0) {
+                x += 22;
+            } else if (col == 1) {
+                x += 25;
+            }
+        }
+
+        //tail: ZINICHTHY
+        x = 150;
+        y += 22;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailZinichthy[bodySizeIndex][FishStateManager.BodyTexture.SHELL.ordinal()]
+                            [FishStateManager.FinPectoral.COELAFISH.ordinal()]
+                            [3][col],
+                    x, y, null);
+
+            if (col == 0) {
+                x += 22;
+            } else if (col == 1) {
+                x += 25;
+            }
+        }
+
+        //tail: KURASELACHE
+        x = 150;
+        y += 22;
+
+        for (int col = 0; col < 3; col++) {
+            g.drawImage(Assets.tailKuraselache[bodySizeIndex][FishStateManager.BodyTexture.SHELL.ordinal()]
+                            [FishStateManager.FinPectoral.COELAFISH.ordinal()]
+                            [4][col],
+                    x, y, null);
+
+            if (col == 0) {
+                x += 22;
+            } else if (col == 1) {
+                x += 25;
+            }
+        }
+
+
 
 /*
         int xOffset = 0;

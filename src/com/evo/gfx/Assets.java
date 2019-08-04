@@ -203,7 +203,7 @@ public class Assets {
 
                 yStartLocal = yStartLocal + (row * heightLocal);
 
-                for (int col = 0; col < eatFrames.length; col++) {
+                for (int col = 0; col < eatFrames[0][0][0][0].length; col++) {
                     eatFrames[bodySize.ordinal()]
                             [bodyTexture.ordinal()]
                             [jaws.ordinal()]
@@ -217,7 +217,7 @@ public class Assets {
 
                 yStartLocal = yStartLocal + (row * heightLocal);
 
-                for (int col = 0; col < biteFrames.length; col++) {
+                for (int col = 0; col < biteFrames[0][0][0][1].length; col++) {
                     biteFrames[bodySize.ordinal()]
                             [bodyTexture.ordinal()]
                             [jaws.ordinal()]
@@ -231,7 +231,7 @@ public class Assets {
 
                 yStartLocal = yStartLocal + (row * heightLocal);
 
-                for (int col = 0; col < hurtFrames.length; col++) {
+                for (int col = 0; col < hurtFrames[0][0][0][2].length; col++) {
                     hurtFrames[bodySize.ordinal()]
                             [bodyTexture.ordinal()]
                             [jaws.ordinal()]

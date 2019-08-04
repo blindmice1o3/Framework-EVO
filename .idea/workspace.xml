@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2bcc4a98-1f2c-4e1b-a19b-f51f53d66850" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/entities/moveable/fish/FishStateManager.java" afterPath="$PROJECT_DIR$/src/com/evo/entities/moveable/fish/FishStateManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/gfx/Assets.java" afterPath="$PROJECT_DIR$/src/com/evo/gfx/Assets.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/states/IntroState.java" afterPath="$PROJECT_DIR$/src/com/evo/states/IntroState.java" />
     </list>
@@ -22,11 +22,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Assets.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Assets.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/evo/gfx/Assets.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="267" column="115" lean-forward="false" selection-start-line="267" selection-start-column="115" selection-end-line="267" selection-end-column="115" />
+            <state relative-caret-position="374">
+              <caret line="232" column="0" lean-forward="true" selection-start-line="232" selection-start-column="0" selection-end-line="232" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -34,11 +34,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IntroState.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="IntroState.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/evo/states/IntroState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="72" column="49" lean-forward="false" selection-start-line="72" selection-start-column="49" selection-end-line="72" selection-end-column="49" />
+            <state relative-caret-position="272">
+              <caret line="106" column="36" lean-forward="true" selection-start-line="106" selection-start-column="36" selection-end-line="106" selection-end-column="36" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -49,8 +49,8 @@
       <file leaf-file-name="FishStateManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/evo/entities/moveable/fish/FishStateManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="7" column="54" lean-forward="true" selection-start-line="7" selection-start-column="54" selection-end-line="7" selection-end-column="54" />
+            <state relative-caret-position="147">
+              <caret line="14" column="71" lean-forward="false" selection-start-line="14" selection-start-column="71" selection-end-line="14" selection-end-column="71" />
               <folding />
             </state>
           </provider>
@@ -176,10 +176,10 @@
         <option value="$PROJECT_DIR$/src/com/evo/states/WorldMapState.java" />
         <option value="$PROJECT_DIR$/src/com/evo/entities/moveable/fish/FishPartsManager.java" />
         <option value="$PROJECT_DIR$/src/com/evo/entities/moveable/fish/Fish.java" />
-        <option value="$PROJECT_DIR$/src/com/evo/entities/moveable/fish/FishStateManager.java" />
         <option value="$PROJECT_DIR$/src/com/evo/Displayer.java" />
-        <option value="$PROJECT_DIR$/src/com/evo/gfx/Assets.java" />
         <option value="$PROJECT_DIR$/src/com/evo/states/IntroState.java" />
+        <option value="$PROJECT_DIR$/src/com/evo/entities/moveable/fish/FishStateManager.java" />
+        <option value="$PROJECT_DIR$/src/com/evo/gfx/Assets.java" />
       </list>
     </option>
   </component>
@@ -934,28 +934,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/evo/gfx/Assets.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="267" column="115" lean-forward="false" selection-start-line="267" selection-start-column="115" selection-end-line="267" selection-end-column="115" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/evo/entities/moveable/fish/FishStateManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="7" column="54" lean-forward="true" selection-start-line="7" selection-start-column="54" selection-end-line="7" selection-end-column="54" />
+        <state relative-caret-position="147">
+          <caret line="14" column="71" lean-forward="false" selection-start-line="14" selection-start-column="71" selection-end-line="14" selection-end-column="71" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/evo/states/IntroState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="72" column="49" lean-forward="false" selection-start-line="72" selection-start-column="49" selection-end-line="72" selection-end-column="49" />
+        <state relative-caret-position="272">
+          <caret line="106" column="36" lean-forward="true" selection-start-line="106" selection-start-column="36" selection-end-line="106" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/evo/gfx/Assets.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="232" column="0" lean-forward="true" selection-start-line="232" selection-start-column="0" selection-end-line="232" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

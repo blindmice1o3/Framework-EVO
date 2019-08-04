@@ -12,7 +12,7 @@ public class FishStateManager {
     public enum BodyTexture { SLICK, SCALY, SHELL; }
 
     //HEAD
-    public enum Jaws { ORIGINAL, KURASELACHES, ZINICHTHY, SWORDFISH; }
+    public enum Jaws { ORIGINAL, KURASELACHES, ZINICHTHY/*, SWORDFISH*/; }
     //HEAD-ATTACHMENT
     public enum Horn { ORIGINAL, SPIRALED, ANGLER, SWORDFISH, NONE; }
 

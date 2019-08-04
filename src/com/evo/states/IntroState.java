@@ -55,23 +55,11 @@ public class IntroState implements IState {
                     if (jawsIndex >= FishStateManager.Jaws.values().length) {
                         jawsIndex = 0;
                     }
-                } else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_V)) {
-                    actionStateIndex++;
-
-                    if (actionStateIndex >= (FishStateManager.ActionState.values().length-1)) {
-                        actionStateIndex = 0;
-                    }
                 } else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_B)) {
                     frameNumberIndex++;
 
-                    if (actionStateIndex < 2) {
-                        if (frameNumberIndex >= 3) {
-                            frameNumberIndex = 0;
-                        }
-                    } else {
-                        if (frameNumberIndex >= 2) {
-                            frameNumberIndex = 0;
-                        }
+                    if (frameNumberIndex >= 3) {
+                        frameNumberIndex = 0;
                     }
                 }
 
@@ -112,12 +100,14 @@ public class IntroState implements IState {
     @Override
     public void render(Graphics g) {
 
-        g.drawImage(Assets.eatFrames[bodySizeIndex][bodyTextureIndex][jawsIndex][actionStateIndex][frameNumberIndex],
+        g.drawImage(Assets.eatFrames[bodySizeIndex][bodyTextureIndex][jawsIndex][0][frameNumberIndex],
             0, 0, null);
-        g.drawImage(Assets.biteFrames[bodySizeIndex][bodyTextureIndex][jawsIndex][actionStateIndex][frameNumberIndex],
+        g.drawImage(Assets.biteFrames[bodySizeIndex][bodyTextureIndex][jawsIndex][1][frameNumberIndex],
                 0, 16, null);
-        g.drawImage(Assets.hurtFrames[bodySizeIndex][bodyTextureIndex][jawsIndex][actionStateIndex][frameNumberIndex],
-                0, 32, null);
+        if (frameNumberIndex != 2) {
+            g.drawImage(Assets.hurtFrames[bodySizeIndex][bodyTextureIndex][jawsIndex][2][frameNumberIndex],
+                    0, 32, null);
+        }
 
 /*
         int xOffset = 0;

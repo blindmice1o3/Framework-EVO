@@ -1,6 +1,7 @@
 package com.evo.gfx;
 
 import com.evo.Utils;
+import com.evo.entities.moveable.fish.Fish;
 import com.evo.entities.moveable.fish.FishStateManager;
 
 import java.awt.image.BufferedImage;
@@ -166,54 +167,48 @@ public class Assets {
         // ENTITY - Chapter 1: FISH BODY (AND ATTACHMENTS)
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         //DECREASE-SLICK-ORIGINAL
-        pullFishBodyImageSubsetDecreaseOriginal(FishStateManager.BodySize.DECREASE,
-                FishStateManager.BodyTexture.SLICK,
-                FishStateManager.FinPectoral.ORIGINAL,
-                6, 358);
+        pullFishBodyImageSubsetDecreaseOriginal(FishStateManager.BodyTexture.SLICK, 6, 358);
         //DECREASE-SLICK-COELAFISH
-        pullFishBodyImageSubsetDecreaseCoelafish(FishStateManager.BodySize.DECREASE,
-                FishStateManager.BodyTexture.SLICK,
-                FishStateManager.FinPectoral.COELAFISH,
-                2, 457);
+        pullFishBodyImageSubsetDecreaseCoelafish(FishStateManager.BodyTexture.SLICK, 2, 457);
         //DECREASE-SLICK-TACKLE
-        pullFishBodyImageSubsetDecreaseTackle(FishStateManager.BodySize.DECREASE,
-                FishStateManager.BodyTexture.SLICK,
-                FishStateManager.FinPectoral.TACKLE,
-                6, 566);
-
+        pullFishBodyImageSubsetDecreaseTackle(FishStateManager.BodyTexture.SLICK, 6, 566);
 
         //DECREASE-SCALY-ORIGINAL
-        pullFishBodyImageSubsetDecreaseOriginal(FishStateManager.BodySize.DECREASE,
-                FishStateManager.BodyTexture.SCALY,
-                FishStateManager.FinPectoral.ORIGINAL,
-                84, 358);
+        pullFishBodyImageSubsetDecreaseOriginal(FishStateManager.BodyTexture.SCALY, 84, 358);
         //DECREASE-SCALY-COELAFISH
-        pullFishBodyImageSubsetDecreaseCoelafish(FishStateManager.BodySize.DECREASE,
-                FishStateManager.BodyTexture.SCALY,
-                FishStateManager.FinPectoral.COELAFISH,
-                80, 457);
+        pullFishBodyImageSubsetDecreaseCoelafish(FishStateManager.BodyTexture.SCALY, 80, 457);
         //DECREASE-SCALY-TACKLE
-        pullFishBodyImageSubsetDecreaseTackle(FishStateManager.BodySize.DECREASE,
-                FishStateManager.BodyTexture.SCALY,
-                FishStateManager.FinPectoral.TACKLE,
-                84, 566);
-
+        pullFishBodyImageSubsetDecreaseTackle(FishStateManager.BodyTexture.SCALY, 84, 566);
 
         //DECREASE-SHELL-ORIGINAL
-        pullFishBodyImageSubsetDecreaseOriginal(FishStateManager.BodySize.DECREASE,
-                FishStateManager.BodyTexture.SHELL,
-                FishStateManager.FinPectoral.ORIGINAL,
-                163, 358);
+        pullFishBodyImageSubsetDecreaseOriginal(FishStateManager.BodyTexture.SHELL, 163, 358);
         //DECREASE-SHELL-COELAFISH
-        pullFishBodyImageSubsetDecreaseCoelafish(FishStateManager.BodySize.DECREASE,
-                FishStateManager.BodyTexture.SHELL,
-                FishStateManager.FinPectoral.COELAFISH,
-                159, 457);
+        pullFishBodyImageSubsetDecreaseCoelafish(FishStateManager.BodyTexture.SHELL, 159, 457);
         //DECREASE-SHELL-TACKLE
-        pullFishBodyImageSubsetDecreaseTackle(FishStateManager.BodySize.DECREASE,
-                FishStateManager.BodyTexture.SHELL,
-                FishStateManager.FinPectoral.TACKLE,
-                163, 566);
+        pullFishBodyImageSubsetDecreaseTackle(FishStateManager.BodyTexture.SHELL, 163, 566);
+
+
+        //INCREASE-SLICK-ORIGINAL
+        pullFishBodyImageSubsetIncreaseOriginal(FishStateManager.BodyTexture.SLICK, 237, 298);
+        //INCREASE-SLICK-COELAFISH
+        pullFishBodyImageSubsetIncreaseCoelafish(FishStateManager.BodyTexture.SLICK, 237, 412);
+        //INCREASE-SLICK-TACKLE
+        pullFishBodyImageSubsetIncreaseTackle(FishStateManager.BodyTexture.SLICK, 237, 541);
+
+        //INCREASE-SCALY-ORIGINAL
+        pullFishBodyImageSubsetIncreaseOriginal(FishStateManager.BodyTexture.SCALY, 339, 298);
+        //INCREASE-SCALY-COELAFISH
+        pullFishBodyImageSubsetIncreaseCoelafish(FishStateManager.BodyTexture.SCALY, 339, 412);
+        //INCREASE-SCALY-TACKLE
+        pullFishBodyImageSubsetIncreaseTackle(FishStateManager.BodyTexture.SCALY, 339, 541);
+
+        //INCREASE-SHELL-ORIGINAL
+        pullFishBodyImageSubsetIncreaseOriginal(FishStateManager.BodyTexture.SHELL, 441, 298);
+        //INCREASE-SHELL-COELAFISH
+        pullFishBodyImageSubsetIncreaseCoelafish(FishStateManager.BodyTexture.SHELL, 441, 412);
+        //INCREASE-SHELL-TACKLE
+        pullFishBodyImageSubsetIncreaseTackle(FishStateManager.BodyTexture.SHELL, 441, 541);
+
 
 
         // BACKGROUND - IntroState
@@ -324,9 +319,7 @@ public class Assets {
         }
     }
 
-    public static void pullFishBodyImageSubsetDecreaseOriginal(FishStateManager.BodySize bodySize,
-                                                               FishStateManager.BodyTexture bodyTexture,
-                                                               FishStateManager.FinPectoral finPectoral,
+    public static void pullFishBodyImageSubsetDecreaseOriginal(FishStateManager.BodyTexture bodyTexture,
                                                                int xStart, int yStart) {
 
         FishStateManager.Tail[] tailsArray = FishStateManager.Tail.values();
@@ -342,9 +335,9 @@ public class Assets {
 
                 case ORIGINAL:
                     for (int col = 0; col < 3; col++) {
-                        tailOriginal[bodySize.ordinal()]
+                        tailOriginal[FishStateManager.BodySize.DECREASE.ordinal()]
                                 [bodyTexture.ordinal()]
-                                [finPectoral.ordinal()]
+                                [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
                                 [FishStateManager.Tail.ORIGINAL.ordinal()]
                                 [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
 
@@ -371,9 +364,9 @@ public class Assets {
                             height = height + 1;
                         }
 
-                        tailCoelafish[bodySize.ordinal()]
+                        tailCoelafish[FishStateManager.BodySize.DECREASE.ordinal()]
                                 [bodyTexture.ordinal()]
-                                [finPectoral.ordinal()]
+                                [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
                                 [FishStateManager.Tail.COELAFISH.ordinal()]
                                 [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
 
@@ -400,9 +393,9 @@ public class Assets {
                             height = height + 1;
                         }
 
-                        tailTeratisu[bodySize.ordinal()]
+                        tailTeratisu[FishStateManager.BodySize.DECREASE.ordinal()]
                                 [bodyTexture.ordinal()]
-                                [finPectoral.ordinal()]
+                                [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
                                 [FishStateManager.Tail.TERATISU.ordinal()]
                                 [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
 
@@ -429,9 +422,9 @@ public class Assets {
                             height = height + 1;
                         }
 
-                        tailZinichthy[bodySize.ordinal()]
+                        tailZinichthy[FishStateManager.BodySize.DECREASE.ordinal()]
                                 [bodyTexture.ordinal()]
-                                [finPectoral.ordinal()]
+                                [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
                                 [FishStateManager.Tail.ZINICHTHY.ordinal()]
                                 [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
 
@@ -458,9 +451,9 @@ public class Assets {
                             height = height + 2;
                         }
 
-                        tailKuraselache[bodySize.ordinal()]
+                        tailKuraselache[FishStateManager.BodySize.DECREASE.ordinal()]
                                 [bodyTexture.ordinal()]
-                                [finPectoral.ordinal()]
+                                [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
                                 [FishStateManager.Tail.KURASELACHE.ordinal()]
                                 [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
 
@@ -487,9 +480,7 @@ public class Assets {
 
     }
 
-    public static void pullFishBodyImageSubsetDecreaseCoelafish(FishStateManager.BodySize bodySize,
-                                                               FishStateManager.BodyTexture bodyTexture,
-                                                               FishStateManager.FinPectoral finPectoral,
+    public static void pullFishBodyImageSubsetDecreaseCoelafish(FishStateManager.BodyTexture bodyTexture,
                                                                int xStart, int yStart) {
 
         FishStateManager.Tail[] tailsArray = FishStateManager.Tail.values();
@@ -505,9 +496,9 @@ public class Assets {
 
                 case ORIGINAL:
                     for (int col = 0; col < 3; col++) {
-                        tailOriginal[bodySize.ordinal()]
+                        tailOriginal[FishStateManager.BodySize.DECREASE.ordinal()]
                                 [bodyTexture.ordinal()]
-                                [finPectoral.ordinal()]
+                                [FishStateManager.FinPectoral.COELAFISH.ordinal()]
                                 [FishStateManager.Tail.ORIGINAL.ordinal()]
                                 [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
 
@@ -534,9 +525,9 @@ public class Assets {
                             height = height + 1;
                         }
 
-                        tailCoelafish[bodySize.ordinal()]
+                        tailCoelafish[FishStateManager.BodySize.DECREASE.ordinal()]
                                 [bodyTexture.ordinal()]
-                                [finPectoral.ordinal()]
+                                [FishStateManager.FinPectoral.COELAFISH.ordinal()]
                                 [FishStateManager.Tail.COELAFISH.ordinal()]
                                 [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
 
@@ -563,9 +554,9 @@ public class Assets {
                             height = height + 1;
                         }
 
-                        tailTeratisu[bodySize.ordinal()]
+                        tailTeratisu[FishStateManager.BodySize.DECREASE.ordinal()]
                                 [bodyTexture.ordinal()]
-                                [finPectoral.ordinal()]
+                                [FishStateManager.FinPectoral.COELAFISH.ordinal()]
                                 [FishStateManager.Tail.TERATISU.ordinal()]
                                 [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
 
@@ -592,9 +583,9 @@ public class Assets {
                             height = height + 1;
                         }
 
-                        tailZinichthy[bodySize.ordinal()]
+                        tailZinichthy[FishStateManager.BodySize.DECREASE.ordinal()]
                                 [bodyTexture.ordinal()]
-                                [finPectoral.ordinal()]
+                                [FishStateManager.FinPectoral.COELAFISH.ordinal()]
                                 [FishStateManager.Tail.ZINICHTHY.ordinal()]
                                 [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
 
@@ -621,9 +612,9 @@ public class Assets {
                             height = height + 1;
                         }
 
-                        tailKuraselache[bodySize.ordinal()]
+                        tailKuraselache[FishStateManager.BodySize.DECREASE.ordinal()]
                                 [bodyTexture.ordinal()]
-                                [finPectoral.ordinal()]
+                                [FishStateManager.FinPectoral.COELAFISH.ordinal()]
                                 [FishStateManager.Tail.KURASELACHE.ordinal()]
                                 [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
 
@@ -650,9 +641,7 @@ public class Assets {
 
     }
 
-    public static void pullFishBodyImageSubsetDecreaseTackle(FishStateManager.BodySize bodySize,
-                                                               FishStateManager.BodyTexture bodyTexture,
-                                                               FishStateManager.FinPectoral finPectoral,
+    public static void pullFishBodyImageSubsetDecreaseTackle(FishStateManager.BodyTexture bodyTexture,
                                                                int xStart, int yStart) {
 
         FishStateManager.Tail[] tailsArray = FishStateManager.Tail.values();
@@ -668,9 +657,9 @@ public class Assets {
 
                 case ORIGINAL:
                     for (int col = 0; col < 3; col++) {
-                        tailOriginal[bodySize.ordinal()]
+                        tailOriginal[FishStateManager.BodySize.DECREASE.ordinal()]
                                 [bodyTexture.ordinal()]
-                                [finPectoral.ordinal()]
+                                [FishStateManager.FinPectoral.TACKLE.ordinal()]
                                 [FishStateManager.Tail.ORIGINAL.ordinal()]
                                 [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
 
@@ -697,9 +686,9 @@ public class Assets {
                             height = height + 2;
                         }
 
-                        tailCoelafish[bodySize.ordinal()]
+                        tailCoelafish[FishStateManager.BodySize.DECREASE.ordinal()]
                                 [bodyTexture.ordinal()]
-                                [finPectoral.ordinal()]
+                                [FishStateManager.FinPectoral.TACKLE.ordinal()]
                                 [FishStateManager.Tail.COELAFISH.ordinal()]
                                 [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
 
@@ -726,9 +715,9 @@ public class Assets {
                             height = height + 2;
                         }
 
-                        tailTeratisu[bodySize.ordinal()]
+                        tailTeratisu[FishStateManager.BodySize.DECREASE.ordinal()]
                                 [bodyTexture.ordinal()]
-                                [finPectoral.ordinal()]
+                                [FishStateManager.FinPectoral.TACKLE.ordinal()]
                                 [FishStateManager.Tail.TERATISU.ordinal()]
                                 [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
 
@@ -755,9 +744,9 @@ public class Assets {
                             height = height + 1;
                         }
 
-                        tailZinichthy[bodySize.ordinal()]
+                        tailZinichthy[FishStateManager.BodySize.DECREASE.ordinal()]
                                 [bodyTexture.ordinal()]
-                                [finPectoral.ordinal()]
+                                [FishStateManager.FinPectoral.TACKLE.ordinal()]
                                 [FishStateManager.Tail.ZINICHTHY.ordinal()]
                                 [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
 
@@ -784,9 +773,9 @@ public class Assets {
                             height = height + 3;
                         }
 
-                        tailKuraselache[bodySize.ordinal()]
+                        tailKuraselache[FishStateManager.BodySize.DECREASE.ordinal()]
                                 [bodyTexture.ordinal()]
-                                [finPectoral.ordinal()]
+                                [FishStateManager.FinPectoral.TACKLE.ordinal()]
                                 [FishStateManager.Tail.KURASELACHE.ordinal()]
                                 [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
 
@@ -799,6 +788,491 @@ public class Assets {
                             xStartLocal = xStartLocal + 24;
                             width = width - 3;
                             height = height + 0;
+                        }
+                    }
+
+                    break;
+
+                default:
+                    break;
+
+            }
+
+        }
+
+    }
+
+
+    public static void pullFishBodyImageSubsetIncreaseOriginal(FishStateManager.BodyTexture bodyTexture,
+                                                               int xStart, int yStart) {
+
+        FishStateManager.Tail[] tailsArray = FishStateManager.Tail.values();
+
+        for (int row = 0; row < FishStateManager.Tail.values().length; row++) {
+
+            int xStartLocal = xStart;
+            int yStartLocal = yStart;
+            int width = 25;
+            int height = 17;
+
+            switch (tailsArray[row]) {
+
+                case ORIGINAL:
+                    for (int col = 0; col < 3; col++) {
+                        tailOriginal[FishStateManager.BodySize.INCREASE.ordinal()]
+                                [bodyTexture.ordinal()]
+                                [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
+                                [FishStateManager.Tail.ORIGINAL.ordinal()]
+                                [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
+
+                        //setting up for next col
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 26;
+                            width = width + 7;
+                            height = height + 1;
+                        } else if (col == 1) {
+                            xStartLocal = xStartLocal + 34;
+                            width = width - 7;
+                            height = height + 3;
+                        }
+                    }
+
+                    break;
+
+                case COELAFISH:
+                    for (int col = 0; col < 3; col++) {
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 2;
+                            yStartLocal = yStartLocal + 22;
+                            width = width - 2;
+                            height = height + 1;
+                        }
+
+                        tailCoelafish[FishStateManager.BodySize.INCREASE.ordinal()]
+                                [bodyTexture.ordinal()]
+                                [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
+                                [FishStateManager.Tail.COELAFISH.ordinal()]
+                                [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
+
+                        //setting up for next col
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 28;
+                            width = width + 5;
+                            height = height + 1;
+                        } else if (col == 1) {
+                            xStartLocal = xStartLocal + 32;
+                            width = width - 5;
+                            height = height + 3;
+                        }
+                    }
+
+                    break;
+
+                case TERATISU:
+                    for (int col = 0; col < 3; col++) {
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 1;
+                            yStartLocal = yStartLocal + 45;
+                            width = width - 1;
+                            height = height + 1;
+                        }
+
+                        tailTeratisu[FishStateManager.BodySize.INCREASE.ordinal()]
+                                [bodyTexture.ordinal()]
+                                [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
+                                [FishStateManager.Tail.TERATISU.ordinal()]
+                                [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
+
+                        //setting up for next col
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 29;
+                            width = width + 4;
+                            height = height + 1;
+                        } else if (col == 1) {
+                            xStartLocal = xStartLocal + 31;
+                            width = width - 4;
+                            height = height + 3;
+                        }
+                    }
+
+                    break;
+
+                case ZINICHTHY:
+                    for (int col = 0; col < 3; col++) {
+                        if (col == 0) {
+                            xStartLocal = xStartLocal - 1;
+                            yStartLocal = yStartLocal + 68;
+                            width = width + 1;
+                            height = height + 1;
+                        }
+
+                        tailZinichthy[FishStateManager.BodySize.INCREASE.ordinal()]
+                                [bodyTexture.ordinal()]
+                                [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
+                                [FishStateManager.Tail.ZINICHTHY.ordinal()]
+                                [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
+
+                        //setting up for next col
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 27;
+                            width = width + 6;
+                            height = height + 1;
+                        } else if (col == 1) {
+                            xStartLocal = xStartLocal + 33;
+                            width = width - 6;
+                            height = height + 3;
+                        }
+                    }
+
+                    break;
+
+                case KURASELACHE:
+                    for (int col = 0; col < 3; col++) {
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 0;
+                            yStartLocal = yStartLocal + 91;
+                            width = width + 0;
+                            height = height + 1;
+                        }
+
+                        tailKuraselache[FishStateManager.BodySize.INCREASE.ordinal()]
+                                [bodyTexture.ordinal()]
+                                [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
+                                [FishStateManager.Tail.KURASELACHE.ordinal()]
+                                [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
+
+                        //setting up for next col
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 28;
+                            width = width + 5;
+                            height = height + 1;
+                        } else if (col == 1) {
+                            xStartLocal = xStartLocal + 32;
+                            width = width - 5;
+                            height = height + 3;
+                        }
+                    }
+
+                    break;
+
+                default:
+                    break;
+
+            }
+
+        }
+
+    }
+
+
+    public static void pullFishBodyImageSubsetIncreaseCoelafish(FishStateManager.BodyTexture bodyTexture,
+                                                               int xStart, int yStart) {
+
+        FishStateManager.Tail[] tailsArray = FishStateManager.Tail.values();
+
+        for (int row = 0; row < FishStateManager.Tail.values().length; row++) {
+
+            int xStartLocal = xStart;
+            int yStartLocal = yStart;
+            int width = 25;
+            int height = 20;
+
+            switch (tailsArray[row]) {
+
+                case ORIGINAL:
+                    for (int col = 0; col < 3; col++) {
+                        tailOriginal[FishStateManager.BodySize.INCREASE.ordinal()]
+                                [bodyTexture.ordinal()]
+                                [FishStateManager.FinPectoral.COELAFISH.ordinal()]
+                                [FishStateManager.Tail.ORIGINAL.ordinal()]
+                                [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
+
+                        //setting up for next col
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 26;
+                            width = width + 7;
+                            height = height + 2;
+                        } else if (col == 1) {
+                            xStartLocal = xStartLocal + 34;
+                            width = width - 6;
+                            height = height + 2;
+                        }
+                    }
+
+                    break;
+
+                case COELAFISH:
+                    for (int col = 0; col < 3; col++) {
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 2;
+                            yStartLocal = yStartLocal + 25;
+                            width = width - 2;
+                            height = height + 1;
+                        }
+
+                        tailCoelafish[FishStateManager.BodySize.INCREASE.ordinal()]
+                                [bodyTexture.ordinal()]
+                                [FishStateManager.FinPectoral.COELAFISH.ordinal()]
+                                [FishStateManager.Tail.COELAFISH.ordinal()]
+                                [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
+
+                        //setting up for next col
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 28;
+                            width = width + 5;
+                            height = height + 2;
+                        } else if (col == 1) {
+                            xStartLocal = xStartLocal + 32;
+                            width = width - 4;
+                            height = height + 2;
+                        }
+                    }
+
+                    break;
+
+                case TERATISU:
+                    for (int col = 0; col < 3; col++) {
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 1;
+                            yStartLocal = yStartLocal + 51;
+                            width = width - 1;
+                            height = height + 1;
+                        }
+
+                        tailTeratisu[FishStateManager.BodySize.INCREASE.ordinal()]
+                                [bodyTexture.ordinal()]
+                                [FishStateManager.FinPectoral.COELAFISH.ordinal()]
+                                [FishStateManager.Tail.TERATISU.ordinal()]
+                                [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
+
+                        //setting up for next col
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 29;
+                            width = width + 4;
+                            height = height + 2;
+                        } else if (col == 1) {
+                            xStartLocal = xStartLocal + 31;
+                            width = width - 3;
+                            height = height + 2;
+                        }
+                    }
+
+                    break;
+
+                case ZINICHTHY:
+                    for (int col = 0; col < 3; col++) {
+                        if (col == 0) {
+                            xStartLocal = xStartLocal - 1;
+                            yStartLocal = yStartLocal + 77;
+                            width = width + 1;
+                            height = height + 1;
+                        }
+
+                        tailZinichthy[FishStateManager.BodySize.INCREASE.ordinal()]
+                                [bodyTexture.ordinal()]
+                                [FishStateManager.FinPectoral.COELAFISH.ordinal()]
+                                [FishStateManager.Tail.ZINICHTHY.ordinal()]
+                                [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
+
+                        //setting up for next col
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 27;
+                            width = width + 6;
+                            height = height + 2;
+                        } else if (col == 1) {
+                            xStartLocal = xStartLocal + 33;
+                            width = width - 5;
+                            height = height + 2;
+                        }
+                    }
+
+                    break;
+
+                case KURASELACHE:
+                    for (int col = 0; col < 3; col++) {
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 0;
+                            yStartLocal = yStartLocal + 103;
+                            width = width + 0;
+                            height = height + 1;
+                        }
+
+                        tailKuraselache[FishStateManager.BodySize.INCREASE.ordinal()]
+                                [bodyTexture.ordinal()]
+                                [FishStateManager.FinPectoral.COELAFISH.ordinal()]
+                                [FishStateManager.Tail.KURASELACHE.ordinal()]
+                                [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
+
+                        //setting up for next col
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 28;
+                            width = width + 5;
+                            height = height + 2;
+                        } else if (col == 1) {
+                            xStartLocal = xStartLocal + 32;
+                            width = width - 4;
+                            height = height + 2;
+                        }
+                    }
+
+                    break;
+
+                default:
+                    break;
+
+            }
+
+        }
+
+    }
+
+    public static void pullFishBodyImageSubsetIncreaseTackle(FishStateManager.BodyTexture bodyTexture,
+                                                               int xStart, int yStart) {
+
+        FishStateManager.Tail[] tailsArray = FishStateManager.Tail.values();
+
+        for (int row = 0; row < FishStateManager.Tail.values().length; row++) {
+
+            int xStartLocal = xStart;
+            int yStartLocal = yStart;
+            int width = 25;
+            int height = 16;
+
+            switch (tailsArray[row]) {
+
+                case ORIGINAL:
+                    for (int col = 0; col < 3; col++) {
+                        tailOriginal[FishStateManager.BodySize.INCREASE.ordinal()]
+                                [bodyTexture.ordinal()]
+                                [FishStateManager.FinPectoral.TACKLE.ordinal()]
+                                [FishStateManager.Tail.ORIGINAL.ordinal()]
+                                [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
+
+                        //setting up for next col
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 26;
+                            width = width + 7;
+                            height = height + 1;
+                        } else if (col == 1) {
+                            xStartLocal = xStartLocal + 34;
+                            width = width - 5;
+                            height = height + 2;
+                        }
+                    }
+
+                    break;
+
+                case COELAFISH:
+                    for (int col = 0; col < 3; col++) {
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 2;
+                            yStartLocal = yStartLocal + 20;
+                            width = width - 2;
+                            height = height + 1;
+                        }
+
+                        tailCoelafish[FishStateManager.BodySize.INCREASE.ordinal()]
+                                [bodyTexture.ordinal()]
+                                [FishStateManager.FinPectoral.TACKLE.ordinal()]
+                                [FishStateManager.Tail.COELAFISH.ordinal()]
+                                [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
+
+                        //setting up for next col
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 28;
+                            width = width + 5;
+                            height = height + 1;
+                        } else if (col == 1) {
+                            xStartLocal = xStartLocal + 32;
+                            width = width - 3;
+                            height = height + 2;
+                        }
+                    }
+
+                    break;
+
+                case TERATISU:
+                    for (int col = 0; col < 3; col++) {
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 1;
+                            yStartLocal = yStartLocal + 41;
+                            width = width - 1;
+                            height = height + 1;
+                        }
+
+                        tailTeratisu[FishStateManager.BodySize.INCREASE.ordinal()]
+                                [bodyTexture.ordinal()]
+                                [FishStateManager.FinPectoral.TACKLE.ordinal()]
+                                [FishStateManager.Tail.TERATISU.ordinal()]
+                                [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
+
+                        //setting up for next col
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 29;
+                            width = width + 4;
+                            height = height + 1;
+                        } else if (col == 1) {
+                            xStartLocal = xStartLocal + 31;
+                            width = width - 2;
+                            height = height + 2;
+                        }
+                    }
+
+                    break;
+
+                case ZINICHTHY:
+                    for (int col = 0; col < 3; col++) {
+                        if (col == 0) {
+                            xStartLocal = xStartLocal - 1;
+                            yStartLocal = yStartLocal + 62;
+                            width = width + 1;
+                            height = height + 1;
+                        }
+
+                        tailZinichthy[FishStateManager.BodySize.INCREASE.ordinal()]
+                                [bodyTexture.ordinal()]
+                                [FishStateManager.FinPectoral.TACKLE.ordinal()]
+                                [FishStateManager.Tail.ZINICHTHY.ordinal()]
+                                [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
+
+                        //setting up for next col
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 27;
+                            width = width + 6;
+                            height = height + 1;
+                        } else if (col == 1) {
+                            xStartLocal = xStartLocal + 33;
+                            width = width - 4;
+                            height = height + 2;
+                        }
+                    }
+
+                    break;
+
+                case KURASELACHE:
+                    for (int col = 0; col < 3; col++) {
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 0;
+                            yStartLocal = yStartLocal + 83;
+                            width = width + 0;
+                            height = height + 1;
+                        }
+
+                        tailKuraselache[FishStateManager.BodySize.INCREASE.ordinal()]
+                                [bodyTexture.ordinal()]
+                                [FishStateManager.FinPectoral.TACKLE.ordinal()]
+                                [FishStateManager.Tail.KURASELACHE.ordinal()]
+                                [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
+
+                        //setting up for next col
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 28;
+                            width = width + 5;
+                            height = height + 1;
+                        } else if (col == 1) {
+                            xStartLocal = xStartLocal + 32;
+                            width = width - 3;
+                            height = height + 2;
                         }
                     }
 

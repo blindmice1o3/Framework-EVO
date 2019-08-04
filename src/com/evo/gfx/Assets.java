@@ -176,6 +176,11 @@ public class Assets {
                 FishStateManager.FinPectoral.COELAFISH,
                 2, 457);
         //DECREASE-SLICK-TACKLE
+        pullFishBodyImageSubsetDecreaseTackle(FishStateManager.BodySize.DECREASE,
+                FishStateManager.BodyTexture.SLICK,
+                FishStateManager.FinPectoral.TACKLE,
+                6, 566);
+
 
         //DECREASE-SCALY-ORIGINAL
         pullFishBodyImageSubsetDecreaseOriginal(FishStateManager.BodySize.DECREASE,
@@ -188,6 +193,11 @@ public class Assets {
                 FishStateManager.FinPectoral.COELAFISH,
                 80, 457);
         //DECREASE-SCALY-TACKLE
+        pullFishBodyImageSubsetDecreaseTackle(FishStateManager.BodySize.DECREASE,
+                FishStateManager.BodyTexture.SCALY,
+                FishStateManager.FinPectoral.TACKLE,
+                84, 566);
+
 
         //DECREASE-SHELL-ORIGINAL
         pullFishBodyImageSubsetDecreaseOriginal(FishStateManager.BodySize.DECREASE,
@@ -200,6 +210,10 @@ public class Assets {
                 FishStateManager.FinPectoral.COELAFISH,
                 159, 457);
         //DECREASE-SHELL-TACKLE
+        pullFishBodyImageSubsetDecreaseTackle(FishStateManager.BodySize.DECREASE,
+                FishStateManager.BodyTexture.SHELL,
+                FishStateManager.FinPectoral.TACKLE,
+                163, 566);
 
 
         // BACKGROUND - IntroState
@@ -622,6 +636,169 @@ public class Assets {
                             xStartLocal = xStartLocal + 24;
                             width = width - 4;
                             height = height + 2;
+                        }
+                    }
+
+                    break;
+
+                default:
+                    break;
+
+            }
+
+        }
+
+    }
+
+    public static void pullFishBodyImageSubsetDecreaseTackle(FishStateManager.BodySize bodySize,
+                                                               FishStateManager.BodyTexture bodyTexture,
+                                                               FishStateManager.FinPectoral finPectoral,
+                                                               int xStart, int yStart) {
+
+        FishStateManager.Tail[] tailsArray = FishStateManager.Tail.values();
+
+        for (int row = 0; row < FishStateManager.Tail.values().length; row++) {
+
+            int xStartLocal = xStart;
+            int yStartLocal = yStart;
+            int width = 17;
+            int height = 13;
+
+            switch (tailsArray[row]) {
+
+                case ORIGINAL:
+                    for (int col = 0; col < 3; col++) {
+                        tailOriginal[bodySize.ordinal()]
+                                [bodyTexture.ordinal()]
+                                [finPectoral.ordinal()]
+                                [FishStateManager.Tail.ORIGINAL.ordinal()]
+                                [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
+
+                        //setting up for next col
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 18;
+                            width = width + 7;
+                            height = height + 1;
+                        } else if (col == 1) {
+                            xStartLocal = xStartLocal + 26;
+                            width = width - 5;
+                            height = height + 0;
+                        }
+                    }
+
+                    break;
+
+                case COELAFISH:
+                    for (int col = 0; col < 3; col++) {
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 1;
+                            yStartLocal = yStartLocal + 15;
+                            width = width - 1;
+                            height = height + 2;
+                        }
+
+                        tailCoelafish[bodySize.ordinal()]
+                                [bodyTexture.ordinal()]
+                                [finPectoral.ordinal()]
+                                [FishStateManager.Tail.COELAFISH.ordinal()]
+                                [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
+
+                        //setting up for next col
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 21;
+                            width = width + 4;
+                            height = height + 1;
+                        } else if (col == 1) {
+                            xStartLocal = xStartLocal + 24;
+                            width = width - 3;
+                            height = height - 1;
+                        }
+                    }
+
+                    break;
+
+                case TERATISU:
+                    for (int col = 0; col < 3; col++) {
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 1;
+                            yStartLocal = yStartLocal + 32;
+                            width = width - 1;
+                            height = height + 2;
+                        }
+
+                        tailTeratisu[bodySize.ordinal()]
+                                [bodyTexture.ordinal()]
+                                [finPectoral.ordinal()]
+                                [FishStateManager.Tail.TERATISU.ordinal()]
+                                [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
+
+                        //setting up for next col
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 21;
+                            width = width + 4;
+                            height = height + 0;
+                        } else if (col == 1) {
+                            xStartLocal = xStartLocal + 23;
+                            width = width - 2;
+                            height = height + 0;
+                        }
+                    }
+
+                    break;
+
+                case ZINICHTHY:
+                    for (int col = 0; col < 3; col++) {
+                        if (col == 0) {
+                            xStartLocal = xStartLocal - 1;
+                            yStartLocal = yStartLocal + 48;
+                            width = width + 1;
+                            height = height + 1;
+                        }
+
+                        tailZinichthy[bodySize.ordinal()]
+                                [bodyTexture.ordinal()]
+                                [finPectoral.ordinal()]
+                                [FishStateManager.Tail.ZINICHTHY.ordinal()]
+                                [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
+
+                        //setting up for next col
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 19;
+                            width = width + 6;
+                            height = height + 1;
+                        } else if (col == 1) {
+                            xStartLocal = xStartLocal + 25;
+                            width = width - 4;
+                            height = height + 0;
+                        }
+                    }
+
+                    break;
+
+                case KURASELACHE:
+                    for (int col = 0; col < 3; col++) {
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 0;
+                            yStartLocal = yStartLocal + 64;
+                            width = width + 0;
+                            height = height + 3;
+                        }
+
+                        tailKuraselache[bodySize.ordinal()]
+                                [bodyTexture.ordinal()]
+                                [finPectoral.ordinal()]
+                                [FishStateManager.Tail.KURASELACHE.ordinal()]
+                                [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, width, height);
+
+                        //setting up for next col
+                        if (col == 0) {
+                            xStartLocal = xStartLocal + 20;
+                            width = width + 5;
+                            height = height + 0;
+                        } else if (col == 1) {
+                            xStartLocal = xStartLocal + 24;
+                            width = width - 3;
+                            height = height + 0;
                         }
                     }
 

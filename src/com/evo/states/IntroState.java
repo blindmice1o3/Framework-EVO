@@ -12,8 +12,16 @@ public class IntroState implements IState {
 
     private Handler handler;
 
+    private int bodySizeIndex, bodyTextureIndex, jawsIndex, actionStateIndex, frameNumberIndex;
+
     public IntroState(Handler handler) {
         this.handler = handler;
+
+        bodySizeIndex = 0;
+        bodyTextureIndex = 0;
+        jawsIndex = 0;
+        actionStateIndex = 0;
+        frameNumberIndex = 0;
     }
 
     @Override
@@ -29,6 +37,44 @@ public class IntroState implements IState {
 
         switch (handler.getStateManager().getCurrentChapter()) {
             case ONE:
+                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_Z)) {
+                    bodySizeIndex++;
+
+                    if (bodySizeIndex >= FishStateManager.BodySize.values().length) {
+                        bodySizeIndex = 0;
+                    }
+                } else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_X)) {
+                    bodyTextureIndex++;
+
+                    if (bodyTextureIndex >= FishStateManager.BodyTexture.values().length) {
+                        bodyTextureIndex = 0;
+                    }
+                } else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_C)) {
+                    jawsIndex++;
+
+                    if (jawsIndex >= FishStateManager.Jaws.values().length) {
+                        jawsIndex = 0;
+                    }
+                } else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_V)) {
+                    actionStateIndex++;
+
+                    if (actionStateIndex >= (FishStateManager.ActionState.values().length-1)) {
+                        actionStateIndex = 0;
+                    }
+                } else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_B)) {
+                    frameNumberIndex++;
+
+                    if (actionStateIndex < 2) {
+                        if (frameNumberIndex >= 3) {
+                            frameNumberIndex = 0;
+                        }
+                    } else {
+                        if (frameNumberIndex >= 2) {
+                            frameNumberIndex = 0;
+                        }
+                    }
+                }
+
                 break;
             case TWO:
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
@@ -65,6 +111,15 @@ public class IntroState implements IState {
 
     @Override
     public void render(Graphics g) {
+
+        g.drawImage(Assets.eatFrames[bodySizeIndex][bodyTextureIndex][jawsIndex][actionStateIndex][frameNumberIndex],
+            0, 0, null);
+        g.drawImage(Assets.biteFrames[bodySizeIndex][bodyTextureIndex][jawsIndex][actionStateIndex][frameNumberIndex],
+                0, 16, null);
+        g.drawImage(Assets.hurtFrames[bodySizeIndex][bodyTextureIndex][jawsIndex][actionStateIndex][frameNumberIndex],
+                0, 32, null);
+
+/*
         int xOffset = 0;
         int yOffset = 0;
 
@@ -138,7 +193,7 @@ public class IntroState implements IState {
                 }
             }
         }
-
+*/
 
 
         /*

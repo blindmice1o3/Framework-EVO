@@ -255,23 +255,39 @@ public class Assets {
             int width = 0;
             int height = 0;
 
-            if (row == FishStateManager.Tail.ORIGINAL.ordinal()) {
+            FishStateManager.Tail[] tailsArray = FishStateManager.Tail.values();
 
-                for (int col = 0; col < 3; col++) {
-                    tailOriginal[bodySize.ordinal()]
-                            [bodyTexture.ordinal()]
-                            [finPectoral.ordinal()]
-                            [FishStateManager.Tail.ORIGINAL.ordinal()]
-                            [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, )
-                }
+            switch (tailsArray[row]) {
 
-            } else if (row == FishStateManager.Tail.COELAFISH.ordinal()) {
+                case ORIGINAL:
+                    for (int col = 0; col < 3; col++) {
+                        tailOriginal[bodySize.ordinal()]
+                                [bodyTexture.ordinal()]
+                                [finPectoral.ordinal()]
+                                [FishStateManager.Tail.ORIGINAL.ordinal()]
+                                [col] = spriteSheetChapter1Creatures.getSubimage(xStartLocal, yStartLocal, 17, 14);
+                    }
 
-            } else if (row == FishStateManager.Tail.TERATISU.ordinal()) {
+                    break;
 
-            } else if (row == FishStateManager.Tail.ZINICHTHY.ordinal()) {
+                case COELAFISH:
 
-            } else if (row == FishStateManager.Tail.KURASELACHE.ordinal()) {
+                    break;
+
+                case TERATISU:
+
+                    break;
+
+                case ZINICHTHY:
+
+                    break;
+
+                case KURASELACHE:
+
+                    break;
+
+                default:
+                    break;
 
             }
 

@@ -2,6 +2,7 @@ package com.evo.entities.moveable.fish;
 
 import com.evo.Handler;
 import com.evo.entities.moveable.Creature;
+import com.evo.gfx.Assets;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -28,5 +29,29 @@ public class Fish extends Creature {
     public void render(Graphics g) {
 
     }
+
+
+
+    class FishHead {
+
+        private BufferedImage currentHeadImage;
+
+        public FishHead() {
+            currentHeadImage = Assets.eatFrames[FishStateManager.BodySize.DECREASE.ordinal()]
+                    [FishStateManager.BodyTexture.SLICK.ordinal()]
+                    [FishStateManager.Jaws.ORIGINAL.ordinal()]
+                    [FishStateManager.ActionState.EAT.ordinal()]
+                    [0];
+        } // **** end FishHead() constructor ****
+
+        public void tick() {
+            //update currentHeadImage.
+        }
+
+        public void render(Graphics g) {
+            g.drawImage(currentHeadImage, 0, 0, null);
+        }
+
+    } // **** end FishHead inner-class ****
 
 } // **** end Fish class ****

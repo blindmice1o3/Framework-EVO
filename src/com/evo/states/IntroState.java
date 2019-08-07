@@ -13,6 +13,7 @@ public class IntroState implements IState {
     private Handler handler;
 
     private int bodySizeIndex, bodyTextureIndex, jawsIndex, actionStateIndex, frameNumberIndex;
+    private Fish fishInstance;
 
     public IntroState(Handler handler) {
         this.handler = handler;
@@ -22,6 +23,8 @@ public class IntroState implements IState {
         jawsIndex = 0;
         actionStateIndex = 0;
         frameNumberIndex = 0;
+
+        fishInstance = new Fish(handler,40, 10);
     }
 
     @Override
@@ -99,6 +102,8 @@ public class IntroState implements IState {
 
     @Override
     public void render(Graphics g) {
+        fishInstance.render(g);
+
         //@@@@@HEAD@@@@@
 
         g.drawImage(Assets.eatFrames[bodySizeIndex][bodyTextureIndex][jawsIndex][0][frameNumberIndex],

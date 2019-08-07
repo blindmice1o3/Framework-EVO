@@ -48,4 +48,20 @@ public class Fish extends Creature {
         g.drawImage(currentBodyImage, x, y, null);
     }
 
+    public void moveUp() {
+        y = y - yMove;
+    }
+
+    public void moveDown() {
+        y = y + yMove;
+    }
+
+    public void moveLeft() {
+        x = x - xMove;
+    }
+
+    public void moveRight() {
+        x = x + xMove;
+    }
+
 } // **** end Fish class ****

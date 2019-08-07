@@ -7,10 +7,13 @@ import java.awt.image.BufferedImage;
 
 public abstract class Creature extends Entity {
 
-    private int xMove, yMove;
+    protected int xMove, yMove;
 
     public Creature(Handler handler, BufferedImage image, int x, int y, int width, int height) {
         super(handler, image, x, y, width, height);
+
+        xMove = 1;
+        yMove = 1;
     }
 
     public void move() {

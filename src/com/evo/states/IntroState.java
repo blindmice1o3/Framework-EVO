@@ -40,31 +40,20 @@ public class IntroState implements IState {
 
         switch (handler.getStateManager().getCurrentChapter()) {
             case ONE:
-                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_Z)) {
-                    bodySizeIndex++;
-
-                    if (bodySizeIndex >= FishStateManager.BodySize.values().length) {
-                        bodySizeIndex = 0;
-                    }
-                } else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_X)) {
-                    bodyTextureIndex++;
-
-                    if (bodyTextureIndex >= FishStateManager.BodyTexture.values().length) {
-                        bodyTextureIndex = 0;
-                    }
-                } else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_C)) {
-                    jawsIndex++;
-
-                    if (jawsIndex >= FishStateManager.Jaws.values().length) {
-                        jawsIndex = 0;
-                    }
-                } else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_B)) {
-                    frameNumberIndex++;
-
-                    if (frameNumberIndex >= 3) {
-                        frameNumberIndex = 0;
-                    }
+                if (handler.getKeyManager().up) {
+                    fishInstance.moveUp();
                 }
+                if (handler.getKeyManager().down) {
+                    fishInstance.moveDown();
+                }
+                if (handler.getKeyManager().left) {
+                    fishInstance.moveLeft();
+                }
+                if (handler.getKeyManager().right) {
+                   fishInstance.moveRight();
+                }
+
+
 
                 break;
             case TWO:

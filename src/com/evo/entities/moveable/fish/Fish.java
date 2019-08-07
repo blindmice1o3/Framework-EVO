@@ -5,6 +5,8 @@ import com.evo.entities.moveable.Creature;
 import com.evo.gfx.Assets;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 public class Fish extends Creature {
@@ -49,15 +51,26 @@ public class Fish extends Creature {
             g.drawImage(currentHeadImage, x + currentBodyImage.getWidth(), y, null);
         } else if (directionFacing == DirectionFacing.LEFT) {
             //TODO: flip image of head and body.
+            BufferedImage flippedCurrentHeadImage = Fish.flipHorizontally(currentHeadImage);
+            BufferedImage flippedCurrentBodyImage = Fish.flipHorizontally(currentBodyImage);
 
             //@@@@@@@@@@@@@@@@@@@@@@@@@
             //HEAD
-            g.drawImage(currentHeadImage, x, y, null);
+            g.drawImage(flippedCurrentHeadImage, x, y, null);
 
             //BODY
-            g.drawImage(currentBodyImage, x + currentHeadImage.getWidth(), y, null);
+            g.drawImage(flippedCurrentBodyImage, x + flippedCurrentHeadImage.getWidth(), y, null);
             //@@@@@@@@@@@@@@@@@@@@@@@@@
         }
+    }
+
+    public static BufferedImage flipHorizontally(BufferedImage image) {
+        AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+        tx.translate(-image.getWidth(null), 0);
+
+        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+
+        return op.filter(image, null);
     }
 
     public void moveUp() {

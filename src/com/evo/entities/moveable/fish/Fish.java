@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 
 public class Fish extends Creature {
 
-    public enum DirectionFacing { UP, DOWN, LEFT, RIGHT; }
+    public enum DirectionFacing { LEFT, RIGHT; }
 
     private FishStateManager fishStateManager;
     private DirectionFacing directionFacing;
@@ -22,17 +22,17 @@ public class Fish extends Creature {
         super(handler, null, x, y, 100, 50);
 
         fishStateManager = new FishStateManager();
-        directionFacing = DirectionFacing.UP;
+        directionFacing = DirectionFacing.RIGHT;
 
-        currentHeadImage = Assets.eatFrames[FishStateManager.BodySize.DECREASE.ordinal()]
-                [FishStateManager.BodyTexture.SLICK.ordinal()]
-                [FishStateManager.Jaws.ORIGINAL.ordinal()]
-                [FishStateManager.ActionState.EAT.ordinal()]
+        currentHeadImage = Assets.eatFrames[fishStateManager.getCurrentBodySize().ordinal()]
+                [fishStateManager.getCurrentBodyTexture().ordinal()]
+                [fishStateManager.getCurrentJaws().ordinal()]
+                [fishStateManager.getCurrentActionState().ordinal()]
                 [0];
-        currentBodyImage = Assets.tailOriginal[FishStateManager.BodySize.DECREASE.ordinal()]
-                [FishStateManager.BodyTexture.SLICK.ordinal()]
-                [FishStateManager.FinPectoral.ORIGINAL.ordinal()]
-                [FishStateManager.Tail.ORIGINAL.ordinal()]
+        currentBodyImage = Assets.tailOriginal[fishStateManager.getCurrentBodySize().ordinal()]
+                [fishStateManager.getCurrentBodyTexture().ordinal()]
+                [fishStateManager.getCurrentFinPectoral().ordinal()]
+                [fishStateManager.getCurrentTail().ordinal()]
                 [0];
     } // **** end Fish(Handler, int, int) constructor ****
 
@@ -41,11 +41,23 @@ public class Fish extends Creature {
     }
 
     public void render(Graphics g) {
-        //HEAD
-        g.drawImage(currentHeadImage, x+currentBodyImage.getWidth(), y, null);
+        if (directionFacing == DirectionFacing.RIGHT) {
+            //BODY
+            g.drawImage(currentBodyImage, x, y, null);
 
-        //BODY
-        g.drawImage(currentBodyImage, x, y, null);
+            //HEAD
+            g.drawImage(currentHeadImage, x + currentBodyImage.getWidth(), y, null);
+        } else if (directionFacing == DirectionFacing.LEFT) {
+            //TODO: flip image of head and body.
+
+            //@@@@@@@@@@@@@@@@@@@@@@@@@
+            //HEAD
+            g.drawImage(currentHeadImage, x, y, null);
+
+            //BODY
+            g.drawImage(currentBodyImage, x + currentHeadImage.getWidth(), y, null);
+            //@@@@@@@@@@@@@@@@@@@@@@@@@
+        }
     }
 
     public void moveUp() {
@@ -62,6 +74,12 @@ public class Fish extends Creature {
 
     public void moveRight() {
         x = x + xMove;
+    }
+
+    // GETTERS AND SETTERS
+
+    public void setDirectionFacing(DirectionFacing directionFacing) {
+        this.directionFacing = directionFacing;
     }
 
 } // **** end Fish class ****

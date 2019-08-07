@@ -41,7 +41,7 @@ public class FishStateManager {
 
     //CONSTRUCTOR with default values.
     public FishStateManager() {
-        currentActionState = ActionState.NONE;
+        currentActionState = ActionState.EAT;
 
         currentBodySize = BodySize.DECREASE;
         currentBodyTexture = BodyTexture.SLICK;

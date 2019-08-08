@@ -40,6 +40,8 @@ public class IntroState implements IState {
     public void getInput() {
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
             handler.getStateManager().changeIState(StateManager.State.CHAPTER, null);
+        } else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SHIFT)) {
+            handler.getStateManager().changeIState(StateManager.State.START_MENU, null);
         }
 
         switch (handler.getStateManager().getCurrentChapter()) {

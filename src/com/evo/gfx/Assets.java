@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 public class Assets {
 
     // SPRITE SHEETS
-    public static BufferedImage spriteSheetChapterIntroAndWorldMap, spriteSheetChapter1Creatures;
+    public static BufferedImage spriteSheetChapterIntroAndWorldMap, spriteSheetChapter1Creatures, spriteSheetStartMenu;
 
     // BACKGROUND - IntroState
     public static BufferedImage chapter1Intro, chapter2Intro, chapter3Intro, chapter4Intro, chapter5Intro;
@@ -33,11 +33,15 @@ public class Assets {
     // ENTITY - Chapter 1: FISH BODY (AND ATTACHMENTS)
     public static BufferedImage[][][][][] tailOriginal, tailCoelafish, tailTeratisu, tailZinichthy, tailKuraselache;
 
+    // BACKGROUND - StartMenuState
+    public static BufferedImage startMenu;
+
     // Initialization
     public static void init() {
         // SPRITE SHEETS
         spriteSheetChapterIntroAndWorldMap = Utils.loadImage("/SNES - EVO Search for Eden - Maps & Chapter Images.png");
         spriteSheetChapter1Creatures = Utils.loadImage("/SNES - EVO Search for Eden - Chapter 1 Creatures.png");
+        spriteSheetStartMenu = Utils.loadImage("/Game Boy GBC - Pokemon Crystal - Start Menu.png");
 
         // ENTITY - Chapter 1: FISH HEAD (AND ATTACHMENTS)
         eatFrames = new BufferedImage[FishStateManager.BodySize.values().length]
@@ -248,6 +252,11 @@ public class Assets {
         leftOverworld1 = spriteSheetChapter1Creatures.getSubimage(199, 113, 16, 9);
         rightOverworld0 = spriteSheetChapter1Creatures.getSubimage(182, 123, 16, 9);
         rightOverworld1 = spriteSheetChapter1Creatures.getSubimage(199, 123, 16, 9);
+
+
+
+        // BACKGROUND - StartMenuState
+        startMenu = spriteSheetStartMenu.getSubimage(397, 3, 75, 92);
 
     }
 

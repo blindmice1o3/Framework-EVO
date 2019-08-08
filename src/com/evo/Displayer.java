@@ -47,7 +47,7 @@ public class Displayer extends JFrame {
 
         @Override
         public void paintComponent(Graphics g) {
-            super.paintComponent(g);
+            //super.paintComponent(g);
             
             handler.getGame().getStateManager().render(g);
         }

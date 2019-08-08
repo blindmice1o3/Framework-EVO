@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class StateManager {
 
-    public static enum State { INTRO, CHAPTER, WORLD_MAP, GAME_STAGE, START_MENU; }
+    public static enum State { NULL, INTRO, CHAPTER, WORLD_MAP, GAME_STAGE, START_MENU; }
     public static enum Chapter { ONE, TWO, THREE, FOUR, FIVE; }
 
     private Handler handler;
@@ -32,12 +32,13 @@ public class StateManager {
     public void init(Handler handler) {
         this.handler = handler;
 
+        states.put(State.NULL, new NullState(handler));
         states.put(State.INTRO, new IntroState(handler));
         states.put(State.CHAPTER, new ChapterState(handler));
         states.put(State.WORLD_MAP, new WorldMapState(handler));
         states.put(State.START_MENU, new StartMenuState(handler));
 
-        statesStack.add(states.get(State.INTRO));
+        statesStack.add(states.get(State.NULL));
 
         //currentState = states.get(State.INTRO);
     }

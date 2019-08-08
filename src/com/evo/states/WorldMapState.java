@@ -142,6 +142,9 @@ public class WorldMapState implements IState {
 
     @Override
     public void render(Graphics g) {
+        //NullState.render(Graphics) ------> fills the screen with white rectangle.
+        handler.getStateManager().getStatesStack().get(0).render(g);
+
         Graphics2D g2d = (Graphics2D)g;
         float opacity = 1.0f;
 

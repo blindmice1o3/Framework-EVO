@@ -52,14 +52,21 @@ public class StateManager {
         }
     }
 
-    public void changeIState(State state, Object[] args) {
+    //this is pushIState(State state, Object[] args)
+    public void pushIState(State state, Object[] args) {
         getTop().exit();
         statesStack.add(states.get(state));
         getTop().enter(args);
     }
 
+    //this is popIState()
+    public void popIState() {
+        getTop().exit();
+        statesStack.remove(statesStack.size()-1);
+    }
+
     /*
-    public void changeIState(State state, Object[] args) {
+    public void pushIState(State state, Object[] args) {
         currentState.exit();
         currentState = states.get(state);
         currentState.enter(args);

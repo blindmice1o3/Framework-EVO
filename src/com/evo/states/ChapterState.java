@@ -23,9 +23,9 @@ public class ChapterState implements IState {
     @Override
     public void getInput() {
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
-            handler.getStateManager().changeIState(StateManager.State.WORLD_MAP, null);
+            handler.getStateManager().pushIState(StateManager.State.WORLD_MAP, null);
         } else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
-            handler.getStateManager().changeIState(StateManager.State.INTRO, null);
+            handler.getStateManager().popIState();
         }
 
         switch (handler.getStateManager().getCurrentChapter()) {

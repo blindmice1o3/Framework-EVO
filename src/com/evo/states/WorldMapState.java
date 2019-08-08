@@ -41,14 +41,14 @@ public class WorldMapState implements IState {
     @Override
     public void getInput() {
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
-            handler.getStateManager().changeIState(StateManager.State.CHAPTER, null);
+            handler.getStateManager().popIState();
         }
 
         switch (handler.getStateManager().getCurrentChapter()) {
             case ONE:
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
                     handler.getStateManager().setCurrentChapter(StateManager.Chapter.TWO);
-                    handler.getStateManager().changeIState(StateManager.State.INTRO, null);
+                    handler.getStateManager().pushIState(StateManager.State.INTRO, null);
                 }
                 else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_W)) {
                     index++;
@@ -106,21 +106,21 @@ public class WorldMapState implements IState {
             case TWO:
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
                     handler.getStateManager().setCurrentChapter(StateManager.Chapter.THREE);
-                    handler.getStateManager().changeIState(StateManager.State.INTRO, null);
+                    handler.getStateManager().pushIState(StateManager.State.INTRO, null);
                 }
 
                 break;
             case THREE:
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
                     handler.getStateManager().setCurrentChapter(StateManager.Chapter.FOUR);
-                    handler.getStateManager().changeIState(StateManager.State.INTRO, null);
+                    handler.getStateManager().pushIState(StateManager.State.INTRO, null);
                 }
 
                 break;
             case FOUR:
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
                     handler.getStateManager().setCurrentChapter(StateManager.Chapter.FIVE);
-                    handler.getStateManager().changeIState(StateManager.State.INTRO, null);
+                    handler.getStateManager().pushIState(StateManager.State.INTRO, null);
                 }
 
                 break;

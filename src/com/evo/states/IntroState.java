@@ -39,9 +39,9 @@ public class IntroState implements IState {
     @Override
     public void getInput() {
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
-            handler.getStateManager().changeIState(StateManager.State.CHAPTER, null);
+            handler.getStateManager().pushIState(StateManager.State.CHAPTER, null);
         } else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SHIFT)) {
-            handler.getStateManager().changeIState(StateManager.State.START_MENU, null);
+            handler.getStateManager().pushIState(StateManager.State.START_MENU, null);
         }
 
         switch (handler.getStateManager().getCurrentChapter()) {
@@ -105,28 +105,28 @@ public class IntroState implements IState {
             case TWO:
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
                     handler.getStateManager().setCurrentChapter(StateManager.Chapter.ONE);
-                    handler.getStateManager().changeIState(StateManager.State.WORLD_MAP, null);
+                    handler.getStateManager().popIState();
                 }
 
                 break;
             case THREE:
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
                     handler.getStateManager().setCurrentChapter(StateManager.Chapter.TWO);
-                    handler.getStateManager().changeIState(StateManager.State.WORLD_MAP, null);
+                    handler.getStateManager().popIState();
                 }
 
                 break;
             case FOUR:
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
                     handler.getStateManager().setCurrentChapter(StateManager.Chapter.THREE);
-                    handler.getStateManager().changeIState(StateManager.State.WORLD_MAP, null);
+                    handler.getStateManager().popIState();
                 }
 
                 break;
             case FIVE:
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
                     handler.getStateManager().setCurrentChapter(StateManager.Chapter.FOUR);
-                    handler.getStateManager().changeIState(StateManager.State.WORLD_MAP, null);
+                    handler.getStateManager().popIState();
                 }
 
                 break;

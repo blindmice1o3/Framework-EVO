@@ -22,7 +22,7 @@ public class StartMenuState implements IState {
     @Override
     public void getInput() {
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
-            handler.getStateManager().changeIState(StateManager.State.INTRO, null);
+            handler.getStateManager().popIState();
         }
     }
 

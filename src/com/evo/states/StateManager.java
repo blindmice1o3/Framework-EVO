@@ -79,6 +79,7 @@ public class StateManager {
         return statesStack.get(statesStack.size()-1);
     }
 
+    public List<IState> getStatesStack() { return statesStack; }
 
     public Chapter getCurrentChapter() { return currentChapter; }
 

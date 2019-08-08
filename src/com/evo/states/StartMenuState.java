@@ -8,10 +8,16 @@ import java.awt.event.KeyEvent;
 
 public class StartMenuState implements IState {
 
+    public enum MenuList { BACK_PACK, SAVE, OPTION, EXIT; }
+
     private Handler handler;
+
+    private int index;
 
     public StartMenuState(Handler handler) {
         this.handler = handler;
+
+        index = 0;
     } // **** end StartMenuState(Handler) constructor ****
 
     @Override
@@ -23,6 +29,20 @@ public class StartMenuState implements IState {
     public void getInput() {
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
             handler.getStateManager().popIState();
+        }
+
+        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_S)) {
+            index++;
+
+            if (index > MenuList.values().length-1) {
+                index = 0;
+            }
+        } else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_W)) {
+            index--;
+
+            if (index < 0) {
+                index = MenuList.values().length-1;
+            }
         }
     }
 

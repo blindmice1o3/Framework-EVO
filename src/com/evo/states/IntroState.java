@@ -74,6 +74,27 @@ public class IntroState implements IState {
                     }
                 }
 
+                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_X)) {
+                    int currentJawsOrdinal = fishInstance.getFishStateManager().getCurrentJaws().ordinal();
+                    FishStateManager.Jaws[] jaws = FishStateManager.Jaws.values();
+
+                    if ((currentJawsOrdinal+1) < jaws.length) {
+                        fishInstance.getFishStateManager().setCurrentJaws(jaws[currentJawsOrdinal + 1]);
+                    } else {
+                        fishInstance.getFishStateManager().setCurrentJaws(jaws[0]);
+                    }
+                }
+
+                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_C)) {
+                    int currentFinPectoralOrdinal = fishInstance.getFishStateManager().getCurrentFinPectoral().ordinal();
+                    FishStateManager.FinPectoral[] finPectoral = FishStateManager.FinPectoral.values();
+
+                    if ((currentFinPectoralOrdinal+1) < finPectoral.length) {
+                        fishInstance.getFishStateManager().setCurrentFinPectoral(finPectoral[currentFinPectoralOrdinal + 1]);
+                    } else {
+                        fishInstance.getFishStateManager().setCurrentFinPectoral(finPectoral[0]);
+                    }
+                }
 
 
 

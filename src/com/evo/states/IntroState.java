@@ -30,6 +30,10 @@ public class IntroState implements IState {
     @Override
     public void tick() {
         getInput();
+
+        /////////////////////
+        fishInstance.tick();
+        /////////////////////
     }
 
     @Override
@@ -58,6 +62,19 @@ public class IntroState implements IState {
                    fishInstance.setDirectionFacing(Fish.DirectionFacing.RIGHT);
                     ///////////////////////////////////////////////////////////
                 }
+
+                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_Z)) {
+                    int currentBodyTextOrdinal = fishInstance.getFishStateManager().getCurrentBodyTexture().ordinal();
+                    FishStateManager.BodyTexture[] bodyTexture = FishStateManager.BodyTexture.values();
+
+                    if ((currentBodyTextOrdinal+1) < bodyTexture.length) {
+                        fishInstance.getFishStateManager().setCurrentBodyTexture(bodyTexture[currentBodyTextOrdinal + 1]);
+                    } else {
+                        fishInstance.getFishStateManager().setCurrentBodyTexture(bodyTexture[0]);
+                    }
+                }
+
+
 
 
 

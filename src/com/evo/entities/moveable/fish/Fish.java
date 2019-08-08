@@ -39,7 +39,17 @@ public class Fish extends Creature {
     } // **** end Fish(Handler, int, int) constructor ****
 
     public void tick() {
-        //update currentHeadImage.
+        //TODO: finish this.
+        currentHeadImage = Assets.eatFrames[fishStateManager.getCurrentBodySize().ordinal()]
+                [fishStateManager.getCurrentBodyTexture().ordinal()]
+                [fishStateManager.getCurrentJaws().ordinal()]
+                [fishStateManager.getCurrentActionState().ordinal()]
+                [0];
+        currentBodyImage = Assets.tailOriginal[fishStateManager.getCurrentBodySize().ordinal()]
+                [fishStateManager.getCurrentBodyTexture().ordinal()]
+                [fishStateManager.getCurrentFinPectoral().ordinal()]
+                [fishStateManager.getCurrentTail().ordinal()]
+                [0];
     }
 
     public void render(Graphics g) {
@@ -94,5 +104,7 @@ public class Fish extends Creature {
     public void setDirectionFacing(DirectionFacing directionFacing) {
         this.directionFacing = directionFacing;
     }
+
+    public FishStateManager getFishStateManager() { return fishStateManager; }
 
 } // **** end Fish class ****

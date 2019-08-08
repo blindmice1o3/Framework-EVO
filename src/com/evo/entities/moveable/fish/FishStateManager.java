@@ -56,37 +56,53 @@ public class FishStateManager {
 
     ////////////////////////////////////////////////////////////
 
-    //GETTERS
+    // GETTERS AND SETTERS
     public ActionState getCurrentActionState() {
         return currentActionState;
     }
+
+    public void setCurrentActionState(ActionState currentActionState) { this.currentActionState = currentActionState; }
 
     public BodySize getCurrentBodySize() {
         return currentBodySize;
     }
 
+    public void setCurrentBodySize(BodySize currentBodySize) { this.currentBodySize = currentBodySize; }
+
     public BodyTexture getCurrentBodyTexture() {
         return currentBodyTexture;
     }
+
+    public void setCurrentBodyTexture(BodyTexture currentBodyTexture) { this.currentBodyTexture = currentBodyTexture; }
 
     public Jaws getCurrentJaws() {
         return currentJaws;
     }
 
+    public void setCurrentJaws(Jaws currentJaws) { this.currentJaws = currentJaws; }
+
     public Horn getCurrentHorn() {
         return currentHorn;
     }
+
+    public void setCurrentHorn(Horn currentHorn) { this.currentHorn = currentHorn; }
 
     public FinPectoral getCurrentFinPectoral() {
         return currentFinPectoral;
     }
 
+    public void setCurrentFinPectoral(FinPectoral currentFinPectoral) { this.currentFinPectoral = currentFinPectoral; }
+
     public Tail getCurrentTail() {
         return currentTail;
     }
 
+    public void setCurrentTail(Tail currentTail) { this.currentTail = currentTail; }
+
     public FinDorsal getCurrentFinDorsal() {
         return currentFinDorsal;
     }
+
+    public void setCurrentFinDorsal(FinDorsal currentFinDorsal) { this.currentFinDorsal = currentFinDorsal; }
 
 } // **** end FishStateManager class ****

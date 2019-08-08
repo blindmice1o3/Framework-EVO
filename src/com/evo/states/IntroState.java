@@ -38,9 +38,12 @@ public class IntroState implements IState {
 
     @Override
     public void getInput() {
+        //a-button
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
             handler.getStateManager().pushIState(StateManager.State.CHAPTER, null);
-        } else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SHIFT)) {
+        }
+        //start-button (pause)
+        else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SHIFT)) {
             handler.getStateManager().pushIState(StateManager.State.START_MENU, null);
         }
 
@@ -103,6 +106,7 @@ public class IntroState implements IState {
 
                 break;
             case TWO:
+                //b-button
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
                     handler.getStateManager().setCurrentChapter(StateManager.Chapter.ONE);
                     handler.getStateManager().popIState();
@@ -110,6 +114,7 @@ public class IntroState implements IState {
 
                 break;
             case THREE:
+                //b-button
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
                     handler.getStateManager().setCurrentChapter(StateManager.Chapter.TWO);
                     handler.getStateManager().popIState();
@@ -117,6 +122,7 @@ public class IntroState implements IState {
 
                 break;
             case FOUR:
+                //b-button
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
                     handler.getStateManager().setCurrentChapter(StateManager.Chapter.THREE);
                     handler.getStateManager().popIState();
@@ -124,6 +130,7 @@ public class IntroState implements IState {
 
                 break;
             case FIVE:
+                //b-button
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
                     handler.getStateManager().setCurrentChapter(StateManager.Chapter.FOUR);
                     handler.getStateManager().popIState();

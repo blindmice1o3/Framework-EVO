@@ -22,10 +22,17 @@ public class ChapterState implements IState {
 
     @Override
     public void getInput() {
+        //a-button
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
             handler.getStateManager().pushIState(StateManager.State.WORLD_MAP, null);
-        } else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
+        }
+        //b-button
+        else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
             handler.getStateManager().popIState();
+        }
+        //start-button (pause)
+        else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SHIFT)) {
+            handler.getStateManager().pushIState(StateManager.State.START_MENU, null);
         }
 
         switch (handler.getStateManager().getCurrentChapter()) {

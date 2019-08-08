@@ -40,12 +40,18 @@ public class WorldMapState implements IState {
 
     @Override
     public void getInput() {
+        //b-button
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
             handler.getStateManager().popIState();
+        }
+        //start-button (pause)
+        else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SHIFT)) {
+            handler.getStateManager().pushIState(StateManager.State.START_MENU, null);
         }
 
         switch (handler.getStateManager().getCurrentChapter()) {
             case ONE:
+                //a-button
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
                     handler.getStateManager().setCurrentChapter(StateManager.Chapter.TWO);
                     handler.getStateManager().pushIState(StateManager.State.INTRO, null);
@@ -104,6 +110,7 @@ public class WorldMapState implements IState {
 
                 break;
             case TWO:
+                //a-button
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
                     handler.getStateManager().setCurrentChapter(StateManager.Chapter.THREE);
                     handler.getStateManager().pushIState(StateManager.State.INTRO, null);
@@ -111,6 +118,7 @@ public class WorldMapState implements IState {
 
                 break;
             case THREE:
+                //a-button
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
                     handler.getStateManager().setCurrentChapter(StateManager.Chapter.FOUR);
                     handler.getStateManager().pushIState(StateManager.State.INTRO, null);
@@ -118,6 +126,7 @@ public class WorldMapState implements IState {
 
                 break;
             case FOUR:
+                //a-button
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
                     handler.getStateManager().setCurrentChapter(StateManager.Chapter.FIVE);
                     handler.getStateManager().pushIState(StateManager.State.INTRO, null);

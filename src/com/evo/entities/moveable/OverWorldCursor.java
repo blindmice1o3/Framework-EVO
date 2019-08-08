@@ -17,10 +17,10 @@ public class OverWorldCursor extends Creature {
     }
 
     public void render(Graphics g) {
-        g.drawImage(image, (int)(x * ((WorldMapState)handler.getStateManager().getCurrentState()).X_CONVERSION_FACTOR),
-                (int)(y * ((WorldMapState)handler.getStateManager().getCurrentState()).Y_CONVERSION_FACTOR),
-                (int)(width * ((WorldMapState)handler.getStateManager().getCurrentState()).X_CONVERSION_FACTOR),
-                (int)(height * ((WorldMapState)handler.getStateManager().getCurrentState()).Y_CONVERSION_FACTOR),
+        g.drawImage(image, (int)(x * ((WorldMapState)handler.getStateManager().getTop()).X_CONVERSION_FACTOR),
+                (int)(y * ((WorldMapState)handler.getStateManager().getTop()).Y_CONVERSION_FACTOR),
+                (int)(width * ((WorldMapState)handler.getStateManager().getTop()).X_CONVERSION_FACTOR),
+                (int)(height * ((WorldMapState)handler.getStateManager().getTop()).Y_CONVERSION_FACTOR),
                 null);
     }
 

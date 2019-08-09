@@ -9,13 +9,9 @@ import java.awt.event.KeyEvent;
 public class ChapterState implements IState {
 
     private Handler handler;
-    public final double X_CONVERSION_FACTOR;
-    public final double Y_CONVERSION_FACTOR;
 
     public ChapterState(Handler handler) {
         this.handler = handler;
-        X_CONVERSION_FACTOR = ((double)handler.panelWidth / Assets.chapter1Chapter.getWidth());
-        Y_CONVERSION_FACTOR = ((double)handler.panelHeight / Assets.chapter1Chapter.getHeight());
     }
 
 

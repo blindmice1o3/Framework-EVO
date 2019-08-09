@@ -36,4 +36,18 @@ public abstract class Entity {
         bounds.y = y;
     }
 
+    public void setWidth(int width) {
+        this.width = width;
+        bounds.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+        bounds.height = height;
+    }
+
+    public int getWidth() { return width; }
+
+    public int getHeight() { return height; }
+
 } // **** end Entity abstract class ****

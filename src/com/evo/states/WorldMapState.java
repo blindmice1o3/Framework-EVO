@@ -28,8 +28,9 @@ public class WorldMapState implements IState {
         System.out.println("WorldMapState.Y_CONVERSION_FACTOR: " + Y_CONVERSION_FACTOR);
 
         stages = new Object[7];
-        overWorldCursor = new OverWorldCursor(handler, Assets.upOverworld0, 0, 0,
-                X_CONVERSION_FACTOR, Y_CONVERSION_FACTOR);
+        overWorldCursor = new OverWorldCursor(handler, Assets.upOverworld0, 0, 0);
+        overWorldCursor.setWidth( (int)(overWorldCursor.getWidth() * X_CONVERSION_FACTOR) );
+        overWorldCursor.setHeight( (int)(overWorldCursor.getHeight() * Y_CONVERSION_FACTOR) );
         index = 0;
     }
 
@@ -41,36 +42,36 @@ public class WorldMapState implements IState {
             case ONE:
                 switch (index) {
                     case 0:
-                        overWorldCursor.setX((int)(6.25 * TILE_WIDTH));
-                        overWorldCursor.setY((int)(11 * TILE_HEIGHT));
+                        overWorldCursor.setX((int)(6.25 * TILE_WIDTH * X_CONVERSION_FACTOR));
+                        overWorldCursor.setY((int)(11 * TILE_HEIGHT * Y_CONVERSION_FACTOR));
                         break;
                     case 1:
-                        overWorldCursor.setX((int)(4.85 * TILE_WIDTH));
-                        overWorldCursor.setY((int)(8 * TILE_HEIGHT));
+                        overWorldCursor.setX((int)(4.85 * TILE_WIDTH * X_CONVERSION_FACTOR));
+                        overWorldCursor.setY((int)(8 * TILE_HEIGHT * Y_CONVERSION_FACTOR));
                         break;
                     case 2:
-                        overWorldCursor.setX((int)(4.95 * TILE_WIDTH));
-                        overWorldCursor.setY((int)(5.35 * TILE_HEIGHT));
+                        overWorldCursor.setX((int)(4.95 * TILE_WIDTH * X_CONVERSION_FACTOR));
+                        overWorldCursor.setY((int)(5.35 * TILE_HEIGHT * Y_CONVERSION_FACTOR));
                         break;
                     case 3:
-                        overWorldCursor.setX((int)(8.6 * TILE_WIDTH));
-                        overWorldCursor.setY((int)(5.35 * TILE_HEIGHT));
+                        overWorldCursor.setX((int)(8.6 * TILE_WIDTH * X_CONVERSION_FACTOR));
+                        overWorldCursor.setY((int)(5.35 * TILE_HEIGHT * Y_CONVERSION_FACTOR));
                         break;
                     case 4:
-                        overWorldCursor.setX((int)(10.5 * TILE_WIDTH));
-                        overWorldCursor.setY((int)(6.7 * TILE_HEIGHT));
+                        overWorldCursor.setX((int)(10.5 * TILE_WIDTH * X_CONVERSION_FACTOR));
+                        overWorldCursor.setY((int)(6.7 * TILE_HEIGHT * Y_CONVERSION_FACTOR));
                         break;
                     case 5:
-                        overWorldCursor.setX((int)(12.35 * TILE_WIDTH));
-                        overWorldCursor.setY((int)(5.35 * TILE_HEIGHT));
+                        overWorldCursor.setX((int)(12.35 * TILE_WIDTH * X_CONVERSION_FACTOR));
+                        overWorldCursor.setY((int)(5.35 * TILE_HEIGHT * Y_CONVERSION_FACTOR));
                         break;
                     case 6:
-                        overWorldCursor.setX((int)(5.6 * TILE_WIDTH));
-                        overWorldCursor.setY((int)(2.95 * TILE_HEIGHT));
+                        overWorldCursor.setX((int)(5.6 * TILE_WIDTH * X_CONVERSION_FACTOR));
+                        overWorldCursor.setY((int)(2.95 * TILE_HEIGHT * Y_CONVERSION_FACTOR));
                         break;
                     default:
-                        overWorldCursor.setX((int)(6.25 * TILE_WIDTH));
-                        overWorldCursor.setY((int)(11 * TILE_HEIGHT));
+                        overWorldCursor.setX((int)(6.25 * TILE_WIDTH * X_CONVERSION_FACTOR));
+                        overWorldCursor.setY((int)(11 * TILE_HEIGHT * Y_CONVERSION_FACTOR));
                         break;
                 }
 

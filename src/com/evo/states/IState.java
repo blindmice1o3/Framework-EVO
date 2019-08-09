@@ -1,8 +1,9 @@
 package com.evo.states;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public interface IState {
+public interface IState extends Serializable {
 
     void tick();
     void getInput();

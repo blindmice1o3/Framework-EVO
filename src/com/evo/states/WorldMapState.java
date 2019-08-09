@@ -17,7 +17,7 @@ public class WorldMapState implements IState {
     public final double Y_CONVERSION_FACTOR;
 
     private Object[] stages;
-    private OverWorldCursor overWorldCursor;
+    private transient OverWorldCursor overWorldCursor;
     private int index;
 
     public WorldMapState(Handler handler) {

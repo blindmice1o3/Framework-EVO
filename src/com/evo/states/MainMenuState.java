@@ -12,7 +12,7 @@ public class MainMenuState implements IState {
     public enum MenuList { EVOLUTION, CAPABILITY, RECORD_OF_EVOLUTION, MAIN; }
 
     private Handler handler;
-    private OverWorldCursor overWorldCursor;
+    private transient OverWorldCursor overWorldCursor;
 
     private MenuList currentMenuSelection;
     private int index;
@@ -86,9 +86,19 @@ public class MainMenuState implements IState {
     public void getInput() {
         switch (currentMenuSelection) {
             case EVOLUTION:
+                //b-button: return to MenuList.MAIN.
+                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
+                    index = 0;
+                    currentMenuSelection = MenuList.MAIN;
+                }
 
                 break;
             case CAPABILITY:
+                //b-button: return to MenuList.MAIN.
+                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
+                    index = 0;
+                    currentMenuSelection = MenuList.MAIN;
+                }
 
                 break;
             case RECORD_OF_EVOLUTION:
@@ -96,15 +106,24 @@ public class MainMenuState implements IState {
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
                     switch (index) {
                         case 0:
+                            //TODO: SAVE
+                            String pathSavedGame = "qwerty789";
+                            handler.getGame().getSaverAndLoader().save(pathSavedGame + ".bin");
                             //@@@@@@@@@@@@@@@
                             //SAVES THE GAME
                             //@@@@@@@@@@@@@@@
+                            currentMenuSelection = MenuList.MAIN;
+                            index = 0;
 
+                            System.out.println("SAVED GAME!");
                             break;
                         case 1:
-                            index = 0;
-                            currentMenuSelection = MenuList.MAIN;
+                            //index = 0;
+                            //currentMenuSelection = MenuList.MAIN;
+                            //TODO: LOAD
+                            handler.getGame().getSaverAndLoader().load();
 
+                            System.out.println("LOADED GAME!");
                             break;
                         default:
                             System.out.println("MainMenuState.getInput(): switch-construct.RECORD_OF_EVOLUTION's switch's default.");
@@ -188,8 +207,8 @@ public class MainMenuState implements IState {
                 //text.
                 g.setColor(Color.WHITE);
                 g.drawString("Record creature (save)?", 30+3, Assets.mainMenu.getHeight()+20+11);
-                g.drawString("yes", 43, Assets.mainMenu.getHeight()+20+25);
-                g.drawString("no", 93, Assets.mainMenu.getHeight()+20+25);
+                g.drawString("save", 43, Assets.mainMenu.getHeight()+20+25);
+                g.drawString("load", 93, Assets.mainMenu.getHeight()+20+25);
                 //cursor image: leftOverworld0.
                 overWorldCursor.render(g);
 

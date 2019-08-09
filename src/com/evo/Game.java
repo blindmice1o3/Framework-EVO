@@ -2,7 +2,10 @@ package com.evo;
 
 import com.evo.gfx.Assets;
 import com.evo.input.KeyManager;
+import com.evo.serialize_deserialize.SaverAndLoader;
 import com.evo.states.StateManager;
+
+import java.io.Serializable;
 
 public class Game implements Runnable {
 
@@ -17,6 +20,7 @@ public class Game implements Runnable {
     private KeyManager keyManager;
     private Displayer displayer;
     private StateManager stateManager;
+    private SaverAndLoader saverAndLoader;
 
     public Game() {
 
@@ -45,6 +49,8 @@ public class Game implements Runnable {
         handler.init();
         stateManager.init(handler);
         ////////////////////////////
+
+        saverAndLoader = new SaverAndLoader(handler);
     }
 
     private void gameLoop() {
@@ -121,5 +127,9 @@ public class Game implements Runnable {
     public StateManager getStateManager() {
         return stateManager;
     }
+
+    public void setStateManager(StateManager stateManager) { this.stateManager = stateManager; }
+
+    public SaverAndLoader getSaverAndLoader() { return saverAndLoader; }
 
 } // **** end Game class ****

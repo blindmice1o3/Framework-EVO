@@ -24,7 +24,7 @@ public class IntroState implements IState {
         actionStateIndex = 0;
         frameNumberIndex = 0;
 
-        fishInstance = new Fish(handler,40, 10);
+        fishInstance = new Fish(handler);
     }
 
     @Override

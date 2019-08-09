@@ -3,9 +3,11 @@ package com.evo;
 import com.evo.input.KeyManager;
 import com.evo.states.StateManager;
 
-public class Handler {
+import java.io.Serializable;
 
-    private Game game;
+public class Handler implements Serializable {
+
+    private transient Game game;
 
     public int panelWidth;
     public int panelHeight;

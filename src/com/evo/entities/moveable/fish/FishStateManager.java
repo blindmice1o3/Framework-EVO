@@ -1,6 +1,8 @@
 package com.evo.entities.moveable.fish;
 
-public class FishStateManager {
+import java.io.Serializable;
+
+public class FishStateManager implements Serializable {
 
     ////////////////////////////////////////////////////////////
 

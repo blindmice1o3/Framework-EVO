@@ -8,20 +8,21 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
-public class Fish extends Creature {
+public class Fish extends Creature implements Serializable {
 
     public enum DirectionFacing { LEFT, RIGHT; }
 
     private FishStateManager fishStateManager;
     private DirectionFacing directionFacing;
 
-    private BufferedImage currentHeadImage;
-    private BufferedImage currentBodyImage;
+    private transient BufferedImage currentHeadImage;
+    private transient BufferedImage currentBodyImage;
 
-    public Fish(Handler handler, int x, int y) {
+    public Fish(Handler handler) {
         //super(image, x, y, (2 * Tile.WIDTH), Tile.HEIGHT);
-        super(handler, null, x, y, 100, 50);
+        super(handler, null, 40, 10, 100, 50);
 
         fishStateManager = new FishStateManager();
         directionFacing = DirectionFacing.RIGHT;

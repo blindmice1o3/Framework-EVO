@@ -3,15 +3,16 @@ package com.evo.states;
 import com.evo.Handler;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StateManager {
+public class StateManager implements Serializable {
 
-    public static enum State { NULL, INTRO, CHAPTER, WORLD_MAP, GAME_STAGE, MAIN_MENU; }
-    public static enum Chapter { ONE, TWO, THREE, FOUR, FIVE; }
+    public enum State { NULL, INTRO, CHAPTER, WORLD_MAP, GAME_STAGE, MAIN_MENU; }
+    public enum Chapter { ONE, TWO, THREE, FOUR, FIVE; }
 
     private Handler handler;
 

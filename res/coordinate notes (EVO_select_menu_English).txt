@@ -1,0 +1,3 @@
+EVO_select_menu_English
+
+6, 11, 128, 52

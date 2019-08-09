@@ -41,7 +41,7 @@ public class Assets {
         // SPRITE SHEETS
         spriteSheetChapterIntroAndWorldMap = Utils.loadImage("/SNES - EVO Search for Eden - Maps & Chapter Images.png");
         spriteSheetChapter1Creatures = Utils.loadImage("/SNES - EVO Search for Eden - Chapter 1 Creatures.png");
-        spriteSheetStartMenu = Utils.loadImage("/Game Boy GBC - Pokemon Crystal - Start Menu.png");
+        spriteSheetStartMenu = Utils.loadImage("/EVO_select_menu_English.png");
 
         // ENTITY - Chapter 1: FISH HEAD (AND ATTACHMENTS)
         eatFrames = new BufferedImage[FishStateManager.BodySize.values().length]
@@ -256,7 +256,7 @@ public class Assets {
 
 
         // BACKGROUND - StartMenuState
-        startMenu = spriteSheetStartMenu.getSubimage(397, 3, 75, 92);
+        startMenu = spriteSheetStartMenu.getSubimage(6, 11, 128, 52);
 
     }
 

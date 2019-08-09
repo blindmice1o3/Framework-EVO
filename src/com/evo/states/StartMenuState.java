@@ -9,23 +9,19 @@ import java.awt.event.KeyEvent;
 
 public class StartMenuState implements IState {
 
-    public enum MenuList { BACK_PACK, SAVE, OPTION, EXIT; }
+    public enum MenuList { EVOLUTION, CAPABILITY, RECORD_OF_EVOLUTION; }
 
     private Handler handler;
-    public final double X_CONVERSION_FACTOR;
-    public final double Y_CONVERSION_FACTOR;
 
-    private MenuList[] menuOptions;
     private OverWorldCursor overWorldCursor;
     private int index;
 
     public StartMenuState(Handler handler) {
         this.handler = handler;
-        X_CONVERSION_FACTOR = ((double)handler.panelWidth / Assets.startMenu.getWidth());
-        Y_CONVERSION_FACTOR = ((double)handler.panelHeight / Assets.startMenu.getHeight());
 
-        menuOptions = StartMenuState.MenuList.values();
-        overWorldCursor = new OverWorldCursor(handler, Assets.rightOverworld0, handler.panelWidth-80, 25);
+        overWorldCursor = new OverWorldCursor(handler, Assets.leftOverworld0, 23, 31);
+        overWorldCursor.setWidth( (Assets.leftOverworld0.getWidth() / 2) );
+        overWorldCursor.setHeight( (Assets.leftOverworld0.getHeight() / 2) );
         index = 0;
     } // **** end StartMenuState(Handler) constructor ****
 
@@ -33,36 +29,36 @@ public class StartMenuState implements IState {
     public void tick() {
         getInput();
 
+        //determines cursor's on-screen location based on selected index.
         switch (index) {
             case 0:
-                overWorldCursor.setX(handler.panelWidth-80);
-                overWorldCursor.setY(25);
+                overWorldCursor.setX(23);
+                overWorldCursor.setY(31);
                 break;
             case 1:
-                overWorldCursor.setX(handler.panelWidth-80);
-                overWorldCursor.setY(45);
+                overWorldCursor.setX(23);
+                overWorldCursor.setY(43);
                 break;
             case 2:
-                overWorldCursor.setX(handler.panelWidth-80);
-                overWorldCursor.setY(65);
-                break;
-            case 3:
-                overWorldCursor.setX(handler.panelWidth-80);
-                overWorldCursor.setY(85);
+                overWorldCursor.setX(23);
+                overWorldCursor.setY(55);
                 break;
             default:
-                overWorldCursor.setX(10);
-                overWorldCursor.setY(30);
+                overWorldCursor.setX(23);
+                overWorldCursor.setY(31);
                 break;
         }
     }
 
     @Override
     public void getInput() {
-        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
+        //b-button or start-button will exit StartMenuState (goes back to previous IState).
+        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD) ||
+                (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SHIFT))) {
             handler.getStateManager().popIState();
         }
 
+        //down-button and up-button: changes the index position.
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_S)) {
             index++;
 
@@ -80,7 +76,8 @@ public class StartMenuState implements IState {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.startMenu, handler.panelWidth-85, 10, null);
+        //background image: start menu (pokemon).
+        g.drawImage(Assets.startMenu, 20, 20, null);
 
         overWorldCursor.render(g);
     }

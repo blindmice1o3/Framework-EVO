@@ -49,7 +49,7 @@ public class ChapterState implements IState {
 
     @Override
     public void render(Graphics g) {
-        //NullState.render(Graphics) ------> fills the screen with white rectangle.
+        //NullState.render(Graphics) ------> fills the screen with background color of Displayer's panel.
         handler.getStateManager().getStatesStack().get(0).render(g);
 
         Graphics2D g2d = (Graphics2D)g;

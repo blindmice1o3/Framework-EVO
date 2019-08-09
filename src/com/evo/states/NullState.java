@@ -24,6 +24,7 @@ public class NullState implements IState {
 
     @Override
     public void render(Graphics g) {
+        // Fills the screen with background color of Displayer's panel.
         g.setColor(handler.getDisplayer().getPanel().getBackground());
         g.fillRect(0, 0, handler.panelWidth, handler.panelHeight);
     }

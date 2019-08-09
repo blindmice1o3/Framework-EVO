@@ -36,6 +36,53 @@ public class WorldMapState implements IState {
     @Override
     public void tick() {
         getInput();
+
+        switch (handler.getStateManager().getCurrentChapter()) {
+            case ONE:
+                switch (index) {
+                    case 0:
+                        overWorldCursor.setX((int)(6.25 * TILE_WIDTH));
+                        overWorldCursor.setY((int)(11 * TILE_HEIGHT));
+                        break;
+                    case 1:
+                        overWorldCursor.setX((int)(4.85 * TILE_WIDTH));
+                        overWorldCursor.setY((int)(8 * TILE_HEIGHT));
+                        break;
+                    case 2:
+                        overWorldCursor.setX((int)(4.95 * TILE_WIDTH));
+                        overWorldCursor.setY((int)(5.35 * TILE_HEIGHT));
+                        break;
+                    case 3:
+                        overWorldCursor.setX((int)(8.6 * TILE_WIDTH));
+                        overWorldCursor.setY((int)(5.35 * TILE_HEIGHT));
+                        break;
+                    case 4:
+                        overWorldCursor.setX((int)(10.5 * TILE_WIDTH));
+                        overWorldCursor.setY((int)(6.7 * TILE_HEIGHT));
+                        break;
+                    case 5:
+                        overWorldCursor.setX((int)(12.35 * TILE_WIDTH));
+                        overWorldCursor.setY((int)(5.35 * TILE_HEIGHT));
+                        break;
+                    case 6:
+                        overWorldCursor.setX((int)(5.6 * TILE_WIDTH));
+                        overWorldCursor.setY((int)(2.95 * TILE_HEIGHT));
+                        break;
+                    default:
+                        overWorldCursor.setX((int)(6.25 * TILE_WIDTH));
+                        overWorldCursor.setY((int)(11 * TILE_HEIGHT));
+                        break;
+                }
+
+                break;
+            case TWO:
+            case THREE:
+            case FOUR:
+            case FIVE:
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -71,40 +118,7 @@ public class WorldMapState implements IState {
                     }
                 }
 
-                switch (index) {
-                    case 0:
-                        overWorldCursor.setX((int)(6.25 * TILE_WIDTH));
-                        overWorldCursor.setY((int)(11 * TILE_HEIGHT));
-                        break;
-                    case 1:
-                        overWorldCursor.setX((int)(4.85 * TILE_WIDTH));
-                        overWorldCursor.setY((int)(8 * TILE_HEIGHT));
-                        break;
-                    case 2:
-                        overWorldCursor.setX((int)(4.95 * TILE_WIDTH));
-                        overWorldCursor.setY((int)(5.35 * TILE_HEIGHT));
-                        break;
-                    case 3:
-                        overWorldCursor.setX((int)(8.6 * TILE_WIDTH));
-                        overWorldCursor.setY((int)(5.35 * TILE_HEIGHT));
-                        break;
-                    case 4:
-                        overWorldCursor.setX((int)(10.5 * TILE_WIDTH));
-                        overWorldCursor.setY((int)(6.7 * TILE_HEIGHT));
-                        break;
-                    case 5:
-                        overWorldCursor.setX((int)(12.35 * TILE_WIDTH));
-                        overWorldCursor.setY((int)(5.35 * TILE_HEIGHT));
-                        break;
-                    case 6:
-                        overWorldCursor.setX((int)(5.6 * TILE_WIDTH));
-                        overWorldCursor.setY((int)(2.95 * TILE_HEIGHT));
-                        break;
-                    default:
-                        overWorldCursor.setX((int)(6.25 * TILE_WIDTH));
-                        overWorldCursor.setY((int)(11 * TILE_HEIGHT));
-                        break;
-                }
+                //MOVED TO TICK()
 
                 //overWorldCursor.tick();
 
@@ -142,7 +156,7 @@ public class WorldMapState implements IState {
 
     @Override
     public void render(Graphics g) {
-        //NullState.render(Graphics) ------> fills the screen with white rectangle.
+        //NullState.render(Graphics) ------> fills the screen with background color of Displayer's panel.
         handler.getStateManager().getStatesStack().get(0).render(g);
 
         Graphics2D g2d = (Graphics2D)g;

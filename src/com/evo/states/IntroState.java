@@ -11,12 +11,16 @@ import java.awt.event.KeyEvent;
 public class IntroState implements IState {
 
     private Handler handler;
+    public final double X_CONVERSION_FACTOR;
+    public final double Y_CONVERSION_FACTOR;
 
     private int bodySizeIndex, bodyTextureIndex, jawsIndex, actionStateIndex, frameNumberIndex;
     private Fish fishInstance;
 
     public IntroState(Handler handler) {
         this.handler = handler;
+        X_CONVERSION_FACTOR = ((double)handler.panelWidth / Assets.chapter1Intro.getWidth());
+        Y_CONVERSION_FACTOR = ((double)handler.panelHeight / Assets.chapter1Intro.getHeight());
 
         bodySizeIndex = 0;
         bodyTextureIndex = 0;

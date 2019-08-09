@@ -1,6 +1,7 @@
 package com.evo.states;
 
 import com.evo.Handler;
+import com.evo.entities.moveable.OverWorldCursor;
 import com.evo.gfx.Assets;
 
 import java.awt.*;
@@ -11,18 +12,50 @@ public class StartMenuState implements IState {
     public enum MenuList { BACK_PACK, SAVE, OPTION, EXIT; }
 
     private Handler handler;
+    public final double X_CONVERSION_FACTOR;
+    public final double Y_CONVERSION_FACTOR;
 
+    private MenuList[] menuOptions;
+    private OverWorldCursor overWorldCursor;
     private int index;
 
     public StartMenuState(Handler handler) {
         this.handler = handler;
+        X_CONVERSION_FACTOR = ((double)handler.panelWidth / Assets.startMenu.getWidth());
+        Y_CONVERSION_FACTOR = ((double)handler.panelHeight / Assets.startMenu.getHeight());
 
+        menuOptions = StartMenuState.MenuList.values();
+        overWorldCursor = new OverWorldCursor(handler, Assets.rightOverworld0, 0, 0,
+                X_CONVERSION_FACTOR, Y_CONVERSION_FACTOR);
         index = 0;
     } // **** end StartMenuState(Handler) constructor ****
 
     @Override
     public void tick() {
         getInput();
+
+        switch (index) {
+            case 0:
+                overWorldCursor.setX(10);
+                overWorldCursor.setY(30);
+                break;
+            case 1:
+                overWorldCursor.setX(10);
+                overWorldCursor.setY(50);
+                break;
+            case 2:
+                overWorldCursor.setX(10);
+                overWorldCursor.setY(70);
+                break;
+            case 3:
+                overWorldCursor.setX(10);
+                overWorldCursor.setY(90);
+                break;
+            default:
+                overWorldCursor.setX(10);
+                overWorldCursor.setY(30);
+                break;
+        }
     }
 
     @Override
@@ -49,6 +82,8 @@ public class StartMenuState implements IState {
     @Override
     public void render(Graphics g) {
         g.drawImage(Assets.startMenu, handler.panelWidth-85, 10, null);
+
+        overWorldCursor.render(g);
     }
 
     @Override

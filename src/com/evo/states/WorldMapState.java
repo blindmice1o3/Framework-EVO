@@ -22,15 +22,15 @@ public class WorldMapState implements IState {
 
     public WorldMapState(Handler handler) {
         this.handler = handler;
-
-        overWorldCursor = new OverWorldCursor(handler, Assets.upOverworld0, 0, 0);
-        index = 0;
-        stages = new Object[7];
-
         X_CONVERSION_FACTOR = ((double)handler.panelWidth / Assets.chapter1WorldMap.getWidth());
         Y_CONVERSION_FACTOR = ((double)handler.panelHeight / Assets.chapter1WorldMap.getHeight());
         System.out.println("WorldMapState.X_CONVERSION_FACTOR: " + X_CONVERSION_FACTOR);
         System.out.println("WorldMapState.Y_CONVERSION_FACTOR: " + Y_CONVERSION_FACTOR);
+
+        stages = new Object[7];
+        overWorldCursor = new OverWorldCursor(handler, Assets.upOverworld0, 0, 0,
+                X_CONVERSION_FACTOR, Y_CONVERSION_FACTOR);
+        index = 0;
     }
 
     @Override

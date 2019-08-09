@@ -1926,6 +1926,9 @@ public class IntroState implements IState {
             default:
                 break;
         }
+
+        //need to reset the opacity to 1.0f.
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
         */
     }
 

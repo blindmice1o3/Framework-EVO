@@ -25,7 +25,7 @@ public class StartMenuState implements IState {
         Y_CONVERSION_FACTOR = ((double)handler.panelHeight / Assets.startMenu.getHeight());
 
         menuOptions = StartMenuState.MenuList.values();
-        overWorldCursor = new OverWorldCursor(handler, Assets.rightOverworld0, 0, 0);
+        overWorldCursor = new OverWorldCursor(handler, Assets.rightOverworld0, handler.panelWidth-80, 25);
         index = 0;
     } // **** end StartMenuState(Handler) constructor ****
 
@@ -35,20 +35,20 @@ public class StartMenuState implements IState {
 
         switch (index) {
             case 0:
-                overWorldCursor.setX(10);
-                overWorldCursor.setY(30);
+                overWorldCursor.setX(handler.panelWidth-80);
+                overWorldCursor.setY(25);
                 break;
             case 1:
-                overWorldCursor.setX(10);
-                overWorldCursor.setY(50);
+                overWorldCursor.setX(handler.panelWidth-80);
+                overWorldCursor.setY(45);
                 break;
             case 2:
-                overWorldCursor.setX(10);
-                overWorldCursor.setY(70);
+                overWorldCursor.setX(handler.panelWidth-80);
+                overWorldCursor.setY(65);
                 break;
             case 3:
-                overWorldCursor.setX(10);
-                overWorldCursor.setY(90);
+                overWorldCursor.setX(handler.panelWidth-80);
+                overWorldCursor.setY(85);
                 break;
             default:
                 overWorldCursor.setX(10);

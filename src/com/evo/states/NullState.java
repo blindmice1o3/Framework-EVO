@@ -16,11 +16,13 @@ public class NullState implements IState {
     @Override
     public void tick() {
         getInput();
+
+        handler.getStateManager().pushIState(StateManager.State.INTRO, null);
     }
 
     @Override
     public void getInput() {
-        handler.getStateManager().pushIState(StateManager.State.INTRO, null);
+
     }
 
     @Override

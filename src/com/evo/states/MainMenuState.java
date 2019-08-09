@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 
 public class MainMenuState implements IState {
 
-    public enum MenuList { EVOLUTION, CAPABILITY, RECORD_OF_EVOLUTION; }
+    public enum MenuList { EVOLUTION, CAPABILITY, RECORD_OF_EVOLUTION, MAIN; }
 
     private Handler handler;
     private MenuList currentMenuSelection;
@@ -19,7 +19,7 @@ public class MainMenuState implements IState {
 
     public MainMenuState(Handler handler) {
         this.handler = handler;
-        currentMenuSelection = null;
+        currentMenuSelection = MenuList.MAIN;
 
         overWorldCursor = new OverWorldCursor(handler, Assets.leftOverworld0, 23, 31);
         overWorldCursor.setWidth( (Assets.leftOverworld0.getWidth() / 2) );
@@ -31,54 +31,90 @@ public class MainMenuState implements IState {
     public void tick() {
         getInput();
 
-        //determines cursor's on-screen location based on selected index.
-        switch (index) {
-            case 0:
-                overWorldCursor.setX(23);
-                overWorldCursor.setY(31);
+        switch (currentMenuSelection) {
+            case EVOLUTION:
+
                 break;
-            case 1:
-                overWorldCursor.setX(23);
-                overWorldCursor.setY(43);
+            case CAPABILITY:
+
                 break;
-            case 2:
-                overWorldCursor.setX(23);
-                overWorldCursor.setY(55);
+            case RECORD_OF_EVOLUTION:
+
+                break;
+            case MAIN:
+                //determines cursor's on-screen location based on selected index.
+                switch (index) {
+                    case 0:
+                        overWorldCursor.setX(23);
+                        overWorldCursor.setY(31);
+                        break;
+                    case 1:
+                        overWorldCursor.setX(23);
+                        overWorldCursor.setY(43);
+                        break;
+                    case 2:
+                        overWorldCursor.setX(23);
+                        overWorldCursor.setY(55);
+                        break;
+                    default:
+                        overWorldCursor.setX(23);
+                        overWorldCursor.setY(31);
+                        break;
+                }
+
                 break;
             default:
-                overWorldCursor.setX(23);
-                overWorldCursor.setY(31);
+                System.out.println("MainMenuState.tick(): switch's default.");
                 break;
         }
     }
 
     @Override
     public void getInput() {
-        //a-button: assigns currentMenuSelection.
-        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
-            currentMenuSelection = MenuList.values()[index];
-        }
+        switch (currentMenuSelection) {
+            case EVOLUTION:
 
-        //b-button or select-button will exit MainMenuState (goes back to previous IState).
-        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD) ||
-                (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SHIFT))) {
-            currentMenuSelection = null;
-            handler.getStateManager().popIState();
-        }
+                break;
+            case CAPABILITY:
 
-        //down-button and up-button: changes the index position.
-        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_S)) {
-            index++;
+                break;
+            case RECORD_OF_EVOLUTION:
 
-            if (index > MenuList.values().length-1) {
-                index = 0;
-            }
-        } else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_W)) {
-            index--;
+                break;
+            case MAIN:
+                //a-button: assigns currentMenuSelection.
+                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
+                    currentMenuSelection = MenuList.values()[index];
+                }
 
-            if (index < 0) {
-                index = MenuList.values().length-1;
-            }
+                //b-button or select-button will exit MainMenuState (goes back to previous IState).
+                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD) ||
+                        (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SHIFT))) {
+                    currentMenuSelection = MenuList.MAIN;
+                    handler.getStateManager().popIState();
+                }
+
+                //down-button and up-button: changes the index position.
+                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_S)) {
+                    index++;
+
+                    //minus 2 because MenuList.MAIN doesn't count as a menu selection choice.
+                    if (index > MenuList.values().length-2) {
+                        index = 0;
+                    }
+                } else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_W)) {
+                    index--;
+
+                    if (index < 0) {
+                        //minus 2 because MenuList.MAIN doesn't count as a menu selection choice.
+                        index = MenuList.values().length-2;
+                    }
+                }
+
+                break;
+            default:
+                System.out.println("MainMenuState.getInput(): switch's default.");
+                break;
         }
     }
 
@@ -94,24 +130,28 @@ public class MainMenuState implements IState {
             case RECORD_OF_EVOLUTION:
 
                 break;
-            default:
+            case MAIN:
                 //background image: main menu.
                 g.drawImage(Assets.mainMenu, 20, 20, null);
-
+                //cursor image: leftOverworld0.
                 overWorldCursor.render(g);
+
+                break;
+            default:
+                System.out.println("MainMenuState.render(Graphics): switch's default.");
                 break;
         }
     }
 
     @Override
     public void enter(Object[] args) {
-        currentMenuSelection = null;
+        currentMenuSelection = MenuList.MAIN;
         index = 0;
     }
 
     @Override
     public void exit() {
-        currentMenuSelection = null;
+        currentMenuSelection = MenuList.MAIN;
         index = 0;
     }
 

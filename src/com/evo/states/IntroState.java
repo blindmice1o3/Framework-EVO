@@ -38,13 +38,13 @@ public class IntroState implements IState {
 
     @Override
     public void getInput() {
-        //a-button
+        //a-button (will enter ChapterState).
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
             handler.getStateManager().pushIState(StateManager.State.CHAPTER, null);
         }
-        //start-button (pause)
+        //select-button (will enter MainMenuState).
         else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SHIFT)) {
-            handler.getStateManager().pushIState(StateManager.State.START_MENU, null);
+            handler.getStateManager().pushIState(StateManager.State.MAIN_MENU, null);
         }
 
         switch (handler.getStateManager().getCurrentChapter()) {

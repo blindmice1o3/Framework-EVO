@@ -88,13 +88,13 @@ public class WorldMapState implements IState {
 
     @Override
     public void getInput() {
-        //b-button
+        //b-button (goes back to previous IState).
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
             handler.getStateManager().popIState();
         }
-        //start-button (pause)
+        //select-button (will enter MainMenuState).
         else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SHIFT)) {
-            handler.getStateManager().pushIState(StateManager.State.START_MENU, null);
+            handler.getStateManager().pushIState(StateManager.State.MAIN_MENU, null);
         }
 
         switch (handler.getStateManager().getCurrentChapter()) {

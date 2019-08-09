@@ -7,23 +7,25 @@ import com.evo.gfx.Assets;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
-public class StartMenuState implements IState {
+public class MainMenuState implements IState {
 
     public enum MenuList { EVOLUTION, CAPABILITY, RECORD_OF_EVOLUTION; }
 
     private Handler handler;
+    private MenuList currentMenuSelection;
 
     private OverWorldCursor overWorldCursor;
     private int index;
 
-    public StartMenuState(Handler handler) {
+    public MainMenuState(Handler handler) {
         this.handler = handler;
+        currentMenuSelection = null;
 
         overWorldCursor = new OverWorldCursor(handler, Assets.leftOverworld0, 23, 31);
         overWorldCursor.setWidth( (Assets.leftOverworld0.getWidth() / 2) );
         overWorldCursor.setHeight( (Assets.leftOverworld0.getHeight() / 2) );
         index = 0;
-    } // **** end StartMenuState(Handler) constructor ****
+    } // **** end MainMenuState(Handler) constructor ****
 
     @Override
     public void tick() {
@@ -52,9 +54,15 @@ public class StartMenuState implements IState {
 
     @Override
     public void getInput() {
-        //b-button or start-button will exit StartMenuState (goes back to previous IState).
+        //a-button: assigns currentMenuSelection.
+        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
+            currentMenuSelection = MenuList.values()[index];
+        }
+
+        //b-button or select-button will exit MainMenuState (goes back to previous IState).
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD) ||
                 (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SHIFT))) {
+            currentMenuSelection = null;
             handler.getStateManager().popIState();
         }
 
@@ -76,20 +84,35 @@ public class StartMenuState implements IState {
 
     @Override
     public void render(Graphics g) {
-        //background image: start menu (pokemon).
-        g.drawImage(Assets.startMenu, 20, 20, null);
+        switch (currentMenuSelection) {
+            case EVOLUTION:
 
-        overWorldCursor.render(g);
+                break;
+            case CAPABILITY:
+
+                break;
+            case RECORD_OF_EVOLUTION:
+
+                break;
+            default:
+                //background image: main menu.
+                g.drawImage(Assets.mainMenu, 20, 20, null);
+
+                overWorldCursor.render(g);
+                break;
+        }
     }
 
     @Override
     public void enter(Object[] args) {
-
+        currentMenuSelection = null;
+        index = 0;
     }
 
     @Override
     public void exit() {
-
+        currentMenuSelection = null;
+        index = 0;
     }
 
-} // **** end StartMenuState class ****
+} // **** end MainMenuState class ****

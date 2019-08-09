@@ -1,7 +1,6 @@
 package com.evo.gfx;
 
 import com.evo.Utils;
-import com.evo.entities.moveable.fish.Fish;
 import com.evo.entities.moveable.fish.FishStateManager;
 
 import java.awt.image.BufferedImage;
@@ -33,8 +32,8 @@ public class Assets {
     // ENTITY - Chapter 1: FISH BODY (AND ATTACHMENTS)
     public static BufferedImage[][][][][] tailOriginal, tailCoelafish, tailTeratisu, tailZinichthy, tailKuraselache;
 
-    // BACKGROUND - StartMenuState
-    public static BufferedImage startMenu;
+    // BACKGROUND - MainMenuState
+    public static BufferedImage mainMenu;
 
     // Initialization
     public static void init() {
@@ -255,8 +254,8 @@ public class Assets {
 
 
 
-        // BACKGROUND - StartMenuState
-        startMenu = spriteSheetStartMenu.getSubimage(6, 11, 128, 52);
+        // BACKGROUND - MainMenuState
+        mainMenu = spriteSheetStartMenu.getSubimage(6, 11, 128, 52);
 
     }
 

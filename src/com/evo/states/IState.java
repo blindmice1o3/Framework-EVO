@@ -3,7 +3,7 @@ package com.evo.states;
 import java.awt.*;
 import java.io.Serializable;
 
-public interface IState extends Serializable {
+public interface IState {
 
     void tick();
     void getInput();

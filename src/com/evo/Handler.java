@@ -5,9 +5,9 @@ import com.evo.states.StateManager;
 
 import java.io.Serializable;
 
-public class Handler implements Serializable {
+public class Handler {
 
-    private transient Game game;
+    private Game game;
 
     public int panelWidth;
     public int panelHeight;

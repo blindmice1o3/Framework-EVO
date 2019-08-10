@@ -14,7 +14,6 @@ public class ChapterState implements IState {
         this.handler = handler;
     }
 
-
     @Override
     public void tick() {
         getInput();

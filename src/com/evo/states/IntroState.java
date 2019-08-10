@@ -1942,4 +1942,7 @@ public class IntroState implements IState {
 
     }
 
+    // GETTERS AND SETTERS
+    public Fish getFishInstance() { return fishInstance; }
+
 }

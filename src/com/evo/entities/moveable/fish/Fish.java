@@ -108,4 +108,6 @@ public class Fish extends Creature implements Serializable {
 
     public FishStateManager getFishStateManager() { return fishStateManager; }
 
+    public void setFishStateManager(FishStateManager fishStateManager) { this.fishStateManager = fishStateManager; }
+
 } // **** end Fish class ****

@@ -1,6 +1,8 @@
 package com.evo.serialize_deserialize;
 
 import com.evo.Handler;
+import com.evo.entities.moveable.fish.FishStateManager;
+import com.evo.states.IntroState;
 import com.evo.states.StateManager;
 
 import java.io.*;
@@ -23,7 +25,13 @@ public class SaverAndLoader {
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
                 ////////////////////////////////////////////////////////////////////
-                objectOutputStream.writeObject(handler.getGame().getStateManager());
+                //should be IntroState
+                if (handler.getGame().getStateManager().getStatesStack().get(1) instanceof IntroState) {
+                    IntroState introState = (IntroState)handler.getGame().getStateManager().getStatesStack().get(1);
+                    FishStateManager fishStateManager = introState.getFishInstance().getFishStateManager();
+
+                    objectOutputStream.writeObject(fishStateManager);
+                }
                 ////////////////////////////////////////////////////////////////////
 
                 objectOutputStream.close();
@@ -46,9 +54,14 @@ public class SaverAndLoader {
 
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
-            handler.getGame().setStateManager(
-                    (StateManager)objectInputStream.readObject()
-            );
+            //should be IntroState
+            if (handler.getGame().getStateManager().getStatesStack().get(1) instanceof IntroState) {
+                IntroState introState = (IntroState)handler.getGame().getStateManager().getStatesStack().get(1);
+
+                FishStateManager fishStateManager = (FishStateManager)objectInputStream.readObject();
+
+                introState.getFishInstance().setFishStateManager(fishStateManager);
+            }
 
             objectInputStream.close();
 

@@ -12,7 +12,7 @@ public class MainMenuState implements IState {
     public enum MenuList { EVOLUTION, CAPABILITY, RECORD_OF_EVOLUTION, MAIN; }
 
     private Handler handler;
-    private transient OverWorldCursor overWorldCursor;
+    private OverWorldCursor overWorldCursor;
 
     private MenuList currentMenuSelection;
     private int index;

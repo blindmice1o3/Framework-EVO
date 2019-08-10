@@ -37,7 +37,7 @@ public class Fish extends Creature implements Serializable {
                 [fishStateManager.getCurrentFinPectoral().ordinal()]
                 [fishStateManager.getCurrentTail().ordinal()]
                 [0];
-    } // **** end Fish(Handler, int, int) constructor ****
+    } // **** end Fish(Handler) constructor ****
 
     public void tick() {
         //TODO: finish this.

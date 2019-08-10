@@ -108,22 +108,25 @@ public class MainMenuState implements IState {
                         case 0:
                             //TODO: SAVE
                             String pathSavedGame = "qwerty789";
-                            handler.getGame().getSaverAndLoader().save(pathSavedGame + ".bin");
                             //@@@@@@@@@@@@@@@
                             //SAVES THE GAME
                             //@@@@@@@@@@@@@@@
-                            currentMenuSelection = MenuList.MAIN;
-                            index = 0;
+                            handler.getGame().getSaverAndLoader().save(pathSavedGame + ".bin");
 
                             System.out.println("SAVED GAME!");
+                            currentMenuSelection = MenuList.MAIN;
+                            index = 0;
                             break;
                         case 1:
-                            //index = 0;
-                            //currentMenuSelection = MenuList.MAIN;
                             //TODO: LOAD
+                            //@@@@@@@@@@@@@@@
+                            //LOADS THE GAME
+                            //@@@@@@@@@@@@@@@
                             handler.getGame().getSaverAndLoader().load();
 
                             System.out.println("LOADED GAME!");
+                            currentMenuSelection = MenuList.MAIN;
+                            index = 0;
                             break;
                         default:
                             System.out.println("MainMenuState.getInput(): switch-construct.RECORD_OF_EVOLUTION's switch's default.");

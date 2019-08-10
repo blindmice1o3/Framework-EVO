@@ -10,15 +10,15 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
-public class Fish extends Creature implements Serializable {
+public class Fish extends Creature {
 
     public enum DirectionFacing { LEFT, RIGHT; }
 
     private FishStateManager fishStateManager;
     private DirectionFacing directionFacing;
 
-    private transient BufferedImage currentHeadImage;
-    private transient BufferedImage currentBodyImage;
+    private BufferedImage currentHeadImage;
+    private BufferedImage currentBodyImage;
 
     public Fish(Handler handler) {
         //super(image, x, y, (2 * Tile.WIDTH), Tile.HEIGHT);
@@ -101,6 +101,8 @@ public class Fish extends Creature implements Serializable {
     }
 
     // GETTERS AND SETTERS
+
+    public DirectionFacing getDirectionFacing() { return directionFacing; }
 
     public void setDirectionFacing(DirectionFacing directionFacing) {
         this.directionFacing = directionFacing;

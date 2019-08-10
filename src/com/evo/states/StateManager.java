@@ -38,6 +38,7 @@ public class StateManager implements Serializable {
         states.put(State.CHAPTER, new ChapterState(handler));
         states.put(State.WORLD_MAP, new WorldMapState(handler));
         states.put(State.MAIN_MENU, new MainMenuState(handler));
+        states.put(State.GAME_STAGE, new GameStageState(handler));
 
         statesStack.add(states.get(State.NULL));
 

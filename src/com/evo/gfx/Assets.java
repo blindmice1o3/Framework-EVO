@@ -35,6 +35,9 @@ public class Assets {
     // BACKGROUND - MainMenuState
     public static BufferedImage mainMenu;
 
+    // BACKGROUND - GameStageState
+    public static BufferedImage chapter1GameStage;
+
     // Initialization
     public static void init() {
         // SPRITE SHEETS
@@ -256,6 +259,10 @@ public class Assets {
 
         // BACKGROUND - MainMenuState
         mainMenu = spriteSheetStartMenu.getSubimage(6, 11, 128, 52);
+
+
+        // BACKGROUND - GameStageState
+        chapter1GameStage = Utils.loadImage("/mario-7-2.gif");
 
     }
 

@@ -101,8 +101,15 @@ public class WorldMapState implements IState {
             case ONE:
                 //a-button
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
-                    handler.getStateManager().setCurrentChapter(StateManager.Chapter.TWO);
-                    handler.getStateManager().pushIState(StateManager.State.INTRO, null);
+                    //TODO: depending on the value of index, connect to corresponding GameStageState's enum-blah-blah.
+                    if (index != 0) {
+                        handler.getStateManager().pushIState(StateManager.State.GAME_STAGE, null);
+                    }
+                    else {
+                        //AUTOMATICALLY MOVES to next chapter and pushes IntroState onto the top of the stack.
+                        handler.getStateManager().setCurrentChapter(StateManager.Chapter.TWO);
+                        handler.getStateManager().pushIState(StateManager.State.INTRO, null);
+                    }
                 }
                 else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_W)) {
                     index++;

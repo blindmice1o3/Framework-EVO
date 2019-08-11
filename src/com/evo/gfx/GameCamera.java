@@ -21,17 +21,17 @@ public class GameCamera {
         if (xOffset < 0) {
             xOffset = 0;
         } else if (xOffset > ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getWidth()
-                * (3*Tile.TILE_WIDTH) - handler.panelWidth) {
+                * (Tile.screenTileWidth) - handler.panelWidth) {
             xOffset = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getWidth()
-                    * (3*Tile.TILE_WIDTH) - handler.panelWidth;
+                    * (Tile.screenTileWidth) - handler.panelWidth;
         }
 
         if(yOffset < 0) {
             yOffset = 0;
         } else if (yOffset > ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getHeight()
-                * (3*Tile.TILE_HEIGHT) - handler.panelHeight) {
+                * (Tile.screenTileHeight) - handler.panelHeight) {
             yOffset = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getHeight()
-                    * (3*Tile.TILE_HEIGHT) - handler.panelHeight;
+                    * (Tile.screenTileHeight) - handler.panelHeight;
         }
     }
 

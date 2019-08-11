@@ -35,23 +35,23 @@ public class GameStage {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         /* RENDERING EFFICIENCY (NOT RENDERING the entire tiles/map ANYMORE, JUST THE TILE SHOWING ON SCREEN) */
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //won't go into negative x values. (left end of screen). !!!HAD NEEDED 2X (see Tile.render(Graphics) method)!!!
-        int xStart = (int)Math.max(0, (handler.getGameCamera().getxOffset() / (3*Tile.TILE_WIDTH)));
+        //won't go into negative x values. (left end of screen). !!!HAD NEEDED 3X (see Tile.render(Graphics) method)!!!
+        int xStart = (int)Math.max(0, (handler.getGameCamera().getxOffset() / (Tile.screenTileWidth)));
                 //0;
-        //won't go pass the end of the map/stage. (right end of screen). !!!HAD NEEDED 2X (see Tile.render(Graphics) method)!!!
-        int xEnd = (int)Math.min(width, ((handler.getGameCamera().getxOffset() + handler.panelWidth) / (3*Tile.TILE_WIDTH)) + 2);
+        //won't go pass the end of the map/stage. (right end of screen). !!!HAD NEEDED 3X (see Tile.render(Graphics) method)!!!
+        int xEnd = (int)Math.min(width, ((handler.getGameCamera().getxOffset() + handler.panelWidth) / (Tile.screenTileWidth)) + 2);
                 //width;
-        int yStart = (int)Math.max(0, (handler.getGameCamera().getyOffset() / (3*Tile.TILE_HEIGHT)));
+        int yStart = (int)Math.max(0, (handler.getGameCamera().getyOffset() / (Tile.screenTileHeight)));
                 //0;
-        int yEnd = (int)Math.min(height, ((handler.getGameCamera().getyOffset() + handler.panelHeight) / (3*Tile.TILE_HEIGHT)) + 2);
+        int yEnd = (int)Math.min(height, ((handler.getGameCamera().getyOffset() + handler.panelHeight) / (Tile.screenTileHeight)) + 2);
                 //height;
 
         for (int y = yStart; y < yEnd; y++) {
             for (int x = xStart; x < xEnd; x++) {
                 //using the game camera's xOffset and yOffset
                 ///////////////////////////////////////////////////////////////////////////////
-                tiles[x][y].render( g, (int)((x*3*Tile.TILE_WIDTH) - handler.getGameCamera().getxOffset()),
-                        (int)((y*3*Tile.TILE_HEIGHT) - handler.getGameCamera().getyOffset()) );
+                tiles[x][y].render( g, (int)((x*Tile.screenTileWidth) - handler.getGameCamera().getxOffset()),
+                        (int)((y*Tile.screenTileHeight) - handler.getGameCamera().getyOffset()) );
                 ///////////////////////////////////////////////////////////////////////////////
             }
         }

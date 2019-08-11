@@ -6,6 +6,9 @@ import java.awt.image.BufferedImage;
 public class Tile {
 
     public static final int TILE_WIDTH = 16, TILE_HEIGHT = 16;
+    public static int conversionFactor = 3;
+    public static int screenTileWidth = conversionFactor * TILE_WIDTH;
+    public static int screenTileHeight = conversionFactor * TILE_HEIGHT;
 
     protected BufferedImage texture;
     protected boolean solid;
@@ -21,10 +24,12 @@ public class Tile {
 
     public void render(Graphics g, int x, int y) {
         g.drawImage(texture, x, y,
-                /* 2X */
-                3*TILE_WIDTH,
-                /* 2X */
-                3*TILE_HEIGHT,
+                /* 3X */
+                screenTileWidth,
+                //3*TILE_WIDTH,
+                /* 3X */
+                screenTileHeight,
+                //3*TILE_HEIGHT,
                 null);
     }
 

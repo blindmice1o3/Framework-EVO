@@ -3,7 +3,6 @@ package com.evo.states;
 import com.evo.Handler;
 import com.evo.entities.moveable.fish.Fish;
 import com.evo.game_stages.GameStage;
-import com.evo.gfx.Assets;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -72,5 +71,9 @@ public class GameStageState implements IState {
     public void exit() {
 
     }
+
+    // GETTERS AND SETTERS
+
+    public GameStage getCurrentGameStage() { return currentGameStage; }
 
 } // **** end GameStageState class ****

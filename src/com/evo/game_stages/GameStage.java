@@ -36,22 +36,22 @@ public class GameStage {
         /* RENDERING EFFICIENCY (NOT RENDERING the entire tiles/map ANYMORE, JUST THE TILE SHOWING ON SCREEN) */
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         //won't go into negative x values. (left end of screen). !!!HAD NEEDED 2X (see Tile.render(Graphics) method)!!!
-        int xStart = (int)Math.max(0, (handler.getGameCamera().getxOffset() / (2*Tile.TILE_WIDTH)));
+        int xStart = (int)Math.max(0, (handler.getGameCamera().getxOffset() / (3*Tile.TILE_WIDTH)));
                 //0;
         //won't go pass the end of the map/stage. (right end of screen). !!!HAD NEEDED 2X (see Tile.render(Graphics) method)!!!
-        int xEnd = (int)Math.min(width, ((handler.getGameCamera().getxOffset() + handler.panelWidth) / (2*Tile.TILE_WIDTH)) + 1);
+        int xEnd = (int)Math.min(width, ((handler.getGameCamera().getxOffset() + handler.panelWidth) / (3*Tile.TILE_WIDTH)) + 2);
                 //width;
-        int yStart = (int)Math.max(0, (handler.getGameCamera().getyOffset() / (2*Tile.TILE_HEIGHT)));
+        int yStart = (int)Math.max(0, (handler.getGameCamera().getyOffset() / (3*Tile.TILE_HEIGHT)));
                 //0;
-        int yEnd = (int)Math.min(height, ((handler.getGameCamera().getyOffset() + handler.panelHeight) / (2*Tile.TILE_HEIGHT)) + 1);
+        int yEnd = (int)Math.min(height, ((handler.getGameCamera().getyOffset() + handler.panelHeight) / (3*Tile.TILE_HEIGHT)) + 2);
                 //height;
 
         for (int y = yStart; y < yEnd; y++) {
             for (int x = xStart; x < xEnd; x++) {
                 //using the game camera's xOffset and yOffset
                 ///////////////////////////////////////////////////////////////////////////////
-                tiles[x][y].render( g, (int)((x*2*Tile.TILE_WIDTH) - handler.getGameCamera().getxOffset()),
-                        (int)((y*2*Tile.TILE_HEIGHT) - handler.getGameCamera().getyOffset()) );
+                tiles[x][y].render( g, (int)((x*3*Tile.TILE_WIDTH) - handler.getGameCamera().getxOffset()),
+                        (int)((y*3*Tile.TILE_HEIGHT) - handler.getGameCamera().getyOffset()) );
                 ///////////////////////////////////////////////////////////////////////////////
             }
         }
@@ -60,8 +60,12 @@ public class GameStage {
     }
 
     private void loadGameStage(String path) {
-        width = 192;
-        height = 14;
+        width = Assets.chapter1GameStage.getWidth() / Tile.TILE_WIDTH;
+        height = Assets.chapter1GameStage.getHeight() / Tile.TILE_HEIGHT;
+        System.out.println("number of tiles for GameStage.width: " + width);
+        System.out.println("number of tiles for GameStage.height: " + height);
+        //width = 192;
+        //height = 14;
         tiles = new Tile[width][height];
 
         for (int x = 0; x < width; x++) {
@@ -74,5 +78,9 @@ public class GameStage {
     }
 
     public Fish getFishInstance() { return fishInstance; }
+
+    public int getWidth() { return width; }
+
+    public int getHeight() { return height; }
 
 } // **** end GameStage class ****

@@ -76,11 +76,13 @@ public class StateManager implements Serializable {
     }
     */
 
-    //GETTERS AND SETTERS
-
     public IState getTop() {
         return statesStack.get(statesStack.size()-1);
     }
+
+    public IState getState(State state) { return states.get(state); }
+
+    //GETTERS AND SETTERS
 
     public List<IState> getStatesStack() { return statesStack; }
 

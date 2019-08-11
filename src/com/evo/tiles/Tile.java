@@ -22,9 +22,9 @@ public class Tile {
     public void render(Graphics g, int x, int y) {
         g.drawImage(texture, x, y,
                 /* 2X */
-                2*TILE_WIDTH,
+                3*TILE_WIDTH,
                 /* 2X */
-                2*TILE_HEIGHT,
+                3*TILE_HEIGHT,
                 null);
     }
 

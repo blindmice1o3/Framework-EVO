@@ -56,10 +56,16 @@ public class Fish extends Creature {
     public void render(Graphics g) {
         if (directionFacing == DirectionFacing.RIGHT) {
             //BODY
-            g.drawImage(currentBodyImage, x, y, null);
+            g.drawImage(currentBodyImage,
+                    (int)(x - handler.getGameCamera().getxOffset()),
+                    (int)(y - handler.getGameCamera().getyOffset()),
+                    null);
 
             //HEAD
-            g.drawImage(currentHeadImage, x + currentBodyImage.getWidth(), y, null);
+            g.drawImage(currentHeadImage,
+                    (int)(x + currentBodyImage.getWidth() - handler.getGameCamera().getxOffset()),
+                    (int)(y - handler.getGameCamera().getyOffset()),
+                    null);
         } else if (directionFacing == DirectionFacing.LEFT) {
             //TODO: flip image of head and body.
             BufferedImage flippedCurrentHeadImage = Fish.flipHorizontally(currentHeadImage);
@@ -67,10 +73,16 @@ public class Fish extends Creature {
 
             //@@@@@@@@@@@@@@@@@@@@@@@@@
             //HEAD
-            g.drawImage(flippedCurrentHeadImage, x, y, null);
+            g.drawImage(flippedCurrentHeadImage,
+                    (int)(x - handler.getGameCamera().getxOffset()),
+                    (int)(y - handler.getGameCamera().getyOffset()),
+                    null);
 
             //BODY
-            g.drawImage(flippedCurrentBodyImage, x + flippedCurrentHeadImage.getWidth(), y, null);
+            g.drawImage(flippedCurrentBodyImage,
+                    (int)(x + flippedCurrentHeadImage.getWidth() - handler.getGameCamera().getxOffset()),
+                    (int)(y - handler.getGameCamera().getyOffset()),
+                    null);
             //@@@@@@@@@@@@@@@@@@@@@@@@@
         }
     }

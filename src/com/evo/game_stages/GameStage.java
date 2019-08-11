@@ -1,5 +1,7 @@
 package com.evo.game_stages;
 
+import com.evo.Handler;
+import com.evo.entities.moveable.fish.Fish;
 import com.evo.gfx.Assets;
 import com.evo.tiles.Tile;
 
@@ -7,25 +9,40 @@ import java.awt.*;
 
 public class GameStage {
 
+    private Handler handler;
+
     private int width, height;
     private Tile[][] tiles;
+    private Fish fishInstance;
 
-    public GameStage(String path) {
+    public GameStage(Handler handler, String path) {
+        this.handler = handler;
         loadGameStage(path);
-    } // **** end GameStage(String) constructor ****
+
+        fishInstance = new Fish(handler);
+        fishInstance.setX(310);
+        fishInstance.setY(200);
+        fishInstance.setxMove(5);   //move speed.
+        fishInstance.setyMove(5);   //move speed.
+    } // **** end GameStage(Handler, String) constructor ****
 
     public void tick() {
-
+        fishInstance.tick();
+        handler.getGameCamera().centerOnEntity(fishInstance);
     }
 
     public void render(Graphics g) {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-
-                tiles[x][y].render(g, x*Tile.TILE_WIDTH, y*Tile.TILE_HEIGHT);
-
+                //using the game camera's xOffset and yOffset
+                ///////////////////////////////////////////////////////////////////////////////
+                tiles[x][y].render( g, (int)((x*2*Tile.TILE_WIDTH) - handler.getGameCamera().getxOffset()),
+                        (int)((y*2*Tile.TILE_HEIGHT) - handler.getGameCamera().getyOffset()) );
+                ///////////////////////////////////////////////////////////////////////////////
             }
         }
+
+        fishInstance.render(g);
     }
 
     private void loadGameStage(String path) {
@@ -41,5 +58,7 @@ public class GameStage {
             }
         }
     }
+
+    public Fish getFishInstance() { return fishInstance; }
 
 } // **** end GameStage class ****

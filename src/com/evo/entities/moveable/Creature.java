@@ -21,4 +21,22 @@ public abstract class Creature extends Entity {
         y += yMove;
     }
 
+    // GETTERS AND SETTERS
+
+    public int getxMove() {
+        return xMove;
+    }
+
+    public void setxMove(int xMove) {
+        this.xMove = xMove;
+    }
+
+    public int getyMove() {
+        return yMove;
+    }
+
+    public void setyMove(int yMove) {
+        this.yMove = yMove;
+    }
+
 }

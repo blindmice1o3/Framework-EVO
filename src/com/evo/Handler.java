@@ -1,5 +1,6 @@
 package com.evo;
 
+import com.evo.gfx.GameCamera;
 import com.evo.input.KeyManager;
 import com.evo.states.StateManager;
 
@@ -37,5 +38,7 @@ public class Handler {
     public Displayer getDisplayer() {
         return game.getDisplayer();
     }
+
+    public GameCamera getGameCamera() { return game.getGameCamera(); }
 
 } // **** end Handler class ****

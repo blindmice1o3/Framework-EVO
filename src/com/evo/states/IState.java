@@ -1,6 +1,7 @@
 package com.evo.states;
 
 import java.awt.*;
+import java.io.Serializable;
 
 public interface IState {
 

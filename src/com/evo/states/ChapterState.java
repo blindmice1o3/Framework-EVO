@@ -14,7 +14,6 @@ public class ChapterState implements IState {
         this.handler = handler;
     }
 
-
     @Override
     public void tick() {
         getInput();
@@ -22,10 +21,17 @@ public class ChapterState implements IState {
 
     @Override
     public void getInput() {
+        //a-button (will enter WorldMapState).
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
-            handler.getStateManager().changeIState(StateManager.State.WORLD_MAP, null);
-        } else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
-            handler.getStateManager().changeIState(StateManager.State.INTRO, null);
+            handler.getStateManager().pushIState(StateManager.State.WORLD_MAP, null);
+        }
+        //b-button (goes back to previous IState).
+        else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
+            handler.getStateManager().popIState();
+        }
+        //select-button (will enter MainMenuState).
+        else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SHIFT)) {
+            handler.getStateManager().pushIState(StateManager.State.MAIN_MENU, null);
         }
 
         switch (handler.getStateManager().getCurrentChapter()) {
@@ -42,6 +48,9 @@ public class ChapterState implements IState {
 
     @Override
     public void render(Graphics g) {
+        //NullState.render(Graphics) ------> fills the screen with background color of Displayer's panel.
+        handler.getStateManager().getStatesStack().get(0).render(g);
+
         Graphics2D g2d = (Graphics2D)g;
         float opacity = 1.0f;
 
@@ -94,6 +103,9 @@ public class ChapterState implements IState {
             default:
                 break;
         }
+
+        //need to reset the opacity to 1.0f.
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
     }
 
     @Override

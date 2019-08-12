@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 public class OverWorldCursor extends Creature {
 
     public OverWorldCursor(Handler handler, BufferedImage image, int x, int y) {
-            super(handler, image, x, y, image.getWidth(), image.getHeight());
+        super(handler, image, x, y, image.getWidth(), image.getHeight());
     }
 
     public void tick() {
@@ -17,11 +17,7 @@ public class OverWorldCursor extends Creature {
     }
 
     public void render(Graphics g) {
-        g.drawImage(image, (int)(x * ((WorldMapState)handler.getStateManager().getCurrentState()).X_CONVERSION_FACTOR),
-                (int)(y * ((WorldMapState)handler.getStateManager().getCurrentState()).Y_CONVERSION_FACTOR),
-                (int)(width * ((WorldMapState)handler.getStateManager().getCurrentState()).X_CONVERSION_FACTOR),
-                (int)(height * ((WorldMapState)handler.getStateManager().getCurrentState()).Y_CONVERSION_FACTOR),
-                null);
+        g.drawImage(image, x, y, width, height,null);
     }
 
 }

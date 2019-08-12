@@ -7,15 +7,46 @@ import java.awt.image.BufferedImage;
 
 public abstract class Creature extends Entity {
 
-    private int xMove, yMove;
+    protected int xMove, yMove;
 
     public Creature(Handler handler, BufferedImage image, int x, int y, int width, int height) {
         super(handler, image, x, y, width, height);
+
+        xMove = 1;
+        yMove = 1;
     }
 
     public void move() {
+        moveX();
+        moveY();
+    }
+
+    public void moveX() {
         x += xMove;
+    }
+
+    public void moveY() {
         y += yMove;
+    }
+
+    //protected boolean collision
+
+    // GETTERS AND SETTERS
+
+    public int getxMove() {
+        return xMove;
+    }
+
+    public void setxMove(int xMove) {
+        this.xMove = xMove;
+    }
+
+    public int getyMove() {
+        return yMove;
+    }
+
+    public void setyMove(int yMove) {
+        this.yMove = yMove;
     }
 
 }

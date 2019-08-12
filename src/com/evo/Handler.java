@@ -1,7 +1,10 @@
 package com.evo;
 
+import com.evo.gfx.GameCamera;
 import com.evo.input.KeyManager;
 import com.evo.states.StateManager;
+
+import java.io.Serializable;
 
 public class Handler {
 
@@ -35,5 +38,7 @@ public class Handler {
     public Displayer getDisplayer() {
         return game.getDisplayer();
     }
+
+    public GameCamera getGameCamera() { return game.getGameCamera(); }
 
 } // **** end Handler class ****

@@ -1,8 +1,12 @@
 package com.evo;
 
 import com.evo.gfx.Assets;
+import com.evo.gfx.GameCamera;
 import com.evo.input.KeyManager;
+import com.evo.serialize_deserialize.SaverAndLoader;
 import com.evo.states.StateManager;
+
+import java.io.Serializable;
 
 public class Game implements Runnable {
 
@@ -17,6 +21,8 @@ public class Game implements Runnable {
     private KeyManager keyManager;
     private Displayer displayer;
     private StateManager stateManager;
+    private SaverAndLoader saverAndLoader;
+    private GameCamera gameCamera;
 
     public Game() {
 
@@ -35,9 +41,10 @@ public class Game implements Runnable {
 
     private void initGame() {
         Assets.init();
-        stateManager = new StateManager();
 
+        stateManager = new StateManager();
         handler = new Handler(this);
+        gameCamera = new GameCamera(handler, 0, 0);
         keyManager = new KeyManager();
         displayer = new Displayer("EVO: Search for Eden", WIDTH, HEIGHT, handler);
 
@@ -45,6 +52,8 @@ public class Game implements Runnable {
         handler.init();
         stateManager.init(handler);
         ////////////////////////////
+
+        saverAndLoader = new SaverAndLoader(handler);
     }
 
     private void gameLoop() {
@@ -101,8 +110,10 @@ public class Game implements Runnable {
     }
 
     private void tick() {
-        //System.out.println("Game.tick()");
+        //@@@@@@@@@@@@@@@@
         keyManager.tick();
+        //@@@@@@@@@@@@@@@@
+
         stateManager.tick();
     }
 
@@ -121,5 +132,11 @@ public class Game implements Runnable {
     public StateManager getStateManager() {
         return stateManager;
     }
+
+    public void setStateManager(StateManager stateManager) { this.stateManager = stateManager; }
+
+    public SaverAndLoader getSaverAndLoader() { return saverAndLoader; }
+
+    public GameCamera getGameCamera() { return gameCamera; }
 
 } // **** end Game class ****

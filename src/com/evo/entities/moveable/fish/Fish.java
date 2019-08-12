@@ -22,7 +22,10 @@ public class Fish extends Creature {
 
     public Fish(Handler handler) {
         //super(image, x, y, (2 * Tile.WIDTH), Tile.HEIGHT);
-        super(handler, null, 40, 10, 100, 50);
+        super(handler, null, 40, 10,
+                Assets.eatFrames[0][0][0][0][0].getWidth()
+                        + Assets.tailOriginal[0][0][0][0][0].getWidth(),
+                Assets.eatFrames[0][0][0][0][0].getHeight());
 
         fishStateManager = new FishStateManager();
         directionFacing = DirectionFacing.RIGHT;
@@ -54,6 +57,7 @@ public class Fish extends Creature {
     }
 
     public void render(Graphics g) {
+        //ACTUAL IMAGE OF FISH
         if (directionFacing == DirectionFacing.RIGHT) {
             //BODY
             g.drawImage(currentBodyImage,
@@ -85,6 +89,12 @@ public class Fish extends Creature {
                     null);
             //@@@@@@@@@@@@@@@@@@@@@@@@@
         }
+
+        //BOUNDING RECTANGLE
+        g.setColor(Color.RED);
+        g.fillRect((int)(x + bounds.x - handler.getGameCamera().getxOffset()),
+                (int)(y + bounds.y - handler.getGameCamera().getyOffset()),
+                bounds.width, bounds.height);
     }
 
     public static BufferedImage flipHorizontally(BufferedImage image) {
@@ -123,5 +133,9 @@ public class Fish extends Creature {
     public FishStateManager getFishStateManager() { return fishStateManager; }
 
     public void setFishStateManager(FishStateManager fishStateManager) { this.fishStateManager = fishStateManager; }
+
+    public BufferedImage getCurrentHeadImage() { return currentHeadImage; }
+
+    public BufferedImage getCurrentBodyImage() { return currentBodyImage; }
 
 } // **** end Fish class ****

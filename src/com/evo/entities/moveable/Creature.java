@@ -17,9 +17,19 @@ public abstract class Creature extends Entity {
     }
 
     public void move() {
+        moveX();
+        moveY();
+    }
+
+    public void moveX() {
         x += xMove;
+    }
+
+    public void moveY() {
         y += yMove;
     }
+
+    //protected boolean collision
 
     // GETTERS AND SETTERS
 

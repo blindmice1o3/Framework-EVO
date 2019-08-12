@@ -22,6 +22,12 @@ public class GameStage {
         fishInstance = new Fish(handler);
         fishInstance.setX(310);
         fishInstance.setY(200);
+        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        fishInstance.getBounds().setBounds(0, 0,
+                fishInstance.getCurrentHeadImage().getWidth()
+                        + fishInstance.getCurrentBodyImage().getWidth(),
+                fishInstance.getCurrentHeadImage().getHeight());
+        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         fishInstance.setxMove(5);   //move speed.
         fishInstance.setyMove(5);   //move speed.
     } // **** end GameStage(Handler, String) constructor ****

@@ -91,10 +91,10 @@ public class Fish extends Creature {
         }
 
         //BOUNDING RECTANGLE
-        g.setColor(Color.RED);
-        g.fillRect((int)(x + bounds.x - handler.getGameCamera().getxOffset()),
-                (int)(y + bounds.y - handler.getGameCamera().getyOffset()),
-                bounds.width, bounds.height);
+        //g.setColor(Color.RED);
+        //g.fillRect((int)(x + bounds.x - handler.getGameCamera().getxOffset()),
+        //        (int)(y + bounds.y - handler.getGameCamera().getyOffset()),
+        //        bounds.width, bounds.height);
     }
 
     public static BufferedImage flipHorizontally(BufferedImage image) {

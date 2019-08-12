@@ -3,6 +3,7 @@ package com.evo.serialize_deserialize;
 import com.evo.Handler;
 import com.evo.entities.moveable.fish.Fish;
 import com.evo.entities.moveable.fish.FishStateManager;
+import com.evo.states.GameStageState;
 import com.evo.states.IntroState;
 import com.evo.states.StateManager;
 
@@ -21,25 +22,27 @@ public class SaverAndLoader {
 
         if (path.substring(path.length()-4).equals(".bin")) {
 
-            try (FileOutputStream fileOutputStream = new FileOutputStream(path)){
+            try (FileOutputStream fileOutputStream = new FileOutputStream(path)) {
 
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
-                ////////////////////////////////////////////////////////////////////
-                //should be IntroState
-                if (handler.getGame().getStateManager().getStatesStack().get(1) instanceof IntroState) {
-                    IntroState introState = (IntroState)handler.getGame().getStateManager().getStatesStack().get(1);
-                    FishStateManager fishStateManager = introState.getFishInstance().getFishStateManager();
-                    Fish.DirectionFacing directionFacing = introState.getFishInstance().getDirectionFacing();
-                    int x = introState.getFishInstance().getX();
-                    int y = introState.getFishInstance().getY();
 
-                    objectOutputStream.writeObject(fishStateManager);
-                    objectOutputStream.writeObject(directionFacing);
-                    objectOutputStream.writeInt(x);
-                    objectOutputStream.writeInt(y);
-                }
+
                 ////////////////////////////////////////////////////////////////////
+                //should be GameStageState
+                GameStageState gameStageState = (GameStageState)handler.getGame().getStateManager().getState(StateManager.State.GAME_STAGE);
+                FishStateManager fishStateManager = gameStageState.getCurrentGameStage().getFishInstance().getFishStateManager();
+                Fish.DirectionFacing directionFacing = gameStageState.getCurrentGameStage().getFishInstance().getDirectionFacing();
+                int x = gameStageState.getCurrentGameStage().getFishInstance().getX();
+                int y = gameStageState.getCurrentGameStage().getFishInstance().getY();
+
+                objectOutputStream.writeObject(fishStateManager);
+                objectOutputStream.writeObject(directionFacing);
+                objectOutputStream.writeInt(x);
+                objectOutputStream.writeInt(y);
+                ////////////////////////////////////////////////////////////////////
+
+
 
                 objectOutputStream.close();
 
@@ -61,21 +64,23 @@ public class SaverAndLoader {
 
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
-            //should be IntroState
-            if (handler.getGame().getStateManager().getStatesStack().get(1) instanceof IntroState) {
-                IntroState introState = (IntroState)handler.getGame().getStateManager().getStatesStack().get(1);
 
-                FishStateManager fishStateManager = (FishStateManager)objectInputStream.readObject();
-                Fish.DirectionFacing directionFacing = (Fish.DirectionFacing)objectInputStream.readObject();
-                int x = objectInputStream.readInt();
-                int y = objectInputStream.readInt();
 
-                introState.getFishInstance().setFishStateManager(fishStateManager);
-                introState.getFishInstance().tick();
-                introState.getFishInstance().setDirectionFacing(directionFacing);
-                introState.getFishInstance().setX(x);
-                introState.getFishInstance().setY(y);
-            }
+            //should be GameStageState
+            GameStageState gameStageState = (GameStageState)handler.getGame().getStateManager().getState(StateManager.State.GAME_STAGE);
+
+            FishStateManager fishStateManager = (FishStateManager)objectInputStream.readObject();
+            Fish.DirectionFacing directionFacing = (Fish.DirectionFacing)objectInputStream.readObject();
+            int x = objectInputStream.readInt();
+            int y = objectInputStream.readInt();
+
+            gameStageState.getCurrentGameStage().getFishInstance().setFishStateManager(fishStateManager);
+            gameStageState.getCurrentGameStage().getFishInstance().tick();
+            gameStageState.getCurrentGameStage().getFishInstance().setDirectionFacing(directionFacing);
+            gameStageState.getCurrentGameStage().getFishInstance().setX(x);
+            gameStageState.getCurrentGameStage().getFishInstance().setY(y);
+
+
 
             objectInputStream.close();
 

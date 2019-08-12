@@ -12,19 +12,19 @@ public class IntroState implements IState {
 
     private Handler handler;
 
-    private int bodySizeIndex, bodyTextureIndex, jawsIndex, actionStateIndex, frameNumberIndex;
-    private Fish fishInstance;
+    /*private int bodySizeIndex, bodyTextureIndex, jawsIndex, actionStateIndex, frameNumberIndex;*/
+    //private Fish fishInstance;
 
     public IntroState(Handler handler) {
         this.handler = handler;
-
+/*
         bodySizeIndex = 0;
         bodyTextureIndex = 0;
         jawsIndex = 0;
         actionStateIndex = 0;
         frameNumberIndex = 0;
-
-        fishInstance = new Fish(handler);
+*/
+        //fishInstance = new Fish(handler);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class IntroState implements IState {
         getInput();
 
         /////////////////////
-        fishInstance.tick();
+        //fishInstance.tick();
         /////////////////////
     }
 
@@ -49,6 +49,7 @@ public class IntroState implements IState {
 
         switch (handler.getStateManager().getCurrentChapter()) {
             case ONE:
+/*
                 if (handler.getKeyManager().up) {
                     fishInstance.moveUp();
                 }
@@ -69,11 +70,11 @@ public class IntroState implements IState {
                 }
 
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_Z)) {
-                    int currentBodyTextOrdinal = fishInstance.getFishStateManager().getCurrentBodyTexture().ordinal();
+                    int currentBodyTextureOrdinal = fishInstance.getFishStateManager().getCurrentBodyTexture().ordinal();
                     FishStateManager.BodyTexture[] bodyTexture = FishStateManager.BodyTexture.values();
 
-                    if ((currentBodyTextOrdinal+1) < bodyTexture.length) {
-                        fishInstance.getFishStateManager().setCurrentBodyTexture(bodyTexture[currentBodyTextOrdinal + 1]);
+                    if ((currentBodyTextureOrdinal+1) < bodyTexture.length) {
+                        fishInstance.getFishStateManager().setCurrentBodyTexture(bodyTexture[currentBodyTextureOrdinal + 1]);
                     } else {
                         fishInstance.getFishStateManager().setCurrentBodyTexture(bodyTexture[0]);
                     }
@@ -100,9 +101,7 @@ public class IntroState implements IState {
                         fishInstance.getFishStateManager().setCurrentFinPectoral(finPectoral[0]);
                     }
                 }
-
-
-
+*/
 
                 break;
             case TWO:
@@ -147,8 +146,150 @@ public class IntroState implements IState {
         //NullState.render(Graphics) ------> fills the screen with background color of Displayer's panel.
         handler.getStateManager().getStatesStack().get(0).render(g);
 
-        fishInstance.render(g);
 
+        Graphics2D g2d = (Graphics2D)g;
+        float opacity = 1.0f;
+
+        switch (handler.getStateManager().getCurrentChapter()) {
+            case ONE:
+                g2d.drawImage(Assets.chapter1Intro, 0, 0, handler.panelWidth, handler.panelHeight, null);
+
+                // CHANGING OPACITY OF NEXT IMAGE
+                opacity = 0.25f;
+                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
+                g2d.drawImage(Assets.chapter1Wave, 0, 0, handler.panelWidth, handler.panelHeight, null);
+
+                break;
+            case TWO:
+                g2d.drawImage(Assets.chapter2Intro, 0, 0, handler.panelWidth, handler.panelHeight, null);
+
+                // CHANGING OPACITY OF NEXT IMAGE
+                opacity = 0.25f;
+                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
+                g2d.drawImage(Assets.chapter2Wave, 0, 0, handler.panelWidth, handler.panelHeight, null);
+
+                break;
+            case THREE:
+                g2d.drawImage(Assets.chapter3Intro, 0, 0, handler.panelWidth, handler.panelHeight, null);
+
+                // CHANGING OPACITY OF NEXT IMAGE
+                opacity = 0.25f;
+                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
+                g2d.drawImage(Assets.chapter3Wave, 0, 0, handler.panelWidth, handler.panelHeight, null);
+
+                break;
+            case FOUR:
+                g2d.drawImage(Assets.chapter4Intro, 0, 0, handler.panelWidth, handler.panelHeight, null);
+
+                // CHANGING OPACITY OF NEXT IMAGE
+                opacity = 0.25f;
+                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
+                g2d.drawImage(Assets.chapter4Wave, 0, 0, handler.panelWidth, handler.panelHeight, null);
+
+                break;
+            case FIVE:
+                g2d.drawImage(Assets.chapter5Intro, 0, 0, handler.panelWidth, handler.panelHeight, null);
+
+                // CHANGING OPACITY OF NEXT IMAGE
+                opacity = 0.25f;
+                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
+                g2d.drawImage(Assets.chapter5Wave, 0, 0, handler.panelWidth, handler.panelHeight, null);
+
+                break;
+            default:
+                break;
+        }
+
+        //need to reset the opacity to 1.0f.
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+
+
+
+        //fishInstance.render(g);
+
+
+
+/*
+        int xOffset = 0;
+        int yOffset = 0;
+
+        for (FishStateManager.BodySize bodySize : FishStateManager.BodySize.values()) {
+            for (FishStateManager.BodyTexture bodyTexture : FishStateManager.BodyTexture.values()) {
+                for (FishStateManager.Jaws jaws : FishStateManager.Jaws.values()) {
+                    for (FishStateManager.ActionState actionState : FishStateManager.ActionState.values()) {
+
+                        if (actionState.ordinal() < FishStateManager.ActionState.values().length-1) {
+                            for (int index = 0; index < Assets.eatFrames[bodySize.ordinal()][bodyTexture.ordinal()]
+                                    [jaws.ordinal()][actionState.ordinal()].length; index++) {
+                                if (xOffset < handler.panelWidth - 16) {
+                                    g.drawImage(Assets.eatFrames[bodySize.ordinal()]
+                                            [bodyTexture.ordinal()]
+                                            [jaws.ordinal()]
+                                            [actionState.ordinal()]
+                                            [index], xOffset, yOffset, null);
+
+                                    xOffset += 16;
+
+                                    if (xOffset >= handler.panelWidth - 16) {
+                                        xOffset = 0;
+                                        if (yOffset < handler.panelHeight) {
+                                            yOffset += 16;
+                                        }
+                                    }
+                                }
+                            }
+                            /////////////////////////////////////////////////////////////////////////////
+                            for (int index = 0; index < Assets.biteFrames[bodySize.ordinal()][bodyTexture.ordinal()]
+                                    [jaws.ordinal()][actionState.ordinal()].length; index++) {
+                                if (xOffset < handler.panelWidth - 16) {
+                                    g.drawImage(Assets.biteFrames[bodySize.ordinal()]
+                                            [bodyTexture.ordinal()]
+                                            [jaws.ordinal()]
+                                            [actionState.ordinal()]
+                                            [index], xOffset, yOffset, null);
+
+                                    xOffset += 16;
+
+                                    if (xOffset >= handler.panelWidth - 16) {
+                                        xOffset = 0;
+                                        if (yOffset < handler.panelHeight) {
+                                            yOffset += 16;
+                                        }
+                                    }
+                                }
+                            }
+                            //////////////////////////////////////////////////////////////////////////////
+                            for (int index = 0; index < Assets.hurtFrames[bodySize.ordinal()][bodyTexture.ordinal()]
+                                    [jaws.ordinal()][actionState.ordinal()].length; index++) {
+                                if (xOffset < handler.panelWidth - 16) {
+                                    g.drawImage(Assets.hurtFrames[bodySize.ordinal()]
+                                            [bodyTexture.ordinal()]
+                                            [jaws.ordinal()]
+                                            [actionState.ordinal()]
+                                            [index], xOffset, yOffset, null);
+
+                                    xOffset += 16;
+
+                                    if (xOffset >= handler.panelWidth - 16) {
+                                        xOffset = 0;
+                                        if (yOffset < handler.panelHeight) {
+                                            yOffset += 16;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+*/
+
+
+
+
+
+/*
         //@@@@@HEAD@@@@@
 
         g.drawImage(Assets.eatFrames[bodySizeIndex][bodyTextureIndex][jawsIndex][0][frameNumberIndex],
@@ -1793,143 +1934,7 @@ public class IntroState implements IState {
                 x += 25;
             }
         }
-
-
-
-/*
-        int xOffset = 0;
-        int yOffset = 0;
-
-        for (FishStateManager.BodySize bodySize : FishStateManager.BodySize.values()) {
-            for (FishStateManager.BodyTexture bodyTexture : FishStateManager.BodyTexture.values()) {
-                for (FishStateManager.Jaws jaws : FishStateManager.Jaws.values()) {
-                    for (FishStateManager.ActionState actionState : FishStateManager.ActionState.values()) {
-
-                        if (actionState.ordinal() < FishStateManager.ActionState.values().length-1) {
-                            for (int index = 0; index < Assets.eatFrames[bodySize.ordinal()][bodyTexture.ordinal()]
-                                    [jaws.ordinal()][actionState.ordinal()].length; index++) {
-                                if (xOffset < handler.panelWidth - 16) {
-                                    g.drawImage(Assets.eatFrames[bodySize.ordinal()]
-                                            [bodyTexture.ordinal()]
-                                            [jaws.ordinal()]
-                                            [actionState.ordinal()]
-                                            [index], xOffset, yOffset, null);
-
-                                    xOffset += 16;
-
-                                    if (xOffset >= handler.panelWidth - 16) {
-                                        xOffset = 0;
-                                        if (yOffset < handler.panelHeight) {
-                                            yOffset += 16;
-                                        }
-                                    }
-                                }
-                            }
-                            /////////////////////////////////////////////////////////////////////////////
-                            for (int index = 0; index < Assets.biteFrames[bodySize.ordinal()][bodyTexture.ordinal()]
-                                    [jaws.ordinal()][actionState.ordinal()].length; index++) {
-                                if (xOffset < handler.panelWidth - 16) {
-                                    g.drawImage(Assets.biteFrames[bodySize.ordinal()]
-                                            [bodyTexture.ordinal()]
-                                            [jaws.ordinal()]
-                                            [actionState.ordinal()]
-                                            [index], xOffset, yOffset, null);
-
-                                    xOffset += 16;
-
-                                    if (xOffset >= handler.panelWidth - 16) {
-                                        xOffset = 0;
-                                        if (yOffset < handler.panelHeight) {
-                                            yOffset += 16;
-                                        }
-                                    }
-                                }
-                            }
-                            //////////////////////////////////////////////////////////////////////////////
-                            for (int index = 0; index < Assets.hurtFrames[bodySize.ordinal()][bodyTexture.ordinal()]
-                                    [jaws.ordinal()][actionState.ordinal()].length; index++) {
-                                if (xOffset < handler.panelWidth - 16) {
-                                    g.drawImage(Assets.hurtFrames[bodySize.ordinal()]
-                                            [bodyTexture.ordinal()]
-                                            [jaws.ordinal()]
-                                            [actionState.ordinal()]
-                                            [index], xOffset, yOffset, null);
-
-                                    xOffset += 16;
-
-                                    if (xOffset >= handler.panelWidth - 16) {
-                                        xOffset = 0;
-                                        if (yOffset < handler.panelHeight) {
-                                            yOffset += 16;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
 */
-
-
-        /*
-        Graphics2D g2d = (Graphics2D)g;
-        float opacity = 1.0f;
-
-        switch (handler.getStateManager().getCurrentChapter()) {
-            case ONE:
-                g2d.drawImage(Assets.chapter1Intro, 0, 0, handler.panelWidth, handler.panelHeight, null);
-
-                // CHANGING OPACITY OF NEXT IMAGE
-                opacity = 0.25f;
-                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
-                g2d.drawImage(Assets.chapter1Wave, 0, 0, handler.panelWidth, handler.panelHeight, null);
-
-                break;
-            case TWO:
-                g2d.drawImage(Assets.chapter2Intro, 0, 0, handler.panelWidth, handler.panelHeight, null);
-
-                // CHANGING OPACITY OF NEXT IMAGE
-                opacity = 0.25f;
-                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
-                g2d.drawImage(Assets.chapter2Wave, 0, 0, handler.panelWidth, handler.panelHeight, null);
-
-                break;
-            case THREE:
-                g2d.drawImage(Assets.chapter3Intro, 0, 0, handler.panelWidth, handler.panelHeight, null);
-
-                // CHANGING OPACITY OF NEXT IMAGE
-                opacity = 0.25f;
-                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
-                g2d.drawImage(Assets.chapter3Wave, 0, 0, handler.panelWidth, handler.panelHeight, null);
-
-                break;
-            case FOUR:
-                g2d.drawImage(Assets.chapter4Intro, 0, 0, handler.panelWidth, handler.panelHeight, null);
-
-                // CHANGING OPACITY OF NEXT IMAGE
-                opacity = 0.25f;
-                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
-                g2d.drawImage(Assets.chapter4Wave, 0, 0, handler.panelWidth, handler.panelHeight, null);
-
-                break;
-            case FIVE:
-                g2d.drawImage(Assets.chapter5Intro, 0, 0, handler.panelWidth, handler.panelHeight, null);
-
-                // CHANGING OPACITY OF NEXT IMAGE
-                opacity = 0.25f;
-                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
-                g2d.drawImage(Assets.chapter5Wave, 0, 0, handler.panelWidth, handler.panelHeight, null);
-
-                break;
-            default:
-                break;
-        }
-
-        //need to reset the opacity to 1.0f.
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
-        */
     }
 
     @Override
@@ -1943,6 +1948,6 @@ public class IntroState implements IState {
     }
 
     // GETTERS AND SETTERS
-    public Fish getFishInstance() { return fishInstance; }
+    //public Fish getFishInstance() { return fishInstance; }
 
 }

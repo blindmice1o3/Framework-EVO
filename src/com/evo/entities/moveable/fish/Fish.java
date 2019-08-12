@@ -63,12 +63,14 @@ public class Fish extends Creature {
             g.drawImage(currentBodyImage,
                     (int)(x - handler.getGameCamera().getxOffset()),
                     (int)(y - handler.getGameCamera().getyOffset()),
+                    currentBodyImage.getWidth(), currentBodyImage.getHeight(),
                     null);
 
             //HEAD
             g.drawImage(currentHeadImage,
                     (int)(x + currentBodyImage.getWidth() - handler.getGameCamera().getxOffset()),
                     (int)(y - handler.getGameCamera().getyOffset()),
+                    currentHeadImage.getWidth(), currentHeadImage.getHeight(),
                     null);
         } else if (directionFacing == DirectionFacing.LEFT) {
             //TODO: flip image of head and body.
@@ -80,12 +82,14 @@ public class Fish extends Creature {
             g.drawImage(flippedCurrentHeadImage,
                     (int)(x - handler.getGameCamera().getxOffset()),
                     (int)(y - handler.getGameCamera().getyOffset()),
+                    flippedCurrentHeadImage.getWidth(), flippedCurrentHeadImage.getHeight(),
                     null);
 
             //BODY
             g.drawImage(flippedCurrentBodyImage,
                     (int)(x + flippedCurrentHeadImage.getWidth() - handler.getGameCamera().getxOffset()),
                     (int)(y - handler.getGameCamera().getyOffset()),
+                    flippedCurrentBodyImage.getWidth(), flippedCurrentBodyImage.getHeight(),
                     null);
             //@@@@@@@@@@@@@@@@@@@@@@@@@
         }

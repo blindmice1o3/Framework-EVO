@@ -110,8 +110,10 @@ public class Game implements Runnable {
     }
 
     private void tick() {
-        //System.out.println("Game.tick()");
+        //@@@@@@@@@@@@@@@@
         keyManager.tick();
+        //@@@@@@@@@@@@@@@@
+
         stateManager.tick();
     }
 

@@ -11,8 +11,13 @@ public class GameStage {
 
     private Handler handler;
 
+    // TILES
     private int width, height; //(in numberOfTile) initialized by loadGameStage(String).
     private Tile[][] tiles;
+
+    // ENTITIES
+    private float xSpawn = 310;
+    private float ySpawn = 200;
     private Fish fishInstance;
 
     public GameStage(Handler handler, String path) {
@@ -20,16 +25,19 @@ public class GameStage {
         loadGameStage(path);
 
         fishInstance = new Fish(handler);
-        fishInstance.setX(310);
-        fishInstance.setY(200);
-        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        fishInstance.setX(xSpawn);
+        fishInstance.setY(ySpawn);
+        /*
         fishInstance.getBounds().setBounds(0, 0,
                 fishInstance.getCurrentHeadImage().getWidth()
                         + fishInstance.getCurrentBodyImage().getWidth(),
                 fishInstance.getCurrentHeadImage().getHeight());
-        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        fishInstance.setxMove(5);   //move speed.
-        fishInstance.setyMove(5);   //move speed.
+        */
+        System.out.println("GameStage.constructor (fish bound's customed width/height): " +
+                fishInstance.getBounds().width + "/" + fishInstance.getBounds().height);
+        //fishInstance.setxMove(5);   //move speed.
+        //fishInstance.setyMove(5);   //move speed.
+        fishInstance.setSpeed(5);
     } // **** end GameStage(Handler, String) constructor ****
 
     public void tick() {
@@ -52,6 +60,7 @@ public class GameStage {
         int yEnd = (int)Math.min(height, ((handler.getGameCamera().getyOffset() + handler.panelHeight) / (Tile.screenTileHeight)) + 2);
                 //height;
 
+        //BACKGROUND/TILES
         for (int y = yStart; y < yEnd; y++) {
             for (int x = xStart; x < xEnd; x++) {
                 //using the game camera's xOffset and yOffset
@@ -62,6 +71,7 @@ public class GameStage {
             }
         }
 
+        //ENTITIES
         fishInstance.render(g);
     }
 

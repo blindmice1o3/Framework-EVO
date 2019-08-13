@@ -30,6 +30,8 @@ public abstract class Entity {
     public abstract void tick();
     public abstract void render(Graphics g);
 
+    // GETTERS AND SETTERS
+
     public void setX(float x) {
         this.x = x;
     }

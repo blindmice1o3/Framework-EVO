@@ -27,6 +27,7 @@ public class Fish extends Creature {
                 Assets.eatFrames[0][0][0][0][0].getWidth()
                         + Assets.tailOriginal[0][0][0][0][0].getWidth(),
                 Assets.eatFrames[0][0][0][0][0].getHeight());
+        System.out.println("Fish.constructor (width/height): " + width + "/" + height);
 
         fishStateManager = new FishStateManager();
         directionFacing = DirectionFacing.RIGHT;

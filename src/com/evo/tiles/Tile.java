@@ -33,4 +33,14 @@ public class Tile {
                 null);
     }
 
+    // GETTERS AND SETTERS
+
+    public boolean isSolid() {
+        return solid;
+    }
+
+    public void setSolid(boolean solid) {
+        this.solid = solid;
+    }
+
 } // **** end Tile class ****

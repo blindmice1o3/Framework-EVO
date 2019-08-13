@@ -5,6 +5,7 @@ import com.evo.entities.moveable.Creature;
 import com.evo.gfx.Assets;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -43,7 +44,11 @@ public class Fish extends Creature {
     } // **** end Fish(Handler) constructor ****
 
     public void tick() {
-        //TODO: finish this.
+        // MOVEMENT
+        getInput();
+        move();
+
+        //TODO: BODY-PARTS SWAPPING.
         currentHeadImage = Assets.eatFrames[fishStateManager.getCurrentBodySize().ordinal()]
                 [fishStateManager.getCurrentBodyTexture().ordinal()]
                 [fishStateManager.getCurrentJaws().ordinal()]
@@ -54,6 +59,64 @@ public class Fish extends Creature {
                 [fishStateManager.getCurrentFinPectoral().ordinal()]
                 [fishStateManager.getCurrentTail().ordinal()]
                 [0];
+    }
+
+    public void getInput() {
+        // MOVEMENT
+        xMove = 0;
+        yMove = 0;
+
+        if (handler.getKeyManager().up) {
+            yMove = -speed;
+        }
+        if (handler.getKeyManager().down) {
+            yMove = speed;
+        }
+        if (handler.getKeyManager().left) {
+            xMove = -speed;
+            ////////////////////////////////////////
+            directionFacing = DirectionFacing.LEFT;
+            ////////////////////////////////////////
+        }
+        if (handler.getKeyManager().right) {
+            xMove = speed;
+            ////////////////////////////////////////
+            directionFacing = DirectionFacing.RIGHT;
+            ////////////////////////////////////////
+        }
+
+        // BODY-PARTS SWAPPING
+        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_Z)) {
+            int currentBodyTextureOrdinal = fishStateManager.getCurrentBodyTexture().ordinal();
+            FishStateManager.BodyTexture[] bodyTexture = FishStateManager.BodyTexture.values();
+
+            if ((currentBodyTextureOrdinal+1) < bodyTexture.length) {
+                fishStateManager.setCurrentBodyTexture(bodyTexture[currentBodyTextureOrdinal + 1]);
+            } else {
+                fishStateManager.setCurrentBodyTexture(bodyTexture[0]);
+            }
+        }
+        else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_X)) {
+            int currentJawsOrdinal = fishStateManager.getCurrentJaws().ordinal();
+            FishStateManager.Jaws[] jaws = FishStateManager.Jaws.values();
+
+            if ((currentJawsOrdinal+1) < jaws.length) {
+                fishStateManager.setCurrentJaws(jaws[currentJawsOrdinal + 1]);
+            } else {
+                fishStateManager.setCurrentJaws(jaws[0]);
+            }
+        }
+        else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_C)) {
+            int currentFinPectoralOrdinal = fishStateManager.getCurrentFinPectoral().ordinal();
+            FishStateManager.FinPectoral[] finPectoral = FishStateManager.FinPectoral.values();
+
+            if ((currentFinPectoralOrdinal+1) < finPectoral.length) {
+                fishStateManager.setCurrentFinPectoral(finPectoral[currentFinPectoralOrdinal + 1]);
+            } else {
+                fishStateManager.setCurrentFinPectoral(finPectoral[0]);
+            }
+        }
+
     }
 
     public void render(Graphics g) {
@@ -108,22 +171,6 @@ public class Fish extends Creature {
         AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
 
         return op.filter(image, null);
-    }
-
-    public void moveUp() {
-        y = y - yMove;
-    }
-
-    public void moveDown() {
-        y = y + yMove;
-    }
-
-    public void moveLeft() {
-        x = x - xMove;
-    }
-
-    public void moveRight() {
-        x = x + xMove;
     }
 
     // GETTERS AND SETTERS

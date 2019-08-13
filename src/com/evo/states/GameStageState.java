@@ -36,60 +36,6 @@ public class GameStageState implements IState {
             handler.getStateManager().pushIState(StateManager.State.MAIN_MENU, null);
         }
 
-
-        if (handler.getKeyManager().up) {
-            currentGameStage.getFishInstance().moveUp();
-        }
-        if (handler.getKeyManager().down) {
-            currentGameStage.getFishInstance().moveDown();
-        }
-        if (handler.getKeyManager().left) {
-            currentGameStage.getFishInstance().moveLeft();
-            ///////////////////////////////////////////////////////////
-            currentGameStage.getFishInstance().setDirectionFacing(Fish.DirectionFacing.LEFT);
-            ///////////////////////////////////////////////////////////
-        }
-        if (handler.getKeyManager().right) {
-            currentGameStage.getFishInstance().moveRight();
-            ///////////////////////////////////////////////////////////
-            currentGameStage.getFishInstance().setDirectionFacing(Fish.DirectionFacing.RIGHT);
-            ///////////////////////////////////////////////////////////
-        }
-
-
-
-        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_Z)) {
-            int currentBodyTextureOrdinal = currentGameStage.getFishInstance().getFishStateManager().getCurrentBodyTexture().ordinal();
-            FishStateManager.BodyTexture[] bodyTexture = FishStateManager.BodyTexture.values();
-
-            if ((currentBodyTextureOrdinal+1) < bodyTexture.length) {
-                currentGameStage.getFishInstance().getFishStateManager().setCurrentBodyTexture(bodyTexture[currentBodyTextureOrdinal + 1]);
-            } else {
-                currentGameStage.getFishInstance().getFishStateManager().setCurrentBodyTexture(bodyTexture[0]);
-            }
-        }
-
-        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_X)) {
-            int currentJawsOrdinal = currentGameStage.getFishInstance().getFishStateManager().getCurrentJaws().ordinal();
-            FishStateManager.Jaws[] jaws = FishStateManager.Jaws.values();
-
-            if ((currentJawsOrdinal+1) < jaws.length) {
-                currentGameStage.getFishInstance().getFishStateManager().setCurrentJaws(jaws[currentJawsOrdinal + 1]);
-            } else {
-                currentGameStage.getFishInstance().getFishStateManager().setCurrentJaws(jaws[0]);
-            }
-        }
-
-        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_C)) {
-            int currentFinPectoralOrdinal = currentGameStage.getFishInstance().getFishStateManager().getCurrentFinPectoral().ordinal();
-            FishStateManager.FinPectoral[] finPectoral = FishStateManager.FinPectoral.values();
-
-            if ((currentFinPectoralOrdinal+1) < finPectoral.length) {
-                currentGameStage.getFishInstance().getFishStateManager().setCurrentFinPectoral(finPectoral[currentFinPectoralOrdinal + 1]);
-            } else {
-                currentGameStage.getFishInstance().getFishStateManager().setCurrentFinPectoral(finPectoral[0]);
-            }
-        }
     }
 
     @Override

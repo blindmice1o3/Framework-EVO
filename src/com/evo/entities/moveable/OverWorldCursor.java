@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 public class OverWorldCursor extends Creature {
 
-    public OverWorldCursor(Handler handler, BufferedImage image, int x, int y) {
+    public OverWorldCursor(Handler handler, BufferedImage image, float x, float y) {
         super(handler, image, x, y, image.getWidth(), image.getHeight());
     }
 
@@ -17,7 +17,7 @@ public class OverWorldCursor extends Creature {
     }
 
     public void render(Graphics g) {
-        g.drawImage(image, x, y, width, height,null);
+        g.drawImage(image, (int)x, (int)y, width, height,null);
     }
 
 }

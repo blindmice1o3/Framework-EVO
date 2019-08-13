@@ -9,28 +9,32 @@ public abstract class Entity {
 
     protected Handler handler;
 
-    protected int x, y, width, height;
-    protected BufferedImage image;
+    protected float x, y;
+    protected int width, height;
     protected Rectangle bounds;
 
-    public Entity(Handler handler, BufferedImage image, int x, int y, int width, int height) {
+    protected BufferedImage image;
+
+    public Entity(Handler handler, BufferedImage image, float x, float y, int width, int height) {
         this.handler = handler;
+
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.image = image;
         bounds = new Rectangle(0, 0, width, height);
-    } // **** end Entity(Handler, BufferedImage, int, int, int, int) constructor ****
+
+        this.image = image;
+    } // **** end Entity(Handler, BufferedImage, float, float, int, int) constructor ****
 
     public abstract void tick();
     public abstract void render(Graphics g);
 
-    public void setX(int x) {
+    public void setX(float x) {
         this.x = x;
     }
 
-    public void setY(int y) {
+    public void setY(float y) {
         this.y = y;
     }
 
@@ -42,9 +46,9 @@ public abstract class Entity {
         this.height = height;
     }
 
-    public int getX() { return x; }
+    public float getX() { return x; }
 
-    public int getY() { return y; }
+    public float getY() { return y; }
 
     public int getWidth() { return width; }
 

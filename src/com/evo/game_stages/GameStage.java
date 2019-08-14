@@ -22,21 +22,12 @@ public class GameStage {
 
     public GameStage(Handler handler, String path) {
         this.handler = handler;
+
         loadGameStage(path);
 
         fishInstance = new Fish(handler);
         fishInstance.setX(xSpawn);
         fishInstance.setY(ySpawn);
-        /*
-        fishInstance.getBounds().setBounds(0, 0,
-                fishInstance.getCurrentHeadImage().getWidth()
-                        + fishInstance.getCurrentBodyImage().getWidth(),
-                fishInstance.getCurrentHeadImage().getHeight());
-        */
-        System.out.println("GameStage.constructor (fish bound's customed width/height): " +
-                fishInstance.getBounds().width + "/" + fishInstance.getBounds().height);
-        //fishInstance.setxMove(5);   //move speed.
-        //fishInstance.setyMove(5);   //move speed.
         fishInstance.setSpeed(5);
     } // **** end GameStage(Handler, String) constructor ****
 
@@ -92,6 +83,10 @@ public class GameStage {
             }
         }
     }
+
+    // GETTERS AND SETTERS
+
+    public Tile[][] getTiles() { return tiles; }
 
     public Fish getFishInstance() { return fishInstance; }
 

@@ -2,6 +2,8 @@ package com.evo.entities.moveable;
 
 import com.evo.Handler;
 import com.evo.entities.Entity;
+import com.evo.states.GameStageState;
+import com.evo.states.StateManager;
 
 import java.awt.image.BufferedImage;
 
@@ -36,7 +38,11 @@ public abstract class Creature extends Entity {
         y += yMove;
     }
 
-    //protected boolean collision
+    protected boolean collisionWithTile(int x, int y) {
+        GameStageState gameStageState = (GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE);
+
+        return gameStageState.getCurrentGameStage().getTiles()[x][y].isSolid();
+    }
 
     // GETTERS AND SETTERS
 

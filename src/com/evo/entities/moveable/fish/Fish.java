@@ -22,7 +22,6 @@ public class Fish extends Creature {
     private BufferedImage currentBodyImage;
 
     public Fish(Handler handler) {
-        //super(image, x, y, (2 * Tile.WIDTH), Tile.HEIGHT);
         super(handler, null, 40, 10,
                 Assets.eatFrames[0][0][0][0][0].getWidth()
                         + Assets.tailOriginal[0][0][0][0][0].getWidth(),
@@ -42,6 +41,11 @@ public class Fish extends Creature {
                 [fishStateManager.getCurrentFinPectoral().ordinal()]
                 [fishStateManager.getCurrentTail().ordinal()]
                 [0];
+
+        bounds.x = 4;
+        bounds.y = 3;
+        bounds.width = 24;
+        bounds.height = 8;
     } // **** end Fish(Handler) constructor ****
 
     public void tick() {
@@ -159,10 +163,10 @@ public class Fish extends Creature {
         }
 
         //BOUNDING RECTANGLE
-        //g.setColor(Color.RED);
-        //g.fillRect((int)(x + bounds.x - handler.getGameCamera().getxOffset()),
-        //        (int)(y + bounds.y - handler.getGameCamera().getyOffset()),
-        //        bounds.width, bounds.height);
+        g.setColor(Color.RED);
+        g.fillRect((int)(x + bounds.x - handler.getGameCamera().getxOffset()),
+                (int)(y + bounds.y - handler.getGameCamera().getyOffset()),
+                bounds.width, bounds.height);
     }
 
     public static BufferedImage flipHorizontally(BufferedImage image) {

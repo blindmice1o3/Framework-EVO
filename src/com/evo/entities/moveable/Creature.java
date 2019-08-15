@@ -34,24 +34,36 @@ public abstract class Creature extends Entity {
     public void moveX() {
         //moving RIGHT (check right corners of Creature):
         if (xMove > 0) {
-            //future location (location trying to move into)
+            //future location (location trying to move into) (RIGHT side of Creature).
             int tx = (int)((x + bounds.x + bounds.width + xMove)/ Tile.screenTileWidth);
 
             //check TOP-right and BOTTOM-right corners.
+            //if NO collision, change the Creature's x-coordinate value.
             if (!collisionWithTile(tx, (int)((y + bounds.y)/Tile.screenTileHeight)) &&
                     !collisionWithTile(tx, (int)((y + bounds.y + bounds.height)/Tile.screenTileHeight))) {
                 x += xMove;
             }
+            //there was a COLLISION, Creature's future x-position is inside a tile, re-adjust it to JUST outside tile.
+            else {
+                //convert to pixel-coordinate by multiplying with Tile.screenTileWidth; minus 1 allows y-movement.
+                x = (tx * Tile.screenTileWidth) - bounds.x - bounds.width - 1;
+            }
         }
         //moving LEFT (check left corners of Creature):
         else if (xMove < 0) {
-            //future location (location trying to move into)
+            //future location (location trying to move into) (LEFT side of Creature).
             int tx = (int)((x + bounds.x + xMove)/Tile.screenTileWidth);
 
             //check TOP-left and BOTTOM-left corners.
+            //if NO collision, change the Creature's x-coordinate value.
             if (!collisionWithTile(tx, (int)((y + bounds.y)/Tile.screenTileHeight)) &&
                     !collisionWithTile(tx, (int)((y + bounds.y + bounds.height)/Tile.screenTileHeight))) {
                 x += xMove;
+            }
+            //there was a COLLISION, Creature's future x-position is inside a tile, re-adjust it to JUST outside tile.
+            else {
+                //convert to pixel-coordinate by multiplying with Tile.screenTileWidth.
+                x = (tx * Tile.screenTileWidth) + Tile.screenTileWidth - bounds.x;
             }
         }
     }
@@ -59,24 +71,36 @@ public abstract class Creature extends Entity {
     public void moveY() {
         //moving DOWN (check bottom corners of Creature):
         if (yMove > 0) {
-            //future location (location trying to move into)
+            //future location (location trying to move into) (BOTTOM side of Creature).
             int ty = (int)((y + bounds.y + bounds.height + yMove)/Tile.screenTileHeight);
 
             //check LEFT-bottom and RIGHT-bottom corners.
+            //if NO collision, change the Creature's y-coordinate value.
             if (!collisionWithTile((int)((x + bounds.x)/Tile.screenTileWidth), ty) &&
                     !collisionWithTile((int)((x + bounds.x + bounds.width)/Tile.screenTileWidth), ty)) {
                 y += yMove;
             }
+            //there was a COLLISION, Creature's future y-position is inside a tile, re-adjust it to JUST outside tile.
+            else {
+                //convert to pixel-coordinate by multiplying with Tile.screenTileHeight; minus 1 allows x-movement.
+                y = (ty * Tile.screenTileHeight) - bounds.y - bounds.height - 1;
+            }
         }
         //moving UP (check top corners of Creature):
         else if (yMove < 0) {
-            //future location (location trying to move into)
+            //future location (location trying to move into) (TOP side of Creature).
             int ty = (int)((y + bounds.y + yMove)/Tile.screenTileHeight);
 
             //check LEFT-top and RIGHT-top corners.
+            //if NO collision, change the Creature's y-coordinate value.
             if (!collisionWithTile((int)((x + bounds.x)/Tile.screenTileWidth), ty) &&
                     !collisionWithTile((int)((x + bounds.x + bounds.width)/Tile.screenTileWidth), ty)) {
                 y += yMove;
+            }
+            //there was a COLLISION, Creature's future y-position is inside a tile, re-adjust it to JUST outside tile.
+            else {
+                //convert to pixel-coordinate by multiplying with Tile.screenTileHeight.
+                y = (ty * Tile.screenTileHeight) + Tile.screenTileHeight - bounds.y;
             }
         }
     }

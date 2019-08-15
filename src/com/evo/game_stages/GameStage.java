@@ -84,10 +84,10 @@ public class GameStage {
                             Tile.TILE_WIDTH, Tile.TILE_HEIGHT), false);
                 }
                 //loading tiles of the border row/column of the map/stage.
+                //!!!NOT GRABBING THE ORIGINAL Assets.chapter1GameStage background image for these tiles!!!
                 else {
                     //SOLID tile.
-                    tiles[x][y] = new Tile(Assets.chapter1GameStage.getSubimage((x * Tile.TILE_WIDTH), (y * Tile.TILE_HEIGHT),
-                            Tile.TILE_WIDTH, Tile.TILE_HEIGHT), true);
+                    tiles[x][y] = new Tile(Assets.brickSolid, true);
                 }
             }
         }

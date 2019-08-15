@@ -36,7 +36,7 @@ public class Assets {
     public static BufferedImage mainMenu;
 
     // BACKGROUND - GameStageState
-    public static BufferedImage chapter1GameStage;
+    public static BufferedImage chapter1GameStage, brickSolid;
 
     // Initialization
     public static void init() {
@@ -263,6 +263,8 @@ public class Assets {
 
         // BACKGROUND - GameStageState
         chapter1GameStage = Utils.loadImage("/mario-7-2.gif");
+
+        brickSolid = chapter1GameStage.getSubimage(0, 200, 16, 16);
 
     }
 

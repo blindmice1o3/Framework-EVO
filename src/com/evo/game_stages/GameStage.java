@@ -77,9 +77,18 @@ public class GameStage {
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                //loading id of 0 as default.
-                tiles[x][y] = new Tile(Assets.chapter1GameStage.getSubimage((x*Tile.TILE_WIDTH), (y*Tile.TILE_HEIGHT),
-                        Tile.TILE_WIDTH, Tile.TILE_HEIGHT), false);
+                //loading tiles of the middle of the map/stage
+                if ( (x != 0) && (x != width-1) && (y != 0) && (y != height-1) ) {
+                    //NOT solid tile.
+                    tiles[x][y] = new Tile(Assets.chapter1GameStage.getSubimage((x * Tile.TILE_WIDTH), (y * Tile.TILE_HEIGHT),
+                            Tile.TILE_WIDTH, Tile.TILE_HEIGHT), false);
+                }
+                //loading tiles of the border row/column of the map/stage.
+                else {
+                    //SOLID tile.
+                    tiles[x][y] = new Tile(Assets.chapter1GameStage.getSubimage((x * Tile.TILE_WIDTH), (y * Tile.TILE_HEIGHT),
+                            Tile.TILE_WIDTH, Tile.TILE_HEIGHT), true);
+                }
             }
         }
     }

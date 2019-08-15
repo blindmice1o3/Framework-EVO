@@ -4,6 +4,7 @@ import com.evo.Handler;
 import com.evo.entities.Entity;
 import com.evo.states.GameStageState;
 import com.evo.states.StateManager;
+import com.evo.tiles.Tile;
 
 import java.awt.image.BufferedImage;
 
@@ -31,11 +32,53 @@ public abstract class Creature extends Entity {
     }
 
     public void moveX() {
-        x += xMove;
+        //moving RIGHT (check right corners of Creature):
+        if (xMove > 0) {
+            //future location (location trying to move into)
+            int tx = (int)((x + bounds.x + bounds.width + xMove)/ Tile.screenTileWidth);
+
+            //check TOP-right and BOTTOM-right corners.
+            if (!collisionWithTile(tx, (int)((y + bounds.y)/Tile.screenTileHeight)) &&
+                    !collisionWithTile(tx, (int)((y + bounds.y + bounds.height)/Tile.screenTileHeight))) {
+                x += xMove;
+            }
+        }
+        //moving LEFT (check left corners of Creature):
+        else if (xMove < 0) {
+            //future location (location trying to move into)
+            int tx = (int)((x + bounds.x + xMove)/Tile.screenTileWidth);
+
+            //check TOP-left and BOTTOM-left corners.
+            if (!collisionWithTile(tx, (int)((y + bounds.y)/Tile.screenTileHeight)) &&
+                    !collisionWithTile(tx, (int)((y + bounds.y + bounds.height)/Tile.screenTileHeight))) {
+                x += xMove;
+            }
+        }
     }
 
     public void moveY() {
-        y += yMove;
+        //moving DOWN (check bottom corners of Creature):
+        if (yMove > 0) {
+            //future location (location trying to move into)
+            int ty = (int)((y + bounds.y + bounds.height + yMove)/Tile.screenTileHeight);
+
+            //check LEFT-bottom and RIGHT-bottom corners.
+            if (!collisionWithTile((int)((x + bounds.x)/Tile.screenTileWidth), ty) &&
+                    !collisionWithTile((int)((x + bounds.x + bounds.width)/Tile.screenTileWidth), ty)) {
+                y += yMove;
+            }
+        }
+        //moving UP (check top corners of Creature):
+        else if (yMove < 0) {
+            //future location (location trying to move into)
+            int ty = (int)((y + bounds.y + yMove)/Tile.screenTileHeight);
+
+            //check LEFT-top and RIGHT-top corners.
+            if (!collisionWithTile((int)((x + bounds.x)/Tile.screenTileWidth), ty) &&
+                    !collisionWithTile((int)((x + bounds.x + bounds.width)/Tile.screenTileWidth), ty)) {
+                y += yMove;
+            }
+        }
     }
 
     protected boolean collisionWithTile(int x, int y) {

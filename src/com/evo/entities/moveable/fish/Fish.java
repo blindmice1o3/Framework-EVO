@@ -2,6 +2,7 @@ package com.evo.entities.moveable.fish;
 
 import com.evo.Handler;
 import com.evo.entities.moveable.Creature;
+import com.evo.gfx.Animation;
 import com.evo.gfx.Assets;
 
 import java.awt.*;
@@ -18,8 +19,10 @@ public class Fish extends Creature {
     private FishStateManager fishStateManager;
     private DirectionFacing directionFacing;
 
-    private BufferedImage currentHeadImage;
-    private BufferedImage currentBodyImage;
+    private Animation currentHeadAnimation;
+    private Animation currentBodyAnimation;
+    //private BufferedImage currentHeadImage;
+    //private BufferedImage currentBodyImage;
 
     public Fish(Handler handler) {
         super(handler, null, 40, 10,
@@ -31,6 +34,18 @@ public class Fish extends Creature {
         fishStateManager = new FishStateManager();
         directionFacing = DirectionFacing.RIGHT;
 
+        currentHeadAnimation = new Animation(500,
+                Assets.eatFrames[fishStateManager.getCurrentBodySize().ordinal()]
+                        [fishStateManager.getCurrentBodyTexture().ordinal()]
+                        [fishStateManager.getCurrentJaws().ordinal()]
+                        [fishStateManager.getCurrentActionState().ordinal()]);
+        currentBodyAnimation = new Animation(500,
+                Assets.tailOriginal[fishStateManager.getCurrentBodySize().ordinal()]
+                        [fishStateManager.getCurrentBodyTexture().ordinal()]
+                        [fishStateManager.getCurrentFinPectoral().ordinal()]
+                        [fishStateManager.getCurrentTail().ordinal()]);
+
+/*
         currentHeadImage = Assets.eatFrames[fishStateManager.getCurrentBodySize().ordinal()]
                 [fishStateManager.getCurrentBodyTexture().ordinal()]
                 [fishStateManager.getCurrentJaws().ordinal()]
@@ -41,6 +56,7 @@ public class Fish extends Creature {
                 [fishStateManager.getCurrentFinPectoral().ordinal()]
                 [fishStateManager.getCurrentTail().ordinal()]
                 [0];
+*/
 
         bounds.x = 4;
         bounds.y = 3;
@@ -54,6 +70,10 @@ public class Fish extends Creature {
         move();
 
         //TODO: BODY-PARTS SWAPPING.
+
+        currentHeadAnimation.tick();
+        currentBodyAnimation.tick();
+/*
         currentHeadImage = Assets.eatFrames[fishStateManager.getCurrentBodySize().ordinal()]
                 [fishStateManager.getCurrentBodyTexture().ordinal()]
                 [fishStateManager.getCurrentJaws().ordinal()]
@@ -64,6 +84,7 @@ public class Fish extends Creature {
                 [fishStateManager.getCurrentFinPectoral().ordinal()]
                 [fishStateManager.getCurrentTail().ordinal()]
                 [0];
+*/
     }
 
     public void getInput() {
@@ -100,6 +121,18 @@ public class Fish extends Creature {
             } else {
                 fishStateManager.setCurrentBodyTexture(bodyTexture[0]);
             }
+
+            //TODO: inefficient, (though unlikely) could be returning to an already-existing Animation object.
+            currentHeadAnimation = new Animation(500,
+                    Assets.eatFrames[fishStateManager.getCurrentBodySize().ordinal()]
+                            [fishStateManager.getCurrentBodyTexture().ordinal()]
+                            [fishStateManager.getCurrentJaws().ordinal()]
+                            [fishStateManager.getCurrentActionState().ordinal()]);
+            currentBodyAnimation = new Animation(500,
+                    Assets.tailOriginal[fishStateManager.getCurrentBodySize().ordinal()]
+                            [fishStateManager.getCurrentBodyTexture().ordinal()]
+                            [fishStateManager.getCurrentFinPectoral().ordinal()]
+                            [fishStateManager.getCurrentTail().ordinal()]);
         }
         else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_X)) {
             int currentJawsOrdinal = fishStateManager.getCurrentJaws().ordinal();
@@ -110,6 +143,18 @@ public class Fish extends Creature {
             } else {
                 fishStateManager.setCurrentJaws(jaws[0]);
             }
+
+            //TODO: inefficient, (though unlikely) could be returning to an already-existing Animation object.
+            currentHeadAnimation = new Animation(500,
+                    Assets.eatFrames[fishStateManager.getCurrentBodySize().ordinal()]
+                            [fishStateManager.getCurrentBodyTexture().ordinal()]
+                            [fishStateManager.getCurrentJaws().ordinal()]
+                            [fishStateManager.getCurrentActionState().ordinal()]);
+            currentBodyAnimation = new Animation(500,
+                    Assets.tailOriginal[fishStateManager.getCurrentBodySize().ordinal()]
+                            [fishStateManager.getCurrentBodyTexture().ordinal()]
+                            [fishStateManager.getCurrentFinPectoral().ordinal()]
+                            [fishStateManager.getCurrentTail().ordinal()]);
         }
         else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_C)) {
             int currentFinPectoralOrdinal = fishStateManager.getCurrentFinPectoral().ordinal();
@@ -120,6 +165,18 @@ public class Fish extends Creature {
             } else {
                 fishStateManager.setCurrentFinPectoral(finPectoral[0]);
             }
+
+            //TODO: inefficient, (though unlikely) could be returning to an already-existing Animation object.
+            currentHeadAnimation = new Animation(500,
+                    Assets.eatFrames[fishStateManager.getCurrentBodySize().ordinal()]
+                            [fishStateManager.getCurrentBodyTexture().ordinal()]
+                            [fishStateManager.getCurrentJaws().ordinal()]
+                            [fishStateManager.getCurrentActionState().ordinal()]);
+            currentBodyAnimation = new Animation(500,
+                    Assets.tailOriginal[fishStateManager.getCurrentBodySize().ordinal()]
+                            [fishStateManager.getCurrentBodyTexture().ordinal()]
+                            [fishStateManager.getCurrentFinPectoral().ordinal()]
+                            [fishStateManager.getCurrentTail().ordinal()]);
         }
 
     }
@@ -128,22 +185,24 @@ public class Fish extends Creature {
         //ACTUAL IMAGE OF FISH
         if (directionFacing == DirectionFacing.RIGHT) {
             //BODY
-            g.drawImage(currentBodyImage,
+            g.drawImage(currentBodyAnimation.getCurrentFrame(),
                     (int)(x - handler.getGameCamera().getxOffset()),
                     (int)(y - handler.getGameCamera().getyOffset()),
-                    currentBodyImage.getWidth(), currentBodyImage.getHeight(),
+                    currentBodyAnimation.getCurrentFrame().getWidth(),
+                    currentBodyAnimation.getCurrentFrame().getHeight(),
                     null);
 
             //HEAD
-            g.drawImage(currentHeadImage,
-                    (int)(x + currentBodyImage.getWidth() - handler.getGameCamera().getxOffset()),
+            g.drawImage(currentHeadAnimation.getCurrentFrame(),
+                    (int)(x + currentBodyAnimation.getCurrentFrame().getWidth() - handler.getGameCamera().getxOffset()),
                     (int)(y - handler.getGameCamera().getyOffset()),
-                    currentHeadImage.getWidth(), currentHeadImage.getHeight(),
+                    currentHeadAnimation.getCurrentFrame().getWidth(),
+                    currentHeadAnimation.getCurrentFrame().getHeight(),
                     null);
         } else if (directionFacing == DirectionFacing.LEFT) {
             //TODO: flip image of head and body.
-            BufferedImage flippedCurrentHeadImage = Fish.flipHorizontally(currentHeadImage);
-            BufferedImage flippedCurrentBodyImage = Fish.flipHorizontally(currentBodyImage);
+            BufferedImage flippedCurrentHeadImage = Fish.flipHorizontally(currentHeadAnimation.getCurrentFrame());
+            BufferedImage flippedCurrentBodyImage = Fish.flipHorizontally(currentBodyAnimation.getCurrentFrame());
 
             //@@@@@@@@@@@@@@@@@@@@@@@@@
             //HEAD
@@ -163,10 +222,10 @@ public class Fish extends Creature {
         }
 
         //BOUNDING RECTANGLE
-        g.setColor(Color.RED);
-        g.fillRect((int)(x + bounds.x - handler.getGameCamera().getxOffset()),
-                (int)(y + bounds.y - handler.getGameCamera().getyOffset()),
-                bounds.width, bounds.height);
+        //g.setColor(Color.RED);
+        //g.fillRect((int)(x + bounds.x - handler.getGameCamera().getxOffset()),
+        //        (int)(y + bounds.y - handler.getGameCamera().getyOffset()),
+        //        bounds.width, bounds.height);
     }
 
     public static BufferedImage flipHorizontally(BufferedImage image) {
@@ -190,8 +249,10 @@ public class Fish extends Creature {
 
     public void setFishStateManager(FishStateManager fishStateManager) { this.fishStateManager = fishStateManager; }
 
+/*
     public BufferedImage getCurrentHeadImage() { return currentHeadImage; }
 
     public BufferedImage getCurrentBodyImage() { return currentBodyImage; }
+*/
 
 } // **** end Fish class ****

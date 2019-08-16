@@ -1,6 +1,7 @@
 package com.evo.game_stages;
 
 import com.evo.Handler;
+import com.evo.entities.EntityManager;
 import com.evo.entities.moveable.fish.Fish;
 import com.evo.entities.non_moveable.Kelp;
 import com.evo.gfx.Assets;
@@ -19,26 +20,27 @@ public class GameStage {
     // ENTITIES
     private float xSpawn = 310;
     private float ySpawn = 200;
-    private Fish fishInstance;
-    private Kelp kelpInstance;
+    //private Fish fishInstance;
+    //private Kelp kelpInstance;
+
+    private EntityManager entityManager;
 
     public GameStage(Handler handler, String path) {
         this.handler = handler;
+        entityManager = new EntityManager(handler, new Fish(handler, xSpawn, ySpawn));
 
         loadGameStage(path);
 
-        fishInstance = new Fish(handler);
-        fishInstance.setX(xSpawn);
-        fishInstance.setY(ySpawn);
-        fishInstance.setSpeed(5);
-
-        kelpInstance = new Kelp(handler, Assets.kelpSolid[0], xSpawn-50, ySpawn-25);
+        entityManager.getPlayer().setSpeed(5);
+        entityManager.addEntity(new Kelp(handler, Assets.kelpSolid[0], xSpawn-50, ySpawn-25));
+        entityManager.addEntity(new Kelp(handler, Assets.kelpSolid[0], xSpawn-62, ySpawn-25));
+        entityManager.addEntity(new Kelp(handler, Assets.kelpSolid[0], xSpawn-74, ySpawn-25));
     } // **** end GameStage(Handler, String) constructor ****
 
     public void tick() {
-        kelpInstance.tick();
-        fishInstance.tick();
-        handler.getGameCamera().centerOnEntity(fishInstance);
+        entityManager.tick();
+
+        handler.getGameCamera().centerOnEntity(entityManager.getPlayer());
     }
 
     public void render(Graphics g) {
@@ -68,8 +70,7 @@ public class GameStage {
         }
 
         //ENTITIES
-        kelpInstance.render(g);
-        fishInstance.render(g);
+        entityManager.render(g);
     }
 
     private void loadGameStage(String path) {
@@ -103,7 +104,7 @@ public class GameStage {
 
     public Tile[][] getTiles() { return tiles; }
 
-    public Fish getFishInstance() { return fishInstance; }
+    public Fish getFishInstance() { return entityManager.getPlayer(); }
 
     public int getWidth() { return width; }
 

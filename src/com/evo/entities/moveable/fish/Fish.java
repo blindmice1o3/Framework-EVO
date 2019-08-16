@@ -24,8 +24,8 @@ public class Fish extends Creature {
     //private BufferedImage currentHeadImage;
     //private BufferedImage currentBodyImage;
 
-    public Fish(Handler handler) {
-        super(handler, null, 40, 10,
+    public Fish(Handler handler, float x, float y) {
+        super(handler, null, x, y,
                 Assets.eatFrames[0][0][0][0][0].getWidth()
                         + Assets.tailOriginal[0][0][0][0][0].getWidth(),
                 Assets.eatFrames[0][0][0][0][0].getHeight());
@@ -62,7 +62,7 @@ public class Fish extends Creature {
         bounds.y = 3;
         bounds.width = 24;
         bounds.height = 8;
-    } // **** end Fish(Handler) constructor ****
+    } // **** end Fish(Handler, float, float) constructor ****
 
     public void tick() {
         // MOVEMENT

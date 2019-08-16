@@ -38,6 +38,9 @@ public class Assets {
     // BACKGROUND - GameStageState
     public static BufferedImage chapter1GameStage, brickSolid;
 
+    // ENTITIES - KELP
+    public static BufferedImage[] kelpSolid;
+
     // Initialization
     public static void init() {
         // SPRITE SHEETS
@@ -263,8 +266,15 @@ public class Assets {
 
         // BACKGROUND - GameStageState
         chapter1GameStage = Utils.loadImage("/mario-7-2.gif");
-
         brickSolid = chapter1GameStage.getSubimage(0, 200, 16, 16);
+
+
+        // ENTITIES - KELP
+        kelpSolid = new BufferedImage[4];
+        kelpSolid[0] = spriteSheetChapter1Creatures.getSubimage(557, 718, 12, 32);
+        kelpSolid[1] = spriteSheetChapter1Creatures.getSubimage(569, 718, 12, 32);
+        kelpSolid[2] = spriteSheetChapter1Creatures.getSubimage(582, 718, 12, 32);
+        kelpSolid[3] = spriteSheetChapter1Creatures.getSubimage(594, 718, 12, 32);
 
     }
 

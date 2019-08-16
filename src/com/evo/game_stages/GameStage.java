@@ -2,6 +2,7 @@ package com.evo.game_stages;
 
 import com.evo.Handler;
 import com.evo.entities.moveable.fish.Fish;
+import com.evo.entities.non_moveable.Kelp;
 import com.evo.gfx.Assets;
 import com.evo.tiles.Tile;
 
@@ -19,6 +20,7 @@ public class GameStage {
     private float xSpawn = 310;
     private float ySpawn = 200;
     private Fish fishInstance;
+    private Kelp kelpInstance;
 
     public GameStage(Handler handler, String path) {
         this.handler = handler;
@@ -29,9 +31,12 @@ public class GameStage {
         fishInstance.setX(xSpawn);
         fishInstance.setY(ySpawn);
         fishInstance.setSpeed(5);
+
+        kelpInstance = new Kelp(handler, Assets.kelpSolid[0], xSpawn-50, ySpawn-25);
     } // **** end GameStage(Handler, String) constructor ****
 
     public void tick() {
+        kelpInstance.tick();
         fishInstance.tick();
         handler.getGameCamera().centerOnEntity(fishInstance);
     }
@@ -63,6 +68,7 @@ public class GameStage {
         }
 
         //ENTITIES
+        kelpInstance.render(g);
         fishInstance.render(g);
     }
 

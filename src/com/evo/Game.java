@@ -42,18 +42,25 @@ public class Game implements Runnable {
     private void initGame() {
         Assets.init();
 
+        System.out.println("0");
         stateManager = new StateManager();
+        System.out.println("1");
         handler = new Handler(this);
+        System.out.println("2");
         gameCamera = new GameCamera(handler, 0, 0);
+        System.out.println("3");
         keyManager = new KeyManager();
+        System.out.println("4");
         displayer = new Displayer("EVO: Search for Eden", WIDTH, HEIGHT, handler);
-
+        System.out.println("5");
         ////////////////////////////
         handler.init();
+        System.out.println("6");
         stateManager.init(handler);
+        System.out.println("7");
         ////////////////////////////
-
         saverAndLoader = new SaverAndLoader(handler);
+        System.out.println("8");
     }
 
     private void gameLoop() {

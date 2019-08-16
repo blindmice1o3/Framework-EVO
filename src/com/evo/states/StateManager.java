@@ -41,6 +41,7 @@ public class StateManager implements Serializable {
         states.put(State.GAME_STAGE, new GameStageState(handler));
 
         statesStack.add(states.get(State.NULL));
+        statesStack.add(states.get(State.INTRO));
 
         //currentState = states.get(State.INTRO);
     }
@@ -50,7 +51,7 @@ public class StateManager implements Serializable {
     }
 
     public void render(Graphics g) {
-        if (getTop() != null) {
+        if (statesStack.size()-1 >= 0) {
             getTop().render(g);
         }
     }

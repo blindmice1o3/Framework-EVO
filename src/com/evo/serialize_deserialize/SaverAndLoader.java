@@ -4,7 +4,6 @@ import com.evo.Handler;
 import com.evo.entities.moveable.fish.Fish;
 import com.evo.entities.moveable.fish.FishStateManager;
 import com.evo.states.GameStageState;
-import com.evo.states.IntroState;
 import com.evo.states.StateManager;
 
 import java.io.*;
@@ -31,10 +30,10 @@ public class SaverAndLoader {
                 ////////////////////////////////////////////////////////////////////
                 //should be GameStageState
                 GameStageState gameStageState = (GameStageState)handler.getGame().getStateManager().getState(StateManager.State.GAME_STAGE);
-                FishStateManager fishStateManager = gameStageState.getCurrentGameStage().getFishInstance().getFishStateManager();
-                Fish.DirectionFacing directionFacing = gameStageState.getCurrentGameStage().getFishInstance().getDirectionFacing();
-                float x = gameStageState.getCurrentGameStage().getFishInstance().getX();
-                float y = gameStageState.getCurrentGameStage().getFishInstance().getY();
+                FishStateManager fishStateManager = gameStageState.getCurrentGameStage().getPlayer().getFishStateManager();
+                Fish.DirectionFacing directionFacing = gameStageState.getCurrentGameStage().getPlayer().getDirectionFacing();
+                float x = gameStageState.getCurrentGameStage().getPlayer().getX();
+                float y = gameStageState.getCurrentGameStage().getPlayer().getY();
 
                 objectOutputStream.writeObject(fishStateManager);
                 objectOutputStream.writeObject(directionFacing);
@@ -74,11 +73,11 @@ public class SaverAndLoader {
             float x = objectInputStream.readFloat();
             float y = objectInputStream.readFloat();
 
-            gameStageState.getCurrentGameStage().getFishInstance().setFishStateManager(fishStateManager);
-            gameStageState.getCurrentGameStage().getFishInstance().tick();
-            gameStageState.getCurrentGameStage().getFishInstance().setDirectionFacing(directionFacing);
-            gameStageState.getCurrentGameStage().getFishInstance().setX(x);
-            gameStageState.getCurrentGameStage().getFishInstance().setY(y);
+            gameStageState.getCurrentGameStage().getPlayer().setFishStateManager(fishStateManager);
+            gameStageState.getCurrentGameStage().getPlayer().tick();
+            gameStageState.getCurrentGameStage().getPlayer().setDirectionFacing(directionFacing);
+            gameStageState.getCurrentGameStage().getPlayer().setX(x);
+            gameStageState.getCurrentGameStage().getPlayer().setY(y);
 
 
 

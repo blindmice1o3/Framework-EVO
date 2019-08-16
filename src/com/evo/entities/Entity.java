@@ -1,6 +1,8 @@
 package com.evo.entities;
 
 import com.evo.Handler;
+import com.evo.states.GameStageState;
+import com.evo.states.StateManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -29,6 +31,29 @@ public abstract class Entity {
 
     public abstract void tick();
     public abstract void render(Graphics g);
+
+    public boolean checkEntityCollisions(float xOffset, float yOffset) {
+        for (Entity e : ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().getEntities()) {
+            //if the entity calling checkEntityCollisions(float, float) finds ITSELF in the collection, skip by continue.
+            if (e.equals(this)) {
+                continue;
+            }
+
+            //check EACH entity to see if their collision bounds INTERSECTS with yours.
+            if (e.getCollisionBounds(0f, 0f).intersects(getCollisionBounds(xOffset, yOffset))) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public Rectangle getCollisionBounds(float xOffset, float yOffset) {
+        return new Rectangle((int)(x + bounds.x + xOffset),
+                (int)(y + bounds.y + yOffset),
+                bounds.width,
+                bounds.height);
+    }
 
     // GETTERS AND SETTERS
 

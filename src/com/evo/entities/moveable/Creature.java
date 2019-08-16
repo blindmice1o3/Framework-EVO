@@ -27,8 +27,14 @@ public abstract class Creature extends Entity {
     } // **** end Creature(Handler, BufferedImage, float, float, int, int) constructor
 
     public void move() {
-        moveX();
-        moveY();
+        //COLLISION W ENTITY CHECK depending on where we WILL BE moving to (xMove).
+        if (!checkEntityCollisions(xMove, 0f)) {
+            moveX();
+        }
+        //COLLISION W ENTITY CHECK depending on where we WILL BE moving to (yMove).
+        if (!checkEntityCollisions(0f, yMove)) {
+            moveY();
+        }
     }
 
     public void moveX() {

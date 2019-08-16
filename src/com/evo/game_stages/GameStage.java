@@ -20,9 +20,6 @@ public class GameStage {
     // ENTITIES
     private float xSpawn = 310;
     private float ySpawn = 200;
-    //private Fish fishInstance;
-    //private Kelp kelpInstance;
-
     private EntityManager entityManager;
 
     public GameStage(Handler handler, String path) {
@@ -104,7 +101,9 @@ public class GameStage {
 
     public Tile[][] getTiles() { return tiles; }
 
-    public Fish getFishInstance() { return entityManager.getPlayer(); }
+    public EntityManager getEntityManager() { return entityManager; }
+
+    public Fish getPlayer() { return entityManager.getPlayer(); }
 
     public int getWidth() { return width; }
 

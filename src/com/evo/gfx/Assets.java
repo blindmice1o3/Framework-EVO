@@ -2,6 +2,7 @@ package com.evo.gfx;
 
 import com.evo.Utils;
 import com.evo.entities.moveable.fish.FishStateManager;
+import com.evo.tiles.Tile;
 
 import java.awt.image.BufferedImage;
 
@@ -36,7 +37,7 @@ public class Assets {
     public static BufferedImage mainMenu;
 
     // BACKGROUND - GameStageState
-    public static BufferedImage chapter1GameStage, brickSolid;
+    public static BufferedImage chapter1GameStage, brickGreen, coralPink, coinGameObject;
 
     // ENTITIES - KELP
     public static BufferedImage[] kelpSolid;
@@ -266,7 +267,9 @@ public class Assets {
 
         // BACKGROUND - GameStageState
         chapter1GameStage = Utils.loadImage("/mario-7-2.gif");
-        brickSolid = chapter1GameStage.getSubimage(0, 200, 16, 16);
+        brickGreen = chapter1GameStage.getSubimage(0, 200, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
+        coralPink = chapter1GameStage.getSubimage(176, 184, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
+        coinGameObject = chapter1GameStage.getSubimage(224, 184, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
 
 
         // ENTITIES - KELP

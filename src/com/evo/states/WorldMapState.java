@@ -178,9 +178,9 @@ public class WorldMapState implements IState {
 /*
                 //////////////////// TOKEN /////////////////
                 g2d.drawImage(Assets.upOverworld0, (int)((6.25 * 16) * 2.4765625), (int)((11 * 16) * 2.017857142857143),
-                        (int)(((6.25 * 16) * 2.4765625) + (Assets.upOverworld0.getWidth() * 2.4765625)),
-                        (int)(((11 * 16) * 2.017857142857143) + (Assets.upOverworld0.getHeight() * 2.017857142857143)),
-                        0, 0, Assets.upOverworld0.getWidth(), Assets.upOverworld0.getHeight(), null);
+                        (int)(((6.25 * 16) * 2.4765625) + (Assets.upOverworld0.getWidthInNumOfTile() * 2.4765625)),
+                        (int)(((11 * 16) * 2.017857142857143) + (Assets.upOverworld0.getHeightInNumOfTile() * 2.017857142857143)),
+                        0, 0, Assets.upOverworld0.getWidthInNumOfTile(), Assets.upOverworld0.getHeightInNumOfTile(), null);
                 ////////////////////////////////////////////
 */
                 /////OVERWORLDCURSOR//////

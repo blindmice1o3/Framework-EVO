@@ -23,9 +23,9 @@ public class GameCamera {
             xOffset = 0;
         }
         //else if off-RIGHT-of-map, re-position so it's right at the edge.
-        else if (xOffset > ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getWidth()
+        else if (xOffset > ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getWidthInNumOfTile()
                 * (Tile.screenTileWidth) - handler.panelWidth) {
-            xOffset = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getWidth()
+            xOffset = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getWidthInNumOfTile()
                     * (Tile.screenTileWidth) - handler.panelWidth;
         }
 
@@ -34,9 +34,9 @@ public class GameCamera {
             yOffset = 0;
         }
         // else if off-BOTTOM-of-map, re-position so it's right at the edge.
-        else if (yOffset > ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getHeight()
+        else if (yOffset > ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getHeightInNumOfTile()
                 * (Tile.screenTileHeight) - handler.panelHeight) {
-            yOffset = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getHeight()
+            yOffset = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getHeightInNumOfTile()
                     * (Tile.screenTileHeight) - handler.panelHeight;
         }
     }

@@ -78,9 +78,11 @@ public class GameStage {
             return false;
         }
 
+        int x = 0;
+        int y = 0;
         //if any pixels are not the same, the two sprite are NOT the same.
-        for (int y = 0; y < sprite1.getHeight(); y++) {
-            for (int x = 0; x < sprite1.getWidth(); x++) {
+        //for (int y = 0; y < Tile.TILE_HEIGHT; y++) {
+            //for (int x = 0; x < Tile.TILE_HEIGHT; x++) {
                 int pixelSprite1 = sprite1.getRGB(x, y);
                 int redSprite1 = (pixelSprite1 >> 16) & 0xff;
                 int greenSprite1 = (pixelSprite1 >> 8) & 0xff;
@@ -91,13 +93,16 @@ public class GameStage {
                 int greenSprite2 = (pixelSprite2 >> 8) & 0xff;
                 int blueSprite2 = (pixelSprite2) & 0xff;
 
-                if ((redSprite1 != redSprite2) || (greenSprite1 != greenSprite2) || (blueSprite1 != blueSprite2)) {
-                    return false;
-                }
-            }
-        }
 
-        return true;
+
+                if ( ((redSprite1 == redSprite2) && (greenSprite1 == greenSprite2) && (blueSprite1 == blueSprite2)) ) {
+                    return true;
+                }
+
+            //}
+        //}
+
+        return false;
     }
 
     private void loadGameStage(String path) {
@@ -111,8 +116,8 @@ public class GameStage {
 
         ArrayList<BufferedImage> solidTileSearchTargets = new ArrayList<BufferedImage>();
         solidTileSearchTargets.add(Assets.brickGreen);
-        solidTileSearchTargets.add(Assets.coralPink);
-        solidTileSearchTargets.add(Assets.coinGameObject);
+        //solidTileSearchTargets.add(Assets.coralPink);
+        //solidTileSearchTargets.add(Assets.coinGameObject);
 
         //check each pixels in the tile (16x16) within the 192tiles by 14tiles map.
         for (int y = 0; y < heightInNumOfTile-1; y++) {
@@ -120,22 +125,23 @@ public class GameStage {
 
                 int xOffset = (x * Tile.TILE_WIDTH);
                 int yOffset = (y * Tile.TILE_HEIGHT)+8;
+                BufferedImage currentTile = Assets.chapter1GameStage.getSubimage(xOffset, yOffset,
+                        Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
+
 
                 //for each tile, check if it's one of the solidTileSearchTargets.
                 for (BufferedImage solidTileTarget : solidTileSearchTargets) {
 
-                    BufferedImage currentTile = Assets.chapter1GameStage.getSubimage(xOffset, yOffset,
-                            solidTileTarget.getWidth(), solidTileTarget.getHeight());
-
                     //if it's the same, we have a SOLID tile.
                     if (compareTwoSprites(solidTileTarget, currentTile)) {
                         tiles[x][y] = new Tile(currentTile, true);
-                    }
-                    //otherwise, we have a NOT solid tile.
-                    else {
-                        tiles[x][y] = new Tile(currentTile, false);
+                        break;
                     }
 
+                }
+
+                if (tiles[x][y] == null) {
+                    tiles[x][y] = new Tile(currentTile, false);
                 }
 /*
                 //loading tiles of the middle of the map/stage

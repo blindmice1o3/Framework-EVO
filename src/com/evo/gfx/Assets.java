@@ -37,7 +37,7 @@ public class Assets {
     public static BufferedImage mainMenu;
 
     // BACKGROUND - GameStageState
-    public static BufferedImage chapter1GameStage, brickGreen, coralPink, coinGameObject;
+    public static BufferedImage chapter1GameStage, brickGreen, coralPink1, coralPink2, coralPink3, coinGameObject;
 
     // ENTITIES - KELP
     public static BufferedImage[] kelpSolid;
@@ -268,7 +268,9 @@ public class Assets {
         // BACKGROUND - GameStageState
         chapter1GameStage = Utils.loadImage("/mario-7-2.gif");
         brickGreen = chapter1GameStage.getSubimage(0, 200, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
-        coralPink = chapter1GameStage.getSubimage(176, 184, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
+        coralPink1 = chapter1GameStage.getSubimage(176, 184, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
+        coralPink2 = chapter1GameStage.getSubimage(1632, 120, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
+        coralPink3 = chapter1GameStage.getSubimage(2384, 184, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
         coinGameObject = chapter1GameStage.getSubimage(224, 184, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
 
 

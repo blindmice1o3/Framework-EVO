@@ -72,14 +72,13 @@ public class GameStage {
         entityManager.render(g);
     }
 
-    private boolean compareTwoSprites(BufferedImage sprite1, BufferedImage sprite2) {
+    private boolean compareTwoSprites(BufferedImage sprite1, BufferedImage sprite2, int x, int y) {
         //if width or height are not the same, the two sprites are NOT the same.
         if ((sprite1.getWidth() != sprite1.getWidth()) || (sprite1.getHeight() != sprite2.getHeight())) {
             return false;
         }
 
-        int x = 0;
-        int y = 0;
+
         //if any pixels are not the same, the two sprite are NOT the same.
         //for (int y = 0; y < Tile.TILE_HEIGHT; y++) {
             //for (int x = 0; x < Tile.TILE_HEIGHT; x++) {
@@ -116,8 +115,11 @@ public class GameStage {
 
         ArrayList<BufferedImage> solidTileSearchTargets = new ArrayList<BufferedImage>();
         solidTileSearchTargets.add(Assets.brickGreen);
-        //solidTileSearchTargets.add(Assets.coralPink);
-        //solidTileSearchTargets.add(Assets.coinGameObject);
+        solidTileSearchTargets.add(Assets.coinGameObject);
+        solidTileSearchTargets.add(Assets.coralPink1);
+        solidTileSearchTargets.add(Assets.coralPink2);
+        solidTileSearchTargets.add(Assets.coralPink3);
+
 
         //check each pixels in the tile (16x16) within the 192tiles by 14tiles map.
         for (int y = 0; y < heightInNumOfTile-1; y++) {
@@ -132,11 +134,40 @@ public class GameStage {
                 //for each tile, check if it's one of the solidTileSearchTargets.
                 for (BufferedImage solidTileTarget : solidTileSearchTargets) {
 
+                    int xx = 0;
+                    int yy = 0;
+
+                    if (solidTileTarget == Assets.brickGreen) {
+                        xx = 0;
+                        yy = 0;
+                    } else {
+                        xx = 9;
+                        yy = 2;
+                    }
+
                     //if it's the same, we have a SOLID tile.
-                    if (compareTwoSprites(solidTileTarget, currentTile)) {
+                    if (compareTwoSprites(solidTileTarget, currentTile, xx, yy)) {
                         tiles[x][y] = new Tile(currentTile, true);
                         break;
                     }
+
+                    if ((tiles[x][y] == null) && (solidTileTarget == Assets.coralPink1)) {
+                        xx = 8;
+                        yy = 14;
+                        if (compareTwoSprites(solidTileTarget, currentTile, xx, yy)) {
+                            tiles[x][y] = new Tile(currentTile, true);
+                            break;
+                        }
+                    }
+                    if ((tiles[x][y] == null) && (solidTileTarget == Assets.coralPink1)) {
+                        xx = 8;
+                        yy = 15;
+                        if (compareTwoSprites(solidTileTarget, currentTile, xx, yy)) {
+                            tiles[x][y] = new Tile(currentTile, true);
+                            break;
+                        }
+                    }
+
 
                 }
 

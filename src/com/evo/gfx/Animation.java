@@ -33,4 +33,16 @@ public class Animation {
         return frames[index];
     }
 
+    public void resetIndex() {
+        index = 0;
+    }
+
+    // GETTERS
+
+    public int getIndex() { return index; }
+
+    public BufferedImage[] getFrames() { return frames; }
+
+    public long getTimer() { return timer; }
+
 } // **** end Animation class ****

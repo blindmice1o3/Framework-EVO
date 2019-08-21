@@ -19,6 +19,7 @@ public class Fish extends Creature {
     private FishStateManager fishStateManager;
     private DirectionFacing directionFacing;
 
+    private Animation idleHeadAnimation, eatHeadAnimation, biteHeadAnimation, hurtHeadAnimation;
     private Animation currentHeadAnimation;
     private Animation currentBodyAnimation;
     //private BufferedImage currentHeadImage;
@@ -34,12 +35,8 @@ public class Fish extends Creature {
         fishStateManager = new FishStateManager();
         directionFacing = DirectionFacing.RIGHT;
 
-        currentHeadAnimation = new Animation(500,
-                Assets.eatFrames[fishStateManager.getCurrentBodySize().ordinal()]
-                        [fishStateManager.getCurrentBodyTexture().ordinal()]
-                        [fishStateManager.getCurrentJaws().ordinal()]
-                        [fishStateManager.getCurrentActionState().ordinal()]);
-        currentBodyAnimation = new Animation(500,
+        initHeadAnimations();
+        currentBodyAnimation = new Animation(600,
                 Assets.tailOriginal[fishStateManager.getCurrentBodySize().ordinal()]
                         [fishStateManager.getCurrentBodyTexture().ordinal()]
                         [fishStateManager.getCurrentFinPectoral().ordinal()]
@@ -64,14 +61,82 @@ public class Fish extends Creature {
         bounds.height = 8;
     } // **** end Fish(Handler, float, float) constructor ****
 
+    private void initHeadAnimations() {
+        //for FishStateManager.ActionState.NONE
+        BufferedImage[] idleFrames = new BufferedImage[1];
+        idleFrames[0] = Assets.eatFrames[fishStateManager.getCurrentBodySize().ordinal()]
+                [fishStateManager.getCurrentBodyTexture().ordinal()]
+                [fishStateManager.getCurrentJaws().ordinal()]
+                [FishStateManager.ActionState.EAT.ordinal()]
+                [0];
+        idleHeadAnimation = new Animation(400, idleFrames);
+
+        //for FishStateManager.ActionState.HURT
+        BufferedImage[] hurtFrames = new BufferedImage[1];
+        hurtFrames[0] = Assets.hurtFrames[fishStateManager.getCurrentBodySize().ordinal()]
+                [fishStateManager.getCurrentBodyTexture().ordinal()]
+                [fishStateManager.getCurrentJaws().ordinal()]
+                [FishStateManager.ActionState.HURT.ordinal()]
+                [0];
+        hurtHeadAnimation = new Animation(400, hurtFrames);
+
+        //for FishStateManager.ActionState.EAT
+        BufferedImage[] eatFrames = new BufferedImage[3];
+        eatFrames[0] = Assets.eatFrames[fishStateManager.getCurrentBodySize().ordinal()]
+                [fishStateManager.getCurrentBodyTexture().ordinal()]
+                [fishStateManager.getCurrentJaws().ordinal()]
+                [FishStateManager.ActionState.EAT.ordinal()]
+                [1];
+        eatFrames[1] = Assets.eatFrames[fishStateManager.getCurrentBodySize().ordinal()]
+                [fishStateManager.getCurrentBodyTexture().ordinal()]
+                [fishStateManager.getCurrentJaws().ordinal()]
+                [FishStateManager.ActionState.EAT.ordinal()]
+                [2];
+        eatFrames[2] = Assets.biteFrames[fishStateManager.getCurrentBodySize().ordinal()]
+                [fishStateManager.getCurrentBodyTexture().ordinal()]
+                [fishStateManager.getCurrentJaws().ordinal()]
+                [FishStateManager.ActionState.BITE.ordinal()]
+                [2];
+        eatHeadAnimation = new Animation(400, eatFrames);
+
+        //for FishStateManager.ActionState.BITE
+        BufferedImage[] biteFrames = new BufferedImage[3];
+        biteFrames[0] = Assets.biteFrames[fishStateManager.getCurrentBodySize().ordinal()]
+                [fishStateManager.getCurrentBodyTexture().ordinal()]
+                [fishStateManager.getCurrentJaws().ordinal()]
+                [FishStateManager.ActionState.BITE.ordinal()]
+                [0];
+        biteFrames[1] = Assets.biteFrames[fishStateManager.getCurrentBodySize().ordinal()]
+                [fishStateManager.getCurrentBodyTexture().ordinal()]
+                [fishStateManager.getCurrentJaws().ordinal()]
+                [FishStateManager.ActionState.BITE.ordinal()]
+                [1];
+        biteFrames[2] = Assets.hurtFrames[fishStateManager.getCurrentBodySize().ordinal()]
+                [fishStateManager.getCurrentBodyTexture().ordinal()]
+                [fishStateManager.getCurrentJaws().ordinal()]
+                [FishStateManager.ActionState.HURT.ordinal()]
+                [1];
+        biteHeadAnimation = new Animation(400, biteFrames);
+
+        /////////////////////////////////////////
+        currentHeadAnimation = idleHeadAnimation;
+        /////////////////////////////////////////
+    }
+
     public void tick() {
         // MOVEMENT
         getInput();
         move();
 
         //TODO: BODY-PARTS SWAPPING.
+        if (currentHeadAnimation != idleHeadAnimation) {
+            currentHeadAnimation.tick();
 
-        currentHeadAnimation.tick();
+            if (currentHeadAnimation.getIndex() == currentHeadAnimation.getFrames().length-1) {
+                fishStateManager.setCurrentActionState(FishStateManager.ActionState.NONE);
+                currentHeadAnimation = idleHeadAnimation;
+            }
+        }
         currentBodyAnimation.tick();
 /*
         currentHeadImage = Assets.eatFrames[fishStateManager.getCurrentBodySize().ordinal()]
@@ -111,8 +176,18 @@ public class Fish extends Creature {
             ////////////////////////////////////////
         }
 
+        // A and B BUTTONS
+        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SPACE)) {
+            fishStateManager.setCurrentActionState(FishStateManager.ActionState.BITE);
+            currentHeadAnimation = biteHeadAnimation;
+        }
+        else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
+            fishStateManager.setCurrentActionState(FishStateManager.ActionState.EAT);
+            currentHeadAnimation = eatHeadAnimation;
+        }
+
         // BODY-PARTS SWAPPING
-        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_Z)) {
+        else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_Z)) {
             int currentBodyTextureOrdinal = fishStateManager.getCurrentBodyTexture().ordinal();
             FishStateManager.BodyTexture[] bodyTexture = FishStateManager.BodyTexture.values();
 
@@ -123,12 +198,8 @@ public class Fish extends Creature {
             }
 
             //TODO: inefficient, (though unlikely) could be returning to an already-existing Animation object.
-            currentHeadAnimation = new Animation(500,
-                    Assets.eatFrames[fishStateManager.getCurrentBodySize().ordinal()]
-                            [fishStateManager.getCurrentBodyTexture().ordinal()]
-                            [fishStateManager.getCurrentJaws().ordinal()]
-                            [fishStateManager.getCurrentActionState().ordinal()]);
-            currentBodyAnimation = new Animation(500,
+            initHeadAnimations();
+            currentBodyAnimation = new Animation(600,
                     Assets.tailOriginal[fishStateManager.getCurrentBodySize().ordinal()]
                             [fishStateManager.getCurrentBodyTexture().ordinal()]
                             [fishStateManager.getCurrentFinPectoral().ordinal()]
@@ -145,12 +216,8 @@ public class Fish extends Creature {
             }
 
             //TODO: inefficient, (though unlikely) could be returning to an already-existing Animation object.
-            currentHeadAnimation = new Animation(500,
-                    Assets.eatFrames[fishStateManager.getCurrentBodySize().ordinal()]
-                            [fishStateManager.getCurrentBodyTexture().ordinal()]
-                            [fishStateManager.getCurrentJaws().ordinal()]
-                            [fishStateManager.getCurrentActionState().ordinal()]);
-            currentBodyAnimation = new Animation(500,
+            initHeadAnimations();
+            currentBodyAnimation = new Animation(600,
                     Assets.tailOriginal[fishStateManager.getCurrentBodySize().ordinal()]
                             [fishStateManager.getCurrentBodyTexture().ordinal()]
                             [fishStateManager.getCurrentFinPectoral().ordinal()]
@@ -167,12 +234,8 @@ public class Fish extends Creature {
             }
 
             //TODO: inefficient, (though unlikely) could be returning to an already-existing Animation object.
-            currentHeadAnimation = new Animation(500,
-                    Assets.eatFrames[fishStateManager.getCurrentBodySize().ordinal()]
-                            [fishStateManager.getCurrentBodyTexture().ordinal()]
-                            [fishStateManager.getCurrentJaws().ordinal()]
-                            [fishStateManager.getCurrentActionState().ordinal()]);
-            currentBodyAnimation = new Animation(500,
+            initHeadAnimations();
+            currentBodyAnimation = new Animation(600,
                     Assets.tailOriginal[fishStateManager.getCurrentBodySize().ordinal()]
                             [fishStateManager.getCurrentBodyTexture().ordinal()]
                             [fishStateManager.getCurrentFinPectoral().ordinal()]
@@ -188,14 +251,22 @@ public class Fish extends Creature {
             g.drawImage(currentBodyAnimation.getCurrentFrame(),
                     (int)(x - handler.getGameCamera().getxOffset()),
                     (int)(y - handler.getGameCamera().getyOffset()),
+                    (int)(x - handler.getGameCamera().getxOffset() + Assets.tailOriginal[0][0][0][0][0].getWidth()),
+                    (int)(y - handler.getGameCamera().getyOffset() + Assets.tailOriginal[0][0][0][0][0].getHeight()),
+                    0,
+                    0,
                     currentBodyAnimation.getCurrentFrame().getWidth(),
                     currentBodyAnimation.getCurrentFrame().getHeight(),
                     null);
 
             //HEAD
             g.drawImage(currentHeadAnimation.getCurrentFrame(),
-                    (int)(x + currentBodyAnimation.getCurrentFrame().getWidth() - handler.getGameCamera().getxOffset()),
+                    (int)(x - handler.getGameCamera().getxOffset() + Assets.tailOriginal[0][0][0][0][0].getWidth()),
                     (int)(y - handler.getGameCamera().getyOffset()),
+                    (int)(x - handler.getGameCamera().getxOffset() + Assets.tailOriginal[0][0][0][0][0].getWidth() + Assets.eatFrames[0][0][0][0][0].getWidth()),
+                    (int)(y - handler.getGameCamera().getyOffset() + Assets.eatFrames[0][0][0][0][0].getHeight()),
+                    0,
+                    0,
                     currentHeadAnimation.getCurrentFrame().getWidth(),
                     currentHeadAnimation.getCurrentFrame().getHeight(),
                     null);
@@ -209,14 +280,24 @@ public class Fish extends Creature {
             g.drawImage(flippedCurrentHeadImage,
                     (int)(x - handler.getGameCamera().getxOffset()),
                     (int)(y - handler.getGameCamera().getyOffset()),
-                    flippedCurrentHeadImage.getWidth(), flippedCurrentHeadImage.getHeight(),
+                    (int)(x - handler.getGameCamera().getxOffset() + Assets.eatFrames[0][0][0][0][0].getWidth()),
+                    (int)(y - handler.getGameCamera().getyOffset() + Assets.eatFrames[0][0][0][0][0].getHeight()),
+                    0,
+                    0,
+                    flippedCurrentHeadImage.getWidth(),
+                    flippedCurrentHeadImage.getHeight(),
                     null);
 
             //BODY
             g.drawImage(flippedCurrentBodyImage,
-                    (int)(x + flippedCurrentHeadImage.getWidth() - handler.getGameCamera().getxOffset()),
+                    (int)(x - handler.getGameCamera().getxOffset() + flippedCurrentHeadImage.getWidth()),
                     (int)(y - handler.getGameCamera().getyOffset()),
-                    flippedCurrentBodyImage.getWidth(), flippedCurrentBodyImage.getHeight(),
+                    (int)(x - handler.getGameCamera().getxOffset() + flippedCurrentHeadImage.getWidth() + Assets.tailOriginal[0][0][0][0][0].getWidth()),
+                    (int)(y - handler.getGameCamera().getyOffset() + Assets.tailOriginal[0][0][0][0][0].getHeight()),
+                    0,
+                    0,
+                    flippedCurrentBodyImage.getWidth(),
+                    flippedCurrentBodyImage.getHeight(),
                     null);
             //@@@@@@@@@@@@@@@@@@@@@@@@@
         }

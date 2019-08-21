@@ -43,7 +43,7 @@ public class FishStateManager implements Serializable {
 
     //CONSTRUCTOR with default values.
     public FishStateManager() {
-        currentActionState = ActionState.EAT;
+        currentActionState = ActionState.NONE;
 
         currentBodySize = BodySize.DECREASE;
         currentBodyTexture = BodyTexture.SLICK;

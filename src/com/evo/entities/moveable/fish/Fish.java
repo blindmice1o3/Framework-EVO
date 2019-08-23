@@ -251,6 +251,14 @@ public class Fish extends Creature {
             g.drawImage(currentBodyAnimation.getCurrentFrame(),
                     (int)(x - handler.getGameCamera().getxOffset()),
                     (int)(y - handler.getGameCamera().getyOffset()),
+                    Assets.tailOriginal[0][0][0][0][0].getWidth(),
+                    Assets.tailOriginal[0][0][0][0][0].getHeight(),
+                    null);
+
+            /*
+            g.drawImage(currentBodyAnimation.getCurrentFrame(),
+                    (int)(x - handler.getGameCamera().getxOffset()),
+                    (int)(y - handler.getGameCamera().getyOffset()),
                     (int)(x - handler.getGameCamera().getxOffset() + Assets.tailOriginal[0][0][0][0][0].getWidth()),
                     (int)(y - handler.getGameCamera().getyOffset() + Assets.tailOriginal[0][0][0][0][0].getHeight()),
                     0,
@@ -258,8 +266,17 @@ public class Fish extends Creature {
                     currentBodyAnimation.getCurrentFrame().getWidth(),
                     currentBodyAnimation.getCurrentFrame().getHeight(),
                     null);
+            */
 
             //HEAD
+            g.drawImage(currentHeadAnimation.getCurrentFrame(),
+                    (int)(x - handler.getGameCamera().getxOffset() + Assets.tailOriginal[0][0][0][0][0].getWidth()),
+                    (int)(y - handler.getGameCamera().getyOffset()),
+                    Assets.eatFrames[0][0][0][0][0].getWidth(),
+                    Assets.eatFrames[0][0][0][0][0].getHeight(),
+                    null);
+
+            /*
             g.drawImage(currentHeadAnimation.getCurrentFrame(),
                     (int)(x - handler.getGameCamera().getxOffset() + Assets.tailOriginal[0][0][0][0][0].getWidth()),
                     (int)(y - handler.getGameCamera().getyOffset()),
@@ -270,6 +287,8 @@ public class Fish extends Creature {
                     currentHeadAnimation.getCurrentFrame().getWidth(),
                     currentHeadAnimation.getCurrentFrame().getHeight(),
                     null);
+            */
+
         } else if (directionFacing == DirectionFacing.LEFT) {
             //TODO: flip image of head and body.
             BufferedImage flippedCurrentHeadImage = Fish.flipHorizontally(currentHeadAnimation.getCurrentFrame());
@@ -280,6 +299,14 @@ public class Fish extends Creature {
             g.drawImage(flippedCurrentHeadImage,
                     (int)(x - handler.getGameCamera().getxOffset()),
                     (int)(y - handler.getGameCamera().getyOffset()),
+                    Assets.eatFrames[0][0][0][0][0].getWidth(),
+                    Assets.eatFrames[0][0][0][0][0].getHeight(),
+                    null);
+
+            /*
+            g.drawImage(flippedCurrentHeadImage,
+                    (int)(x - handler.getGameCamera().getxOffset()),
+                    (int)(y - handler.getGameCamera().getyOffset()),
                     (int)(x - handler.getGameCamera().getxOffset() + Assets.eatFrames[0][0][0][0][0].getWidth()),
                     (int)(y - handler.getGameCamera().getyOffset() + Assets.eatFrames[0][0][0][0][0].getHeight()),
                     0,
@@ -287,8 +314,17 @@ public class Fish extends Creature {
                     flippedCurrentHeadImage.getWidth(),
                     flippedCurrentHeadImage.getHeight(),
                     null);
+            */
 
             //BODY
+            g.drawImage(flippedCurrentBodyImage,
+                    (int)(x - handler.getGameCamera().getxOffset() + flippedCurrentHeadImage.getWidth()),
+                    (int)(y - handler.getGameCamera().getyOffset()),
+                    Assets.tailOriginal[0][0][0][0][0].getWidth(),
+                    Assets.tailOriginal[0][0][0][0][0].getHeight(),
+                    null);
+
+            /*
             g.drawImage(flippedCurrentBodyImage,
                     (int)(x - handler.getGameCamera().getxOffset() + flippedCurrentHeadImage.getWidth()),
                     (int)(y - handler.getGameCamera().getyOffset()),
@@ -299,6 +335,7 @@ public class Fish extends Creature {
                     flippedCurrentBodyImage.getWidth(),
                     flippedCurrentBodyImage.getHeight(),
                     null);
+            */
             //@@@@@@@@@@@@@@@@@@@@@@@@@
         }
 

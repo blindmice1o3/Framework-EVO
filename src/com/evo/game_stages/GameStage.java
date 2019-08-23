@@ -31,6 +31,7 @@ public class GameStage {
         loadGameStage(path);
 
         entityManager.getPlayer().setSpeed(5);
+
         entityManager.addEntity(new Kelp(handler, Assets.kelpSolid[0], xSpawn-50, ySpawn-25));
         entityManager.addEntity(new Kelp(handler, Assets.kelpSolid[0], xSpawn-62, ySpawn-25));
         entityManager.addEntity(new Kelp(handler, Assets.kelpSolid[0], xSpawn-74, ySpawn-25));

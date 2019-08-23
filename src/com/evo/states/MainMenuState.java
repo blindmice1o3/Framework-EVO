@@ -1,7 +1,7 @@
 package com.evo.states;
 
 import com.evo.Handler;
-import com.evo.entities.moveable.OverWorldCursor;
+import com.evo.gfx.OverWorldCursor;
 import com.evo.gfx.Assets;
 
 import java.awt.*;

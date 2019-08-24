@@ -44,7 +44,7 @@ public class EntityManager {
             ////////////////////////
             //check for active.
             if (!e.isActive()) {
-                entities.remove(e);
+                it.remove();
             }
             ////////////////////////
         }

@@ -24,11 +24,15 @@ public class Fish extends Creature {
     private FishStateManager fishStateManager;
     private DirectionFacing directionFacing;
 
+    //ANIMATIONS
     private Animation idleHeadAnimation, eatHeadAnimation, biteHeadAnimation, hurtHeadAnimation;
     private Animation currentHeadAnimation;
     private Animation currentBodyAnimation;
     //private BufferedImage currentHeadImage;
     //private BufferedImage currentBodyImage;
+
+    //ATTACK TIMER
+    private long lastAttackTimer, attackCooldown = 800, attackTimer = attackCooldown;
 
     public Fish(Handler handler, float x, float y) {
         super(handler, null, x, y,
@@ -167,6 +171,12 @@ public class Fish extends Creature {
      * ar is "Attack Rectangle", which is the collision rectangle of an attack.
      */
     private void checkAttacks() {
+        attackTimer +=  System.currentTimeMillis() - lastAttackTimer;
+        lastAttackTimer = System.currentTimeMillis();
+        if (attackTimer < attackCooldown) {
+            return;
+        }
+
         Rectangle cb = getCollisionBounds(0, 0);
         Rectangle ar = new Rectangle();
         ar.width = Assets.eatFrames[0][0][0][0][0].getWidth();
@@ -187,11 +197,11 @@ public class Fish extends Creature {
             return;
         }
 
+        attackTimer = 0;
+
         //LOOP through every entity in the current game stage.
         ArrayList<Entity> entities = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().getEntities();
-        Iterator<Entity> it = entities.iterator();
-        while (it.hasNext()) {
-            Entity e = it.next();
+        for (Entity e : entities) {
             //if current Entity e is the player, go on to the next entity object from the ArrayList<Entity>.
             if (e.equals(this)) {
                 continue;

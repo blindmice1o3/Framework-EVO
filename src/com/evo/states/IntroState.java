@@ -42,7 +42,7 @@ public class IntroState implements IState {
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
             handler.getStateManager().pushIState(StateManager.State.CHAPTER, null);
         }
-        //select-button (will enter MainMenuState).
+        //select (will enter MainMenuState).
         else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SHIFT)) {
             handler.getStateManager().pushIState(StateManager.State.MAIN_MENU, null);
         }

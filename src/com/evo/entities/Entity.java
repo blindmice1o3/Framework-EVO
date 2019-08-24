@@ -9,11 +9,15 @@ import java.awt.image.BufferedImage;
 
 public abstract class Entity {
 
+    public static final int DEFAULT_HEALTH = 10;
+
     protected Handler handler;
 
     protected float x, y;
     protected int width, height;
     protected Rectangle bounds;
+    protected int health;
+    protected boolean active;
 
     protected BufferedImage image;
 
@@ -25,12 +29,24 @@ public abstract class Entity {
         this.width = width;
         this.height = height;
         bounds = new Rectangle(0, 0, width, height);
+        health = DEFAULT_HEALTH;
+        active = true;
 
         this.image = image;
     } // **** end Entity(Handler, BufferedImage, float, float, int, int) constructor ****
 
     public abstract void tick();
     public abstract void render(Graphics g);
+    public abstract void die();
+
+    public void hurt(int amount) {
+        health -= amount;
+
+        if (health <= 0) {
+            active = false;
+            die();
+        }
+    }
 
     public boolean checkEntityCollisions(float xOffset, float yOffset) {
         for (Entity e : ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().getEntities()) {
@@ -83,4 +99,19 @@ public abstract class Entity {
 
     public Rectangle getBounds() { return bounds; }
 
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 } // **** end Entity abstract class ****

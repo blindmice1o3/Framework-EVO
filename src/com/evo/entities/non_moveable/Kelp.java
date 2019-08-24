@@ -23,6 +23,11 @@ public class Kelp extends StaticEntity {
     }
 
     @Override
+    public void die() {
+
+    }
+
+    @Override
     public void render(Graphics g) {
         g.drawImage(kelpAnimation.getCurrentFrame(),
                 (int)(x - handler.getGameCamera().getxOffset()),

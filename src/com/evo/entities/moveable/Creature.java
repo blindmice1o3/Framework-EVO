@@ -10,17 +10,14 @@ import java.awt.image.BufferedImage;
 
 public abstract class Creature extends Entity {
 
-    public static final int DEFAULT_HEALTH = 10;
     public static final float DEFAULT_SPEED = 3;
 
-    protected int health;
     protected float speed;
     protected float xMove, yMove;
 
     public Creature(Handler handler, BufferedImage image, float x, float y, int width, int height) {
         super(handler, image, x, y, width, height);
 
-        health = DEFAULT_HEALTH;
         speed = DEFAULT_SPEED;
         xMove = 0;
         yMove = 0;
@@ -133,14 +130,6 @@ public abstract class Creature extends Entity {
 
     public void setyMove(float yMove) {
         this.yMove = yMove;
-    }
-
-    public int getHealth() {
-        return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
     }
 
     public float getSpeed() {

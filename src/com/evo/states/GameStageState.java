@@ -31,7 +31,7 @@ public class GameStageState implements IState {
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
             handler.getStateManager().popIState();
         }
-        //select-button (will enter MainMenuState).
+        //select (will enter MainMenuState).
         else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SHIFT)) {
             handler.getStateManager().pushIState(StateManager.State.MAIN_MENU, null);
         }

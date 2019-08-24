@@ -92,7 +92,7 @@ public class WorldMapState implements IState {
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
             handler.getStateManager().popIState();
         }
-        //select-button (will enter MainMenuState).
+        //select (will enter MainMenuState).
         else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SHIFT)) {
             handler.getStateManager().pushIState(StateManager.State.MAIN_MENU, null);
         }
@@ -111,6 +111,7 @@ public class WorldMapState implements IState {
                         handler.getStateManager().pushIState(StateManager.State.INTRO, null);
                     }
                 }
+                //up-button
                 else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_W)) {
                     index++;
 
@@ -118,6 +119,7 @@ public class WorldMapState implements IState {
                         index = 0;
                     }
                 }
+                //down-button
                 else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_S)) {
                     index--;
 

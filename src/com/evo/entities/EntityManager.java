@@ -38,11 +38,20 @@ public class EntityManager {
         Iterator<Entity> it = entities.iterator();
         while (it.hasNext()) {
             Entity e = it.next();
+
             e.tick();
+
+            ////////////////////////
             //check for active.
+            if (!e.isActive()) {
+                entities.remove(e);
+            }
+            ////////////////////////
         }
+        /////////////////////////////////////////
         //sort based on y-value before rendering.
         entities.sort(renderSorter);
+        /////////////////////////////////////////
     }
 
     public void render(Graphics g) {

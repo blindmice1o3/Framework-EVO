@@ -86,7 +86,7 @@ public class MainMenuState implements IState {
     public void getInput() {
         switch (currentMenuSelection) {
             case EVOLUTION:
-                //b-button: return to MenuList.MAIN.
+                //b-button (return to MenuList.MAIN).
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
                     index = 0;
                     currentMenuSelection = MenuList.MAIN;
@@ -94,7 +94,7 @@ public class MainMenuState implements IState {
 
                 break;
             case CAPABILITY:
-                //b-button: return to MenuList.MAIN.
+                //b-button (return to MenuList.MAIN).
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
                     index = 0;
                     currentMenuSelection = MenuList.MAIN;
@@ -102,7 +102,7 @@ public class MainMenuState implements IState {
 
                 break;
             case RECORD_OF_EVOLUTION:
-                //a-button: either SAVES game or set currentMenuSelection to MenuList.MAIN
+                //a-button (either SAVES game or set currentMenuSelection to MenuList.MAIN).
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
                     switch (index) {
                         case 0:
@@ -134,19 +134,22 @@ public class MainMenuState implements IState {
                     }
                 }
 
-                //b-button: return to MenuList.MAIN.
+                //b-button (return to MenuList.MAIN).
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
                     index = 0;
                     currentMenuSelection = MenuList.MAIN;
                 }
 
+                //right-button
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_D)) {
                     index++;
 
                     if (index > 1) {
                         index = 0;
                     }
-                } else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_A)) {
+                }
+                //left-button
+                else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_A)) {
                     index--;
 
                     if (index < 0) {
@@ -156,20 +159,20 @@ public class MainMenuState implements IState {
 
                 break;
             case MAIN:
-                //a-button: assigns currentMenuSelection.
+                //a-button (assigns currentMenuSelection).
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
                     currentMenuSelection = MenuList.values()[index];
                     index = 0;
                 }
 
-                //b-button or select-button will exit MainMenuState (goes back to previous IState).
+                //b-button or select (will exit MainMenuState [goes back to previous IState]).
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD) ||
                         (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SHIFT))) {
                     currentMenuSelection = MenuList.MAIN;
                     handler.getStateManager().popIState();
                 }
 
-                //down-button and up-button: changes the index position.
+                //down-button and up-button (changes the index position).
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_S)) {
                     index++;
 

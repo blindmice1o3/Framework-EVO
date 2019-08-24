@@ -1,9 +1,12 @@
 package com.evo.entities.moveable.fish;
 
 import com.evo.Handler;
+import com.evo.entities.Entity;
 import com.evo.entities.moveable.Creature;
 import com.evo.gfx.Animation;
 import com.evo.gfx.Assets;
+import com.evo.states.GameStageState;
+import com.evo.states.StateManager;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -11,6 +14,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Fish extends Creature {
 
@@ -123,12 +128,9 @@ public class Fish extends Creature {
         /////////////////////////////////////////
     }
 
+    @Override
     public void tick() {
-        // MOVEMENT
-        getInput();
-        move();
-
-        //TODO: BODY-PARTS SWAPPING.
+        // ANIMATIONS
         if (currentHeadAnimation != idleHeadAnimation) {
             currentHeadAnimation.tick();
 
@@ -138,6 +140,7 @@ public class Fish extends Creature {
             }
         }
         currentBodyAnimation.tick();
+
 /*
         currentHeadImage = Assets.eatFrames[fishStateManager.getCurrentBodySize().ordinal()]
                 [fishStateManager.getCurrentBodyTexture().ordinal()]
@@ -150,6 +153,64 @@ public class Fish extends Creature {
                 [fishStateManager.getCurrentTail().ordinal()]
                 [0];
 */
+
+        // MOVEMENT
+        getInput();
+        move();
+
+        // ATTACK
+        checkAttacks();
+    }
+
+    /**
+     * cb is "Collision Bounds", which is the collision rectangle of the player.
+     * ar is "Attack Rectangle", which is the collision rectangle of an attack.
+     */
+    private void checkAttacks() {
+        Rectangle cb = getCollisionBounds(0, 0);
+        Rectangle ar = new Rectangle();
+        ar.width = Assets.eatFrames[0][0][0][0][0].getWidth();
+        ar.height = Assets.eatFrames[0][0][0][0][0].getHeight();
+
+        //a-button (check where to set the attack rectangle).
+        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
+            if (directionFacing == DirectionFacing.LEFT) {
+                ar.x = cb.x - 3;
+                ar.y = cb.y;
+            } else if (directionFacing == DirectionFacing.RIGHT) {
+                ar.x = cb.x + Assets.tailOriginal[0][0][0][0][0].getWidth() + 3;
+                ar.y = cb.y;
+            }
+        }
+        //if NOT attacking, return.
+        else {
+            return;
+        }
+
+        //LOOP through every entity in the current game stage.
+        ArrayList<Entity> entities = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().getEntities();
+        Iterator<Entity> it = entities.iterator();
+        while (it.hasNext()) {
+            Entity e = it.next();
+            //if current Entity e is the player, go on to the next entity object from the ArrayList<Entity>.
+            if (e.equals(this)) {
+                continue;
+            }
+
+            //if there is a collision between the entity and the player's attack rectangle, hurt the entity.
+            ////////////////////////////////////////////////////////////////////////
+            //RETURN if there is collision BECAUSE CAN ONLY HURT 1 ENTITY AT A TIME.
+            ////////////////////////////////////////////////////////////////////////
+            if (e.getCollisionBounds(0, 0).intersects(ar)) {
+                e.hurt(1);
+                return;
+            }
+        }
+    }
+
+    @Override
+    public void die() {
+        System.out.println("You lose.");
     }
 
     public void getInput() {
@@ -176,12 +237,14 @@ public class Fish extends Creature {
             ////////////////////////////////////////
         }
 
-        // A and B BUTTONS
-        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SPACE)) {
+        // A and X BUTTONS (B BUTTON in GameStageState class: pops IState).
+        //a-button (bite).
+        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
             fishStateManager.setCurrentActionState(FishStateManager.ActionState.BITE);
             currentHeadAnimation = biteHeadAnimation;
         }
-        else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
+        //x-button (eat).
+        else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SPACE)) {
             fishStateManager.setCurrentActionState(FishStateManager.ActionState.EAT);
             currentHeadAnimation = eatHeadAnimation;
         }
@@ -244,6 +307,7 @@ public class Fish extends Creature {
 
     }
 
+    @Override
     public void render(Graphics g) {
         //ACTUAL IMAGE OF FISH
         if (directionFacing == DirectionFacing.RIGHT) {

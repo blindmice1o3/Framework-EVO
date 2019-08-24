@@ -6,8 +6,6 @@ import com.evo.input.KeyManager;
 import com.evo.serialize_deserialize.SaverAndLoader;
 import com.evo.states.StateManager;
 
-import java.io.Serializable;
-
 public class Game implements Runnable {
 
     //CONSTANTS

@@ -42,6 +42,9 @@ public class Assets {
     // ENTITIES - KELP
     public static BufferedImage[] kelpSolid;
 
+    // ITEMS - MEAT
+    public static BufferedImage meat;
+
     // Initialization
     public static void init() {
         // SPRITE SHEETS
@@ -280,6 +283,9 @@ public class Assets {
         kelpSolid[1] = spriteSheetChapter1Creatures.getSubimage(569, 718, 12, 32);
         kelpSolid[2] = spriteSheetChapter1Creatures.getSubimage(582, 718, 12, 32);
         kelpSolid[3] = spriteSheetChapter1Creatures.getSubimage(594, 718, 12, 32);
+
+        // ITEMS - MEAT
+        meat = spriteSheetChapter1Creatures.getSubimage(594, 697, 16, 16);
 
     }
 

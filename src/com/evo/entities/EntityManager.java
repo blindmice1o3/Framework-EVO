@@ -1,6 +1,7 @@
 package com.evo.entities;
 
 import com.evo.Handler;
+import com.evo.entities.Entity;
 import com.evo.entities.moveable.fish.Fish;
 
 import java.awt.*;

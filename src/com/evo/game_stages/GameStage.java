@@ -5,6 +5,7 @@ import com.evo.entities.EntityManager;
 import com.evo.entities.moveable.fish.Fish;
 import com.evo.entities.non_moveable.Kelp;
 import com.evo.gfx.Assets;
+import com.evo.items.ItemManager;
 import com.evo.tiles.Tile;
 
 import java.awt.*;
@@ -24,9 +25,13 @@ public class GameStage {
     private float ySpawn = 200;
     private EntityManager entityManager;
 
+    // ITEMS
+    private ItemManager itemManager;
+
     public GameStage(Handler handler, String path) {
         this.handler = handler;
         entityManager = new EntityManager(handler, new Fish(handler, xSpawn, ySpawn));
+        itemManager = new ItemManager(handler);
 
         loadGameStage(path);
 
@@ -38,6 +43,7 @@ public class GameStage {
     } // **** end GameStage(Handler, String) constructor ****
 
     public void tick() {
+        itemManager.tick();
         entityManager.tick();
 
         handler.getGameCamera().centerOnEntity(entityManager.getPlayer());
@@ -69,6 +75,8 @@ public class GameStage {
             }
         }
 
+        //ITEMS
+        itemManager.render(g);
         //ENTITIES
         entityManager.render(g);
     }
@@ -202,6 +210,8 @@ public class GameStage {
     public Tile[][] getTiles() { return tiles; }
 
     public EntityManager getEntityManager() { return entityManager; }
+
+    public ItemManager getItemManager() { return itemManager; }
 
     public Fish getPlayer() { return entityManager.getPlayer(); }
 

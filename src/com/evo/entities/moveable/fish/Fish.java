@@ -318,7 +318,7 @@ public class Fish extends Creature {
 
             //BODY
             g.drawImage(flippedCurrentBodyImage,
-                    (int)(x - handler.getGameCamera().getxOffset() + flippedCurrentHeadImage.getWidth()),
+                    (int)(x - handler.getGameCamera().getxOffset() + Assets.eatFrames[0][0][0][0][0].getWidth()),
                     (int)(y - handler.getGameCamera().getyOffset()),
                     Assets.tailOriginal[0][0][0][0][0].getWidth(),
                     Assets.tailOriginal[0][0][0][0][0].getHeight(),

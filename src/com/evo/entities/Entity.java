@@ -42,6 +42,8 @@ public abstract class Entity {
     public void hurt(int amount) {
         health -= amount;
 
+        System.out.println(getClass().getSimpleName() + ".hurt(int) called: " + health + " hp left.");
+
         if (health <= 0) {
             active = false;
             die();

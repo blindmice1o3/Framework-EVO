@@ -17,7 +17,7 @@ public class Item {
     public static Item meatItem = new Item(Assets.meat, "Meat", 0);
 
     //CLASS
-    public static final int ITEMWIDTH = 16, ITEMHEIGHT = 16, PICKED_UP = -1;
+    public static final int ITEMWIDTH = 16, ITEMHEIGHT = 16;
 
     protected Handler handler;
 
@@ -28,12 +28,14 @@ public class Item {
     protected Rectangle bounds;
 
     protected int x, y, count;
+    protected boolean pickedUp;
 
     public Item(BufferedImage texture, String name, int id) {
         this.texture = texture;
         this.name = name;
         this.id = id;
         count = 1;
+        pickedUp = false;
 
         //x and y are defaulting to 0 at the moment, they get set/initialize when setPosition() is called.
         bounds = new Rectangle(x, y, ITEMWIDTH, ITEMHEIGHT);
@@ -48,8 +50,18 @@ public class Item {
         //player stepped on this item and that means it should get picked up.
         if ( (player.getCollisionBounds(0, 0).intersects(bounds)) &&
                 (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SPACE)) ) {
-            //TODO: give player health/experience.
-            count = PICKED_UP;
+
+            player.setHealth( (player.getHealth() + 2) );
+            player.setExperiencePoints( (player.getExperiencePoints() + 10) );
+
+            //do NOT let eating meat items give player more health points than player's maximum health points.
+            if (player.getHealth() > player.getHealthMax()) {
+                player.setHealth( player.getHealthMax() );
+            }
+            System.out.println("player's health: " + player.getHealth());
+            System.out.println("player's experience points: " + player.getExperiencePoints());
+
+            pickedUp = true;
         }
     }
 
@@ -137,6 +149,14 @@ public class Item {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public boolean isPickedUp() {
+        return pickedUp;
+    }
+
+    public void setPickedUp(boolean pickedUp) {
+        this.pickedUp = pickedUp;
     }
 
 } // **** end Item class ****

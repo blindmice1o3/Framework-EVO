@@ -24,6 +24,12 @@ public class Fish extends Creature {
     private FishStateManager fishStateManager;
     private DirectionFacing directionFacing;
 
+    //EXPERIENCE POINTS
+    private int experiencePoints;
+
+    //MAX_HEALTH
+    private int healthMax;
+
     //ANIMATIONS
     private Animation idleHeadAnimation, eatHeadAnimation, biteHeadAnimation, hurtHeadAnimation;
     private Animation currentHeadAnimation;
@@ -40,6 +46,9 @@ public class Fish extends Creature {
                         + Assets.tailOriginal[0][0][0][0][0].getWidth(),
                 Assets.eatFrames[0][0][0][0][0].getHeight());
         System.out.println("Fish.constructor (width/height): " + width + "/" + height);
+
+        experiencePoints = 0;
+        healthMax = DEFAULT_HEALTH;
 
         fishStateManager = new FishStateManager();
         directionFacing = DirectionFacing.RIGHT;
@@ -441,7 +450,23 @@ public class Fish extends Creature {
 
     public void setFishStateManager(FishStateManager fishStateManager) { this.fishStateManager = fishStateManager; }
 
-/*
+    public int getExperiencePoints() {
+        return experiencePoints;
+    }
+
+    public void setExperiencePoints(int experiencePoints) {
+        this.experiencePoints = experiencePoints;
+    }
+
+    public int getHealthMax() {
+        return healthMax;
+    }
+
+    public void setHealthMax(int healthMax) {
+        this.healthMax = healthMax;
+    }
+
+    /*
     public BufferedImage getCurrentHeadImage() { return currentHeadImage; }
 
     public BufferedImage getCurrentBodyImage() { return currentBodyImage; }

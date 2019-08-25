@@ -1,7 +1,7 @@
 package com.evo.gfx;
 
 import com.evo.Utils;
-import com.evo.entities.moveable.fish.FishStateManager;
+import com.evo.entities.moveable.player.FishStateManager;
 import com.evo.tiles.Tile;
 
 import java.awt.image.BufferedImage;
@@ -27,10 +27,10 @@ public class Assets {
     public static BufferedImage upOverworld0, upOverworld1, downOverworld0, downOverworld1,
             leftOverworld0, leftOverworld1, rightOverworld0, rightOverworld1;
 
-    // ENTITY - Chapter 1: FISH HEAD (AND ATTACHMENTS)
+    // ENTITIES.MOVEABLE - Chapter 1: FISH HEAD (AND ATTACHMENTS)
     public static BufferedImage[][][][][] eatFrames, biteFrames, hurtFrames;
 
-    // ENTITY - Chapter 1: FISH BODY (AND ATTACHMENTS)
+    // ENTITIES.MOVEABLE - Chapter 1: FISH BODY (AND ATTACHMENTS)
     public static BufferedImage[][][][][] tailOriginal, tailCoelafish, tailTeratisu, tailZinichthy, tailKuraselache;
 
     // BACKGROUND - MainMenuState
@@ -39,20 +39,23 @@ public class Assets {
     // BACKGROUND - GameStageState
     public static BufferedImage chapter1GameStage, brickGreen, coralPink1, coralPink2, coralPink3, coinGameObject;
 
-    // ENTITIES - KELP
+    // ENTITIES.NON_MOVEABLE - Chapter 1: KELP
     public static BufferedImage[] kelpSolid;
 
-    // ITEMS - MEAT
+    // ENTITIES.MOVEABLE - Chapter 1: ENEMIES
+    public static BufferedImage[] seaJelly;
+
+    // ITEMS - Chapter 1: MEAT
     public static BufferedImage meat;
 
-    // Initialization
+    // Initialization of sprites.
     public static void init() {
         // SPRITE SHEETS
         spriteSheetChapterIntroAndWorldMap = Utils.loadImage("/SNES - EVO Search for Eden - Maps & Chapter Images.png");
         spriteSheetChapter1Creatures = Utils.loadImage("/SNES - EVO Search for Eden - Chapter 1 Creatures.png");
         spriteSheetStartMenu = Utils.loadImage("/EVO_select_menu_English.png");
 
-        // ENTITY - Chapter 1: FISH HEAD (AND ATTACHMENTS)
+        // ENTITIES.MOVEABLE - Chapter 1: FISH HEAD (AND ATTACHMENTS)
         eatFrames = new BufferedImage[FishStateManager.BodySize.values().length]
                 [FishStateManager.BodyTexture.values().length]
                 [FishStateManager.Jaws.values().length]
@@ -69,7 +72,7 @@ public class Assets {
                 [FishStateManager.ActionState.values().length-1]
                 [2];
 
-        // ENTITY - Chapter 1: FISH BODY (AND ATTACHMENTS)
+        // ENTITIES.MOVEABLE - Chapter 1: FISH BODY (AND ATTACHMENTS)
         tailOriginal = new BufferedImage[FishStateManager.BodySize.values().length]
                 [FishStateManager.BodyTexture.values().length]
                 [FishStateManager.FinPectoral.values().length]
@@ -176,9 +179,9 @@ public class Assets {
 
 
 
-        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        // ENTITY - Chapter 1: FISH BODY (AND ATTACHMENTS)
-        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        // ENTITIES.MOVEABLE - Chapter 1: FISH BODY (AND ATTACHMENTS)
+        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         //DECREASE-SLICK-ORIGINAL
         pullFishBodyImageSubsetDecreaseOriginal(FishStateManager.BodyTexture.SLICK, 6, 358);
         //DECREASE-SLICK-COELAFISH
@@ -277,12 +280,23 @@ public class Assets {
         coinGameObject = chapter1GameStage.getSubimage(224, 184, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
 
 
-        // ENTITIES - KELP
+        // ENTITIES.NON_MOVEABLE - KELP
         kelpSolid = new BufferedImage[4];
         kelpSolid[0] = spriteSheetChapter1Creatures.getSubimage(557, 718, 12, 32);
         kelpSolid[1] = spriteSheetChapter1Creatures.getSubimage(569, 718, 12, 32);
         kelpSolid[2] = spriteSheetChapter1Creatures.getSubimage(582, 718, 12, 32);
         kelpSolid[3] = spriteSheetChapter1Creatures.getSubimage(594, 718, 12, 32);
+
+        // ENTITIES.MOVEABLE - ENEMIES
+        seaJelly = new BufferedImage[8];
+        seaJelly[0] = spriteSheetChapter1Creatures.getSubimage(552, 29, 16, 32); //IDLE0
+        seaJelly[1] = spriteSheetChapter1Creatures.getSubimage(568, 29, 16, 32); //IDLE1
+        seaJelly[2] = spriteSheetChapter1Creatures.getSubimage(584, 29, 16, 32); //IDLE2
+        seaJelly[3] = spriteSheetChapter1Creatures.getSubimage(599, 27, 16, 32); //ATTACK0
+        seaJelly[4] = spriteSheetChapter1Creatures.getSubimage(619, 29, 16, 32); //ATTACK1
+        seaJelly[5] = spriteSheetChapter1Creatures.getSubimage(639, 34, 32, 32); //ATTACK2
+        seaJelly[6] = spriteSheetChapter1Creatures.getSubimage(674, 32, 32, 32); //ATTACK3
+        seaJelly[7] = spriteSheetChapter1Creatures.getSubimage(714, 28, 16, 32); //HURT0
 
         // ITEMS - MEAT
         meat = spriteSheetChapter1Creatures.getSubimage(594, 697, 16, 16);

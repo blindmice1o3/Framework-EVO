@@ -1,4 +1,4 @@
-package com.evo.entities.moveable.fish;
+package com.evo.entities.moveable.player;
 
 import java.io.Serializable;
 

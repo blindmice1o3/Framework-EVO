@@ -1,8 +1,6 @@
 package com.evo.states;
 
 import com.evo.Handler;
-import com.evo.entities.moveable.fish.Fish;
-import com.evo.entities.moveable.fish.FishStateManager;
 import com.evo.game_stages.GameStage;
 
 import java.awt.*;

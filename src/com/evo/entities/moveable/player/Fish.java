@@ -1,4 +1,4 @@
-package com.evo.entities.moveable.fish;
+package com.evo.entities.moveable.player;
 
 import com.evo.Handler;
 import com.evo.entities.Entity;
@@ -13,9 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Fish extends Creature {
 
@@ -194,7 +192,7 @@ public class Fish extends Creature {
         //a-button (check where to set the attack rectangle).
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
             if (directionFacing == DirectionFacing.LEFT) {
-                ar.x = cb.x - 3;
+                ar.x = cb.x - 4;
                 ar.y = cb.y;
             } else if (directionFacing == DirectionFacing.RIGHT) {
                 ar.x = cb.x + Assets.tailOriginal[0][0][0][0][0].getWidth() + 3;

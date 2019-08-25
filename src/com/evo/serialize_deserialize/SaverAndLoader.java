@@ -1,8 +1,8 @@
 package com.evo.serialize_deserialize;
 
 import com.evo.Handler;
-import com.evo.entities.moveable.fish.Fish;
-import com.evo.entities.moveable.fish.FishStateManager;
+import com.evo.entities.moveable.player.Fish;
+import com.evo.entities.moveable.player.FishStateManager;
 import com.evo.states.GameStageState;
 import com.evo.states.StateManager;
 

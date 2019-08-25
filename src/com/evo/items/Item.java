@@ -1,7 +1,7 @@
 package com.evo.items;
 
 import com.evo.Handler;
-import com.evo.entities.moveable.fish.Fish;
+import com.evo.entities.moveable.player.Fish;
 import com.evo.gfx.Assets;
 import com.evo.states.GameStageState;
 import com.evo.states.StateManager;

@@ -8,6 +8,7 @@ import com.evo.gfx.Assets;
 import com.evo.items.Item;
 import com.evo.states.GameStageState;
 import com.evo.states.StateManager;
+import com.evo.tiles.Tile;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -15,8 +16,12 @@ import java.awt.image.BufferedImage;
 public class SeaJelly extends Creature {
 
     public enum State { IDLE, ATTACK, HURT; }
+    public enum MovementDirection { DOWN, UP; }
 
     private State currentState;
+    private MovementDirection currentMovementDirection;
+    private int patrolLengthMax;
+    private int currentPatrolLength;
 
     //ANIMATIONS
     Animation idleAnimation, attackAnimation, hurtAnimation;
@@ -25,6 +30,10 @@ public class SeaJelly extends Creature {
         super(handler, null, x, y, Assets.seaJelly[0].getWidth(), Assets.seaJelly[0].getHeight());
 
         currentState = State.IDLE;
+        currentMovementDirection = MovementDirection.DOWN;
+        patrolLengthMax = 5;
+        currentPatrolLength = 0;
+        speed = 1;
 
         initAnimations();
     } // **** end SeaJelly(Handler, float, float) constructor ****
@@ -64,6 +73,52 @@ public class SeaJelly extends Creature {
         attackAnimation.tick();
         hurtAnimation.tick();
 
+        //MOVEMENTS
+        xMove = 0;
+        yMove = 0;
+
+        //PATROL
+        if ( currentPatrolLength < (patrolLengthMax * Tile.screenTileHeight) ) {
+            switch (currentMovementDirection) {
+                case DOWN:
+                    yMove = speed;
+
+                    break;
+                case UP:
+                    yMove = -speed;
+
+                    break;
+                default:
+                    System.out.println("SeaJelly.tick(), IF, switch(currentMovementDirection)'s default block.");
+                    break;
+            }
+            ///////
+            move();
+            ///////
+            currentPatrolLength += speed;
+
+        }
+        //END OF PATROL LENGTH (TURNING)
+        else {
+            switch (currentMovementDirection) {
+                case DOWN:
+                    currentMovementDirection = MovementDirection.UP;
+                    currentPatrolLength = 0;
+
+                    break;
+                case UP:
+                    currentMovementDirection = MovementDirection.DOWN;
+                    currentPatrolLength = 0;
+
+                    break;
+                default:
+                    System.out.println("SeaJelly.tick(), ELSE, switch(currentMovementDirection)'s default block.");
+                    break;
+            }
+        }
+
+
+        //STATES
         switch (currentState) {
             case IDLE:
 

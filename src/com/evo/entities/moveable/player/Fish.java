@@ -178,7 +178,7 @@ public class Fish extends Creature {
      * ar is "Attack Rectangle", which is the collision rectangle of an attack.
      */
     private void checkAttacks() {
-        attackTimer +=  System.currentTimeMillis() - lastAttackTimer;
+        attackTimer += System.currentTimeMillis() - lastAttackTimer;
         lastAttackTimer = System.currentTimeMillis();
         if (attackTimer < attackCooldown) {
             return;
@@ -204,6 +204,8 @@ public class Fish extends Creature {
             return;
         }
 
+        // if we're at this line, we didn't call return in the else-clause; which means the attack button was pressed
+        // and we need to reset the attackTimer (a cool-down time before the player can attack again).
         attackTimer = 0;
 
         //LOOP through every entity in the current game stage.
@@ -215,11 +217,12 @@ public class Fish extends Creature {
             }
 
             //if there is a collision between the entity and the player's attack rectangle, hurt the entity.
-            ////////////////////////////////////////////////////////////////////////
-            //RETURN if there is collision BECAUSE CAN ONLY HURT 1 ENTITY AT A TIME.
-            ////////////////////////////////////////////////////////////////////////
             if (e.getCollisionBounds(0, 0).intersects(ar)) {
                 e.hurt(1);
+
+                //////////////////////////////////////////////////////////////////////////
+                //RETURN if there is collision BECAUSE CAN ONLY HURT 1 ENTITY AT A TIME.//
+                //////////////////////////////////////////////////////////////////////////
                 return;
             }
         }

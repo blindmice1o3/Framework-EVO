@@ -73,54 +73,52 @@ public class SeaJelly extends Creature {
         attackAnimation.tick();
         hurtAnimation.tick();
 
-        //MOVEMENTS
+        //MOVEMENTS: reset future-change-in-position to 0.
         xMove = 0;
         yMove = 0;
-
-        //PATROL
-        if ( currentPatrolLength < (patrolLengthMax * Tile.screenTileHeight) ) {
-            switch (currentMovementDirection) {
-                case DOWN:
-                    yMove = speed;
-
-                    break;
-                case UP:
-                    yMove = -speed;
-
-                    break;
-                default:
-                    System.out.println("SeaJelly.tick(), IF, switch(currentMovementDirection)'s default block.");
-                    break;
-            }
-            ///////
-            move();
-            ///////
-            currentPatrolLength += speed;
-
-        }
-        //END OF PATROL LENGTH (TURNING)
-        else {
-            switch (currentMovementDirection) {
-                case DOWN:
-                    currentMovementDirection = MovementDirection.UP;
-                    currentPatrolLength = 0;
-
-                    break;
-                case UP:
-                    currentMovementDirection = MovementDirection.DOWN;
-                    currentPatrolLength = 0;
-
-                    break;
-                default:
-                    System.out.println("SeaJelly.tick(), ELSE, switch(currentMovementDirection)'s default block.");
-                    break;
-            }
-        }
-
 
         //STATES
         switch (currentState) {
             case IDLE:
+                //MOVEMENTS: PATROL (set values for future-change-in-position [based on moving up or down the screen]).
+                if ( currentPatrolLength < (patrolLengthMax * Tile.screenTileHeight) ) {
+                    switch (currentMovementDirection) {
+                        case DOWN:
+                            yMove = speed;
+
+                            break;
+                        case UP:
+                            yMove = -speed;
+
+                            break;
+                        default:
+                            System.out.println("SeaJelly.tick(), IF, switch(currentMovementDirection)'s default block.");
+                            break;
+                    }
+                    ///////
+                    move();
+                    ///////
+                    currentPatrolLength += speed;
+
+                }
+                //MOVEMENTS: END OF PATROL LENGTH (reverse directions).
+                else {
+                    switch (currentMovementDirection) {
+                        case DOWN:
+                            currentMovementDirection = MovementDirection.UP;
+                            currentPatrolLength = 0;
+
+                            break;
+                        case UP:
+                            currentMovementDirection = MovementDirection.DOWN;
+                            currentPatrolLength = 0;
+
+                            break;
+                        default:
+                            System.out.println("SeaJelly.tick(), ELSE, switch(currentMovementDirection)'s default block.");
+                            break;
+                    }
+                }
 
                 break;
             case ATTACK:
@@ -140,7 +138,7 @@ public class SeaJelly extends Creature {
                 break;
         }
 
-        // TODO: AoE (radius/collision-bound) that triggers State.ATTACK to be currentState.
+        // TODO: AoE (radius/collision-bound) that triggers State.ATTACK to be currentState, an entity-detection range.
 
         /*
          * TODO: CHASING feature...

@@ -22,7 +22,7 @@ public class ItemManager {
             Item i = it.next();
             i.tick();
 
-            if (i.isPickedUp()) {
+            if ( (i.isPickedUp()) || (i.isExpired()) ) {
                 it.remove();
             }
         }

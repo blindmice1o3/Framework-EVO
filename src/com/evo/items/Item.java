@@ -33,6 +33,10 @@ public class Item {
 
     protected int rewardHealth, rewardExperiencePoints;
 
+    //EXPIRATION
+    protected boolean expired;
+    protected long expirationElapsed, expirationLimit, expirationPreviousTick;
+
     public Item(BufferedImage texture, String name, int id) {
         this.texture = texture;
         this.name = name;
@@ -43,6 +47,11 @@ public class Item {
         rewardHealth = 2;
         rewardExperiencePoints = 10;
 
+        expired = false;
+        expirationLimit = 5000; //milliseconds.
+        expirationElapsed = 0;
+        expirationPreviousTick = System.currentTimeMillis();
+
         //x and y are defaulting to 0 at the moment, they get set/initialize when setPosition() is called.
         bounds = new Rectangle(x, y, ITEMWIDTH, ITEMHEIGHT);
 
@@ -50,6 +59,24 @@ public class Item {
     } // **** end Item(BufferedImage, String, int) constructor ****
 
     public void tick() {
+        //TODO: move the meat instance's x, y coordinate values to produce a floating/bobbing-in-water visual fx.
+
+        checkExpiration();
+
+        checkEaten();
+    }
+
+    private void checkExpiration() {
+        long expirationCurrentTick = System.currentTimeMillis();
+        expirationElapsed += expirationCurrentTick - expirationPreviousTick;
+        expirationPreviousTick = expirationCurrentTick;
+
+        if (expirationElapsed >= expirationLimit) {
+            expired = true;
+        }
+    }
+
+    private void checkEaten() {
         GameStage gameStage = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage();
         Fish player = gameStage.getPlayer();
 
@@ -175,6 +202,14 @@ public class Item {
 
     public void setPickedUp(boolean pickedUp) {
         this.pickedUp = pickedUp;
+    }
+
+    public boolean isExpired() {
+        return expired;
+    }
+
+    public void setExpired(boolean expired) {
+        this.expired = expired;
     }
 
 } // **** end Item class ****

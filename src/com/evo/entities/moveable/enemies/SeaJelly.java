@@ -122,6 +122,7 @@ public class SeaJelly extends Creature {
 
                 break;
             case ATTACK:
+                //TODO: State.ATTACK
 
                 break;
             case HURT:

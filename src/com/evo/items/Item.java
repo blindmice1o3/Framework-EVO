@@ -2,6 +2,7 @@ package com.evo.items;
 
 import com.evo.Handler;
 import com.evo.entities.moveable.player.Fish;
+import com.evo.game_stages.GameStage;
 import com.evo.gfx.Assets;
 import com.evo.states.GameStageState;
 import com.evo.states.StateManager;
@@ -30,12 +31,17 @@ public class Item {
     protected int x, y, count;
     protected boolean pickedUp;
 
+    protected int rewardHealth, rewardExperiencePoints;
+
     public Item(BufferedImage texture, String name, int id) {
         this.texture = texture;
         this.name = name;
         this.id = id;
         count = 1;
         pickedUp = false;
+
+        rewardHealth = 2;
+        rewardExperiencePoints = 10;
 
         //x and y are defaulting to 0 at the moment, they get set/initialize when setPosition() is called.
         bounds = new Rectangle(x, y, ITEMWIDTH, ITEMHEIGHT);
@@ -44,15 +50,22 @@ public class Item {
     } // **** end Item(BufferedImage, String, int) constructor ****
 
     public void tick() {
-        Fish player = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
+        GameStage gameStage = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage();
+        Fish player = gameStage.getPlayer();
 
         //add && condition where KeyManager.keyJustPressed( button-that-triggers-eating-state ).
         //player stepped on this item and that means it should get picked up.
+        //TODO: change from KeyEvent to checking player's currentState == State.EAT.
         if ( (player.getCollisionBounds(0, 0).intersects(bounds)) &&
                 (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SPACE)) ) {
 
-            player.setHealth( (player.getHealth() + 2) );
-            player.setExperiencePoints( (player.getExperiencePoints() + 10) );
+            //TODO: create RewardManager class which should be called by GameStage.tick() and GameStage.render(Graphics).
+            //TODO: instantiate a new Reward() object, passing it rewardHealth, rewardExperiencePoints, and on-screen coordinates.
+            //TODO: add the Reward instance to RewardManager's ArrayList<Reward> rewards.
+            //TODO: have the Reward.render(Graphics, int, int)/Reward.tick() use elapsedTime to remove() the Reward object from RewardManager.
+
+            player.setHealth( (player.getHealth() + rewardHealth) );
+            player.setExperiencePoints( (player.getExperiencePoints() + rewardExperiencePoints) );
 
             //do NOT let eating meat items give player more health points than player's maximum health points.
             if (player.getHealth() > player.getHealthMax()) {
@@ -76,6 +89,11 @@ public class Item {
 
         render(g, (int)(x - handler.getGameCamera().getxOffset()), (int)(y - handler.getGameCamera().getyOffset()));
     }
+
+    public void renderRewards(Graphics g) {
+
+    }
+
 
     /**
      * render to screen (e.g. inventory or HUD) using local variables x and y (passed in as arguments).

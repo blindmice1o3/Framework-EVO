@@ -433,6 +433,15 @@ public class Fish extends Creature {
         //g.fillRect((int)(x + bounds.x - handler.getGameCamera().getxOffset()),
         //        (int)(y + bounds.y - handler.getGameCamera().getyOffset()),
         //        bounds.width, bounds.height);
+
+        renderHUD(g);
+    }
+
+    private void renderHUD(Graphics g) {
+        g.setColor(Color.YELLOW);
+        g.drawString("hp: " + health, 20, 10);
+
+        g.drawString("experiencePoints: " + experiencePoints, handler.panelWidth/2, 10);
     }
 
     public static BufferedImage flipHorizontally(BufferedImage image) {

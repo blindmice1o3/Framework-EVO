@@ -2,28 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2bcc4a98-1f2c-4e1b-a19b-f51f53d66850" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/Game.class" afterPath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/Game.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/Handler.class" afterPath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/Handler.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/entities/Entity.class" afterPath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/entities/Entity.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/entities/moveable/enemies/SeaJelly$1.class" afterPath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/entities/moveable/enemies/SeaJelly$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/entities/moveable/enemies/SeaJelly.class" afterPath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/entities/moveable/enemies/SeaJelly.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/entities/moveable/player/Fish.class" afterPath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/entities/moveable/player/Fish.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/entities/non_moveable/Kelp.class" afterPath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/entities/non_moveable/Kelp.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/gfx/Animation.class" afterPath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/gfx/Animation.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/items/Item.class" afterPath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/items/Item.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/items/ItemManager.class" afterPath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/items/ItemManager.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/serialize_deserialize/SaverAndLoader.class" afterPath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/serialize_deserialize/SaverAndLoader.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/qwerty789.bin" afterPath="$PROJECT_DIR$/qwerty789.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/Game.java" afterPath="$PROJECT_DIR$/src/com/evo/Game.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/Handler.java" afterPath="$PROJECT_DIR$/src/com/evo/Handler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/entities/Entity.java" afterPath="$PROJECT_DIR$/src/com/evo/entities/Entity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/entities/moveable/enemies/SeaJelly.java" afterPath="$PROJECT_DIR$/src/com/evo/entities/moveable/enemies/SeaJelly.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/entities/moveable/player/Fish.java" afterPath="$PROJECT_DIR$/src/com/evo/entities/moveable/player/Fish.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/entities/non_moveable/Kelp.java" afterPath="$PROJECT_DIR$/src/com/evo/entities/non_moveable/Kelp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/gfx/Animation.java" afterPath="$PROJECT_DIR$/src/com/evo/gfx/Animation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/items/Item.java" afterPath="$PROJECT_DIR$/src/com/evo/items/Item.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/items/ItemManager.java" afterPath="$PROJECT_DIR$/src/com/evo/items/ItemManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/serialize_deserialize/SaverAndLoader.java" afterPath="$PROJECT_DIR$/src/com/evo/serialize_deserialize/SaverAndLoader.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -45,8 +26,8 @@
       <file leaf-file-name="Fish.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/evo/entities/moveable/player/Fish.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="33" column="12" lean-forward="false" selection-start-line="33" selection-start-column="12" selection-end-line="33" selection-end-column="12" />
+            <state relative-caret-position="408">
+              <caret line="272" column="65" lean-forward="true" selection-start-line="272" selection-start-column="65" selection-end-line="272" selection-end-column="65" />
               <folding />
             </state>
           </provider>
@@ -55,8 +36,8 @@
       <file leaf-file-name="SaverAndLoader.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/evo/serialize_deserialize/SaverAndLoader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="101" column="0" lean-forward="false" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
+            <state relative-caret-position="357">
+              <caret line="110" column="0" lean-forward="false" selection-start-line="110" selection-start-column="0" selection-end-line="110" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -180,11 +161,11 @@
         <option value="$PROJECT_DIR$/src/com/evo/Handler.java" />
         <option value="$PROJECT_DIR$/src/com/evo/Game.java" />
         <option value="$PROJECT_DIR$/src/com/evo/entities/non_moveable/Kelp.java" />
-        <option value="$PROJECT_DIR$/src/com/evo/entities/moveable/player/Fish.java" />
         <option value="$PROJECT_DIR$/src/com/evo/entities/moveable/enemies/SeaJelly.java" />
         <option value="$PROJECT_DIR$/src/com/evo/gfx/Animation.java" />
         <option value="$PROJECT_DIR$/src/com/evo/entities/Entity.java" />
         <option value="$PROJECT_DIR$/src/com/evo/items/Item.java" />
+        <option value="$PROJECT_DIR$/src/com/evo/entities/moveable/player/Fish.java" />
         <option value="$PROJECT_DIR$/src/com/evo/serialize_deserialize/SaverAndLoader.java" />
       </list>
     </option>
@@ -954,14 +935,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/evo/entities/moveable/player/Fish.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="33" column="12" lean-forward="false" selection-start-line="33" selection-start-column="12" selection-end-line="33" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/evo/gfx/Animation.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -1023,6 +996,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/evo/entities/moveable/player/Fish.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="272" column="65" lean-forward="true" selection-start-line="272" selection-start-column="65" selection-end-line="272" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/evo/items/Item.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -1035,8 +1016,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/evo/serialize_deserialize/SaverAndLoader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="101" column="0" lean-forward="false" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
+        <state relative-caret-position="357">
+          <caret line="110" column="0" lean-forward="false" selection-start-line="110" selection-start-column="0" selection-end-line="110" selection-end-column="0" />
           <folding />
         </state>
       </provider>

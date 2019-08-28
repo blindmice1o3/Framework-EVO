@@ -107,6 +107,8 @@ public class SaverAndLoader {
                 }
 
                 i.setHandler(handler);
+
+                //TODO: new bug, player not able to eat instances of meat items after loading, may be different GameStage objects.
             }
 
             objectInputStream.close();

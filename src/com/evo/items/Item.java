@@ -4,6 +4,7 @@ import com.evo.Handler;
 import com.evo.entities.moveable.player.Fish;
 import com.evo.game_stages.GameStage;
 import com.evo.gfx.Assets;
+import com.evo.rewards.Reward;
 import com.evo.states.GameStageState;
 import com.evo.states.StateManager;
 
@@ -11,6 +12,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Item implements Serializable {
 
@@ -72,6 +75,8 @@ public class Item implements Serializable {
         expirationElapsed += expirationCurrentTick - expirationPreviousTick;
         expirationPreviousTick = expirationCurrentTick;
 
+        //player didn't successfully EAT (intersecting bounds while eat-button pressed) within specified time limit.
+        //Item is automatically removed from game.
         if (expirationElapsed >= expirationLimit) {
             expired = true;
         }
@@ -92,13 +97,21 @@ public class Item implements Serializable {
             //TODO: add the Reward instance to RewardManager's ArrayList<Reward> rewards.
             //TODO: have the Reward.render(Graphics, int, int)/Reward.tick() use elapsedTime to remove() the Reward object from RewardManager.
 
+            Reward reward = new Reward(handler, rewardExperiencePoints, x, y);
+            reward.addExtra(Reward.RewardType.HP, rewardHealth);
+
+            gameStage.getRewardManager().addReward(reward);
+
+
+            //TODO: who should trigger the giveReward(Fish) method?
+            reward.giveReward(player);
+
+            /*
+            //REWARD
             player.setHealth( (player.getHealth() + rewardHealth) );
             player.setExperiencePoints( (player.getExperiencePoints() + rewardExperiencePoints) );
+            */
 
-            //do NOT let eating meat items give player more health points than player's maximum health points.
-            if (player.getHealth() > player.getHealthMax()) {
-                player.setHealth( player.getHealthMax() );
-            }
             System.out.println("player's health: " + player.getHealth());
             System.out.println("player's experience points: " + player.getExperiencePoints());
 
@@ -117,11 +130,6 @@ public class Item implements Serializable {
 
         render(g, (int)(x - handler.getGameCamera().getxOffset()), (int)(y - handler.getGameCamera().getyOffset()));
     }
-
-    public void renderRewards(Graphics g) {
-
-    }
-
 
     /**
      * render to screen (e.g. inventory or HUD) using local variables x and y (passed in as arguments).

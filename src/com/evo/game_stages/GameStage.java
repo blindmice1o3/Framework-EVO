@@ -7,6 +7,7 @@ import com.evo.entities.moveable.player.Fish;
 import com.evo.entities.non_moveable.Kelp;
 import com.evo.gfx.Assets;
 import com.evo.items.ItemManager;
+import com.evo.rewards.RewardManager;
 import com.evo.tiles.Tile;
 
 import java.awt.*;
@@ -29,10 +30,14 @@ public class GameStage {
     // ITEMS
     private ItemManager itemManager;
 
+    // REWARDS
+    private RewardManager rewardManager;
+
     public GameStage(Handler handler, String path) {
         this.handler = handler;
         entityManager = new EntityManager(handler, new Fish(handler, xSpawn, ySpawn));
         itemManager = new ItemManager(handler);
+        rewardManager = new RewardManager(handler);
 
         loadGameStage(path);
 
@@ -48,6 +53,7 @@ public class GameStage {
     public void tick() {
         itemManager.tick();
         entityManager.tick();
+        rewardManager.tick();
 
         handler.getGameCamera().centerOnEntity(entityManager.getPlayer());
     }
@@ -80,8 +86,23 @@ public class GameStage {
 
         //ITEMS
         itemManager.render(g);
+
         //ENTITIES
         entityManager.render(g);
+
+        //REWARDS
+        rewardManager.render(g);
+
+        //HUD
+        renderHUD(g);
+    }
+
+    private void renderHUD(Graphics g) {
+        g.setColor(Color.RED);
+        g.drawString("hp: " + getPlayer().getHealth(), 10, 20);
+
+        g.setColor(Color.WHITE);
+        g.drawString("experiencePoints: " + getPlayer().getExperiencePoints(), handler.panelWidth/2, 20);
     }
 
     private boolean compareTwoSprites(BufferedImage sprite1, BufferedImage sprite2, int x, int y) {
@@ -215,6 +236,8 @@ public class GameStage {
     public EntityManager getEntityManager() { return entityManager; }
 
     public ItemManager getItemManager() { return itemManager; }
+
+    public RewardManager getRewardManager() { return rewardManager; }
 
     public Fish getPlayer() { return entityManager.getPlayer(); }
 

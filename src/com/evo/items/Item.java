@@ -10,8 +10,9 @@ import com.evo.states.StateManager;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
-public class Item {
+public class Item implements Serializable {
 
     //HANDLER
     public static Item[] items = new Item[256];
@@ -20,9 +21,9 @@ public class Item {
     //CLASS
     public static final int ITEMWIDTH = 16, ITEMHEIGHT = 16;
 
-    protected Handler handler;
+    protected transient Handler handler;
 
-    protected BufferedImage texture;
+    protected transient BufferedImage texture;
     protected String name;
     protected final int id;
 
@@ -48,7 +49,7 @@ public class Item {
         rewardExperiencePoints = 10;
 
         expired = false;
-        expirationLimit = 5000; //milliseconds.
+        expirationLimit = 9000; //milliseconds.
         expirationElapsed = 0;
         expirationPreviousTick = System.currentTimeMillis();
 
@@ -211,5 +212,9 @@ public class Item {
     public void setExpired(boolean expired) {
         this.expired = expired;
     }
+
+    public void setExpirationElapsed(long expirationElapsed) { this.expirationElapsed = expirationElapsed; }
+
+    public void setExpirationPreviousTick(long expirationPreviousTick) { this.expirationPreviousTick = expirationPreviousTick; }
 
 } // **** end Item class ****

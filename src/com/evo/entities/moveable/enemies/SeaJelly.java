@@ -24,7 +24,7 @@ public class SeaJelly extends Creature {
     private int currentPatrolLength;
 
     //ANIMATIONS
-    Animation idleAnimation, attackAnimation, hurtAnimation;
+    private Animation idleAnimation, attackAnimation, hurtAnimation;
 
     public SeaJelly(Handler handler, float x, float y) {
         super(handler, null, x, y, Assets.seaJelly[0].getWidth(), Assets.seaJelly[0].getHeight());
@@ -38,7 +38,8 @@ public class SeaJelly extends Creature {
         initAnimations();
     } // **** end SeaJelly(Handler, float, float) constructor ****
 
-    private void initAnimations() {
+    @Override
+    public void initAnimations() {
         BufferedImage[] idleFrames = new BufferedImage[3];
         idleFrames[0] = Assets.seaJelly[0];
         idleFrames[1] = Assets.seaJelly[1];

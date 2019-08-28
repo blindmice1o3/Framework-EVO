@@ -1,12 +1,18 @@
 package com.evo.serialize_deserialize;
 
 import com.evo.Handler;
+import com.evo.entities.Entity;
+import com.evo.entities.moveable.enemies.SeaJelly;
 import com.evo.entities.moveable.player.Fish;
 import com.evo.entities.moveable.player.FishStateManager;
+import com.evo.entities.non_moveable.Kelp;
+import com.evo.gfx.Assets;
+import com.evo.items.Item;
 import com.evo.states.GameStageState;
 import com.evo.states.StateManager;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class SaverAndLoader {
 
@@ -34,11 +40,15 @@ public class SaverAndLoader {
                 Fish.DirectionFacing directionFacing = gameStageState.getCurrentGameStage().getPlayer().getDirectionFacing();
                 float x = gameStageState.getCurrentGameStage().getPlayer().getX();
                 float y = gameStageState.getCurrentGameStage().getPlayer().getY();
+                ArrayList<Entity> entities = gameStageState.getCurrentGameStage().getEntityManager().getEntities();
+                ArrayList<Item> items = gameStageState.getCurrentGameStage().getItemManager().getItems();
 
                 objectOutputStream.writeObject(fishStateManager);
                 objectOutputStream.writeObject(directionFacing);
                 objectOutputStream.writeFloat(x);
                 objectOutputStream.writeFloat(y);
+                objectOutputStream.writeObject(entities);
+                objectOutputStream.writeObject(items);
                 ////////////////////////////////////////////////////////////////////
 
 
@@ -72,14 +82,32 @@ public class SaverAndLoader {
             Fish.DirectionFacing directionFacing = (Fish.DirectionFacing)objectInputStream.readObject();
             float x = objectInputStream.readFloat();
             float y = objectInputStream.readFloat();
+            ArrayList<Entity> entities = (ArrayList<Entity>)objectInputStream.readObject();
+            ArrayList<Item> items = (ArrayList<Item>)objectInputStream.readObject();
 
             gameStageState.getCurrentGameStage().getPlayer().setFishStateManager(fishStateManager);
             gameStageState.getCurrentGameStage().getPlayer().tick();
             gameStageState.getCurrentGameStage().getPlayer().setDirectionFacing(directionFacing);
             gameStageState.getCurrentGameStage().getPlayer().setX(x);
             gameStageState.getCurrentGameStage().getPlayer().setY(y);
+            gameStageState.getCurrentGameStage().getEntityManager().setEntities(entities);
+            gameStageState.getCurrentGameStage().getItemManager().setItems(items);
 
+            for (Entity e : gameStageState.getCurrentGameStage().getEntityManager().getEntities()) {
+                e.initAnimations();
 
+                e.setHandler(handler);
+            }
+
+            for (Item i : gameStageState.getCurrentGameStage().getItemManager().getItems()) {
+                if (i.getName().equals("Meat")) {
+                    i.setTexture(Assets.meat);
+                    i.setExpirationPreviousTick(System.currentTimeMillis());
+                    //i.setExpirationElapsed(0);
+                }
+
+                i.setHandler(handler);
+            }
 
             objectInputStream.close();
 

@@ -4,14 +4,16 @@ import com.evo.Handler;
 import com.evo.states.GameStageState;
 import com.evo.states.StateManager;
 
+import javax.sql.rowset.serial.SerialArray;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
-public abstract class Entity {
+public abstract class Entity implements Serializable {
 
     public static final int DEFAULT_HEALTH = 10;
 
-    protected Handler handler;
+    protected transient Handler handler;
 
     protected float x, y;
     protected int width, height;
@@ -35,6 +37,7 @@ public abstract class Entity {
         this.image = image;
     } // **** end Entity(Handler, BufferedImage, float, float, int, int) constructor ****
 
+    public abstract void initAnimations();
     public abstract void tick();
     public abstract void render(Graphics g);
     public abstract void die();
@@ -116,4 +119,7 @@ public abstract class Entity {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    public void setHandler(Handler handler) { this.handler = handler; }
+
 } // **** end Entity abstract class ****

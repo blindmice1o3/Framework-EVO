@@ -51,4 +51,11 @@ public class ItemManager {
         this.handler = handler;
     }
 
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(ArrayList<Item> items) {
+        this.items = items;
+    }
 } // **** end ItemManager class ****

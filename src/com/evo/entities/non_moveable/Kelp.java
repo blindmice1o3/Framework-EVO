@@ -18,8 +18,13 @@ public class Kelp extends StaticEntity {
     public Kelp(Handler handler, BufferedImage image, float x, float y) {
         super(handler, null, x, y, 12, 32);
 
-        kelpAnimation = new Animation(500, Assets.kelpSolid);
+        initAnimations();
     } // **** end Kelp(Handler, BufferedImage, float, float) constructor ****
+
+    @Override
+    public void initAnimations() {
+        kelpAnimation = new Animation(500, Assets.kelpSolid);
+    }
 
     @Override
     public void tick() {

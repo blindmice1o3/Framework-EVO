@@ -37,7 +37,7 @@ public class Game implements Runnable {
         shutdownGame();
     }
 
-    private void initGame() {
+    public void initGame() {
         Assets.init();
 
         //System.out.println("0");

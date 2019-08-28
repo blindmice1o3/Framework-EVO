@@ -51,12 +51,7 @@ public class Fish extends Creature {
         fishStateManager = new FishStateManager();
         directionFacing = DirectionFacing.RIGHT;
 
-        initHeadAnimations();
-        currentBodyAnimation = new Animation(600,
-                Assets.tailOriginal[fishStateManager.getCurrentBodySize().ordinal()]
-                        [fishStateManager.getCurrentBodyTexture().ordinal()]
-                        [fishStateManager.getCurrentFinPectoral().ordinal()]
-                        [fishStateManager.getCurrentTail().ordinal()]);
+        initAnimations();
 
 /*
         currentHeadImage = Assets.eatFrames[fishStateManager.getCurrentBodySize().ordinal()]
@@ -76,6 +71,16 @@ public class Fish extends Creature {
         bounds.width = 24;
         bounds.height = 8;
     } // **** end Fish(Handler, float, float) constructor ****
+
+    @Override
+    public void initAnimations() {
+        initHeadAnimations();
+        currentBodyAnimation = new Animation(600,
+                Assets.tailOriginal[fishStateManager.getCurrentBodySize().ordinal()]
+                        [fishStateManager.getCurrentBodyTexture().ordinal()]
+                        [fishStateManager.getCurrentFinPectoral().ordinal()]
+                        [fishStateManager.getCurrentTail().ordinal()]);
+    }
 
     private void initHeadAnimations() {
         //for FishStateManager.ActionState.NONE
@@ -374,7 +379,7 @@ public class Fish extends Creature {
             */
 
         } else if (directionFacing == DirectionFacing.LEFT) {
-            //TODO: flip image of head and body.
+            //FLIP IMAGES of head and body.
             BufferedImage flippedCurrentHeadImage = Fish.flipHorizontally(currentHeadAnimation.getCurrentFrame());
             BufferedImage flippedCurrentBodyImage = Fish.flipHorizontally(currentBodyAnimation.getCurrentFrame());
 

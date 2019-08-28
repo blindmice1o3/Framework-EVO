@@ -97,6 +97,10 @@ public class SaverAndLoader {
                 e.initAnimations();
 
                 e.setHandler(handler);
+
+                if (e instanceof Fish) {
+                    ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().setPlayer((Fish)e);
+                }
             }
 
             for (Item i : gameStageState.getCurrentGameStage().getItemManager().getItems()) {
@@ -107,8 +111,6 @@ public class SaverAndLoader {
                 }
 
                 i.setHandler(handler);
-
-                //TODO: new bug, player not able to eat instances of meat items after loading, may be different GameStage objects.
             }
 
             objectInputStream.close();

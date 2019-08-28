@@ -439,9 +439,9 @@ public class Fish extends Creature {
 
     private void renderHUD(Graphics g) {
         g.setColor(Color.YELLOW);
-        g.drawString("hp: " + health, 20, 10);
+        g.drawString("hp: " + health, 10, 20);
 
-        g.drawString("experiencePoints: " + experiencePoints, handler.panelWidth/2, 10);
+        g.drawString("experiencePoints: " + experiencePoints, handler.panelWidth/2, 20);
     }
 
     public static BufferedImage flipHorizontally(BufferedImage image) {

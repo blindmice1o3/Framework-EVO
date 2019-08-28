@@ -106,7 +106,6 @@ public class MainMenuState implements IState {
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
                     switch (index) {
                         case 0:
-                            //TODO: SAVE
                             String pathSavedGame = "qwerty789";
                             //@@@@@@@@@@@@@@@
                             //SAVES THE GAME
@@ -118,7 +117,6 @@ public class MainMenuState implements IState {
                             index = 0;
                             break;
                         case 1:
-                            //TODO: LOAD
                             //@@@@@@@@@@@@@@@
                             //LOADS THE GAME
                             //@@@@@@@@@@@@@@@

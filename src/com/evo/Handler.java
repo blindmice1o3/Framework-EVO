@@ -1,11 +1,8 @@
 package com.evo;
 
-import com.evo.entities.moveable.player.Fish;
 import com.evo.gfx.GameCamera;
 import com.evo.input.KeyManager;
 import com.evo.states.StateManager;
-
-import java.io.Serializable;
 
 public class Handler {
 

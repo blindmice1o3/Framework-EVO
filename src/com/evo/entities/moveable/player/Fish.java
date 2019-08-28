@@ -148,13 +148,17 @@ public class Fish extends Creature {
     public void tick() {
         // ANIMATIONS
         if (currentHeadAnimation != idleHeadAnimation) {
+            //HEAD
             currentHeadAnimation.tick();
 
             if (currentHeadAnimation.getIndex() == currentHeadAnimation.getFrames().length-1) {
+                //////////////////////////////////////////////////////////////////////////
                 fishStateManager.setCurrentActionState(FishStateManager.ActionState.NONE);
                 currentHeadAnimation = idleHeadAnimation;
+                //////////////////////////////////////////////////////////////////////////
             }
         }
+        //BODY
         currentBodyAnimation.tick();
 
 /*
@@ -265,13 +269,17 @@ public class Fish extends Creature {
         // A and X BUTTONS (B BUTTON in GameStageState class: pops IState).
         //a-button (bite).
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
+            //////////////////////////////////////////////////////////////////////////
             fishStateManager.setCurrentActionState(FishStateManager.ActionState.BITE);
             currentHeadAnimation = biteHeadAnimation;
+            //////////////////////////////////////////////////////////////////////////
         }
         //x-button (eat).
         else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SPACE)) {
+            //////////////////////////////////////////////////////////////////////////
             fishStateManager.setCurrentActionState(FishStateManager.ActionState.EAT);
             currentHeadAnimation = eatHeadAnimation;
+            //////////////////////////////////////////////////////////////////////////
         }
 
         // BODY-PARTS SWAPPING

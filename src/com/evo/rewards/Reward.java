@@ -54,7 +54,7 @@ public class Reward {
 
     public void render(Graphics g) {
         if (timerStarted) {
-            g.setColor(Color.RED);
+            g.setColor(Color.GREEN);
             g.drawString(stash.get(RewardType.HP).toString(),
                     (int)(x - handler.getGameCamera().getxOffset()),
                     (int)(y - handler.getGameCamera().getyOffset()));

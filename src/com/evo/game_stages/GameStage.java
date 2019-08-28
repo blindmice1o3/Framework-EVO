@@ -98,8 +98,14 @@ public class GameStage {
     }
 
     private void renderHUD(Graphics g) {
-        g.setColor(Color.RED);
-        g.drawString("hp: " + getPlayer().getHealth(), 10, 20);
+        g.setColor(Color.BLACK);
+        g.fillRect(28, 11, 10*(getPlayer().getHealthMax()) +4, 12);
+        g.setColor(Color.GREEN);
+        g.fillRect(30, 13, 10*getPlayer().getHealth(), 8);
+        g.setColor(Color.GREEN);
+        g.drawString("hp: ", 10, 20);
+        g.drawString(Integer.toString(getPlayer().getHealth()), 10, 35);
+
 
         g.setColor(Color.WHITE);
         g.drawString("experiencePoints: " + getPlayer().getExperiencePoints(), handler.panelWidth/2, 20);

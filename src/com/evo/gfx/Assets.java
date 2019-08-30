@@ -2,7 +2,6 @@ package com.evo.gfx;
 
 import com.evo.Utils;
 import com.evo.entities.moveable.player.FishStateManager;
-import com.evo.gfx.textbox.FontGrabber;
 import com.evo.tiles.Tile;
 
 import java.awt.image.BufferedImage;

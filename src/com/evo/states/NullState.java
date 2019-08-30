@@ -4,6 +4,7 @@ import com.evo.Handler;
 import com.evo.gfx.Assets;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class NullState implements IState {
 
@@ -21,7 +22,10 @@ public class NullState implements IState {
 
     @Override
     public void getInput() {
-
+        //start (will enter PauseState).
+        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ENTER)) {
+            handler.getStateManager().pushIState(StateManager.State.PAUSE, null);
+        }
     }
 
     @Override

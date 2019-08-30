@@ -6,7 +6,7 @@ import com.evo.entities.moveable.enemies.SeaJelly;
 import com.evo.entities.moveable.player.Fish;
 import com.evo.entities.non_moveable.Kelp;
 import com.evo.gfx.Assets;
-import com.evo.gfx.textbox.FontGrabber;
+import com.evo.gfx.FontGrabber;
 import com.evo.items.ItemManager;
 import com.evo.rewards.RewardManager;
 import com.evo.tiles.Tile;
@@ -99,32 +99,18 @@ public class GameStage {
     }
 
     private void renderHUD(Graphics g) {
-        //CENTER
-        Graphics2D g2d = (Graphics2D)g;
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
-        String text = "Cannabis sativa is what you seek";
-        int widthLetter = 10;
-        int heightLetter = 10;
-        FontGrabber.renderString(g2d,
-                text,
-                (handler.panelWidth/2)-((text.length()*widthLetter)/2),
-                (handler.panelHeight/2)-(heightLetter/2)-(getPlayer().getHeight()),
-                widthLetter,
-                heightLetter);
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
-
-        ///////////////////////////////////////////////////////////////////////////////////
-        //TOP-LEFT
+        //HP BAR
         g.setColor(Color.BLACK);
         g.fillRect(28, 11, 10*(getPlayer().getHealthMax()) +4, 12);
         g.setColor(Color.GREEN);
         g.fillRect(30, 13, 10*getPlayer().getHealth(), 8);
+
+        //HP
         g.setColor(Color.GREEN);
         g.drawString("hp: ", 10, 20);
         g.drawString(Integer.toString(getPlayer().getHealth()), 10, 35);
 
-        ///////////////////////////////////////////////////////////////////////////////////
-        //TOP-RIGHT
+        //XP
         g.setColor(Color.WHITE);
         g.drawString("experiencePoints: " + getPlayer().getExperiencePoints(), handler.panelWidth/2, 20);
     }

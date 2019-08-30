@@ -1,4 +1,4 @@
-package com.evo.gfx.textbox;
+package com.evo.gfx;
 
 import com.evo.gfx.Assets;
 

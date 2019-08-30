@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class StateManager implements Serializable {
 
-    public enum State { NULL, INTRO, CHAPTER, WORLD_MAP, GAME_STAGE, MAIN_MENU; }
+    public enum State { NULL, INTRO, CHAPTER, WORLD_MAP, GAME_STAGE, MAIN_MENU, TEXTBOX, PAUSE; }
     public enum Chapter { ONE, TWO, THREE, FOUR, FIVE; }
 
     private Handler handler;
@@ -39,6 +39,8 @@ public class StateManager implements Serializable {
         states.put(State.WORLD_MAP, new WorldMapState(handler));
         states.put(State.MAIN_MENU, new MainMenuState(handler));
         states.put(State.GAME_STAGE, new GameStageState(handler));
+        states.put(State.TEXTBOX, new TextboxState(handler));
+        states.put(State.PAUSE, new PauseState(handler));
 
         statesStack.add(states.get(State.NULL));
         statesStack.add(states.get(State.INTRO));

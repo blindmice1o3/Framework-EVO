@@ -33,6 +33,10 @@ public class GameStageState implements IState {
         else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SHIFT)) {
             handler.getStateManager().pushIState(StateManager.State.MAIN_MENU, null);
         }
+        //start (will enter PauseState).
+        else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ENTER)) {
+            handler.getStateManager().pushIState(StateManager.State.PAUSE, null);
+        }
 
     }
 

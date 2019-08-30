@@ -99,6 +99,22 @@ public class GameStage {
     }
 
     private void renderHUD(Graphics g) {
+        //CENTER
+        Graphics2D g2d = (Graphics2D)g;
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+        String text = "Cannabis sativa is what you seek";
+        int widthLetter = 10;
+        int heightLetter = 10;
+        FontGrabber.renderString(g2d,
+                text,
+                (handler.panelWidth/2)-((text.length()*widthLetter)/2),
+                (handler.panelHeight/2)-(heightLetter/2)-(getPlayer().getHeight()),
+                widthLetter,
+                heightLetter);
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+
+        ///////////////////////////////////////////////////////////////////////////////////
+        //TOP-LEFT
         g.setColor(Color.BLACK);
         g.fillRect(28, 11, 10*(getPlayer().getHealthMax()) +4, 12);
         g.setColor(Color.GREEN);
@@ -107,11 +123,10 @@ public class GameStage {
         g.drawString("hp: ", 10, 20);
         g.drawString(Integer.toString(getPlayer().getHealth()), 10, 35);
 
-
+        ///////////////////////////////////////////////////////////////////////////////////
+        //TOP-RIGHT
         g.setColor(Color.WHITE);
         g.drawString("experiencePoints: " + getPlayer().getExperiencePoints(), handler.panelWidth/2, 20);
-
-        FontGrabber.renderString(g, "Cannabis sativa is what you seek", 30, 40, 10, 10);
     }
 
     private boolean compareTwoSprites(BufferedImage sprite1, BufferedImage sprite2, int x, int y) {

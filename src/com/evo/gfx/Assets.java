@@ -2,11 +2,17 @@ package com.evo.gfx;
 
 import com.evo.Utils;
 import com.evo.entities.moveable.player.FishStateManager;
+import com.evo.gfx.textbox.FontGrabber;
 import com.evo.tiles.Tile;
 
 import java.awt.image.BufferedImage;
+import java.util.Map;
 
 public class Assets {
+
+    // FONT (from pokemon yellow sprite sheet for battle)
+    public static BufferedImage fontSpriteSheet;
+    public static Map<String, BufferedImage> fontHashMap;
 
     // SPRITE SHEETS
     public static BufferedImage spriteSheetChapterIntroAndWorldMap, spriteSheetChapter1Creatures, spriteSheetStartMenu;
@@ -301,7 +307,19 @@ public class Assets {
         // ITEMS - MEAT
         meat = spriteSheetChapter1Creatures.getSubimage(594, 697, 16, 16);
 
+
+        // FONT (from pokemon yellow sprite sheet for battle)
+        fontSpriteSheet = Utils.loadImage("/Game Boy GBC - Pokemon Yellow - Battle Interface.png");
+        fontHashMap = FontGrabber.initFont();
     }
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     public static void pullFishHeadImageSubset(FishStateManager.BodySize bodySize, FishStateManager.BodyTexture bodyTexture,
                                                FishStateManager.Jaws jaws, int xStart, int yStart, int width, int height) {

@@ -6,6 +6,7 @@ import com.evo.entities.moveable.enemies.SeaJelly;
 import com.evo.entities.moveable.player.Fish;
 import com.evo.entities.non_moveable.Kelp;
 import com.evo.gfx.Assets;
+import com.evo.gfx.textbox.FontGrabber;
 import com.evo.items.ItemManager;
 import com.evo.rewards.RewardManager;
 import com.evo.tiles.Tile;
@@ -109,6 +110,8 @@ public class GameStage {
 
         g.setColor(Color.WHITE);
         g.drawString("experiencePoints: " + getPlayer().getExperiencePoints(), handler.panelWidth/2, 20);
+
+        FontGrabber.renderString(g, "Cannabis sativa is what you seek", 30, 40, 10, 10);
     }
 
     private boolean compareTwoSprites(BufferedImage sprite1, BufferedImage sprite2, int x, int y) {

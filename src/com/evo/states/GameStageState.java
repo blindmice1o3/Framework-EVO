@@ -25,6 +25,12 @@ public class GameStageState implements IState {
 
     @Override
     public void getInput() {
+        //@@@@TESTING TextboxState (KeyEvent.VK_SLASH)@@@@
+        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SLASH)) {
+            handler.getStateManager().pushIState(StateManager.State.TEXTBOX, null);
+        }
+        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
         //b-button (goes back to previous IState).
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
             handler.getStateManager().popIState();

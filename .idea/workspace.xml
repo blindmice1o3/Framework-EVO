@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2bcc4a98-1f2c-4e1b-a19b-f51f53d66850" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/gfx/Assets.java" afterPath="$PROJECT_DIR$/src/com/evo/gfx/Assets.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/gfx/FontGrabber.java" afterPath="$PROJECT_DIR$/src/com/evo/gfx/FontGrabber.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/states/GameStageState.java" afterPath="$PROJECT_DIR$/src/com/evo/states/GameStageState.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/states/PauseState.java" afterPath="$PROJECT_DIR$/src/com/evo/states/PauseState.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/states/TextboxState.java" afterPath="$PROJECT_DIR$/src/com/evo/states/TextboxState.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -67,12 +64,12 @@
       <file leaf-file-name="TextboxState.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/evo/states/TextboxState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="58" column="52" lean-forward="false" selection-start-line="58" selection-start-column="52" selection-end-line="58" selection-end-column="52" />
+            <state relative-caret-position="102">
+              <caret line="144" column="33" lean-forward="false" selection-start-line="144" selection-start-column="33" selection-end-line="144" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#7460#7461#0" expanded="true" />
-                <element signature="e#7500#7501#0" expanded="true" />
+                <element signature="e#8824#8825#0" expanded="true" />
+                <element signature="e#8864#8865#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -171,9 +168,9 @@
         <option value="$PROJECT_DIR$/src/com/evo/states/StateManager.java" />
         <option value="$PROJECT_DIR$/src/com/evo/states/PauseState.java" />
         <option value="$PROJECT_DIR$/src/com/evo/states/GameStageState.java" />
-        <option value="$PROJECT_DIR$/src/com/evo/states/TextboxState.java" />
         <option value="$PROJECT_DIR$/src/com/evo/gfx/Assets.java" />
         <option value="$PROJECT_DIR$/src/com/evo/gfx/FontGrabber.java" />
+        <option value="$PROJECT_DIR$/src/com/evo/states/TextboxState.java" />
       </list>
     </option>
   </component>
@@ -1017,12 +1014,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/evo/states/TextboxState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="58" column="52" lean-forward="false" selection-start-line="58" selection-start-column="52" selection-end-line="58" selection-end-column="52" />
+        <state relative-caret-position="102">
+          <caret line="144" column="33" lean-forward="false" selection-start-line="144" selection-start-column="33" selection-end-line="144" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#7460#7461#0" expanded="true" />
-            <element signature="e#7500#7501#0" expanded="true" />
+            <element signature="e#8824#8825#0" expanded="true" />
+            <element signature="e#8864#8865#0" expanded="true" />
           </folding>
         </state>
       </provider>

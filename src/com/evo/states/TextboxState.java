@@ -13,23 +13,29 @@ public class TextboxState implements IState {
     Handler handler;
 
     private State currentState;
-    private String text;
 
+    //MESSAGE
+    private String text;
     private String firstLine;
     private String secondLine;
     private int numberOfPages;
     private String[] textAfterLayout;
 
-    private int widthLetter, heightLetter;
-    private int xFirstLine, yFirstLine, widthFirstLine, heightFirstLine;
-    private int xSecondLine, ySecondLine, widthSecondLine, heightSecondLine;
-
+    //Frame (and border)
     private int xOffset;
     private int xInit, yInit;
     private int xFinal, yFinal;
     private int widthInit, heightInit;
     private int widthFinal, heightFinal;
     private int xCurrent, yCurrent, widthCurrent,heightCurrent;
+
+    //Text Area
+    private int widthLetter, heightLetter; //size of each letter.
+    private int xFirstLine, yFirstLine, widthFirstLine, heightFirstLine;
+    private int xSecondLine, ySecondLine, widthSecondLine, heightSecondLine;
+    //Text Area - type-in effect
+    private int xLine1TypeInFX, yLine1TypeInFX, widthLine1TypeInFX, heightLine1TypeInFX;
+    private int xLine2TypeInFX, yLine2TypeInFX, widthLine2TypeInFX, heightLine2TypeInFX;
 
     public TextboxState(Handler handler) {
         this.handler = handler;
@@ -63,6 +69,16 @@ public class TextboxState implements IState {
         ySecondLine = yFirstLine + 20; //+20 for space between firstLine and secondLine.
         widthSecondLine = widthFirstLine;
         heightSecondLine = heightFirstLine;
+
+        xLine1TypeInFX = xFirstLine;
+        yLine1TypeInFX = yFirstLine;
+        widthLine1TypeInFX = widthFirstLine;
+        heightLine1TypeInFX = heightFirstLine;
+
+        xLine2TypeInFX = xSecondLine;
+        yLine2TypeInFX = ySecondLine;
+        widthLine2TypeInFX = widthSecondLine;
+        heightLine2TypeInFX = heightSecondLine;
     } // **** end TextboxState(Handler) constructor ****
 
     private void initTextLayout() {
@@ -126,7 +142,15 @@ public class TextboxState implements IState {
                 break;
             case LINE_IN_ANIMATION:
                 //TODO: implement animationfx of line being "typed-in".
-
+                int textSpeed = 2;
+                if (widthLine1TypeInFX > 0) {
+                    xLine1TypeInFX += textSpeed;
+                    widthLine1TypeInFX -= textSpeed;
+                }
+                if ( (widthLine2TypeInFX > 0) && (widthLine1TypeInFX <= 0) ) {
+                    xLine2TypeInFX += textSpeed;
+                    widthLine2TypeInFX -= textSpeed;
+                }
 
                 break;
             case WAIT_FOR_INPUT:
@@ -185,6 +209,8 @@ public class TextboxState implements IState {
         */
     }
 
+
+
     @Override
     public void render(Graphics g) {
 
@@ -204,10 +230,17 @@ public class TextboxState implements IState {
 
                 break;
             case LINE_IN_ANIMATION:
+                //FIRST_LINE
                 FontGrabber.renderString(g, firstLine, xFirstLine, yFirstLine, widthLetter, heightLetter);
+                //SECOND_LINE
                 if (secondLine != null) {
                     FontGrabber.renderString(g, secondLine, xSecondLine, ySecondLine, widthLetter, heightLetter);
                 }
+
+                //type-in effect.
+                g.setColor(Color.BLUE);
+                g.fillRect(xLine1TypeInFX, yLine1TypeInFX, widthLine1TypeInFX, heightLine1TypeInFX);
+                g.fillRect(xLine2TypeInFX, yLine2TypeInFX, widthLine2TypeInFX, heightLine2TypeInFX);
 
                 break;
             case WAIT_FOR_INPUT:
@@ -238,6 +271,17 @@ public class TextboxState implements IState {
         yCurrent = yInit;
         widthCurrent = widthInit;
         heightCurrent = heightInit;
+
+        //RESET values related to textbox's type-in effect.
+        xLine1TypeInFX = xFirstLine;
+        yLine1TypeInFX = yFirstLine;
+        widthLine1TypeInFX = widthFirstLine;
+        heightLine1TypeInFX = heightFirstLine;
+
+        xLine2TypeInFX = xSecondLine;
+        yLine2TypeInFX = ySecondLine;
+        widthLine2TypeInFX = widthSecondLine;
+        heightLine2TypeInFX = heightSecondLine;
 
         //it would've been in LINE_IN_ANIMATION if we don't reset currentState.
         currentState = State.ENTER;

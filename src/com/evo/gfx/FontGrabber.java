@@ -122,14 +122,21 @@ public class FontGrabber {
         fontHashMap.put("8", fontNestedArray[6][8]);
         fontHashMap.put("9", fontNestedArray[6][9]);
 
+        fontHashMap.put("symbol", Assets.pokeballToken);
+
         return fontHashMap;
     }
 
     public static void renderString(Graphics g, String text, int x, int y, int width, int height) {
         int xOffset = 0;
         for (int i = 0; i < text.length(); i++) {
-            g.drawImage(Assets.fontHashMap.get(text.substring(i, i+1)), x+xOffset, y,
-                    width, height, null);
+            if ( Assets.fontHashMap.containsKey(text.substring(i, i+1)) ) {
+                g.drawImage(Assets.fontHashMap.get(text.substring(i, i + 1)), x + xOffset, y,
+                        width, height, null);
+            } else {
+                g.drawImage(Assets.fontHashMap.get("symbol"), x + xOffset, y,
+                        width, height, null);
+            }
             xOffset += width;
         }
     }

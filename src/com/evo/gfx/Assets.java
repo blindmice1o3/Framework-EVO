@@ -11,6 +11,7 @@ public class Assets {
 
     // FONT (from pokemon yellow sprite sheet for battle)
     public static BufferedImage fontSpriteSheet;
+    public static BufferedImage pokeballToken;
     public static Map<String, BufferedImage> fontHashMap;
 
     // SPRITE SHEETS
@@ -309,6 +310,7 @@ public class Assets {
 
         // FONT (from pokemon yellow sprite sheet for battle)
         fontSpriteSheet = Utils.loadImage("/Game Boy GBC - Pokemon Yellow - Battle Interface.png");
+        pokeballToken = fontSpriteSheet.getSubimage(324, 269, 7, 7);
         fontHashMap = FontGrabber.initFont();
     }
 

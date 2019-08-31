@@ -33,7 +33,7 @@ public class PauseState implements IState {
         //CENTER
         Graphics2D g2d = (Graphics2D)g;
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
-        String text = "Cannabis sativa is what you seek";
+        String text = "PAUSED";
         int widthLetter = 10;
         int heightLetter = 10;
         FontGrabber.renderString(g2d,

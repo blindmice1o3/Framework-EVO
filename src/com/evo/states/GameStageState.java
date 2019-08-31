@@ -27,7 +27,10 @@ public class GameStageState implements IState {
     public void getInput() {
         //@@@@TESTING TextboxState (KeyEvent.VK_SLASH)@@@@
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SLASH)) {
-            handler.getStateManager().pushIState(StateManager.State.TEXTBOX, null);
+            /////////////
+            Object args[] = { "The sky above the port was the color of television, tuned to a dead channel. -William Gibson" };
+            /////////////
+            handler.getStateManager().pushIState(StateManager.State.TEXTBOX, args);
         }
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 

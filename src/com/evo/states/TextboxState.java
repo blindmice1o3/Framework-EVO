@@ -1,6 +1,7 @@
 package com.evo.states;
 
 import com.evo.Handler;
+import com.evo.gfx.FontGrabber;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -12,22 +13,34 @@ public class TextboxState implements IState {
     Handler handler;
 
     private State currentState;
+    private String text;
 
-    private int xCurrent, yCurrent, widthCurrent,heightCurrent;
+    private String firstLine;
+    private String secondLine;
+    private int numberOfPages;
+    private String[] textAfterLayout;
+
+    private int widthLetter, heightLetter;
+    private int xFirstLine, yFirstLine, widthFirstLine, heightFirstLine;
+    private int xSecondLine, ySecondLine, widthSecondLine, heightSecondLine;
+
     private int xOffset;
     private int xInit, yInit;
     private int xFinal, yFinal;
     private int widthInit, heightInit;
     private int widthFinal, heightFinal;
+    private int xCurrent, yCurrent, widthCurrent,heightCurrent;
 
     public TextboxState(Handler handler) {
         this.handler = handler;
         currentState = null;
 
+        widthLetter = 10;
+        heightLetter = 10;
         xOffset = 20;
 
         xInit = (handler.panelWidth/2) - xOffset;
-        yInit = (handler.panelHeight/2) - 20;
+        yInit = (handler.panelHeight/2) + 20;
         widthInit = 2 * xOffset;
         heightInit = xOffset;
 
@@ -40,7 +53,39 @@ public class TextboxState implements IState {
         yCurrent = yInit;
         widthCurrent = widthInit;
         heightCurrent = heightInit;
+
+        xFirstLine = xFinal + xOffset;
+        yFirstLine = yFinal + xOffset;
+        widthFirstLine = widthFinal - (2*xOffset) -5; //-5 just to get a specific (tester) text to fit nicely.
+        heightFirstLine = (heightFinal - (2*(xOffset/2)) - 10) / 2;
+
+        xSecondLine = xFirstLine;
+        ySecondLine = yFirstLine + 20; //+20 for space between firstLine and secondLine.
+        widthSecondLine = widthFirstLine;
+        heightSecondLine = heightFirstLine;
     } // **** end TextboxState(Handler) constructor ****
+
+    private void initTextLayout() {
+        int numberOfLetterPerLine = widthFirstLine / widthLetter;
+        int lengthOfTextToDisplay = text.length() * widthLetter;
+        int numberOfLineToDisplay = (lengthOfTextToDisplay / numberOfLetterPerLine) + 1; //+1 possible lobed-off.
+        numberOfPages = numberOfLineToDisplay / 2; //2 lines per page.
+
+        textAfterLayout = new String[numberOfLineToDisplay];
+
+        int indexText = 0;
+        for (int i = 0; i < numberOfLineToDisplay; i++) {
+            if (indexText+numberOfLetterPerLine < text.length()) {
+                textAfterLayout[i] = text.substring(indexText, indexText + numberOfLetterPerLine);
+                indexText = indexText + numberOfLetterPerLine;
+            } else {
+                textAfterLayout[i] = text.substring(indexText);
+            }
+        }
+
+        firstLine = textAfterLayout[0];
+        secondLine = textAfterLayout[1];
+    }
 
     @Override
     public void tick() {
@@ -71,13 +116,17 @@ public class TextboxState implements IState {
                     heightCurrent = heightFinal;
                 }
 
+                //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                 //CHANGE TO NEXT TextboxState.State
                 if ( (xCurrent == xFinal) && (widthCurrent == widthFinal) && (heightCurrent == heightFinal) ) {
                     changeCurrentState(State.LINE_IN_ANIMATION);
                 }
+                //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
                 break;
             case LINE_IN_ANIMATION:
                 //TODO: implement animationfx of line being "typed-in".
+
 
                 break;
             case WAIT_FOR_INPUT:
@@ -155,9 +204,12 @@ public class TextboxState implements IState {
 
                 break;
             case LINE_IN_ANIMATION:
+                FontGrabber.renderString(g, firstLine, xFirstLine, yFirstLine, widthLetter, heightLetter);
+                if (secondLine != null) {
+                    FontGrabber.renderString(g, secondLine, xSecondLine, ySecondLine, widthLetter, heightLetter);
+                }
 
                 break;
-
             case WAIT_FOR_INPUT:
 
                 break;
@@ -189,6 +241,15 @@ public class TextboxState implements IState {
 
         //it would've been in LINE_IN_ANIMATION if we don't reset currentState.
         currentState = State.ENTER;
+
+        if (args != null) {
+            if (args[0] instanceof String) {
+                text = (String)args[0];
+                /////////////////
+                initTextLayout();
+                /////////////////
+            }
+        }
 
         /*
         switch (currentState) {

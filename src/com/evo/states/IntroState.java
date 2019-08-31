@@ -1,6 +1,7 @@
 package com.evo.states;
 
 import com.evo.Handler;
+import com.evo.gfx.Animation;
 import com.evo.gfx.Assets;
 
 import java.awt.*;
@@ -10,11 +11,14 @@ public class IntroState implements IState {
 
     private Handler handler;
 
+    private Animation waveAnimation;
     /*private int bodySizeIndex, bodyTextureIndex, jawsIndex, actionStateIndex, frameNumberIndex;*/
     //private Fish fishInstance;
 
     public IntroState(Handler handler) {
         this.handler = handler;
+
+        waveAnimation = new Animation(120, Assets.waveAnimationArray);
 /*
         bodySizeIndex = 0;
         bodyTextureIndex = 0;
@@ -29,6 +33,7 @@ public class IntroState implements IState {
     public void tick() {
         getInput();
 
+        waveAnimation.tick();
         /////////////////////
         //fishInstance.tick();
         /////////////////////
@@ -143,14 +148,13 @@ public class IntroState implements IState {
         }
     }
 
+    private float opacity = 1.0f;
     @Override
     public void render(Graphics g) {
         //NullState.render(Graphics) ------> fills the screen with background color of Displayer's panel.
-        handler.getStateManager().getStatesStack().get(0).render(g);
-
+//        handler.getStateManager().getStatesStack().get(0).render(g);
 
         Graphics2D g2d = (Graphics2D)g;
-        float opacity = 1.0f;
 
         switch (handler.getStateManager().getCurrentChapter()) {
             case ONE:
@@ -159,7 +163,10 @@ public class IntroState implements IState {
                 // CHANGING OPACITY OF NEXT IMAGE
                 opacity = 0.25f;
                 g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
-                g2d.drawImage(Assets.chapter1Wave, 0, 0, handler.panelWidth, handler.panelHeight, null);
+                ////////////////////////////////////////////////////////////////////////////////////
+                g2d.drawImage(waveAnimation.getCurrentFrame(), 0, 0, handler.panelWidth, handler.panelHeight, null);
+                ////////////////////////////////////////////////////////////////////////////////////
+                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
 
                 break;
             case TWO:

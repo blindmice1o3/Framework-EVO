@@ -28,6 +28,7 @@ public class Assets {
 
     // TRANSPARENT LAYER - WAVE
     public static BufferedImage chapter1Wave, chapter2Wave, chapter3Wave, chapter4Wave, chapter5Wave;
+    public static BufferedImage[] waveAnimationArray;
 
     // OVERWORLD - TOKEN
     public static BufferedImage upOverworld0, upOverworld1, downOverworld0, downOverworld1,
@@ -260,6 +261,16 @@ public class Assets {
         chapter3Wave = spriteSheetChapterIntroAndWorldMap.getSubimage(674, 754, 255+1, 223+1);
         chapter4Wave = spriteSheetChapterIntroAndWorldMap.getSubimage(682, 1282, 255+1, 223+1);
         chapter5Wave = spriteSheetChapterIntroAndWorldMap.getSubimage(671, 1932, 255+1, 223+1);
+
+        waveAnimationArray = new BufferedImage[8];
+        waveAnimationArray[0] = chapter1Wave;
+        waveAnimationArray[1] = chapter2Wave;
+        waveAnimationArray[2] = chapter3Wave;
+        waveAnimationArray[3] = chapter4Wave;
+        waveAnimationArray[4] = chapter5Wave;
+        waveAnimationArray[5] = chapter4Wave;
+        waveAnimationArray[6] = chapter3Wave;
+        waveAnimationArray[7] = chapter2Wave;
 
         // OVERWORLD - TOKEN
         upOverworld0 = spriteSheetChapter1Creatures.getSubimage(149, 113, 9, 16);

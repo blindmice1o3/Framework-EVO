@@ -28,7 +28,14 @@ public class GameStageState implements IState {
         //@@@@TESTING TextboxState (KeyEvent.VK_SLASH)@@@@
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SLASH)) {
             /////////////
-            Object args[] = { "The sky above the port was the color of television, tuned to a dead channel. -William Gibson" };
+            StringBuilder text = new StringBuilder(
+                    "The sky above the port was the color of television, tuned to a dead channel. -William Gibson");
+            text.append(" \"It's not like I'm using,\" Case heard someone say, as he shouldered his way ").append(
+                    "through the crowd around the door of the Chat. \"It's like my body's developed this ").append(
+                    "massive drug deficiency.\" It was a Sprawl voice and a Sprawl joke. The Chatsubo was ").append(
+                    "a bar for professional expatriates; you could drink there for a week and never hear ").append(
+                    "two words in Japanese.");
+            Object args[] = { text.toString() };
             /////////////
             handler.getStateManager().pushIState(StateManager.State.TEXTBOX, args);
         }

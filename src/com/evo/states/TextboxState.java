@@ -1,6 +1,7 @@
 package com.evo.states;
 
 import com.evo.Handler;
+import com.evo.gfx.Assets;
 import com.evo.gfx.FontGrabber;
 
 import java.awt.*;
@@ -36,6 +37,8 @@ public class TextboxState implements IState {
     //Text Area - type-in effect
     private int xLine1TypeInFX, yLine1TypeInFX, widthLine1TypeInFX, heightLine1TypeInFX;
     private int xLine2TypeInFX, yLine2TypeInFX, widthLine2TypeInFX, heightLine2TypeInFX;
+    //CONTINUE INDICATOR
+    private boolean continueIndicator;
 
     public TextboxState(Handler handler) {
         this.handler = handler;
@@ -79,6 +82,8 @@ public class TextboxState implements IState {
         yLine2TypeInFX = ySecondLine;
         widthLine2TypeInFX = widthSecondLine;
         heightLine2TypeInFX = heightSecondLine;
+
+        continueIndicator = false;
     } // **** end TextboxState(Handler) constructor ****
 
 
@@ -110,15 +115,11 @@ public class TextboxState implements IState {
         if (currentLine2Index < textAfterLayout.length) {
             secondLine = textAfterLayout[currentLine2Index];
         }
-        //increment the currentLine#Index.
-        if (currentLine1Index+2 < textAfterLayout.length) {
-            currentLine1Index = currentLine1Index + 2;
-        }
-        if (currentLine2Index+2 < textAfterLayout.length) {
-            currentLine2Index = currentLine2Index + 2;
-        }
     }
 
+    private int continueIndicatorTicker = 0;
+    private int continueIndicatorTickerSpeed = 30;
+    private boolean renderContinueIndicator = false;
     @Override
     public void tick() {
         getInput();
@@ -159,21 +160,76 @@ public class TextboxState implements IState {
             case LINE_IN_ANIMATION:
                 //TODO: implement animationfx of line being "typed-in".
                 int textSpeed = 2;
+                //reveal the lines of text by shrinking the covering-rectangle-that's-the-same-color-as-textbox-background.
                 if (widthLine1TypeInFX > 0) {
                     xLine1TypeInFX += textSpeed;
                     widthLine1TypeInFX -= textSpeed;
                 }
+                //TODO: sometimes there's only one line and we shouldn't wait for the revealing of the second line.
                 if ( (widthLine2TypeInFX > 0) && (widthLine1TypeInFX <= 0) ) {
                     xLine2TypeInFX += textSpeed;
                     widthLine2TypeInFX -= textSpeed;
                 }
 
+                // @@@@@@@@@@@@@@@@@ ACTUALLY... just set currentState to State.WAIT_FOR_INPUT @@@@@@@@@@@@@@@@
+                if ( (widthLine2TypeInFX <= 0) && (widthLine1TypeInFX <= 0) ) {
+                    changeCurrentState(State.WAIT_FOR_INPUT);
+                }
+
                 break;
             case WAIT_FOR_INPUT:
                 //a-button
-                //blinking continue indicator.
+                //If another line exist, increment the currentLine#Index.
+                if (currentLine1Index+2 < textAfterLayout.length) {
+                    // !!!!!!!!!!!!! if we're here, THERE'S ANOTHER PAGE !!!!!!!!!!!!!
+                    //blinking continue indicator.
+                    continueIndicator = true;
+                }
+
+                if (continueIndicator) {
+                    //////////////////////////
+                    continueIndicatorTicker++;
+                    //////////////////////////
+
+                    //continueIndicatorTickerSpeed will determine when to alternate the on/off effect of what's rendered.
+                    if (continueIndicatorTicker >= continueIndicatorTickerSpeed) {
+                        //resets the continueIndicatorTicker when its max is reached.
+                        continueIndicatorTicker = 0;
+                        //alternate the continueIndicator's blinking effect.
+                        renderContinueIndicator = !renderContinueIndicator;
+                    }
+                }
+
+                //trigger CONTINUE-INDICATOR after BOTH lines are done revealing their text.
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
                     //TODO: IF more pages exist, changeCurrentState(PAGE_OUT_ANIMATION). ELSE, changeCurrentState(EXIT).
+                    if (continueIndicator) {
+                        currentLine1Index = currentLine1Index + 2;
+                        firstLine = textAfterLayout[currentLine1Index];
+                        if (currentLine2Index+2 < textAfterLayout.length) {
+                            currentLine2Index = currentLine2Index + 2;
+                            secondLine = textAfterLayout[currentLine2Index];
+                        }
+
+                        //RESET values related to textbox's type-in effect.
+                        xLine1TypeInFX = xFirstLine;
+                        yLine1TypeInFX = yFirstLine;
+                        widthLine1TypeInFX = widthFirstLine;
+                        heightLine1TypeInFX = heightFirstLine;
+
+                        xLine2TypeInFX = xSecondLine;
+                        yLine2TypeInFX = ySecondLine;
+                        widthLine2TypeInFX = widthSecondLine;
+                        heightLine2TypeInFX = heightSecondLine;
+
+                        continueIndicator = false;
+                        changeCurrentState(State.LINE_IN_ANIMATION);
+                        //NEXT PAGE OF 2 LINES.
+                        //set currentState to State.LINE_IN_ANIMATION.
+                    } else {
+                        changeCurrentState(State.PAGE_OUT_ANIMATION);
+                        //set currentState to State.PAGE_OUT_ANIMATION.
+                    }
                 }
 
                 break;
@@ -262,6 +318,16 @@ public class TextboxState implements IState {
 
                 break;
             case LINE_IN_ANIMATION:
+                //IF the continue indicator was rendered from the previous page, cover it and turn it off.
+                if (renderContinueIndicator) {
+                    g.setColor(Color.BLUE);
+                    g.fillRect( xFinal + widthFinal - (2*widthLetter),
+                            yFinal + heightFinal - (2*heightLetter),
+                            widthLetter,
+                            heightLetter );
+                    renderContinueIndicator = false;
+                }
+
                 //FIRST_LINE
                 FontGrabber.renderString(g, firstLine, xFirstLine, yFirstLine, widthLetter, heightLetter);
                 //SECOND_LINE
@@ -276,9 +342,32 @@ public class TextboxState implements IState {
 
                 break;
             case WAIT_FOR_INPUT:
+                if (renderContinueIndicator) {
+                    g.drawImage( Assets.pokeballToken,
+                            xFinal + widthFinal - (2*widthLetter),
+                            yFinal + heightFinal - (2*heightLetter),
+                            widthLetter,
+                            heightLetter,
+                            null );
+                } else {
+                    g.setColor(Color.BLUE);
+                    g.fillRect( xFinal + widthFinal - (2*widthLetter),
+                            yFinal + heightFinal - (2*heightLetter),
+                            widthLetter,
+                            heightLetter );
+                }
 
                 break;
             case PAGE_OUT_ANIMATION:
+                //IF the continue indicator was rendered from the previous page, cover it and turn it off.
+                if (renderContinueIndicator) {
+                    g.setColor(Color.BLUE);
+                    g.fillRect( xFinal + widthFinal - (2*widthLetter),
+                            yFinal + heightFinal - (2*heightLetter),
+                            widthLetter,
+                            heightLetter );
+                    renderContinueIndicator = false;
+                }
 
                 break;
             case EXIT:
@@ -314,6 +403,10 @@ public class TextboxState implements IState {
         yLine2TypeInFX = ySecondLine;
         widthLine2TypeInFX = widthSecondLine;
         heightLine2TypeInFX = heightSecondLine;
+
+        //RESET continue-indicator variables.
+        continueIndicator = false;
+        renderContinueIndicator = false;
 
         //RESET currentLine#Index.
         currentLine1Index = 0;

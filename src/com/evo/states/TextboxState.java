@@ -81,9 +81,14 @@ public class TextboxState implements IState {
         heightLine2TypeInFX = heightSecondLine;
     } // **** end TextboxState(Handler) constructor ****
 
+
+    private int currentLine1Index = 0;
+    private int currentLine2Index = 1;
     private void initTextLayout() {
         int numberOfLetterPerLine = widthFirstLine / widthLetter;
         int lengthOfTextToDisplay = text.length() * widthLetter;
+        //TODO: if the entire-text-to-be-displayed is less than one line, we'll end up with ZERO numberOfPages!!!
+        //if it's at-least one-line worth of text, we'll be okay.
         int numberOfLineToDisplay = (lengthOfTextToDisplay / numberOfLetterPerLine) + 1; //+1 possible lobed-off.
         numberOfPages = numberOfLineToDisplay / 2; //2 lines per page.
 
@@ -99,8 +104,19 @@ public class TextboxState implements IState {
             }
         }
 
-        firstLine = textAfterLayout[0];
-        secondLine = textAfterLayout[1];
+        //initialize firstLine (and possibly secondLine) using currentLine#Index with textAfterLayout (each element in
+        //this String array is a portion of the entire-text-to-be-displayed that will fit on one line).
+        firstLine = textAfterLayout[currentLine1Index];
+        if (currentLine2Index < textAfterLayout.length) {
+            secondLine = textAfterLayout[currentLine2Index];
+        }
+        //increment the currentLine#Index.
+        if (currentLine1Index+2 < textAfterLayout.length) {
+            currentLine1Index = currentLine1Index + 2;
+        }
+        if (currentLine2Index+2 < textAfterLayout.length) {
+            currentLine2Index = currentLine2Index + 2;
+        }
     }
 
     @Override
@@ -155,17 +171,33 @@ public class TextboxState implements IState {
                 break;
             case WAIT_FOR_INPUT:
                 //a-button
+                //blinking continue indicator.
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
-                    //TODO: IF more lines exist, changeCurrentState(PAGE_OUT_ANIMATION). ELSE, changeCurrentState(EXIT).
+                    //TODO: IF more pages exist, changeCurrentState(PAGE_OUT_ANIMATION). ELSE, changeCurrentState(EXIT).
                 }
 
                 break;
             case PAGE_OUT_ANIMATION:
                 //TODO: clear the text area of the textbox, changeCurrentState(LINE_IN_ANIMATION).
+                /*
+                //RESET values related to textbox's type-in effect.
+                xLine1TypeInFX = xFirstLine;
+                yLine1TypeInFX = yFirstLine;
+                widthLine1TypeInFX = widthFirstLine;
+                heightLine1TypeInFX = heightFirstLine;
+
+                xLine2TypeInFX = xSecondLine;
+                yLine2TypeInFX = ySecondLine;
+                widthLine2TypeInFX = widthSecondLine;
+                heightLine2TypeInFX = heightSecondLine;
+                */
+                //SET firstLine and secondLine to the next 2 String element from String[].
+                //need to track the current index of the String[] or use numberOfPages, initialized from initTextLayout().
 
                 break;
             case EXIT:
                 //TODO: implement animationfx of textbox's exit transition.
+                //pop.
 
                 break;
             default:
@@ -282,6 +314,10 @@ public class TextboxState implements IState {
         yLine2TypeInFX = ySecondLine;
         widthLine2TypeInFX = widthSecondLine;
         heightLine2TypeInFX = heightSecondLine;
+
+        //RESET currentLine#Index.
+        currentLine1Index = 0;
+        currentLine2Index = 1;
 
         //it would've been in LINE_IN_ANIMATION if we don't reset currentState.
         currentState = State.ENTER;

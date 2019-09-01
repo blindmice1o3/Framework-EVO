@@ -63,7 +63,9 @@ public class TextboxState implements IState {
         xFirstLine = xFinal + xOffset;
         yFirstLine = yFinal + xOffset;
         widthFirstLine = widthFinal - (2*xOffset) -5; //-5 just to get a specific (tester) text to fit nicely.
-        heightFirstLine = (heightFinal - (2*(xOffset/2)) - 10) / 2;
+        heightFirstLine = heightLetter;
+        //BELOW LOGIC is not correct.
+        //heightFirstLine = (heightFinal - (2*(xOffset/2)) - 10) / 2;
 
         xSecondLine = xFirstLine;
         ySecondLine = yFirstLine + 20; //+20 for space between firstLine and secondLine.
@@ -112,6 +114,10 @@ public class TextboxState implements IState {
         firstLine = textAfterLayout[currentLine1Index];
         if (currentLine2Index < textAfterLayout.length) {
             secondLine = textAfterLayout[currentLine2Index];
+        }
+        //secondLine does not exist.
+        else {
+            secondLine = null;
         }
     }
 
@@ -165,13 +171,18 @@ public class TextboxState implements IState {
                     widthLine1TypeInFX -= textSpeed;
                 }
                 //TODO: sometimes there's only one line and we shouldn't wait for the revealing of the second line.
-                if ( (widthLine2TypeInFX > 0) && (widthLine1TypeInFX <= 0) ) {
+                if ( (widthLine2TypeInFX > 0) && (widthLine1TypeInFX <= 0) && (secondLine != null) ) {
                     xLine2TypeInFX += textSpeed;
                     widthLine2TypeInFX -= textSpeed;
                 }
 
                 // @@@@@@@@@@@@@@@@@ ACTUALLY... just set currentState to State.WAIT_FOR_INPUT @@@@@@@@@@@@@@@@
                 if ( (widthLine2TypeInFX <= 0) && (widthLine1TypeInFX <= 0) ) {
+                    changeCurrentState(State.WAIT_FOR_INPUT);
+                }
+                //ending-situation where secondLine doesn't exist.
+                else if ( (secondLine == null) && (widthLine1TypeInFX <= (firstLine.length()*widthLetter)) ) {
+                //else if ( (secondLine == null) && (widthLine1TypeInFX <= 0) ) {
                     changeCurrentState(State.WAIT_FOR_INPUT);
                 }
 
@@ -203,7 +214,7 @@ public class TextboxState implements IState {
                             currentLine2Index = currentLine2Index + 2;
                             secondLine = textAfterLayout[currentLine2Index];
                         } else {
-                            secondLine = "";
+                            secondLine = null;
                         }
 
                         //RESET values related to textbox's type-in effect.
@@ -311,33 +322,49 @@ public class TextboxState implements IState {
                 }
 
                 //type-in effect.
-                g.setColor(Color.BLUE);
+                //TODO: TESTING WITH BLACK INSTEAD OF BLUE
+                g.setColor(Color.BLACK);
                 g.fillRect(xLine1TypeInFX, yLine1TypeInFX, widthLine1TypeInFX, heightLine1TypeInFX);
                 g.fillRect(xLine2TypeInFX, yLine2TypeInFX, widthLine2TypeInFX, heightLine2TypeInFX);
 
                 break;
             case WAIT_FOR_INPUT:
-                //FIRST_LINE
+                //render: firstLine
                 FontGrabber.renderString(g, firstLine, xFirstLine, yFirstLine, widthLetter, heightLetter);
-                //SECOND_LINE
-                if (secondLine != null) {
-                    FontGrabber.renderString(g, secondLine, xSecondLine, ySecondLine, widthLetter, heightLetter);
-                }
 
-                // !!! RENDER BLINKING continue-indicator !!!
-                if (renderContinueIndicator) {
-                    g.drawImage( Assets.pokeballToken,
-                            xFinal + widthFinal - (2*widthLetter),
-                            yFinal + heightFinal - (2*heightLetter),
+                //SECOND_LINE EXIST.
+                if (secondLine != null) {
+                    //render: secondLine
+                    FontGrabber.renderString(g, secondLine, xSecondLine, ySecondLine, widthLetter, heightLetter);
+
+                    // @@@@@ RENDER BLINKING continue-indicator @@@@@
+                    //blinking on-state
+                    if (renderContinueIndicator) {
+                        g.drawImage(Assets.pokeballToken,
+                                xFinal + widthFinal - (2 * widthLetter),
+                                yFinal + heightFinal - (2 * heightLetter),
+                                widthLetter,
+                                heightLetter,
+                                null);
+                    }
+                    //blinking off-state
+                    else {
+                        g.setColor(Color.BLUE);
+                        g.fillRect(xFinal + widthFinal - (2 * widthLetter),
+                                yFinal + heightFinal - (2 * heightLetter),
+                                widthLetter,
+                                heightLetter);
+                    }
+                }
+                //SECOND_LINE DOES not EXIST.
+                else if ( (secondLine == null) && (widthLine1TypeInFX <= (firstLine.length()*widthLetter)) ) {
+                    //NON-blinking continue-indicator (the non-blinking version implies this is the last page).
+                    g.drawImage(Assets.pokeballToken,
+                            xFinal + widthFinal - (2 * widthLetter),
+                            yFinal + heightFinal - (2 * heightLetter),
                             widthLetter,
                             heightLetter,
-                            null );
-                } else {
-                    g.setColor(Color.BLUE);
-                    g.fillRect( xFinal + widthFinal - (2*widthLetter),
-                            yFinal + heightFinal - (2*heightLetter),
-                            widthLetter,
-                            heightLetter );
+                            null);
                 }
 
                 break;

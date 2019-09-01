@@ -157,7 +157,8 @@ public class TextboxState implements IState {
                 break;
             case LINE_IN_ANIMATION:
                 //TODO: implement animationfx of line being "typed-in".
-                int textSpeed = 2;
+                //int textSpeed = 2; //actual in-game textSpeed.
+                int textSpeed = 10; //developer-mode textSpeed.
                 //reveal the lines of text by shrinking the covering-rectangle-that's-the-same-color-as-textbox-background.
                 if (widthLine1TypeInFX > 0) {
                     xLine1TypeInFX += textSpeed;
@@ -193,7 +194,6 @@ public class TextboxState implements IState {
 
                 //a-button (if there's another page: set firstLine/secondLine to their next String from the array of lines).
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
-                    //TODO: IF more pages exist, changeCurrentState(PAGE_OUT_ANIMATION). ELSE, changeCurrentState(EXIT).
                     //IF THERE'S ANOTHER PAGE: increment the currentLine#Index and re-assign firstLine.
                     if (currentLine1Index+2 < textAfterLayout.length) {
                         currentLine1Index = currentLine1Index + 2;
@@ -217,6 +217,8 @@ public class TextboxState implements IState {
                         widthLine2TypeInFX = widthSecondLine;
                         heightLine2TypeInFX = heightSecondLine;
 
+                        renderContinueIndicator = false;
+
                         ////////////////////////////////////////////
                         changeCurrentState(State.LINE_IN_ANIMATION);
                         ////////////////////////////////////////////
@@ -229,27 +231,39 @@ public class TextboxState implements IState {
 
                 break;
             case PAGE_OUT_ANIMATION:
-                //TODO: clear the text area of the textbox, changeCurrentState(LINE_IN_ANIMATION).
-                System.out.println("State.PAGE_OUT_ANIMATION");
-                /*
-                //RESET values related to textbox's type-in effect.
-                xLine1TypeInFX = xFirstLine;
-                yLine1TypeInFX = yFirstLine;
-                widthLine1TypeInFX = widthFirstLine;
-                heightLine1TypeInFX = heightFirstLine;
+                //TEXT_AREA SHRINKING EFFECT.
+                if (xCurrent < xInit) {
+                    xCurrent = xCurrent + 5;
+                }
+                if (widthCurrent > widthInit) {
+                    widthCurrent = widthCurrent - (2 * 5);
+                }
+                if (heightCurrent > heightInit) {
+                    heightCurrent = heightCurrent - 3;
+                }
 
-                xLine2TypeInFX = xSecondLine;
-                yLine2TypeInFX = ySecondLine;
-                widthLine2TypeInFX = widthSecondLine;
-                heightLine2TypeInFX = heightSecondLine;
-                */
-                //SET firstLine and secondLine to the next 2 String element from String[].
-                //need to track the current index of the String[] or use numberOfPages, initialized from initTextLayout().
+                //when width and height shrink pass their INITIAL DIMENSIONS, set them to 0.
+                if (widthCurrent < widthInit) {
+                    widthCurrent = 0;
+                }
+                if (heightCurrent < heightInit) {
+                    heightCurrent = 0;
+                }
+
+                //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                //CHANGE TO NEXT TextboxState.State.EXIT
+                if ( (widthCurrent == 0) && (heightCurrent == 0) ) {
+                    changeCurrentState(State.EXIT);
+                }
+                //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
                 break;
             case EXIT:
-                //TODO: implement animationfx of textbox's exit transition.
+                //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                 //pop.
+                System.out.println("TextboxState.State.EXIT");
+                handler.getStateManager().popIState();
+                //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
                 break;
             default:
@@ -268,61 +282,27 @@ public class TextboxState implements IState {
                 (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SLASH)) ) {
             handler.getStateManager().popIState();
         }
-
-        /*
-        switch (currentState) {
-            case ENTER:
-
-                break;
-            case LINE_IN_ANIMATION:
-
-                break;
-
-            case WAIT_FOR_INPUT:
-
-                break;
-            case PAGE_OUT_ANIMATION:
-
-                break;
-            case EXIT:
-
-                break;
-            default:
-                break;
-        }
-        */
     }
 
 
 
     @Override
     public void render(Graphics g) {
+        //repaint the render(Graphics) of the IState that is just below the top of the stack.
+        handler.getStateManager().getStatesStack().get(handler.getStateManager().getStatesStack().size()-2).render(g);
+
+        //TEXT_AREA
+        g.setColor(Color.BLUE);
+        g.fillRect(xCurrent, yCurrent, widthCurrent, heightCurrent);
+        //BORDER
+        g.setColor(Color.YELLOW);
+        g.drawRect(xCurrent, yCurrent, widthCurrent, heightCurrent);
 
         switch (currentState) {
             case ENTER:
-                //repaint the render(Graphics) of the IState that is just below the top of the stack.
-                handler.getStateManager().getStatesStack().get(handler.getStateManager().getStatesStack().size()-2).render(g);
-
-                //TEXT_AREA
-                g.setColor(Color.BLUE);
-                g.fillRect(xCurrent, yCurrent, widthCurrent, heightCurrent);
-
-                //BORDER
-                g.setColor(Color.YELLOW);
-                g.drawRect(xCurrent, yCurrent, widthCurrent, heightCurrent);
 
                 break;
             case LINE_IN_ANIMATION:
-                //IF the continue indicator was rendered from the previous page, cover it and turn it off.
-                if (renderContinueIndicator) {
-                    g.setColor(Color.BLUE);
-                    g.fillRect( xFinal + widthFinal - (2*widthLetter),
-                            yFinal + heightFinal - (2*heightLetter),
-                            widthLetter,
-                            heightLetter );
-                    renderContinueIndicator = false;
-                }
-
                 //FIRST_LINE
                 FontGrabber.renderString(g, firstLine, xFirstLine, yFirstLine, widthLetter, heightLetter);
                 //SECOND_LINE
@@ -337,6 +317,14 @@ public class TextboxState implements IState {
 
                 break;
             case WAIT_FOR_INPUT:
+                //FIRST_LINE
+                FontGrabber.renderString(g, firstLine, xFirstLine, yFirstLine, widthLetter, heightLetter);
+                //SECOND_LINE
+                if (secondLine != null) {
+                    FontGrabber.renderString(g, secondLine, xSecondLine, ySecondLine, widthLetter, heightLetter);
+                }
+
+                // !!! RENDER BLINKING continue-indicator !!!
                 if (renderContinueIndicator) {
                     g.drawImage( Assets.pokeballToken,
                             xFinal + widthFinal - (2*widthLetter),
@@ -354,20 +342,6 @@ public class TextboxState implements IState {
 
                 break;
             case PAGE_OUT_ANIMATION:
-                //IF the continue indicator was rendered from the previous page, cover it and turn it off.
-                if (renderContinueIndicator) {
-                    g.setColor(Color.BLUE);
-                    g.fillRect( xFinal + widthFinal - (2*widthLetter),
-                            yFinal + heightFinal - (2*heightLetter),
-                            widthLetter,
-                            heightLetter );
-                    renderContinueIndicator = false;
-                }
-
-                g.setColor(Color.BLUE);
-                g.fillRect(xFirstLine, yFirstLine, widthFirstLine, heightFirstLine);
-                g.setColor(Color.YELLOW);
-                g.drawString("State.PAGE_OUT_ANIMATION", xFirstLine, yFirstLine);
 
                 break;
             case EXIT:
@@ -384,9 +358,10 @@ public class TextboxState implements IState {
 
     @Override
     public void enter(Object[] args) {
-        /* if (currentState == null) {
-            currentState = State.ENTER;
-        } */
+        ///////////////////////////
+        currentState = State.ENTER;
+        ///////////////////////////
+
         //RESET values related to textbox's initial dimension.
         xCurrent = xInit;
         yCurrent = yInit;
@@ -411,9 +386,6 @@ public class TextboxState implements IState {
         currentLine1Index = 0;
         currentLine2Index = 1;
 
-        //it would've been in LINE_IN_ANIMATION if we don't reset currentState.
-        currentState = State.ENTER;
-
         if (args != null) {
             if (args[0] instanceof String) {
                 text = (String)args[0];
@@ -423,55 +395,11 @@ public class TextboxState implements IState {
             }
         }
 
-        /*
-        switch (currentState) {
-            case ENTER:
-
-                break;
-            case LINE_IN_ANIMATION:
-
-                break;
-
-            case WAIT_FOR_INPUT:
-
-                break;
-            case PAGE_OUT_ANIMATION:
-
-                break;
-            case EXIT:
-
-                break;
-            default:
-                break;
-        }
-        */
     }
 
     @Override
     public void exit() {
 
-        /*
-        switch (currentState) {
-            case ENTER:
-
-                break;
-            case LINE_IN_ANIMATION:
-
-                break;
-
-            case WAIT_FOR_INPUT:
-
-                break;
-            case PAGE_OUT_ANIMATION:
-
-                break;
-            case EXIT:
-
-                break;
-            default:
-                break;
-        }
-        */
     }
 
 }

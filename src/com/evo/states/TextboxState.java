@@ -91,11 +91,18 @@ public class TextboxState implements IState {
     private int currentLine2Index = 1;
     private void initTextLayout() {
         int numberOfLetterPerLine = widthFirstLine / widthLetter;
-        int lengthOfTextToDisplay = text.length() * widthLetter;
+        System.out.println("NUMBER OF LETTERS PER LINE: " + numberOfLetterPerLine);
+
+        //int lengthOfTextToDisplay = text.length() * widthLetter;
+        //System.out.println("LENGTH OF TEXT TO DISPLAY: " + lengthOfTextToDisplay);
+
         //TODO: if the entire-text-to-be-displayed is less than one line, we'll end up with ZERO numberOfPages!!!
         //if it's at-least one-line worth of text, we'll be okay.
-        int numberOfLineToDisplay = (lengthOfTextToDisplay / numberOfLetterPerLine) + 1; //+1 possible lobed-off.
+        //TODO: should not be lengthOfTextToDisplay... text.length().
+        int numberOfLineToDisplay = (text.length() / numberOfLetterPerLine) + 1; //+1 possible lobed-off.
         numberOfPages = numberOfLineToDisplay / 2; //2 lines per page.
+
+        System.out.println("NUMBER OF LINES TO DISPLAY: " + numberOfLineToDisplay);
 
         textAfterLayout = new String[numberOfLineToDisplay];
 
@@ -209,6 +216,8 @@ public class TextboxState implements IState {
                         if (currentLine2Index+2 < textAfterLayout.length) {
                             currentLine2Index = currentLine2Index + 2;
                             secondLine = textAfterLayout[currentLine2Index];
+                        } else {
+                            secondLine = "";
                         }
 
                         //RESET values related to textbox's type-in effect.
@@ -235,6 +244,7 @@ public class TextboxState implements IState {
                 break;
             case PAGE_OUT_ANIMATION:
                 //TODO: clear the text area of the textbox, changeCurrentState(LINE_IN_ANIMATION).
+                System.out.println("State.PAGE_OUT_ANIMATION");
                 /*
                 //RESET values related to textbox's type-in effect.
                 xLine1TypeInFX = xFirstLine;
@@ -368,6 +378,11 @@ public class TextboxState implements IState {
                             heightLetter );
                     renderContinueIndicator = false;
                 }
+
+                g.setColor(Color.BLUE);
+                g.fillRect(xFirstLine, yFirstLine, widthFirstLine, heightFirstLine);
+                g.setColor(Color.YELLOW);
+                g.drawString("State.PAGE_OUT_ANIMATION", xFirstLine, yFirstLine);
 
                 break;
             case EXIT:

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2bcc4a98-1f2c-4e1b-a19b-f51f53d66850" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/states/TextboxState.java" afterPath="$PROJECT_DIR$/src/com/evo/states/TextboxState.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -53,12 +54,12 @@
       <file leaf-file-name="TextboxState.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/evo/states/TextboxState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="370" column="16" lean-forward="false" selection-start-line="370" selection-start-column="16" selection-end-line="370" selection-end-column="16" />
+            <state relative-caret-position="425">
+              <caret line="219" column="44" lean-forward="true" selection-start-line="219" selection-start-column="44" selection-end-line="219" selection-end-column="44" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#15185#15186#0" expanded="true" />
-                <element signature="e#15225#15226#0" expanded="true" />
+                <element signature="e#15881#15882#0" expanded="true" />
+                <element signature="e#15921#15922#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -986,12 +987,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/evo/states/TextboxState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="370" column="16" lean-forward="false" selection-start-line="370" selection-start-column="16" selection-end-line="370" selection-end-column="16" />
+        <state relative-caret-position="425">
+          <caret line="219" column="44" lean-forward="true" selection-start-line="219" selection-start-column="44" selection-end-line="219" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#15185#15186#0" expanded="true" />
-            <element signature="e#15225#15226#0" expanded="true" />
+            <element signature="e#15881#15882#0" expanded="true" />
+            <element signature="e#15921#15922#0" expanded="true" />
           </folding>
         </state>
       </provider>

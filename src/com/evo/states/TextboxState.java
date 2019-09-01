@@ -181,7 +181,7 @@ public class TextboxState implements IState {
                     changeCurrentState(State.WAIT_FOR_INPUT);
                 }
                 //ending-situation where secondLine doesn't exist.
-                else if ( (secondLine == null) && (widthLine1TypeInFX <= (firstLine.length()*widthLetter)) ) {
+                else if ( (secondLine == null) && (xLine1TypeInFX >= (firstLine.length()*widthLetter)) ) {
                 //else if ( (secondLine == null) && (widthLine1TypeInFX <= 0) ) {
                     changeCurrentState(State.WAIT_FOR_INPUT);
                 }
@@ -357,7 +357,7 @@ public class TextboxState implements IState {
                     }
                 }
                 //SECOND_LINE DOES not EXIST.
-                else if ( (secondLine == null) && (widthLine1TypeInFX <= (firstLine.length()*widthLetter)) ) {
+                else if ( (secondLine == null) && (xLine1TypeInFX >= (firstLine.length()*widthLetter)) ) {
                     //NON-blinking continue-indicator (the non-blinking version implies this is the last page).
                     g.drawImage(Assets.pokeballToken,
                             xFinal + widthFinal - (2 * widthLetter),

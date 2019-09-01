@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2bcc4a98-1f2c-4e1b-a19b-f51f53d66850" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/states/TextboxState.class" afterPath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/states/TextboxState.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/states/TextboxState.java" afterPath="$PROJECT_DIR$/src/com/evo/states/TextboxState.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -55,8 +53,8 @@
       <file leaf-file-name="TextboxState.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/evo/states/TextboxState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="359" column="105" lean-forward="false" selection-start-line="359" selection-start-column="105" selection-end-line="359" selection-end-column="105" />
+            <state relative-caret-position="17">
+              <caret line="240" column="17" lean-forward="true" selection-start-line="240" selection-start-column="17" selection-end-line="240" selection-end-column="17" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -556,7 +554,7 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.61764705" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.61764705" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44444445" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -970,8 +968,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/evo/states/TextboxState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="359" column="105" lean-forward="false" selection-start-line="359" selection-start-column="105" selection-end-line="359" selection-end-column="105" />
+        <state relative-caret-position="17">
+          <caret line="240" column="17" lean-forward="true" selection-start-line="240" selection-start-column="17" selection-end-line="240" selection-end-column="17" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

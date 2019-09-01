@@ -101,6 +101,7 @@ public class Item implements Serializable {
 
             //TODO: who should trigger the giveReward(Fish) method?
             reward.giveReward(player);
+            //TODO: AFTER GIVING reward, shouldn't it be removed from the RewardManager??? //nm Reward.tick() takes care of it.
 
 
             System.out.println("Item.checkEaten(), player's experience points after reward.giveReward(Fish): " + player.getExperiencePoints());

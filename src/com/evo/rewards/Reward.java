@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class Reward {
 
-    public enum RewardType { HP, EXP; }
+    public enum RewardType { HP, EXP, DAMAGE; }
 
     private Handler handler;
 
@@ -55,20 +55,33 @@ public class Reward {
     public void render(Graphics g) {
         if (timerStarted) {
             g.setColor(Color.GREEN);
-            g.drawString(stash.get(RewardType.HP).toString(),
-                    (int)(x - handler.getGameCamera().getxOffset()),
-                    (int)(y - handler.getGameCamera().getyOffset()));
+            if (stash.get(RewardType.HP) != null) {
+                g.drawString("+" + stash.get(RewardType.HP).toString(),
+                        (int) (x - handler.getGameCamera().getxOffset()),
+                        (int) (y - handler.getGameCamera().getyOffset()));
+            }
 
-            g.setColor(Color.WHITE);
-            g.drawString(stash.get(RewardType.EXP).toString(),
-                    (int)(x - handler.getGameCamera().getxOffset()),
-                    (int)(y - handler.getGameCamera().getyOffset() + 10));
+            if (stash.get(RewardType.EXP) != 0) {
+                g.setColor(Color.WHITE);
+                g.drawString("+" + stash.get(RewardType.EXP).toString(),
+                        (int) (x - handler.getGameCamera().getxOffset()),
+                        (int) (y - handler.getGameCamera().getyOffset() + 10));
+            }
+
+            if (stash.get(RewardType.DAMAGE) != null) {
+                g.setColor(Color.RED);
+                g.drawString("-" + stash.get(RewardType.DAMAGE).toString(),
+                        (int) (x - handler.getGameCamera().getxOffset() - 10),
+                        (int) (y - handler.getGameCamera().getyOffset() - 10));
+            }
         }
     }
 
     public void giveReward(Fish player) {
-        player.setHealth( (player.getHealth() + stash.get(RewardType.HP)) );
         player.setExperiencePoints( (player.getExperiencePoints() + stash.get(RewardType.EXP)) );
+        if (stash.get(RewardType.HP) != null) {
+            player.setHealth((player.getHealth() + stash.get(RewardType.HP)));
+        }
 
         //do NOT let eating meat items give player more health points than player's maximum health points.
         if (player.getHealth() > player.getHealthMax()) {
@@ -84,5 +97,7 @@ public class Reward {
     public boolean isTimerFinished() {
         return timerFinished;
     }
+
+    public void setTimerStarted(boolean timerStarted) { this.timerStarted = timerStarted; }
 
 } // **** end Reward class ****

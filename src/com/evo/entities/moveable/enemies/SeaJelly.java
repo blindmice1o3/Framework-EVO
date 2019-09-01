@@ -8,6 +8,7 @@ import com.evo.game_stages.GameStage;
 import com.evo.gfx.Animation;
 import com.evo.gfx.Assets;
 import com.evo.items.Item;
+import com.evo.rewards.Reward;
 import com.evo.states.GameStageState;
 import com.evo.states.StateManager;
 import com.evo.tiles.Tile;
@@ -79,8 +80,20 @@ public class SeaJelly extends Creature {
             else if (e instanceof Fish) {
                 Fish player = (Fish)e;
                 if (player.getCollisionBounds(0f, 0f).intersects(getCollisionBounds(xOffset, yOffset))) {
+                    //TODO: Should the timer be reset IF ITS attackFrames ISN'T DONE WITH PREVIOUS ITERATION?
+                    //if the player REPEATEDLY move into the SeaJelly's movement path... it causes a weird-looking-resetting effect.
                     ticker = 0;
                     currentState = State.ATTACK;
+
+                    //TODO: RENDERING DAMAGE TO SCREEN (using Reward/RewardManager FOR NOW).
+                    Reward damageRendering = new Reward(handler, 0,
+                            (int)(player.getX()),
+                            (int)(player.getY()));
+                    damageRendering.addExtra(Reward.RewardType.DAMAGE, 1);
+                    GameStage gameStage = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage();
+                    gameStage.getRewardManager().addReward(damageRendering);
+                    damageRendering.giveReward(player);
+
 
                     ///////////////////////
                     player.hurt(1);
@@ -156,6 +169,8 @@ public class SeaJelly extends Creature {
             case ATTACK:
                 ticker++;
 
+                //TODO: is this attack-timer-target long enough to iterate through all 4 attackFrames images???
+                //make transition-back-to-State.IDLE be based on the index of attackFrames???
                 if (ticker == 40) {
                     ticker = 0;
                     currentState = State.IDLE;
@@ -165,6 +180,8 @@ public class SeaJelly extends Creature {
             case HURT:
                 ticker++;
 
+                //only has 1 hurtFrames image, so transition-back-to-State.IDLE
+                //CAN BE BASED ON A TIME LIMIT (as oppose to State.ATTACK being based on its Animation's index).
                 if (ticker == 40) {
                     ticker = 0;
                     currentState = State.IDLE;

@@ -19,7 +19,6 @@ public class TextboxState implements IState {
     private String text;
     private String firstLine;
     private String secondLine;
-    private int numberOfPages;
     private String[] textAfterLayout;
 
     //Frame (and border)
@@ -37,8 +36,6 @@ public class TextboxState implements IState {
     //Text Area - type-in effect
     private int xLine1TypeInFX, yLine1TypeInFX, widthLine1TypeInFX, heightLine1TypeInFX;
     private int xLine2TypeInFX, yLine2TypeInFX, widthLine2TypeInFX, heightLine2TypeInFX;
-    //CONTINUE INDICATOR
-    private boolean continueIndicator;
 
     public TextboxState(Handler handler) {
         this.handler = handler;
@@ -82,8 +79,6 @@ public class TextboxState implements IState {
         yLine2TypeInFX = ySecondLine;
         widthLine2TypeInFX = widthSecondLine;
         heightLine2TypeInFX = heightSecondLine;
-
-        continueIndicator = false;
     } // **** end TextboxState(Handler) constructor ****
 
 
@@ -93,18 +88,14 @@ public class TextboxState implements IState {
         int numberOfLetterPerLine = widthFirstLine / widthLetter;
         System.out.println("NUMBER OF LETTERS PER LINE: " + numberOfLetterPerLine);
 
-        //int lengthOfTextToDisplay = text.length() * widthLetter;
-        //System.out.println("LENGTH OF TEXT TO DISPLAY: " + lengthOfTextToDisplay);
-
         //TODO: if the entire-text-to-be-displayed is less than one line, we'll end up with ZERO numberOfPages!!!
         //if it's at-least one-line worth of text, we'll be okay.
-        //TODO: should not be lengthOfTextToDisplay... text.length().
         int numberOfLineToDisplay = (text.length() / numberOfLetterPerLine) + 1; //+1 possible lobed-off.
-        numberOfPages = numberOfLineToDisplay / 2; //2 lines per page.
-
         System.out.println("NUMBER OF LINES TO DISPLAY: " + numberOfLineToDisplay);
 
+        ////////////////////////////////////////////////////
         textAfterLayout = new String[numberOfLineToDisplay];
+        ////////////////////////////////////////////////////
 
         int indexText = 0;
         for (int i = 0; i < numberOfLineToDisplay; i++) {
@@ -185,15 +176,8 @@ public class TextboxState implements IState {
 
                 break;
             case WAIT_FOR_INPUT:
-                //a-button
-                //If another line exist, increment the currentLine#Index.
+                //CHECK IF THERE'S ANOTHER PAGE: so if, continue-indicator should blink on-and-off.
                 if (currentLine1Index+2 < textAfterLayout.length) {
-                    // !!!!!!!!!!!!! if we're here, THERE'S ANOTHER PAGE !!!!!!!!!!!!!
-                    //blinking continue indicator.
-                    continueIndicator = true;
-                }
-
-                if (continueIndicator) {
                     //////////////////////////
                     continueIndicatorTicker++;
                     //////////////////////////
@@ -207,12 +191,14 @@ public class TextboxState implements IState {
                     }
                 }
 
-                //trigger CONTINUE-INDICATOR after BOTH lines are done revealing their text.
+                //a-button (if there's another page: set firstLine/secondLine to their next String from the array of lines).
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
                     //TODO: IF more pages exist, changeCurrentState(PAGE_OUT_ANIMATION). ELSE, changeCurrentState(EXIT).
-                    if (continueIndicator) {
+                    //IF THERE'S ANOTHER PAGE: increment the currentLine#Index and re-assign firstLine.
+                    if (currentLine1Index+2 < textAfterLayout.length) {
                         currentLine1Index = currentLine1Index + 2;
                         firstLine = textAfterLayout[currentLine1Index];
+                        //CHECK IF ANOTHER secondLine exist.
                         if (currentLine2Index+2 < textAfterLayout.length) {
                             currentLine2Index = currentLine2Index + 2;
                             secondLine = textAfterLayout[currentLine2Index];
@@ -231,13 +217,13 @@ public class TextboxState implements IState {
                         widthLine2TypeInFX = widthSecondLine;
                         heightLine2TypeInFX = heightSecondLine;
 
-                        continueIndicator = false;
+                        ////////////////////////////////////////////
                         changeCurrentState(State.LINE_IN_ANIMATION);
-                        //NEXT PAGE OF 2 LINES.
-                        //set currentState to State.LINE_IN_ANIMATION.
+                        ////////////////////////////////////////////
                     } else {
+                        ////////////////////////////////////////////
                         changeCurrentState(State.PAGE_OUT_ANIMATION);
-                        //set currentState to State.PAGE_OUT_ANIMATION.
+                        ////////////////////////////////////////////
                     }
                 }
 
@@ -311,7 +297,6 @@ public class TextboxState implements IState {
 
     @Override
     public void render(Graphics g) {
-
 
         switch (currentState) {
             case ENTER:
@@ -420,7 +405,6 @@ public class TextboxState implements IState {
         heightLine2TypeInFX = heightSecondLine;
 
         //RESET continue-indicator variables.
-        continueIndicator = false;
         renderContinueIndicator = false;
 
         //RESET currentLine#Index.

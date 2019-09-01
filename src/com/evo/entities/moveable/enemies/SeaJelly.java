@@ -1,7 +1,9 @@
 package com.evo.entities.moveable.enemies;
 
 import com.evo.Handler;
+import com.evo.entities.Entity;
 import com.evo.entities.moveable.Creature;
+import com.evo.entities.moveable.player.Fish;
 import com.evo.game_stages.GameStage;
 import com.evo.gfx.Animation;
 import com.evo.gfx.Assets;
@@ -62,8 +64,37 @@ public class SeaJelly extends Creature {
     public void hurt(int amount) {
         super.hurt(amount);
 
-        currentState = State.HURT;
         ticker = 0;
+        currentState = State.HURT;
+    }
+
+    @Override
+    public boolean checkEntityCollisions(float xOffset, float yOffset) {
+        for (Entity e : ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().getEntities()) {
+            //if the entity calling checkEntityCollisions(float, float) finds ITSELF in the collection, skip by continue.
+            if (e.equals(this)) {
+                continue;
+            }
+            //check if collision with player to perform hurt(int) call.
+            else if (e instanceof Fish) {
+                Fish player = (Fish)e;
+                if (player.getCollisionBounds(0f, 0f).intersects(getCollisionBounds(xOffset, yOffset))) {
+                    ticker = 0;
+                    currentState = State.ATTACK;
+
+                    ///////////////////////
+                    player.hurt(1);
+                    ///////////////////////
+                }
+            }
+
+            //check EACH entity to see if their collision bounds INTERSECTS with yours.
+            if (e.getCollisionBounds(0f, 0f).intersects(getCollisionBounds(xOffset, yOffset))) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private int ticker = 0;
@@ -123,7 +154,12 @@ public class SeaJelly extends Creature {
 
                 break;
             case ATTACK:
-                //TODO: State.ATTACK
+                ticker++;
+
+                if (ticker == 40) {
+                    ticker = 0;
+                    currentState = State.IDLE;
+                }
 
                 break;
             case HURT:

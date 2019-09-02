@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2bcc4a98-1f2c-4e1b-a19b-f51f53d66850" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/qwerty789.bin" afterPath="$PROJECT_DIR$/qwerty789.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/entities/moveable/enemies/Eel.java" afterPath="$PROJECT_DIR$/src/com/evo/entities/moveable/enemies/Eel.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -21,21 +20,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="SeaJelly.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/evo/entities/moveable/enemies/SeaJelly.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2227">
-              <caret line="145" column="98" lean-forward="false" selection-start-line="145" selection-start-column="98" selection-end-line="145" selection-end-column="98" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Eel.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/evo/entities/moveable/enemies/Eel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="326" column="119" lean-forward="false" selection-start-line="326" selection-start-column="119" selection-end-line="326" selection-end-column="119" />
+            <state relative-caret-position="391">
+              <caret line="146" column="91" lean-forward="true" selection-start-line="146" selection-start-column="91" selection-end-line="146" selection-end-column="91" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -677,13 +666,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/evo/Displayer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/evo/Utils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -1047,10 +1029,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_92/src.zip!/java/lang/Math.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="1168" column="7" lean-forward="true" selection-start-line="1168" selection-start-column="7" selection-end-line="1168" selection-end-column="7" />
+          <folding>
+            <element signature="e#46227#46228#0" expanded="true" />
+            <element signature="e#46266#46267#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/evo/entities/moveable/enemies/Eel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="326" column="119" lean-forward="false" selection-start-line="326" selection-start-column="119" selection-end-line="326" selection-end-column="119" />
+        <state relative-caret-position="391">
+          <caret line="146" column="91" lean-forward="true" selection-start-line="146" selection-start-column="91" selection-end-line="146" selection-end-column="91" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

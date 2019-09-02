@@ -142,7 +142,8 @@ public class Eel extends Creature {
                 System.out.println("IMMA GETCHA!");
                 Fish player = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
                 //player is beyond detection range.
-                if (player.getX() - x > detectionRadiusLength) {
+                if ( (Math.abs(player.getX() - x) > detectionRadiusLength) ||
+                        (Math.abs(player.getY() - y) > detectionRadiusLength) ) {
                     //TODO: call unimplemented method named: moveToBeforeChaseCoordinate().
                     ////////////////////////////
                     currentState = State.PATROL;
@@ -237,7 +238,7 @@ public class Eel extends Creature {
     }
 
     private Rectangle detectionRectangleBounds;
-    private int detectionRadiusLength = 3 * Tile.TILE_WIDTH;
+    private int detectionRadiusLength = 8 * Tile.TILE_WIDTH;
     private int xBeforeChase, yBeforeChase;
 
     private Rectangle getDetectionRectangle(float xOffset, float yOffset) {
@@ -270,9 +271,9 @@ public class Eel extends Creature {
                         (int)(detectionSquare.y - handler.getGameCamera().getyOffset()),
                         detectionSquare.width,
                         detectionSquare.height);
-                System.out.println("detectionSquare's: x, y, width, height (" + detectionSquare.x + ", " +
-                        detectionSquare.y + ", " + detectionSquare.width + ", " + detectionSquare.height + ").");
-                System.out.println("Eel's x, y, width, height (" + x + ", " + y + ", " + width + ", " + height + ").");
+                //System.out.println("detectionSquare's: x, y, width, height (" + detectionSquare.x + ", " +
+                //        detectionSquare.y + ", " + detectionSquare.width + ", " + detectionSquare.height + ").");
+                //System.out.println("Eel's x, y, width, height (" + x + ", " + y + ", " + width + ", " + height + ").");
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                 //MOVING LEFT
@@ -325,6 +326,20 @@ public class Eel extends Creature {
                 break;
             case CHASE:
                 //TODO: this was done haphazardly just to see effects and know things are happening as expected or not.
+                //pretty much copied/pasted State.PATROL, but using the attack animation instead.
+                ///////////////////////////detection-rectangle (developer's visual aid)/////////////////////////////////
+                detectionSquare = getDetectionRectangle(0, 0);
+                g.setColor(Color.GREEN);
+                g.fillRect(
+                        (int)(detectionSquare.x - handler.getGameCamera().getxOffset()),
+                        (int)(detectionSquare.y - handler.getGameCamera().getyOffset()),
+                        detectionSquare.width,
+                        detectionSquare.height);
+                //System.out.println("detectionSquare's: x, y, width, height (" + detectionSquare.x + ", " +
+                //        detectionSquare.y + ", " + detectionSquare.width + ", " + detectionSquare.height + ").");
+                //System.out.println("Eel's x, y, width, height (" + x + ", " + y + ", " + width + ", " + height + ").");
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
                 //MOVING LEFT
                 if (currentMovementDirection == MovementDirection.LEFT) {
                     g.drawImage(attackAnimation.getCurrentFrame(),

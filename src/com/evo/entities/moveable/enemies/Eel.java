@@ -1,6 +1,7 @@
 package com.evo.entities.moveable.enemies;
 
 import com.evo.Handler;
+import com.evo.Utils;
 import com.evo.entities.moveable.Creature;
 import com.evo.game_stages.GameStage;
 import com.evo.gfx.Animation;
@@ -191,21 +192,52 @@ public class Eel extends Creature {
     public void render(Graphics g) {
         switch (currentState) {
             case PATROL:
-                g.drawImage(patrolAnimation.getCurrentFrame(),
-                        (int)(x - handler.getGameCamera().getxOffset()),
-                        (int)(y - handler.getGameCamera().getyOffset()),
-                        patrolAnimation.getCurrentFrame().getWidth(),
-                        patrolAnimation.getCurrentFrame().getHeight(),
-                        null);
+                //MOVING LEFT
+                if (currentMovementDirection == MovementDirection.LEFT) {
+                    g.drawImage(patrolAnimation.getCurrentFrame(),
+                            (int)(x - handler.getGameCamera().getxOffset()),
+                            (int)(y - handler.getGameCamera().getyOffset()),
+                            patrolAnimation.getCurrentFrame().getWidth(),
+                            patrolAnimation.getCurrentFrame().getHeight(),
+                            null);
+                }
+                //MOVING RIGHT
+                else if (currentMovementDirection == MovementDirection.RIGHT) {
+                    ////////////////////////////////
+                    BufferedImage flippedPatrolImage = Utils.flipHorizontally(patrolAnimation.getCurrentFrame());
+                    ////////////////////////////////
+                    g.drawImage(flippedPatrolImage,
+                            (int)(x - handler.getGameCamera().getxOffset()),
+                            (int)(y - handler.getGameCamera().getyOffset()),
+                            flippedPatrolImage.getWidth(),
+                            flippedPatrolImage.getHeight(),
+                            null);
+                }
 
                 break;
             case TURN:
-                g.drawImage(turnAnimation.getCurrentFrame(),
-                        (int)(x - handler.getGameCamera().getxOffset()),
-                        (int)(y - handler.getGameCamera().getyOffset()),
-                        turnAnimation.getCurrentFrame().getWidth(),
-                        turnAnimation.getCurrentFrame().getHeight(),
-                        null);
+                //left-turning-right
+                //IT'S opposite because tick() for State.TURN changed currentMovementDirection prior to this render() call.
+                if (currentMovementDirection == MovementDirection.RIGHT) {
+                    ////////////////////////////////
+                    BufferedImage flippedTurnImage = Utils.flipHorizontally(turnAnimation.getCurrentFrame());
+                    ////////////////////////////////
+                    g.drawImage(flippedTurnImage,
+                            (int) (x - handler.getGameCamera().getxOffset()),
+                            (int) (y - handler.getGameCamera().getyOffset()),
+                            turnAnimation.getCurrentFrame().getWidth(),
+                            turnAnimation.getCurrentFrame().getHeight(),
+                            null);
+                }
+                //right-turning-left
+                else if (currentMovementDirection == MovementDirection.LEFT) {
+                    g.drawImage(turnAnimation.getCurrentFrame(),
+                            (int) (x - handler.getGameCamera().getxOffset()),
+                            (int) (y - handler.getGameCamera().getyOffset()),
+                            turnAnimation.getCurrentFrame().getWidth(),
+                            turnAnimation.getCurrentFrame().getHeight(),
+                            null);
+                }
 
                 break;
             case ATTACK:

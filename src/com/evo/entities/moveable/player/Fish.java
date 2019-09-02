@@ -1,6 +1,7 @@
 package com.evo.entities.moveable.player;
 
 import com.evo.Handler;
+import com.evo.Utils;
 import com.evo.entities.Entity;
 import com.evo.entities.moveable.Creature;
 import com.evo.gfx.Animation;
@@ -10,8 +11,6 @@ import com.evo.states.StateManager;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -388,8 +387,8 @@ public class Fish extends Creature {
 
         } else if (directionFacing == DirectionFacing.LEFT) {
             //FLIP IMAGES of head and body.
-            BufferedImage flippedCurrentHeadImage = Fish.flipHorizontally(currentHeadAnimation.getCurrentFrame());
-            BufferedImage flippedCurrentBodyImage = Fish.flipHorizontally(currentBodyAnimation.getCurrentFrame());
+            BufferedImage flippedCurrentHeadImage = Utils.flipHorizontally(currentHeadAnimation.getCurrentFrame());
+            BufferedImage flippedCurrentBodyImage = Utils.flipHorizontally(currentBodyAnimation.getCurrentFrame());
 
             //@@@@@@@@@@@@@@@@@@@@@@@@@
             //HEAD
@@ -442,15 +441,6 @@ public class Fish extends Creature {
         //        (int)(y + bounds.y - handler.getGameCamera().getyOffset()),
         //        bounds.width, bounds.height);
 
-    }
-
-    public static BufferedImage flipHorizontally(BufferedImage image) {
-        AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
-        tx.translate(-image.getWidth(null), 0);
-
-        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-
-        return op.filter(image, null);
     }
 
     // GETTERS AND SETTERS

@@ -143,8 +143,7 @@ public class SeaJelly extends Creature {
                     ///////
                     move();
                     ///////
-                    currentPatrolLength += speed;
-
+                    currentPatrolLength += speed; //TODO: may need to move into overridden move().
                 }
                 //MOVEMENTS: END OF PATROL LENGTH (reverse directions).
                 else {

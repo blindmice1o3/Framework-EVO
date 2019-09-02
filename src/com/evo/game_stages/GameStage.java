@@ -2,6 +2,7 @@ package com.evo.game_stages;
 
 import com.evo.Handler;
 import com.evo.entities.EntityManager;
+import com.evo.entities.moveable.enemies.Eel;
 import com.evo.entities.moveable.enemies.SeaJelly;
 import com.evo.entities.moveable.player.Fish;
 import com.evo.entities.non_moveable.Kelp;
@@ -49,6 +50,7 @@ public class GameStage {
         entityManager.addEntity(new Kelp(handler, Assets.kelpSolid[0], xSpawn-74, ySpawn-25));
 
         entityManager.addEntity(new SeaJelly(handler, xSpawn+50, ySpawn-50));
+        entityManager.addEntity(new Eel(handler, xSpawn+150, ((tiles[0].length-3)*Tile.screenTileHeight)+(Tile.screenTileHeight/2)+7));
     } // **** end GameStage(Handler, String) constructor ****
 
     public void tick() {

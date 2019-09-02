@@ -66,13 +66,13 @@ public class IntroState implements IState {
                 if (handler.getKeyManager().left) {
                     fishInstance.moveLeft();
                     ///////////////////////////////////////////////////////////
-                    fishInstance.setDirectionFacing(Fish.DirectionFacing.LEFT);
+                    fishInstance.setDirectionFacing(Fish.MovementDirection.LEFT);
                     ///////////////////////////////////////////////////////////
                 }
                 if (handler.getKeyManager().right) {
                    fishInstance.moveRight();
                     ///////////////////////////////////////////////////////////
-                   fishInstance.setDirectionFacing(Fish.DirectionFacing.RIGHT);
+                   fishInstance.setDirectionFacing(Fish.MovementDirection.RIGHT);
                     ///////////////////////////////////////////////////////////
                 }
 

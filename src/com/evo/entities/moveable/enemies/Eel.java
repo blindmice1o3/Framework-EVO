@@ -3,6 +3,7 @@ package com.evo.entities.moveable.enemies;
 import com.evo.Handler;
 import com.evo.Utils;
 import com.evo.entities.moveable.Creature;
+import com.evo.entities.moveable.player.Fish;
 import com.evo.game_stages.GameStage;
 import com.evo.gfx.Animation;
 import com.evo.gfx.Assets;
@@ -16,7 +17,7 @@ import java.awt.image.BufferedImage;
 
 public class Eel extends Creature {
 
-    public enum State { PATROL, TURN, ATTACK, HURT; }
+    public enum State { PATROL, TURN, CHASE, ATTACK, HURT; }
     public enum MovementDirection { LEFT, RIGHT; }
 
     private State currentState;
@@ -37,6 +38,12 @@ public class Eel extends Creature {
         speed = 1;
 
         initAnimations();
+
+        detectionRectangleBounds = new Rectangle(
+                -detectionRadiusLength + (width/2), //NEGATIVE
+                -detectionRadiusLength + (height/2), //NEGATIVE
+                2*detectionRadiusLength,
+                2*detectionRadiusLength);
     } // **** end Eel(Handler, float, float) constructor
 
     @Override
@@ -112,12 +119,53 @@ public class Eel extends Creature {
                     move();
                     ///////
                     currentPatrolLength += speed; //TODO: may need to move into overridden move().
+
+                    //CHECK DETECTION COLLISION (is player within detection range?)
+                    if ( checkDetectionCollisions(0, 0) ) {
+                        xBeforeChase = (int)x;
+                        yBeforeChase = (int)y;
+                        ///////////////////////////
+                        currentState = State.CHASE;
+                        ///////////////////////////
+                    }
                 }
                 //MOVEMENTS: END OF PATROL LENGTH (reverse directions).
                 else {
                     //////////////////////////
                     currentState = State.TURN;
                     //////////////////////////
+                }
+
+                break;
+            case CHASE:
+                //TESTING checkDetectionCollisions(float, float)
+                System.out.println("IMMA GETCHA!");
+                Fish player = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
+                //player is beyond detection range.
+                if (player.getX() - x > detectionRadiusLength) {
+                    //TODO: call unimplemented method named: moveToBeforeChaseCoordinate().
+                    ////////////////////////////
+                    currentState = State.PATROL;
+                    ////////////////////////////
+                }
+                //still chasing: move() Eel and see if hurt() should be called.
+                else {
+                    if (player.getX() < x) {
+                        xMove = -speed;
+                    } else {
+                        xMove = speed;
+                    }
+
+                    if (player.getY() < y) {
+                        yMove = -speed;
+                    } else {
+                        yMove = speed;
+                    }
+                    ///////
+                    move();
+                    ///////
+
+                    //check if intersection (hurt() will be called).
                 }
 
                 break;
@@ -188,10 +236,45 @@ public class Eel extends Creature {
          */
     }
 
+    private Rectangle detectionRectangleBounds;
+    private int detectionRadiusLength = 3 * Tile.TILE_WIDTH;
+    private int xBeforeChase, yBeforeChase;
+
+    private Rectangle getDetectionRectangle(float xOffset, float yOffset) {
+        return new Rectangle(
+                (int)(x + detectionRectangleBounds.x + xOffset),
+                (int)(y + detectionRectangleBounds.y + yOffset),
+                detectionRectangleBounds.width,
+                detectionRectangleBounds.height);
+    }
+
+    private boolean checkDetectionCollisions(float xOffset, float yOffset) {
+        Fish player = ((GameStageState) handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().getPlayer();
+
+        if (player.getCollisionBounds(0f, 0f).intersects(getDetectionRectangle(xOffset, yOffset))) {
+            return true;
+        }
+
+        return false;
+    }
+
     @Override
     public void render(Graphics g) {
         switch (currentState) {
             case PATROL:
+                ///////////////////////////detection-rectangle (developer's visual aid)/////////////////////////////////
+                Rectangle detectionSquare = getDetectionRectangle(0, 0);
+                g.setColor(Color.GREEN);
+                g.fillRect(
+                        (int)(detectionSquare.x - handler.getGameCamera().getxOffset()),
+                        (int)(detectionSquare.y - handler.getGameCamera().getyOffset()),
+                        detectionSquare.width,
+                        detectionSquare.height);
+                System.out.println("detectionSquare's: x, y, width, height (" + detectionSquare.x + ", " +
+                        detectionSquare.y + ", " + detectionSquare.width + ", " + detectionSquare.height + ").");
+                System.out.println("Eel's x, y, width, height (" + x + ", " + y + ", " + width + ", " + height + ").");
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
                 //MOVING LEFT
                 if (currentMovementDirection == MovementDirection.LEFT) {
                     g.drawImage(patrolAnimation.getCurrentFrame(),
@@ -236,6 +319,31 @@ public class Eel extends Creature {
                             (int) (y - handler.getGameCamera().getyOffset()),
                             turnAnimation.getCurrentFrame().getWidth(),
                             turnAnimation.getCurrentFrame().getHeight(),
+                            null);
+                }
+
+                break;
+            case CHASE:
+                //TODO: this was done haphazardly just to see effects and know things are happening as expected or not.
+                //MOVING LEFT
+                if (currentMovementDirection == MovementDirection.LEFT) {
+                    g.drawImage(attackAnimation.getCurrentFrame(),
+                            (int)(x - handler.getGameCamera().getxOffset()),
+                            (int)(y - handler.getGameCamera().getyOffset()),
+                            attackAnimation.getCurrentFrame().getWidth(),
+                            attackAnimation.getCurrentFrame().getHeight(),
+                            null);
+                }
+                //MOVING RIGHT
+                else if (currentMovementDirection == MovementDirection.RIGHT) {
+                    ////////////////////////////////
+                    BufferedImage flippedAttackImage = Utils.flipHorizontally(attackAnimation.getCurrentFrame());
+                    ////////////////////////////////
+                    g.drawImage(flippedAttackImage,
+                            (int)(x - handler.getGameCamera().getxOffset()),
+                            (int)(y - handler.getGameCamera().getyOffset()),
+                            flippedAttackImage.getWidth(),
+                            flippedAttackImage.getHeight(),
                             null);
                 }
 

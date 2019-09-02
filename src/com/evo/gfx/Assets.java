@@ -50,7 +50,7 @@ public class Assets {
     public static BufferedImage[] kelpSolid;
 
     // ENTITIES.MOVEABLE - Chapter 1: ENEMIES
-    public static BufferedImage[] seaJelly;
+    public static BufferedImage[] seaJelly, eel;
 
     // ITEMS - Chapter 1: MEAT
     public static BufferedImage meat;
@@ -306,14 +306,23 @@ public class Assets {
 
         // ENTITIES.MOVEABLE - ENEMIES
         seaJelly = new BufferedImage[8];
-        seaJelly[0] = spriteSheetChapter1Creatures.getSubimage(552, 29, 16, 32); //IDLE0
-        seaJelly[1] = spriteSheetChapter1Creatures.getSubimage(568, 29, 16, 32); //IDLE1
-        seaJelly[2] = spriteSheetChapter1Creatures.getSubimage(584, 29, 16, 32); //IDLE2
-        seaJelly[3] = spriteSheetChapter1Creatures.getSubimage(599, 27, 16, 32); //ATTACK0
-        seaJelly[4] = spriteSheetChapter1Creatures.getSubimage(619, 29, 16, 32); //ATTACK1
-        seaJelly[5] = spriteSheetChapter1Creatures.getSubimage(639, 34, 32, 32); //ATTACK2
-        seaJelly[6] = spriteSheetChapter1Creatures.getSubimage(674, 32, 32, 32); //ATTACK3
-        seaJelly[7] = spriteSheetChapter1Creatures.getSubimage(714, 28, 16, 32); //HURT0
+        seaJelly[0] = spriteSheetChapter1Creatures.getSubimage(552, 29, 16, 32); //IDLE0 (forward-facing)
+        seaJelly[1] = spriteSheetChapter1Creatures.getSubimage(568, 29, 16, 32); //IDLE1 (forward-facing)
+        seaJelly[2] = spriteSheetChapter1Creatures.getSubimage(584, 29, 16, 32); //IDLE2 (forward-facing)
+        seaJelly[3] = spriteSheetChapter1Creatures.getSubimage(599, 27, 16, 32); //ATTACK0 (forward-facing)
+        seaJelly[4] = spriteSheetChapter1Creatures.getSubimage(619, 29, 16, 32); //ATTACK1 (left)
+        seaJelly[5] = spriteSheetChapter1Creatures.getSubimage(639, 34, 32, 32); //ATTACK2 (left)
+        seaJelly[6] = spriteSheetChapter1Creatures.getSubimage(674, 32, 32, 32); //ATTACK3 (left)
+        seaJelly[7] = spriteSheetChapter1Creatures.getSubimage(714, 28, 16, 32); //HURT0 (forward-facing)
+
+        eel = new BufferedImage[7];
+        eel[0] = spriteSheetChapter1Creatures.getSubimage(554, 70, 32, 16); //IDLE0 (left)
+        eel[1] = spriteSheetChapter1Creatures.getSubimage(587, 70, 32, 16); //IDLE1 (left)
+        eel[2] = spriteSheetChapter1Creatures.getSubimage(620, 70, 32, 16); //IDLE2 (left)
+        eel[3] = spriteSheetChapter1Creatures.getSubimage(654, 70, 32, 16); //IDLE3 (left)
+        eel[4] = spriteSheetChapter1Creatures.getSubimage(687, 70, 28, 16); //TURN (right-turning-left)
+        eel[5] = spriteSheetChapter1Creatures.getSubimage(716, 62, 16, 32); //ATTACK0 (left)
+        eel[6] = spriteSheetChapter1Creatures.getSubimage(732, 69, 32, 16); //HURT0 (left)
 
         // ITEMS - MEAT
         meat = spriteSheetChapter1Creatures.getSubimage(594, 697, 16, 16);

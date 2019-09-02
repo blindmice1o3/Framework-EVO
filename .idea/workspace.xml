@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2bcc4a98-1f2c-4e1b-a19b-f51f53d66850" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/entities/moveable/enemies/SeaJelly.java" afterPath="$PROJECT_DIR$/src/com/evo/entities/moveable/enemies/SeaJelly.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/items/Item.java" afterPath="$PROJECT_DIR$/src/com/evo/items/Item.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/rewards/Reward.java" afterPath="$PROJECT_DIR$/src/com/evo/rewards/Reward.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/qwerty789.bin" afterPath="$PROJECT_DIR$/qwerty789.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/gfx/Assets.java" afterPath="$PROJECT_DIR$/src/com/evo/gfx/Assets.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,43 +22,36 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="PauseState.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/evo/states/PauseState.java">
+      <file leaf-file-name="SeaJelly.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/evo/entities/moveable/enemies/SeaJelly.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="816">
-              <caret line="54" column="0" lean-forward="false" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
+            <state relative-caret-position="357">
+              <caret line="94" column="55" lean-forward="true" selection-start-line="94" selection-start-column="55" selection-end-line="94" selection-end-column="55" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StateManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/evo/states/StateManager.java">
+      <file leaf-file-name="Kelp.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/evo/entities/non_moveable/Kelp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="850">
-              <caret line="59" column="0" lean-forward="false" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TextboxState.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/evo/states/TextboxState.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="325" column="16" lean-forward="false" selection-start-line="325" selection-start-column="16" selection-end-line="325" selection-end-column="16" />
+            <state relative-caret-position="425">
+              <caret line="34" column="17" lean-forward="true" selection-start-line="34" selection-start-column="17" selection-end-line="34" selection-end-column="17" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#669#670#0" expanded="true" />
+                <element signature="e#737#738#0" expanded="true" />
+                <element signature="e#777#778#0" expanded="true" />
+                <element signature="e#813#814#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SeaJelly.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/evo/entities/moveable/enemies/SeaJelly.java">
+      <file leaf-file-name="Assets.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/evo/gfx/Assets.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="94" column="55" lean-forward="true" selection-start-line="94" selection-start-column="55" selection-end-line="94" selection-end-column="55" />
+            <state relative-caret-position="340">
+              <caret line="316" column="0" lean-forward="true" selection-start-line="316" selection-start-column="0" selection-end-line="316" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -167,12 +160,12 @@
         <option value="$PROJECT_DIR$/src/com/evo/gfx/FontGrabber.java" />
         <option value="$PROJECT_DIR$/src/com/evo/states/GameStageState.java" />
         <option value="$PROJECT_DIR$/src/com/evo/gfx/Animation.java" />
-        <option value="$PROJECT_DIR$/src/com/evo/gfx/Assets.java" />
         <option value="$PROJECT_DIR$/src/com/evo/states/IntroState.java" />
         <option value="$PROJECT_DIR$/src/com/evo/states/TextboxState.java" />
         <option value="$PROJECT_DIR$/src/com/evo/items/Item.java" />
         <option value="$PROJECT_DIR$/src/com/evo/entities/moveable/enemies/SeaJelly.java" />
         <option value="$PROJECT_DIR$/src/com/evo/rewards/Reward.java" />
+        <option value="$PROJECT_DIR$/src/com/evo/gfx/Assets.java" />
       </list>
     </option>
   </component>
@@ -780,19 +773,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/evo/entities/non_moveable/Kelp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="34" column="17" lean-forward="true" selection-start-line="34" selection-start-column="17" selection-end-line="34" selection-end-column="17" />
-          <folding>
-            <element signature="e#669#670#0" expanded="false" />
-            <element signature="e#737#738#0" expanded="false" />
-            <element signature="e#777#778#0" expanded="false" />
-            <element signature="e#813#814#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/evo/items/ItemManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
@@ -804,6 +784,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
           <caret line="63" column="0" lean-forward="false" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -873,6 +854,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2244">
           <caret line="137" column="45" lean-forward="false" selection-start-line="137" selection-start-column="45" selection-end-line="137" selection-end-column="45" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -926,14 +908,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="20" column="40" lean-forward="false" selection-start-line="20" selection-start-column="40" selection-end-line="20" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/evo/gfx/Assets.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="272" column="45" lean-forward="true" selection-start-line="272" selection-start-column="45" selection-end-line="272" selection-end-column="45" />
           <folding />
         </state>
       </provider>
@@ -1022,6 +996,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="94" column="55" lean-forward="true" selection-start-line="94" selection-start-column="55" selection-end-line="94" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/evo/entities/non_moveable/Kelp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="34" column="17" lean-forward="true" selection-start-line="34" selection-start-column="17" selection-end-line="34" selection-end-column="17" />
+          <folding>
+            <element signature="e#669#670#0" expanded="true" />
+            <element signature="e#737#738#0" expanded="true" />
+            <element signature="e#777#778#0" expanded="true" />
+            <element signature="e#813#814#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/evo/gfx/Assets.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="316" column="0" lean-forward="true" selection-start-line="316" selection-start-column="0" selection-end-line="316" selection-end-column="0" />
           <folding />
         </state>
       </provider>

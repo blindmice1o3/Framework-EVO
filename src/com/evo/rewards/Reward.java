@@ -88,8 +88,10 @@ public class Reward {
             player.setHealth( player.getHealthMax() );
         }
 
+        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         timerStarted = true;
         timePrevious = System.currentTimeMillis();
+        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     }
 
     // GETTERS AND SETTERS

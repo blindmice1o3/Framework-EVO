@@ -139,37 +139,71 @@ public class Eel extends Creature {
                 break;
             case CHASE:
                 //TESTING checkDetectionCollisions(float, float)
-                System.out.println("IMMA GETCHA!");
                 Fish player = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
                 //player is beyond detection range.
                 if ( (Math.abs(player.getX() - x) > detectionRadiusLength) ||
                         (Math.abs(player.getY() - y) > detectionRadiusLength) ) {
-                    //TODO: call unimplemented method named: moveToBeforeChaseCoordinate().
                     System.out.println("awwww........ like sand slipping through the fingers (whatever those are).");
-                    ////////////////////////////
-                    currentState = State.PATROL;
-                    ////////////////////////////
-                }
-                //still chasing: move() Eel and see if hurt() should be called.
-                else {
-                    if (player.getX() < x) {
+
+                    //TODO: call unimplemented method named: moveToBeforeChaseCoordinate().
+                    //!!!RETURNING TO PATROL POSITION!!!
+                    //to return to patrol position, have to move left.
+                    if (x > xBeforeChase) {
                         xMove = -speed;
                         currentMovementDirection = MovementDirection.LEFT;
-                    } else {
+                    }
+                    //to return to patrol position, have to move right.
+                    else if (x < xBeforeChase) {
                         xMove = speed;
                         currentMovementDirection = MovementDirection.RIGHT;
                     }
 
-                    if (player.getY() < y) {
+                    //to return to patrol position, have to move up.
+                    if (y > yBeforeChase) {
                         yMove = -speed;
-                    } else {
+                    }
+                    //to return to patrol position, have to move down.
+                    else if (y < yBeforeChase) {
                         yMove = speed;
                     }
                     ///////
                     move();
                     ///////
 
-                    //check if intersection (hurt() will be called).
+                    //ONCE BACK TO PATROL POSITION, change to State.PATROL.
+                    if ( (x == xBeforeChase) && (y == yBeforeChase) ) {
+                        ////////////////////////////
+                        currentState = State.PATROL;
+                        ////////////////////////////
+                    }
+                }
+                //still chasing: move() Eel and see if hurt() should be called.
+                else {
+                    System.out.println("IMMA GETCHA!");
+                    //player is towards eel's left, chase left.
+                    if (player.getX() < x) {
+                        xMove = -speed;
+                        currentMovementDirection = MovementDirection.LEFT;
+                    }
+                    //player is towards eel's right, chase right.
+                    else if (player.getX() > x) {
+                        xMove = speed;
+                        currentMovementDirection = MovementDirection.RIGHT;
+                    }
+
+                    //player is above eel, chase upward.
+                    if (player.getY() < y) {
+                        yMove = -speed;
+                    }
+                    //player is below eel, chase downward.
+                    else if (player.getY() > y) {
+                        yMove = speed;
+                    }
+                    ///////
+                    move();
+                    ///////
+
+                    //TODO: check if intersection (hurt() will be called).
                 }
 
                 break;

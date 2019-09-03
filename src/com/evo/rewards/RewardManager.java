@@ -8,6 +8,8 @@ import java.util.Iterator;
 
 public class RewardManager {
 
+    //TODO: make this HUDManager class and change Reward to HUDComponentToRender.
+
     private Handler handler;
     private ArrayList<Reward> rewards;
 

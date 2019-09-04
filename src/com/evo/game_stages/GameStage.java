@@ -35,6 +35,8 @@ public class GameStage {
     // REWARDS
     private RewardManager rewardManager;
 
+
+
     public GameStage(Handler handler, String path) {
         this.handler = handler;
         entityManager = new EntityManager(handler, new Fish(handler, xSpawn, ySpawn));
@@ -96,6 +98,9 @@ public class GameStage {
         //REWARDS
         rewardManager.render(g);
 
+        //TODO: GameStage will be composed with a HeadUpDisplay object that will call its render(Graphics)
+        // rather than GameStage object calling its renderHUD(Graphics).
+        //TODO: GameStage will pass-in a player instance when instantiating a HeadUpDisplay object.
         //HUD
         renderHUD(g);
     }

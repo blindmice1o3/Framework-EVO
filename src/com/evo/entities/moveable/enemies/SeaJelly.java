@@ -85,7 +85,7 @@ public class SeaJelly extends Creature {
                     ticker = 0;
                     currentState = State.ATTACK;
 
-                    //TODO: RENDERING DAMAGE TO SCREEN (using Reward/RewardManager FOR NOW).
+                    //TODO: RENDERING DAMAGE-DEALT-TO-PLAYER TO SCREEN (using Reward/RewardManager FOR NOW).
                     Reward damageRendering = new Reward(handler, 0,
                             (int)(player.getX()),
                             (int)(player.getY()));

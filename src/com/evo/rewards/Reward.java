@@ -39,6 +39,15 @@ public class Reward {
         stash.put(rewardType, value);
     }
 
+    /*
+    TODO: create HeadUpDisplay class and instantiate in GameStage. HeadUpDisplay.tick() should be a copy of
+    Reward.tick(), but with HUD-related-code after the copied updating-time-duration logic.
+
+
+    -decouple Damage from Reward/RewardManager.
+    -HeadUpDisplay class will appropriate the responsibility of rendering numeric-related-updaters (health points
+    gained, experience points gained, damage incurred).
+     */
     public void tick() {
         if (timerStarted) {
             long timeNow = System.currentTimeMillis();
@@ -54,8 +63,8 @@ public class Reward {
 
     public void render(Graphics g) {
         if (timerStarted) {
-            g.setColor(Color.GREEN);
             if (stash.get(RewardType.HP) != null) {
+                g.setColor(Color.GREEN);
                 g.drawString("+" + stash.get(RewardType.HP).toString(),
                         (int) (x - handler.getGameCamera().getxOffset()),
                         (int) (y - handler.getGameCamera().getyOffset()));

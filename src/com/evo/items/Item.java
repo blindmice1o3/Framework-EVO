@@ -36,6 +36,7 @@ public class Item implements Serializable {
     protected int x, y, count;
     protected boolean pickedUp;
 
+    //TODO: move to Reward class?
     protected int rewardHealth, rewardExperiencePoints;
 
     //EXPIRATION

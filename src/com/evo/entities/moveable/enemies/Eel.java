@@ -300,7 +300,7 @@ public class Eel extends Creature {
     public void render(Graphics g) {
         switch (currentState) {
             case PATROL:
-                /*
+
                 ///////////////////////////detection-rectangle (developer's visual aid)/////////////////////////////////
                 Rectangle detectionSquare = getDetectionRectangle(0, 0);
                 g.setColor(Color.GREEN);
@@ -313,7 +313,7 @@ public class Eel extends Creature {
                 //        detectionSquare.y + ", " + detectionSquare.width + ", " + detectionSquare.height + ").");
                 //System.out.println("Eel's x, y, width, height (" + x + ", " + y + ", " + width + ", " + height + ").");
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-                */
+
 
                 //MOVING LEFT
                 if (currentMovementDirection == MovementDirection.LEFT) {
@@ -365,7 +365,7 @@ public class Eel extends Creature {
                 break;
             case CHASE:
                 //TODO: this was done haphazardly just to see effects and know things are happening as expected or not.
-                /*
+
                 //pretty much copied/pasted State.PATROL, but using the attack animation instead.
                 ///////////////////////////detection-rectangle (developer's visual aid)/////////////////////////////////
                 detectionSquare = getDetectionRectangle(0, 0);
@@ -379,7 +379,7 @@ public class Eel extends Creature {
                 //        detectionSquare.y + ", " + detectionSquare.width + ", " + detectionSquare.height + ").");
                 //System.out.println("Eel's x, y, width, height (" + x + ", " + y + ", " + width + ", " + height + ").");
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-                */
+
 
                 //MOVING LEFT
                 if (currentMovementDirection == MovementDirection.LEFT) {

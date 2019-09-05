@@ -5,6 +5,7 @@ import com.evo.entities.Entity;
 import com.evo.entities.moveable.Creature;
 import com.evo.entities.moveable.player.Fish;
 import com.evo.game_stages.GameStage;
+import com.evo.game_stages.hud.DamageHUD;
 import com.evo.gfx.Animation;
 import com.evo.gfx.Assets;
 import com.evo.items.Item;
@@ -26,6 +27,8 @@ public class SeaJelly extends Creature {
     private int patrolLengthMax;
     private int currentPatrolLength;
 
+    private int attackDamage;
+
     //ANIMATIONS
     private Animation idleAnimation, attackAnimation, hurtAnimation;
 
@@ -36,7 +39,9 @@ public class SeaJelly extends Creature {
         currentMovementDirection = MovementDirection.DOWN;
         patrolLengthMax = 5;
         currentPatrolLength = 0;
+
         speed = 1;
+        attackDamage = 2;
 
         initAnimations();
     } // **** end SeaJelly(Handler, float, float) constructor ****
@@ -86,17 +91,13 @@ public class SeaJelly extends Creature {
                     currentState = State.ATTACK;
 
                     //TODO: RENDERING DAMAGE-DEALT-TO-PLAYER TO SCREEN (using Reward/RewardManager FOR NOW).
-                    Reward damageRendering = new Reward(handler, 0,
-                            (int)(player.getX()),
-                            (int)(player.getY()));
-                    damageRendering.addExtra(Reward.RewardType.DAMAGE, 1);
+                    DamageHUD damageHUD = new DamageHUD(handler, player, attackDamage);
                     GameStage gameStage = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage();
-                    gameStage.getRewardManager().addReward(damageRendering);
-                    damageRendering.giveReward(player);
-
+                    gameStage.getHeadUpDisplay().addTimedNumericIndicator(damageHUD);
+                    damageHUD.startRenderingToScreen();
 
                     ///////////////////////
-                    player.hurt(1);
+                    player.hurt(attackDamage);
                     ///////////////////////
                 }
             }

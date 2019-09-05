@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class Reward {
 
-    public enum RewardType { HP, EXP, DAMAGE; }
+    public enum RewardType { HP, EXP; }
 
     private Handler handler;
 
@@ -77,12 +77,7 @@ public class Reward {
                         (int) (y - handler.getGameCamera().getyOffset() + 10));
             }
 
-            if (stash.get(RewardType.DAMAGE) != null) {
-                g.setColor(Color.RED);
-                g.drawString("-" + stash.get(RewardType.DAMAGE).toString(),
-                        (int) (x - handler.getGameCamera().getxOffset() - 10),
-                        (int) (y - handler.getGameCamera().getyOffset() - 10));
-            }
+
         }
     }
 

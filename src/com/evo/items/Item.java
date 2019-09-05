@@ -4,17 +4,14 @@ import com.evo.Handler;
 import com.evo.entities.moveable.player.Fish;
 import com.evo.entities.moveable.player.FishStateManager;
 import com.evo.game_stages.GameStage;
+import com.evo.game_stages.hud.ComponentHUD;
 import com.evo.gfx.Assets;
-import com.evo.rewards.Reward;
 import com.evo.states.GameStageState;
 import com.evo.states.StateManager;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Item implements Serializable {
 
@@ -93,17 +90,26 @@ public class Item implements Serializable {
         if ( (player.getCollisionBounds(0, 0).intersects(bounds)) &&
                 (player.getFishStateManager().getCurrentActionState() == FishStateManager.ActionState.EAT) ) {
 
+            //hp
             //instantiate a reward, passing it rewardExperiencePoints and on-screen coordinates, add on rewardHealth.
-            Reward reward = new Reward(handler, rewardExperiencePoints, x, y);
-            reward.addExtra(Reward.RewardType.HP, rewardHealth);
-            //add the Reward instance to RewardManager's ArrayList<Reward> rewards.
-            gameStage.getRewardManager().addReward(reward);
+            ComponentHUD hpHUD = new ComponentHUD(handler, ComponentHUD.ComponentType.HP, rewardHealth, player);
+            gameStage.getHeadUpDisplay().addTimedNumericIndicator(hpHUD);
+            hpHUD.startRenderingToScreen();
+            ////////////////////////////////////////////////////////
+            player.setHealth( (player.getHealth() + rewardHealth) );
+            //do NOT let eating meat items give player more health points than player's maximum health points.
+            if (player.getHealth() > player.getHealthMax()) {
+                player.setHealth( player.getHealthMax() );
+            }
+            ////////////////////////////////////////////////////////
 
-
-            //TODO: who should trigger the giveReward(Fish) method?
-            reward.giveReward(player);
-            //TODO: AFTER GIVING reward, shouldn't it be removed from the RewardManager??? //nm Reward.tick() takes care of it.
-
+            //exp
+            ComponentHUD experienceHUD = new ComponentHUD(handler, ComponentHUD.ComponentType.EXP, rewardExperiencePoints, player);
+            gameStage.getHeadUpDisplay().addTimedNumericIndicator(experienceHUD);
+            experienceHUD.startRenderingToScreen();
+            ////////////////////////////////////////////////////////
+            player.setExperiencePoints( (player.getExperiencePoints() + rewardExperiencePoints) );
+            ////////////////////////////////////////////////////////
 
             System.out.println("Item.checkEaten(), player's experience points after reward.giveReward(Fish): " + player.getExperiencePoints());
             pickedUp = true;

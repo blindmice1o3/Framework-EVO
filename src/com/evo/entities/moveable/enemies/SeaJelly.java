@@ -5,11 +5,10 @@ import com.evo.entities.Entity;
 import com.evo.entities.moveable.Creature;
 import com.evo.entities.moveable.player.Fish;
 import com.evo.game_stages.GameStage;
-import com.evo.game_stages.hud.DamageHUD;
+import com.evo.game_stages.hud.ComponentHUD;
 import com.evo.gfx.Animation;
 import com.evo.gfx.Assets;
 import com.evo.items.Item;
-import com.evo.rewards.Reward;
 import com.evo.states.GameStageState;
 import com.evo.states.StateManager;
 import com.evo.tiles.Tile;
@@ -91,14 +90,13 @@ public class SeaJelly extends Creature {
                     currentState = State.ATTACK;
 
                     //TODO: RENDERING DAMAGE-DEALT-TO-PLAYER TO SCREEN (using Reward/RewardManager FOR NOW).
-                    DamageHUD damageHUD = new DamageHUD(handler, player, attackDamage);
+                    ComponentHUD damageHUD = new ComponentHUD(handler, ComponentHUD.ComponentType.DAMAGE, attackDamage, player);
                     GameStage gameStage = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage();
                     gameStage.getHeadUpDisplay().addTimedNumericIndicator(damageHUD);
                     damageHUD.startRenderingToScreen();
-
-                    ///////////////////////
+                    ////////////////////////////////////////////////////////
                     player.hurt(attackDamage);
-                    ///////////////////////
+                    ////////////////////////////////////////////////////////
                 }
             }
 

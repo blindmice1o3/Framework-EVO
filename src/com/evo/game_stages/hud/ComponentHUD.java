@@ -5,16 +5,27 @@ import com.evo.entities.Entity;
 
 import java.awt.*;
 
-public abstract class ComponentHUD {
+public class ComponentHUD {
+
+    public enum ComponentType { HP, EXP, DAMAGE; }
 
     protected Handler handler;
+
+    protected float x, y;
+    protected ComponentType currentComponentType;
+    protected int value;
 
     protected boolean timerStarted, timerFinished;
 
     protected long timeElapsed, timePrevious, timerTarget;
 
-    public ComponentHUD(Handler handler) {
+    public ComponentHUD(Handler handler, ComponentType componentType, int value, Entity entity) {
         this.handler = handler;
+
+        this.currentComponentType = componentType;
+        this.value = value;
+        x = entity.getX();
+        y = entity.getY();
 
         timerStarted = false;
         timerFinished = false;
@@ -22,13 +33,75 @@ public abstract class ComponentHUD {
         timerTarget = 5000;
         timeElapsed = 0;
         timePrevious = System.currentTimeMillis();
-    } // **** end ComponentHUD class ****
+    } // **** end ComponentHUD(Handler, ComponentType, int, Entity) constructor ****
 
-    public abstract void tick();
-    public abstract void render(Graphics g);
-    public abstract void startRenderingToScreen();
+    public void tick() {
+        if (timerStarted) {
+            long timeNow = System.currentTimeMillis();
+
+            timeElapsed += (timeNow - timePrevious);
+            timePrevious = timeNow;
+
+            if (timeElapsed >= timerTarget) {
+                timerFinished = true;
+            }
+        }
+    }
+
+    public void render(Graphics g) {
+        if (timerStarted) {
+            switch (currentComponentType) {
+                case HP:
+                    g.setColor(Color.GREEN);
+                    g.drawString("+" + Integer.toString(value),
+                            (int) (x - handler.getGameCamera().getxOffset()),
+                            (int) (y - handler.getGameCamera().getyOffset()));
+                    break;
+                case EXP:
+                    g.setColor(Color.WHITE);
+                    g.drawString("+" + Integer.toString(value),
+                            (int) (x - handler.getGameCamera().getxOffset()),
+                            (int) (y - handler.getGameCamera().getyOffset() + 10));
+
+                    break;
+                case DAMAGE:
+                    g.setColor(Color.RED);
+                    g.drawString("-" + Integer.toString(value),
+                            (int) (x - handler.getGameCamera().getxOffset() - 10),
+                            (int) (y - handler.getGameCamera().getyOffset() - 10));
+
+                    break;
+                default:
+                    System.out.println("ComponentHUD.render(Graphics), switch-constructor's default.");
+                    break;
+            }
+        }
+    }
+
+    public void startRenderingToScreen() {
+        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        timerStarted = true;
+        timePrevious = System.currentTimeMillis();
+        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    }
 
     // GETTERS AND SETTERS
+
+    public float getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
 
     public boolean isTimerStarted() {
         return timerStarted;

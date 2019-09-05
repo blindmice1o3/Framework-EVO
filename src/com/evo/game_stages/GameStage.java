@@ -9,7 +9,6 @@ import com.evo.entities.non_moveable.Kelp;
 import com.evo.game_stages.hud.HeadUpDisplay;
 import com.evo.gfx.Assets;
 import com.evo.items.ItemManager;
-import com.evo.rewards.RewardManager;
 import com.evo.tiles.Tile;
 
 import java.awt.*;
@@ -32,9 +31,6 @@ public class GameStage {
     // ITEMS
     private ItemManager itemManager;
 
-    // REWARDS
-    private RewardManager rewardManager;
-
     // HUD
     private HeadUpDisplay headUpDisplay;
 
@@ -43,7 +39,6 @@ public class GameStage {
         this.handler = handler;
         entityManager = new EntityManager(handler, new Fish(handler, xSpawn, ySpawn));
         itemManager = new ItemManager(handler);
-        rewardManager = new RewardManager(handler);
 
         loadGameStage(path);
 
@@ -62,7 +57,6 @@ public class GameStage {
     public void tick() {
         itemManager.tick();
         entityManager.tick();
-        rewardManager.tick();
         headUpDisplay.tick();
 
         handler.getGameCamera().centerOnEntity(entityManager.getPlayer());
@@ -100,37 +94,9 @@ public class GameStage {
         //ENTITIES
         entityManager.render(g);
 
-        //REWARDS
-        rewardManager.render(g);
-
         //HUD
         headUpDisplay.render(g);
-
-        //TODO: GameStage will be composed with a HeadUpDisplay object that will call its render(Graphics)
-        // rather than GameStage object calling its renderHUD(Graphics).
-        //TODO: GameStage will pass-in a player instance when instantiating a HeadUpDisplay object.
-        //HUD
-        //renderHUD(g);
     }
-
-    /*
-    private void renderHUD(Graphics g) {
-        //HP BAR
-        g.setColor(Color.BLACK);
-        g.fillRect(28, 11, 10*(getPlayer().getHealthMax()) +4, 12);
-        g.setColor(Color.GREEN);
-        g.fillRect(30, 13, 10*getPlayer().getHealth(), 8);
-
-        //HP
-        g.setColor(Color.GREEN);
-        g.drawString("hp: ", 10, 20);
-        g.drawString(Integer.toString(getPlayer().getHealth()), 10, 35);
-
-        //XP
-        g.setColor(Color.WHITE);
-        g.drawString("experiencePoints: " + getPlayer().getExperiencePoints(), handler.panelWidth/2, 20);
-    }
-    */
 
     private boolean compareTwoSprites(BufferedImage sprite1, BufferedImage sprite2, int x, int y) {
         //if width or height are not the same, the two sprites are NOT the same.
@@ -263,8 +229,6 @@ public class GameStage {
     public EntityManager getEntityManager() { return entityManager; }
 
     public ItemManager getItemManager() { return itemManager; }
-
-    public RewardManager getRewardManager() { return rewardManager; }
 
     public HeadUpDisplay getHeadUpDisplay() { return headUpDisplay; }
 

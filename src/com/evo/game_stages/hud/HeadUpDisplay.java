@@ -5,6 +5,7 @@ import com.evo.entities.moveable.player.Fish;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class HeadUpDisplay {
 
@@ -12,8 +13,6 @@ public class HeadUpDisplay {
     private ArrayList<ComponentHUD> timedNumericIndicators;
 
     private Fish player;
-
-
 
     public HeadUpDisplay(Handler handler, Fish player) {
         this.handler = handler;
@@ -23,19 +22,28 @@ public class HeadUpDisplay {
     } // **** end HeadUpDisplay(Handler, Fish) constructor ****
 
     public void tick() {
-        for (ComponentHUD componentHUD : timedNumericIndicators) {
+        Iterator<ComponentHUD> it = timedNumericIndicators.iterator();
+        while (it.hasNext()) {
+            ComponentHUD componentHUD = it.next();
+
             if (componentHUD.isTimerStarted()) {
+                ////////////////////
                 componentHUD.tick();
+                ////////////////////
+            }
+
+            if (componentHUD.isTimerFinished()) {
+                it.remove();
             }
         }
-
-        //
     }
 
     public void render(Graphics g) {
         for (ComponentHUD componentHUD : timedNumericIndicators) {
             if (componentHUD.isTimerStarted()) {
+                ///////////////////////
                 componentHUD.render(g);
+                ///////////////////////
             }
         }
 

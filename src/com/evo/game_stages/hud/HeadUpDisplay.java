@@ -38,7 +38,8 @@ public class HeadUpDisplay {
     }
 
     public void render(Graphics g) {
-        for (ComponentHUD componentHUD : timedNumericIndicators) {
+        for (int i = 0; i < timedNumericIndicators.size(); i++) {
+            ComponentHUD componentHUD = timedNumericIndicators.get(i);
             if (componentHUD.isTimerStarted()) {
                 ///////////////////////
                 componentHUD.render(g);

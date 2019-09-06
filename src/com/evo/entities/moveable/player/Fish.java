@@ -143,19 +143,54 @@ public class Fish extends Creature {
         /////////////////////////////////////////
     }
 
+    private int hurtTimer = 0;
+    private int hurtTimerTarget = 20;
     @Override
     public void tick() {
         // ANIMATIONS
-        if (currentHeadAnimation != idleHeadAnimation) {
-            //HEAD
-            currentHeadAnimation.tick();
+        //HEAD
+        switch (fishStateManager.getCurrentActionState()) {
+            case HURT:
+                currentHeadAnimation = hurtHeadAnimation;
+                //no need tick (1 frame).
+                hurtTimer++;
 
-            if (currentHeadAnimation.getIndex() == currentHeadAnimation.getFrames().length-1) {
-                //////////////////////////////////////////////////////////////////////////
-                fishStateManager.setCurrentActionState(FishStateManager.ActionState.NONE);
+                if (hurtTimer == hurtTimerTarget) {
+                    fishStateManager.setCurrentActionState(FishStateManager.ActionState.NONE);
+
+                    hurtTimer = 0;
+                }
+
+                break;
+            case BITE:
+                currentHeadAnimation = biteHeadAnimation;
+                currentHeadAnimation.tick();
+
+                if (currentHeadAnimation.getIndex() == currentHeadAnimation.getFrames().length-1) {
+                    //////////////////////////////////////////////////////////////////////////
+                    fishStateManager.setCurrentActionState(FishStateManager.ActionState.NONE);
+                    //////////////////////////////////////////////////////////////////////////
+                }
+
+                break;
+            case EAT:
+                currentHeadAnimation = eatHeadAnimation;
+                currentHeadAnimation.tick();
+
+                if (currentHeadAnimation.getIndex() == currentHeadAnimation.getFrames().length-1) {
+                    //////////////////////////////////////////////////////////////////////////
+                    fishStateManager.setCurrentActionState(FishStateManager.ActionState.NONE);
+                    //////////////////////////////////////////////////////////////////////////
+                }
+
+                break;
+            case NONE:
                 currentHeadAnimation = idleHeadAnimation;
-                //////////////////////////////////////////////////////////////////////////
-            }
+                //no need tick (1 frame).
+
+                break;
+            default:
+                System.out.println("Fish.tick(), switch-construct's default.");
         }
         //BODY
         currentBodyAnimation.tick();
@@ -270,14 +305,15 @@ public class Fish extends Creature {
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
             //////////////////////////////////////////////////////////////////////////
             fishStateManager.setCurrentActionState(FishStateManager.ActionState.BITE);
-            currentHeadAnimation = biteHeadAnimation;
+            //currentHeadAnimation = biteHeadAnimation;
+            //TODO: call checkAttacks() here instead of tick()???
             //////////////////////////////////////////////////////////////////////////
         }
         //x-button (eat).
         else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SPACE)) {
             //////////////////////////////////////////////////////////////////////////
             fishStateManager.setCurrentActionState(FishStateManager.ActionState.EAT);
-            currentHeadAnimation = eatHeadAnimation;
+            //currentHeadAnimation = eatHeadAnimation;
             //////////////////////////////////////////////////////////////////////////
         }
 

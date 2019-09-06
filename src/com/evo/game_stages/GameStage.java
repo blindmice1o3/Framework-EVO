@@ -51,7 +51,7 @@ public class GameStage {
         entityManager.addEntity(new SeaJelly(handler, xSpawn+50, ySpawn-50));
         entityManager.addEntity(new Eel(handler, xSpawn+150, ((tiles[0].length-3)*Tile.screenTileHeight)+(Tile.screenTileHeight/2)+7));
 
-        headUpDisplay = new HeadUpDisplay(handler, entityManager.getPlayer());
+        headUpDisplay = new HeadUpDisplay(handler);
     } // **** end GameStage(Handler, String) constructor ****
 
     public void tick() {

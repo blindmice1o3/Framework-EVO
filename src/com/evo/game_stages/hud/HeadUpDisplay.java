@@ -2,6 +2,8 @@ package com.evo.game_stages.hud;
 
 import com.evo.Handler;
 import com.evo.entities.moveable.player.Fish;
+import com.evo.states.GameStageState;
+import com.evo.states.StateManager;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -12,14 +14,11 @@ public class HeadUpDisplay {
     private Handler handler;
     private ArrayList<ComponentHUD> timedNumericIndicators;
 
-    private Fish player;
-
-    public HeadUpDisplay(Handler handler, Fish player) {
+    public HeadUpDisplay(Handler handler) {
         this.handler = handler;
-        this.player = player;
 
         timedNumericIndicators = new ArrayList<ComponentHUD>();
-    } // **** end HeadUpDisplay(Handler, Fish) constructor ****
+    } // **** end HeadUpDisplay(Handler) constructor ****
 
     public void tick() {
         Iterator<ComponentHUD> it = timedNumericIndicators.iterator();
@@ -52,6 +51,7 @@ public class HeadUpDisplay {
     }
 
     private void renderHUD(Graphics g) {
+        Fish player = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
         /* TOP OF SCREEN */
         //HP BAR
         g.setColor(Color.BLACK);

@@ -143,21 +143,55 @@ public class Fish extends Creature {
         /////////////////////////////////////////
     }
 
+    private int hurtTimer = 0;
+    private int hurtTimerTarget = 20;
     @Override
     public void tick() {
-        // ANIMATIONS
-        if (currentHeadAnimation != idleHeadAnimation) {
-            //HEAD
-            currentHeadAnimation.tick();
+        //HEAD ANIMATION
+        switch (fishStateManager.getCurrentActionState()) {
+            case HURT:
+                currentHeadAnimation = hurtHeadAnimation;
+                //no need tick (1 frame).
+                hurtTimer++;
 
-            if (currentHeadAnimation.getIndex() == currentHeadAnimation.getFrames().length-1) {
-                //////////////////////////////////////////////////////////////////////////
-                fishStateManager.setCurrentActionState(FishStateManager.ActionState.NONE);
+                if (hurtTimer == hurtTimerTarget) {
+                    fishStateManager.setCurrentActionState(FishStateManager.ActionState.NONE);
+
+                    hurtTimer = 0;
+                }
+
+                break;
+            case BITE:
+                currentHeadAnimation = biteHeadAnimation;
+                currentHeadAnimation.tick();
+
+                if (currentHeadAnimation.getIndex() == currentHeadAnimation.getFrames().length-1) {
+                    //////////////////////////////////////////////////////////////////////////
+                    fishStateManager.setCurrentActionState(FishStateManager.ActionState.NONE);
+                    //////////////////////////////////////////////////////////////////////////
+                }
+
+                break;
+            case EAT:
+                currentHeadAnimation = eatHeadAnimation;
+                currentHeadAnimation.tick();
+
+                if (currentHeadAnimation.getIndex() == currentHeadAnimation.getFrames().length-1) {
+                    //////////////////////////////////////////////////////////////////////////
+                    fishStateManager.setCurrentActionState(FishStateManager.ActionState.NONE);
+                    //////////////////////////////////////////////////////////////////////////
+                }
+
+                break;
+            case NONE:
                 currentHeadAnimation = idleHeadAnimation;
-                //////////////////////////////////////////////////////////////////////////
-            }
+                //no need tick (1 frame).
+
+                break;
+            default:
+                System.out.println("Fish.tick(), switch-construct's default.");
         }
-        //BODY
+        //BODY ANIMATION
         currentBodyAnimation.tick();
 
 /*
@@ -173,67 +207,17 @@ public class Fish extends Creature {
                 [0];
 */
 
+        // ATTACK COOLDOWN
+        tickAttackCooldown();
+
         // MOVEMENT
         getInput();
         move();
-
-        // ATTACK
-        checkAttacks();
     }
 
-    /**
-     * cb is "Collision Bounds", which is the collision rectangle of the player.
-     * ar is "Attack Rectangle", which is the collision rectangle of an attack.
-     */
-    private void checkAttacks() {
+    private void tickAttackCooldown() {
         attackTimer += System.currentTimeMillis() - lastAttackTimer;
         lastAttackTimer = System.currentTimeMillis();
-        if (attackTimer < attackCooldown) {
-            return;
-        }
-
-        Rectangle cb = getCollisionBounds(0, 0);
-        Rectangle ar = new Rectangle();
-        ar.width = Assets.eatFrames[0][0][0][0][0].getWidth();
-        ar.height = Assets.eatFrames[0][0][0][0][0].getHeight();
-
-        //a-button (check where to set the attack rectangle).
-        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
-            if (directionFacing == DirectionFacing.LEFT) {
-                ar.x = cb.x - 4;
-                ar.y = cb.y;
-            } else if (directionFacing == DirectionFacing.RIGHT) {
-                ar.x = cb.x + Assets.tailOriginal[0][0][0][0][0].getWidth() + 3;
-                ar.y = cb.y;
-            }
-        }
-        //if NOT attacking, return.
-        else {
-            return;
-        }
-
-        // if we're at this line, we didn't call return in the else-clause; which means the attack button was pressed
-        // and we need to reset the attackTimer (a cool-down time before the player can attack again).
-        attackTimer = 0;
-
-        //LOOP through every entity in the current game stage.
-        ArrayList<Entity> entities = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().getEntities();
-        for (Entity e : entities) {
-            //if current Entity e is the player, go on to the next entity object from the ArrayList<Entity>.
-            if (e.equals(this)) {
-                continue;
-            }
-
-            //if there is a collision between the entity and the player's attack rectangle, hurt the entity.
-            if (e.getCollisionBounds(0, 0).intersects(ar)) {
-                e.hurt(1);
-
-                //////////////////////////////////////////////////////////////////////////
-                //RETURN if there is collision BECAUSE CAN ONLY HURT 1 ENTITY AT A TIME.//
-                //////////////////////////////////////////////////////////////////////////
-                return;
-            }
-        }
     }
 
     @Override
@@ -266,19 +250,63 @@ public class Fish extends Creature {
         }
 
         // A and X BUTTONS (B BUTTON in GameStageState class: pops IState).
-        //a-button (bite).
-        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
-            //////////////////////////////////////////////////////////////////////////
-            fishStateManager.setCurrentActionState(FishStateManager.ActionState.BITE);
-            currentHeadAnimation = biteHeadAnimation;
-            //////////////////////////////////////////////////////////////////////////
-        }
         //x-button (eat).
-        else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SPACE)) {
+        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SPACE)) {
             //////////////////////////////////////////////////////////////////////////
             fishStateManager.setCurrentActionState(FishStateManager.ActionState.EAT);
-            currentHeadAnimation = eatHeadAnimation;
+            //currentHeadAnimation = eatHeadAnimation;
             //////////////////////////////////////////////////////////////////////////
+        }
+        //a-button (bite).
+        else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
+            //////////////////////////////////////////////////////////////////////////
+            fishStateManager.setCurrentActionState(FishStateManager.ActionState.BITE);
+            //currentHeadAnimation = biteHeadAnimation;
+            //////////////////////////////////////////////////////////////////////////
+
+            //TODO: call tickAttackCooldown() here instead of tick()???
+            if (attackTimer < attackCooldown) {
+                return;
+            }
+
+            //cb is "Collision Bounds", which is the collision rectangle of the player.
+            Rectangle cb = getCollisionBounds(0, 0);
+            //ar is "Attack Rectangle", which is the collision rectangle of an attack.
+            Rectangle ar = new Rectangle();
+
+            ar.width = Assets.eatFrames[0][0][0][0][0].getWidth();
+            ar.height = Assets.eatFrames[0][0][0][0][0].getHeight();
+            //check where to set the attack rectangle.
+            if (directionFacing == DirectionFacing.LEFT) {
+                ar.x = cb.x - 4;
+                ar.y = cb.y;
+            } else if (directionFacing == DirectionFacing.RIGHT) {
+                ar.x = cb.x + Assets.tailOriginal[0][0][0][0][0].getWidth() + 3;
+                ar.y = cb.y;
+            }
+
+            // if we're at this line, we didn't call return in the else-clause; which means the attack button was pressed
+            // and we need to reset the attackTimer (a cool-down time before the player can attack again).
+            attackTimer = 0;
+
+            //LOOP through every entity in the current game stage.
+            ArrayList<Entity> entities = ((GameStageState) handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().getEntities();
+            for (Entity e : entities) {
+                //if current Entity e is the player, go on to the next entity object from the ArrayList<Entity>.
+                if (e.equals(this)) {
+                    continue;
+                }
+
+                //if there is a collision between the entity and the player's attack rectangle, hurt the entity.
+                if (e.getCollisionBounds(0, 0).intersects(ar)) {
+                    e.hurt(1);
+
+                    //////////////////////////////////////////////////////////////////////////
+                    //RETURN if there is collision BECAUSE CAN ONLY HURT 1 ENTITY AT A TIME.//
+                    //////////////////////////////////////////////////////////////////////////
+                    return;
+                }
+            }
         }
 
         // BODY-PARTS SWAPPING

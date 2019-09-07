@@ -4,6 +4,7 @@ import com.evo.Handler;
 import com.evo.entities.Entity;
 import com.evo.entities.moveable.Creature;
 import com.evo.entities.moveable.player.Fish;
+import com.evo.entities.moveable.player.FishStateManager;
 import com.evo.game_stages.GameStage;
 import com.evo.game_stages.hud.ComponentHUD;
 import com.evo.gfx.Animation;
@@ -96,6 +97,8 @@ public class SeaJelly extends Creature {
                     damageHUD.startRenderingToScreen();
                     ////////////////////////////////////////////////////////
                     player.hurt(attackDamage);
+                    player.getFishStateManager().setCurrentActionState(FishStateManager.ActionState.HURT);
+                    //TODO: move player.setCurrentHeadAnimation = hurtHeadAnimation to Fish.tick().
                     ////////////////////////////////////////////////////////
                 }
             }

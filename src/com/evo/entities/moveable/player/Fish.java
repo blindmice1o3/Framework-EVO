@@ -259,15 +259,14 @@ public class Fish extends Creature {
         }
         //a-button (bite).
         else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
-            //////////////////////////////////////////////////////////////////////////
-            fishStateManager.setCurrentActionState(FishStateManager.ActionState.BITE);
-            //currentHeadAnimation = biteHeadAnimation;
-            //////////////////////////////////////////////////////////////////////////
-
             //TODO: call tickAttackCooldown() here instead of tick()???
             if (attackTimer < attackCooldown) {
                 return;
             }
+            //////////////////////////////////////////////////////////////////////////
+            fishStateManager.setCurrentActionState(FishStateManager.ActionState.BITE);
+            //currentHeadAnimation = biteHeadAnimation;
+            //////////////////////////////////////////////////////////////////////////
 
             //cb is "Collision Bounds", which is the collision rectangle of the player.
             Rectangle cb = getCollisionBounds(0, 0);

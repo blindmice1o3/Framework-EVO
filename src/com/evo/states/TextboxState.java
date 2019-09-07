@@ -287,13 +287,8 @@ public class TextboxState implements IState {
                         changeCurrentState(State.LINE_IN_ANIMATION);
                         ////////////////////////////////////////////
                     } else {
-                        //THE FOLLOWING if-else IS A QUICK FIX TO A BUG. WHERE THE TEXTBOX LOOPS TO BEGINNING w/o STOPPING.
-                        if (currentLine2Index+2 < lines.size()) {
-                            currentLine2Index = currentLine2Index + 2;
-                            secondLine = lines.get(currentLine2Index);
-                        } else {
-                            secondLine = null;
-                        }
+                        //if reached this line: firstLine's currentLine1Index+2 is too big (no more lines).
+                        secondLine = null;
 
                         ////////////////////////////////////////////
                         changeCurrentState(State.PAGE_OUT_ANIMATION);

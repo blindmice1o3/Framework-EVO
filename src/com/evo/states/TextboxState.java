@@ -3,9 +3,11 @@ package com.evo.states;
 import com.evo.Handler;
 import com.evo.gfx.Assets;
 import com.evo.gfx.FontGrabber;
+import com.sun.javafx.css.CssError;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class TextboxState implements IState {
 
@@ -37,7 +39,11 @@ public class TextboxState implements IState {
     private int xLine1TypeInFX, yLine1TypeInFX, widthLine1TypeInFX, heightLine1TypeInFX;
     private int xLine2TypeInFX, yLine2TypeInFX, widthLine2TypeInFX, heightLine2TypeInFX;
 
+    private ArrayList<String> lines;
+
     public TextboxState(Handler handler) {
+        lines = new ArrayList<String>();
+
         this.handler = handler;
         currentState = null;
 
@@ -92,6 +98,41 @@ public class TextboxState implements IState {
 
         //TODO: if the entire-text-to-be-displayed is less than one line, we'll end up with ZERO numberOfPages!!!
         //if it's at-least one-line worth of text, we'll be okay.
+
+        StringBuilder sb = new StringBuilder();
+        String[] words = text.split(" ");
+        int currentIndex = 0;
+
+
+        //for (int i = 0; i < words.length; i++) {
+        //    System.out.println(words[i]);
+        //}
+
+        while (currentIndex < words.length) {
+            //word will fit on this line.
+            if ((sb.toString().length() + words[currentIndex].length() + 1) <= numberOfLetterPerLine) { //+1 for SPACE added after.
+                sb.append(words[currentIndex]).append(" ");
+                currentIndex++;
+            }
+            //store the line-worth of text into the lines ArrayList<String>.
+            else {
+                lines.add(sb.toString());
+                sb.delete(0, sb.length());
+            }
+
+            //store the last line (not words.length-1 because we add a space after).
+            if (currentIndex == words.length) {
+                lines.add(sb.toString());
+            }
+        }
+
+        //for (String line : lines) {
+        //    System.out.println(line);
+        //}
+
+
+        /*
+
         int numberOfLineToDisplay = (text.length() / numberOfLetterPerLine) + 1; //+1 possible lobed-off.
         System.out.println("NUMBER OF LINES TO DISPLAY: " + numberOfLineToDisplay);
 
@@ -109,8 +150,19 @@ public class TextboxState implements IState {
             }
         }
 
+        */
+
         //initialize firstLine (and possibly secondLine) using currentLine#Index with textAfterLayout (each element in
         //this String array is a portion of the entire-text-to-be-displayed that will fit on one line).
+        firstLine = lines.get(currentLine1Index);
+        if (currentLine2Index < lines.size()) {
+            secondLine = lines.get(currentLine2Index);
+        }
+        //secondLine does not exist.
+        else {
+            secondLine = null;
+        }
+        /*
         firstLine = textAfterLayout[currentLine1Index];
         if (currentLine2Index < textAfterLayout.length) {
             secondLine = textAfterLayout[currentLine2Index];
@@ -119,6 +171,7 @@ public class TextboxState implements IState {
         else {
             secondLine = null;
         }
+        */
     }
 
     private int continueIndicatorTicker = 0;
@@ -189,7 +242,7 @@ public class TextboxState implements IState {
                 break;
             case WAIT_FOR_INPUT:
                 //CHECK IF THERE'S ANOTHER PAGE: so if, continue-indicator should blink on-and-off.
-                if (currentLine1Index+2 < textAfterLayout.length) {
+                if (currentLine1Index+2 < lines.size()) {
                     //////////////////////////
                     continueIndicatorTicker++;
                     //////////////////////////
@@ -206,13 +259,13 @@ public class TextboxState implements IState {
                 //a-button (if there's another page: set firstLine/secondLine to their next String from the array of lines).
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
                     //IF THERE'S ANOTHER PAGE: increment the currentLine#Index and re-assign firstLine.
-                    if (currentLine1Index+2 < textAfterLayout.length) {
+                    if (currentLine1Index+2 < lines.size()) {
                         currentLine1Index = currentLine1Index + 2;
-                        firstLine = textAfterLayout[currentLine1Index];
+                        firstLine = lines.get(currentLine1Index);
                         //CHECK IF ANOTHER secondLine exist.
-                        if (currentLine2Index+2 < textAfterLayout.length) {
+                        if (currentLine2Index+2 < lines.size()) {
                             currentLine2Index = currentLine2Index + 2;
-                            secondLine = textAfterLayout[currentLine2Index];
+                            secondLine = lines.get(currentLine2Index);
                         } else {
                             secondLine = null;
                         }
@@ -234,6 +287,14 @@ public class TextboxState implements IState {
                         changeCurrentState(State.LINE_IN_ANIMATION);
                         ////////////////////////////////////////////
                     } else {
+                        //THE FOLLOWING if-else IS A QUICK FIX TO A BUG. WHERE THE TEXTBOX LOOPS TO BEGINNING w/o STOPPING.
+                        if (currentLine2Index+2 < lines.size()) {
+                            currentLine2Index = currentLine2Index + 2;
+                            secondLine = lines.get(currentLine2Index);
+                        } else {
+                            secondLine = null;
+                        }
+
                         ////////////////////////////////////////////
                         changeCurrentState(State.PAGE_OUT_ANIMATION);
                         ////////////////////////////////////////////

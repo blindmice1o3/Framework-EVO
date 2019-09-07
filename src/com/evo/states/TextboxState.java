@@ -8,6 +8,7 @@ import com.sun.javafx.css.CssError;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class TextboxState implements IState {
 
@@ -88,7 +89,6 @@ public class TextboxState implements IState {
         widthLine2TypeInFX = widthSecondLine;
         heightLine2TypeInFX = heightSecondLine;
     } // **** end TextboxState(Handler) constructor ****
-
 
     private int currentLine1Index = 0;
     private int currentLine2Index = 1;

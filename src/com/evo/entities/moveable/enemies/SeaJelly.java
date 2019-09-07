@@ -5,10 +5,10 @@ import com.evo.entities.Entity;
 import com.evo.entities.moveable.Creature;
 import com.evo.entities.moveable.player.Fish;
 import com.evo.game_stages.GameStage;
+import com.evo.game_stages.hud.ComponentHUD;
 import com.evo.gfx.Animation;
 import com.evo.gfx.Assets;
 import com.evo.items.Item;
-import com.evo.rewards.Reward;
 import com.evo.states.GameStageState;
 import com.evo.states.StateManager;
 import com.evo.tiles.Tile;
@@ -26,6 +26,8 @@ public class SeaJelly extends Creature {
     private int patrolLengthMax;
     private int currentPatrolLength;
 
+    private int attackDamage;
+
     //ANIMATIONS
     private Animation idleAnimation, attackAnimation, hurtAnimation;
 
@@ -36,7 +38,9 @@ public class SeaJelly extends Creature {
         currentMovementDirection = MovementDirection.DOWN;
         patrolLengthMax = 5;
         currentPatrolLength = 0;
+
         speed = 1;
+        attackDamage = 2;
 
         initAnimations();
     } // **** end SeaJelly(Handler, float, float) constructor ****
@@ -85,19 +89,14 @@ public class SeaJelly extends Creature {
                     ticker = 0;
                     currentState = State.ATTACK;
 
-                    //TODO: RENDERING DAMAGE TO SCREEN (using Reward/RewardManager FOR NOW).
-                    Reward damageRendering = new Reward(handler, 0,
-                            (int)(player.getX()),
-                            (int)(player.getY()));
-                    damageRendering.addExtra(Reward.RewardType.DAMAGE, 1);
+                    //TODO: RENDERING DAMAGE-DEALT-TO-PLAYER TO SCREEN (using Reward/RewardManager FOR NOW).
+                    ComponentHUD damageHUD = new ComponentHUD(handler, ComponentHUD.ComponentType.DAMAGE, attackDamage, player);
                     GameStage gameStage = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage();
-                    gameStage.getRewardManager().addReward(damageRendering);
-                    damageRendering.giveReward(player);
-
-
-                    ///////////////////////
-                    player.hurt(1);
-                    ///////////////////////
+                    gameStage.getHeadUpDisplay().addTimedNumericIndicator(damageHUD);
+                    damageHUD.startRenderingToScreen();
+                    ////////////////////////////////////////////////////////
+                    player.hurt(attackDamage);
+                    ////////////////////////////////////////////////////////
                 }
             }
 

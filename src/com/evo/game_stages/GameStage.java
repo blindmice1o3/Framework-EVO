@@ -6,10 +6,9 @@ import com.evo.entities.moveable.enemies.Eel;
 import com.evo.entities.moveable.enemies.SeaJelly;
 import com.evo.entities.moveable.player.Fish;
 import com.evo.entities.non_moveable.Kelp;
+import com.evo.game_stages.hud.HeadUpDisplay;
 import com.evo.gfx.Assets;
-import com.evo.gfx.FontGrabber;
 import com.evo.items.ItemManager;
-import com.evo.rewards.RewardManager;
 import com.evo.tiles.Tile;
 
 import java.awt.*;
@@ -32,14 +31,14 @@ public class GameStage {
     // ITEMS
     private ItemManager itemManager;
 
-    // REWARDS
-    private RewardManager rewardManager;
+    // HUD
+    private HeadUpDisplay headUpDisplay;
+
 
     public GameStage(Handler handler, String path) {
         this.handler = handler;
         entityManager = new EntityManager(handler, new Fish(handler, xSpawn, ySpawn));
         itemManager = new ItemManager(handler);
-        rewardManager = new RewardManager(handler);
 
         loadGameStage(path);
 
@@ -51,12 +50,14 @@ public class GameStage {
 
         entityManager.addEntity(new SeaJelly(handler, xSpawn+50, ySpawn-50));
         entityManager.addEntity(new Eel(handler, xSpawn+150, ((tiles[0].length-3)*Tile.screenTileHeight)+(Tile.screenTileHeight/2)+7));
+
+        headUpDisplay = new HeadUpDisplay(handler);
     } // **** end GameStage(Handler, String) constructor ****
 
     public void tick() {
         itemManager.tick();
         entityManager.tick();
-        rewardManager.tick();
+        headUpDisplay.tick();
 
         handler.getGameCamera().centerOnEntity(entityManager.getPlayer());
     }
@@ -93,28 +94,8 @@ public class GameStage {
         //ENTITIES
         entityManager.render(g);
 
-        //REWARDS
-        rewardManager.render(g);
-
         //HUD
-        renderHUD(g);
-    }
-
-    private void renderHUD(Graphics g) {
-        //HP BAR
-        g.setColor(Color.BLACK);
-        g.fillRect(28, 11, 10*(getPlayer().getHealthMax()) +4, 12);
-        g.setColor(Color.GREEN);
-        g.fillRect(30, 13, 10*getPlayer().getHealth(), 8);
-
-        //HP
-        g.setColor(Color.GREEN);
-        g.drawString("hp: ", 10, 20);
-        g.drawString(Integer.toString(getPlayer().getHealth()), 10, 35);
-
-        //XP
-        g.setColor(Color.WHITE);
-        g.drawString("experiencePoints: " + getPlayer().getExperiencePoints(), handler.panelWidth/2, 20);
+        headUpDisplay.render(g);
     }
 
     private boolean compareTwoSprites(BufferedImage sprite1, BufferedImage sprite2, int x, int y) {
@@ -249,7 +230,7 @@ public class GameStage {
 
     public ItemManager getItemManager() { return itemManager; }
 
-    public RewardManager getRewardManager() { return rewardManager; }
+    public HeadUpDisplay getHeadUpDisplay() { return headUpDisplay; }
 
     public Fish getPlayer() { return entityManager.getPlayer(); }
 

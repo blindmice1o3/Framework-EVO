@@ -40,6 +40,7 @@ public class TextboxState implements IState {
     private int xLine1TypeInFX, yLine1TypeInFX, widthLine1TypeInFX, heightLine1TypeInFX;
     private int xLine2TypeInFX, yLine2TypeInFX, widthLine2TypeInFX, heightLine2TypeInFX;
 
+    //EACH ELEMENT IS A LINE-LENGTH-CHUNK OF THE String PASSED IN WHEN enter(Object[]) WAS CALLED.
     private ArrayList<String> lines;
 
     public TextboxState(Handler handler) {
@@ -184,26 +185,21 @@ public class TextboxState implements IState {
         switch (currentState) {
             case ENTER:
                 //TODO: implement animationfx of textbox expanding (maybe have a bounce/over-shoot expansion size then small reduction to reach intended size).
-                //TEXT_AREA EXPANDING EFFECT.
+                //textbox-background's EXPAND-IN effect.
                 if (xCurrent > xFinal) {
                     xCurrent = xCurrent - 5;
+                } else {
+                    xCurrent = xFinal;              //check to make sure does NOT exceed MAX DIMENSION.
                 }
                 if (widthCurrent < widthFinal) {
                     widthCurrent = widthCurrent + (2 * 5);
+                } else {
+                    widthCurrent = widthFinal;      //check to make sure does NOT exceed MAX DIMENSION.
                 }
                 if (heightCurrent < heightFinal) {
                     heightCurrent = heightCurrent + 3;
-                }
-
-                //CHECK TO MAKE SURE doesn't exceed MAX DIMENSION.
-                if (xCurrent < xFinal) {
-                    xCurrent = xFinal;
-                }
-                if (widthCurrent > widthFinal) {
-                    widthCurrent = widthFinal;
-                }
-                if (heightCurrent > heightFinal) {
-                    heightCurrent = heightFinal;
+                } else {
+                    heightCurrent = heightFinal;    //check to make sure does NOT exceed MAX DIMENSION.
                 }
 
                 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -251,10 +247,10 @@ public class TextboxState implements IState {
 
                     //continueIndicatorTickerSpeed will determine when to alternate the on/off effect of what's rendered.
                     if (continueIndicatorTicker >= continueIndicatorTickerSpeed) {
-                        //resets the continueIndicatorTicker when its max is reached.
-                        continueIndicatorTicker = 0;
                         //alternate the continueIndicator's blinking effect.
                         renderContinueIndicator = !renderContinueIndicator;
+                        //resets the continueIndicatorTicker when its max is reached.
+                        continueIndicatorTicker = 0;
                     }
                 }
 
@@ -312,6 +308,7 @@ public class TextboxState implements IState {
                     heightCurrent = heightCurrent - 3;
                 }
 
+                //TODO: change the 2 if-clauses (below) to be corresponding else-clauses to the above if-clauses.
                 //when width and height shrink pass their INITIAL DIMENSIONS, set them to 0.
                 if (widthCurrent < widthInit) {
                     widthCurrent = 0;
@@ -449,18 +446,18 @@ public class TextboxState implements IState {
         currentState = State.ENTER;
         ///////////////////////////
 
-        //RESET values related to textbox's initial dimension.
+        //RESET textbox-background to its initial dimension.
         xCurrent = xInit;
         yCurrent = yInit;
         widthCurrent = widthInit;
         heightCurrent = heightInit;
 
-        //RESET values related to textbox's type-in effect.
+        //RESET type-in-fx rectangle (for firstLine) to cover the entire line.
         xLine1TypeInFX = xFirstLine;
         yLine1TypeInFX = yFirstLine;
         widthLine1TypeInFX = widthFirstLine;
         heightLine1TypeInFX = heightFirstLine;
-
+        //RESET type-in-fx rectangle (for secondLine) to cover the entire line.
         xLine2TypeInFX = xSecondLine;
         yLine2TypeInFX = ySecondLine;
         widthLine2TypeInFX = widthSecondLine;
@@ -473,6 +470,7 @@ public class TextboxState implements IState {
         currentLine1Index = 0;
         currentLine2Index = 1;
 
+        //@@@IF String WAS PASSED IN, split into line-length chunks and store those chunks in an ArrayList<String> lines.
         if (args != null) {
             if (args[0] instanceof String) {
                 text = (String)args[0];

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2bcc4a98-1f2c-4e1b-a19b-f51f53d66850" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/qwerty789.bin" afterPath="$PROJECT_DIR$/qwerty789.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/states/TextboxState.java" afterPath="$PROJECT_DIR$/src/com/evo/states/TextboxState.java" />
     </list>
@@ -34,8 +35,8 @@
       <file leaf-file-name="TextboxState.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/evo/states/TextboxState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="419" column="84" lean-forward="true" selection-start-line="419" selection-start-column="84" selection-end-line="419" selection-end-column="84" />
+            <state relative-caret-position="204">
+              <caret line="419" column="94" lean-forward="false" selection-start-line="419" selection-start-column="94" selection-end-line="419" selection-end-column="94" />
               <folding />
             </state>
           </provider>
@@ -964,8 +965,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/evo/states/TextboxState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="419" column="84" lean-forward="true" selection-start-line="419" selection-start-column="84" selection-end-line="419" selection-end-column="84" />
+        <state relative-caret-position="204">
+          <caret line="419" column="94" lean-forward="false" selection-start-line="419" selection-start-column="94" selection-end-line="419" selection-end-column="94" />
           <folding />
         </state>
       </provider>

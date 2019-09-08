@@ -219,25 +219,25 @@ public class TextboxState implements IState {
                 int textSpeed = 2; //actual in-game textSpeed.
                 //int textSpeed = 10; //developer-mode textSpeed.
                 //reveal the lines of text by shrinking the covering-rectangle-that's-the-same-color-as-textbox-background.
-                if (xLine1TypeInFX < ((firstLine.length() + 1) * widthLetter) ) {  //+firstLine.length() is the space after each word.
+                if (xLine1TypeInFX < (xFirstLine + (firstLine.length() * widthLetter)) ) {
                     xLine1TypeInFX += textSpeed;
                     widthLine1TypeInFX -= textSpeed;
                 }
                 //TODO: sometimes there's only one line and we shouldn't wait for the revealing of the second line.
-                else if ( (secondLine != null) && (xLine2TypeInFX < ((secondLine.length() + 1) * widthLetter)) ) {
+                else if ( (secondLine != null) && (xLine2TypeInFX < (xSecondLine + (secondLine.length() * widthLetter))) ) {
                     xLine2TypeInFX += textSpeed;
                     widthLine2TypeInFX -= textSpeed;
                 }
 
                 // @@@@@@@@@@@@@@@@@ ACTUALLY... just set currentState to State.WAIT_FOR_INPUT @@@@@@@@@@@@@@@@
                 //ending-situation where secondLine doesn't exist.
-                if ( (secondLine == null) && (xLine1TypeInFX >= ((firstLine.length() + 1) * widthLetter)) ) {
+                if ( (secondLine == null) && (xLine1TypeInFX >= (xFirstLine + (firstLine.length() * widthLetter))) ) {
                     //else if ( (secondLine == null) && (widthLine1TypeInFX <= 0) ) {
                     changeCurrentState(State.WAIT_FOR_INPUT);
                 }
                 //secondLine exist.
-                else if ( (xLine1TypeInFX >= ((firstLine.length() + 1) * widthLetter)) &&
-                        (xLine2TypeInFX >= ((secondLine.length() + 1) * widthLetter)) ) {
+                else if ( (xLine1TypeInFX >= (xFirstLine + (firstLine.length() * widthLetter))) &&
+                        (xLine2TypeInFX >= (xSecondLine + (secondLine.length() * widthLetter))) ) {
                     changeCurrentState(State.WAIT_FOR_INPUT);
                 }
 
@@ -417,7 +417,7 @@ public class TextboxState implements IState {
                     }
                 }
                 //SECOND_LINE DOES not EXIST.
-                else if ( xLine1TypeInFX >= ((firstLine.length() + 1) * widthLetter) ) {
+                else if ( xLine1TypeInFX >= (xFirstLine + (firstLine.length() * widthLetter)) ) {
                     //NON-blinking continue-indicator (the non-blinking version implies this is the last page).
                     g.drawImage(Assets.pokeballToken,
                             xFinal + widthFinal - (2 * widthLetter),

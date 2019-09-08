@@ -219,30 +219,32 @@ public class TextboxState implements IState {
                 int textSpeed = 2; //actual in-game textSpeed.
                 //int textSpeed = 10; //developer-mode textSpeed.
                 //reveal the lines of text by shrinking the covering-rectangle-that's-the-same-color-as-textbox-background.
-                if (widthLine1TypeInFX > 0) {
+                if (xLine1TypeInFX < ((firstLine.length() + 1) * widthLetter) ) {  //+firstLine.length() is the space after each word.
                     xLine1TypeInFX += textSpeed;
                     widthLine1TypeInFX -= textSpeed;
                 }
                 //TODO: sometimes there's only one line and we shouldn't wait for the revealing of the second line.
-                if ( (widthLine2TypeInFX > 0) && (widthLine1TypeInFX <= 0) && (secondLine != null) ) {
+                else if ( (secondLine != null) && (xLine2TypeInFX < ((secondLine.length() + 1) * widthLetter)) ) {
                     xLine2TypeInFX += textSpeed;
                     widthLine2TypeInFX -= textSpeed;
                 }
 
                 // @@@@@@@@@@@@@@@@@ ACTUALLY... just set currentState to State.WAIT_FOR_INPUT @@@@@@@@@@@@@@@@
-                if ( (widthLine2TypeInFX <= 0) && (widthLine1TypeInFX <= 0) ) {
+                //ending-situation where secondLine doesn't exist.
+                if ( (secondLine == null) && (xLine1TypeInFX >= ((firstLine.length() + 1) * widthLetter)) ) {
+                    //else if ( (secondLine == null) && (widthLine1TypeInFX <= 0) ) {
                     changeCurrentState(State.WAIT_FOR_INPUT);
                 }
-                //ending-situation where secondLine doesn't exist.
-                else if ( (secondLine == null) && (xLine1TypeInFX >= (firstLine.length()*widthLetter)) ) {
-                //else if ( (secondLine == null) && (widthLine1TypeInFX <= 0) ) {
+                //secondLine exist.
+                else if ( (xLine1TypeInFX >= ((firstLine.length() + 1) * widthLetter)) &&
+                        (xLine2TypeInFX >= ((secondLine.length() + 1) * widthLetter)) ) {
                     changeCurrentState(State.WAIT_FOR_INPUT);
                 }
 
                 break;
             case WAIT_FOR_INPUT:
                 //CHECK IF THERE'S ANOTHER PAGE: so if, continue-indicator should blink on-and-off.
-                if (currentLine1Index+2 < lines.size()) {
+                if ( (currentLine1Index + 2) < lines.size() ) {
                     //////////////////////////
                     continueIndicatorTicker++;
                     //////////////////////////
@@ -259,11 +261,11 @@ public class TextboxState implements IState {
                 //a-button (if there's another page: set firstLine/secondLine to their next String from the array of lines).
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
                     //IF THERE'S ANOTHER PAGE: increment the currentLine#Index and re-assign firstLine.
-                    if (currentLine1Index+2 < lines.size()) {
+                    if ( (currentLine1Index + 2) < lines.size() ) {
                         currentLine1Index = currentLine1Index + 2;
                         firstLine = lines.get(currentLine1Index);
                         //CHECK IF ANOTHER secondLine exist.
-                        if (currentLine2Index+2 < lines.size()) {
+                        if ( (currentLine2Index + 2) < lines.size() ) {
                             currentLine2Index = currentLine2Index + 2;
                             secondLine = lines.get(currentLine2Index);
                         } else {
@@ -288,6 +290,7 @@ public class TextboxState implements IState {
                         ////////////////////////////////////////////
                     } else {
                         //if reached this line: firstLine's currentLine1Index+2 is too big (no more lines).
+                        firstLine = null;
                         secondLine = null;
 
                         ////////////////////////////////////////////
@@ -414,7 +417,7 @@ public class TextboxState implements IState {
                     }
                 }
                 //SECOND_LINE DOES not EXIST.
-                else if ( (secondLine == null) && (xLine1TypeInFX >= (firstLine.length()*widthLetter)) ) {
+                else if ( xLine1TypeInFX >= ((firstLine.length() + 1) * widthLetter) ) {
                     //NON-blinking continue-indicator (the non-blinking version implies this is the last page).
                     g.drawImage(Assets.pokeballToken,
                             xFinal + widthFinal - (2 * widthLetter),

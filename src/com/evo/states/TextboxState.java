@@ -258,6 +258,8 @@ public class TextboxState implements IState {
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
                     //IF THERE'S ANOTHER PAGE: increment the currentLine#Index and re-assign firstLine.
                     if ( (currentLine1Index + 2) < lines.size() ) {
+                        System.out.println("TextboxState.tick(), switch.WAIT_FOR_INPUT: ArrayList<String> lines has size() == " + lines.size());
+
                         currentLine1Index = currentLine1Index + 2;
                         firstLine = lines.get(currentLine1Index);
                         //CHECK IF ANOTHER secondLine exist.
@@ -303,18 +305,13 @@ public class TextboxState implements IState {
                 }
                 if (widthCurrent > widthInit) {
                     widthCurrent = widthCurrent - (2 * 5);
+                } else {
+                    widthCurrent = 0;   //when width shrink pass its INITIAL DIMENSION, set it to 0.
                 }
                 if (heightCurrent > heightInit) {
                     heightCurrent = heightCurrent - 3;
-                }
-
-                //TODO: change the 2 if-clauses (below) to be corresponding else-clauses to the above if-clauses.
-                //when width and height shrink pass their INITIAL DIMENSIONS, set them to 0.
-                if (widthCurrent < widthInit) {
-                    widthCurrent = 0;
-                }
-                if (heightCurrent < heightInit) {
-                    heightCurrent = 0;
+                } else {
+                    heightCurrent = 0;  //when height shrink pass its INITIAL DIMENSION, set it to 0.
                 }
 
                 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -367,20 +364,20 @@ public class TextboxState implements IState {
 
         switch (currentState) {
             case ENTER:
+                //taken care of by TEXT_AREA and BORDER (outside of this switch-construct).
+                //it's outside so it can be redrawn for all cases.
 
                 break;
             case LINE_IN_ANIMATION:
-                //FIRST_LINE
+                //render: firstLine
                 FontGrabber.renderString(g, firstLine, xFirstLine, yFirstLine, widthLetter, heightLetter);
-                //SECOND_LINE
+                //render: secondLine
                 if (secondLine != null) {
                     FontGrabber.renderString(g, secondLine, xSecondLine, ySecondLine, widthLetter, heightLetter);
                 }
 
-                //type-in effect.
-                //TODO: TESTING WITH BLACK INSTEAD OF BLUE
+                //TYPE-IN EFFECT (rectangles that covers firstLine and secondLine, and reveals them by shrinking)
                 g.setColor(Color.BLUE);
-                //g.setColor(Color.BLACK);
                 g.fillRect(xLine1TypeInFX, yLine1TypeInFX, widthLine1TypeInFX, heightLine1TypeInFX);
                 g.fillRect(xLine2TypeInFX, yLine2TypeInFX, widthLine2TypeInFX, heightLine2TypeInFX);
 
@@ -426,12 +423,17 @@ public class TextboxState implements IState {
 
                 break;
             case PAGE_OUT_ANIMATION:
+                //taken care of by TEXT_AREA and BORDER (outside of this switch-construct).
+                //it's outside so it can be redrawn for all cases.
 
                 break;
             case EXIT:
+                //in State.EXIT, TextboxState.tick() will pop itself off StateManager.stateStack.
+                //which calls TextboxState.exit() (the exit() METHOD is currently empty).
 
                 break;
             default:
+                System.out.println("TextboxState.render(Graphics), switch-construct's default.");
                 break;
         }
     }

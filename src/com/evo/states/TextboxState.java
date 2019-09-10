@@ -212,8 +212,8 @@ public class TextboxState implements IState {
                 break;
             case LINE_IN_ANIMATION:
                 //TODO: implement animationfx of line being "typed-in".
-                int textSpeed = 2; //actual in-game textSpeed.
-                //int textSpeed = 10; //developer-mode textSpeed.
+                //int textSpeed = 2; //actual in-game textSpeed.
+                int textSpeed = 10; //developer-mode textSpeed.
                 //reveal the lines of text by shrinking the covering-rectangle-that's-the-same-color-as-textbox-background.
                 if (xLine1TypeInFX < (xFirstLine + (firstLine.length() * widthLetter)) ) {
                     xLine1TypeInFX += textSpeed;
@@ -377,7 +377,8 @@ public class TextboxState implements IState {
                 }
 
                 //TYPE-IN EFFECT (rectangles that covers firstLine and secondLine, and reveals them by shrinking)
-                g.setColor(Color.BLUE);
+                //g.setColor(Color.BLUE);
+                g.setColor(Color.BLACK);
                 g.fillRect(xLine1TypeInFX, yLine1TypeInFX, widthLine1TypeInFX, heightLine1TypeInFX);
                 g.fillRect(xLine2TypeInFX, yLine2TypeInFX, widthLine2TypeInFX, heightLine2TypeInFX);
 
@@ -447,6 +448,10 @@ public class TextboxState implements IState {
         ///////////////////////////
         currentState = State.ENTER;
         ///////////////////////////
+
+        //@@@@@@@@@@@@
+        lines.clear();
+        //@@@@@@@@@@@@
 
         //RESET textbox-background to its initial dimension.
         xCurrent = xInit;

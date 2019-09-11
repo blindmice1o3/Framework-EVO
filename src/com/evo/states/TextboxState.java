@@ -3,12 +3,10 @@ package com.evo.states;
 import com.evo.Handler;
 import com.evo.gfx.Assets;
 import com.evo.gfx.FontGrabber;
-import com.sun.javafx.css.CssError;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class TextboxState implements IState {
 
@@ -18,30 +16,36 @@ public class TextboxState implements IState {
 
     private State currentState;
 
-    //MESSAGE
+    //MESSAGE //***Lines (firstLine and secondLine)*** //misc
     private String text;
-    private String firstLine;
-    private String secondLine;
-    private String[] textAfterLayout;
+    private int widthLetter, heightLetter; //size of each letter.
+    //EACH ELEMENT IS A LINE-LENGTH-CHUNK OF THE String PASSED IN WHEN enter(Object[]) WAS CALLED.
+    private ArrayList<String> lines;
+
 
     //Frame (and border)
+    //Text Area
     private int xOffset;
     private int xInit, yInit;
     private int xFinal, yFinal;
     private int widthInit, heightInit;
     private int widthFinal, heightFinal;
     private int xCurrent, yCurrent, widthCurrent,heightCurrent;
-
+    //Frame (and border)
     //Text Area
-    private int widthLetter, heightLetter; //size of each letter.
+    private Rectangle textAreaInitialCoordinates;
+    private Rectangle textAreaFinalCoordinates;
+
+
+    //Lines (firstLine and secondLine)
+    private String firstLine;
+    private String secondLine;
+    //Lines - coordinates of line.
     private int xFirstLine, yFirstLine, widthFirstLine, heightFirstLine;
     private int xSecondLine, ySecondLine, widthSecondLine, heightSecondLine;
-    //Text Area - type-in effect
+    //Lines - coordinates of type-in effect rectangle.
     private int xLine1TypeInFX, yLine1TypeInFX, widthLine1TypeInFX, heightLine1TypeInFX;
     private int xLine2TypeInFX, yLine2TypeInFX, widthLine2TypeInFX, heightLine2TypeInFX;
-
-    //EACH ELEMENT IS A LINE-LENGTH-CHUNK OF THE String PASSED IN WHEN enter(Object[]) WAS CALLED.
-    private ArrayList<String> lines;
 
     public TextboxState(Handler handler) {
         lines = new ArrayList<String>();
@@ -53,15 +57,8 @@ public class TextboxState implements IState {
         heightLetter = 10;
         xOffset = 20;
 
-        xInit = (handler.panelWidth/2) - xOffset;
-        yInit = (handler.panelHeight/2) + 20;
-        widthInit = 2 * xOffset;
-        heightInit = xOffset;
-
-        xFinal = 30;
-        yFinal = yInit;
-        widthFinal = handler.panelWidth - (2 * xFinal);
-        heightFinal = 9 * xOffset;
+        initTextAreaInitialCoordinates();
+        initTextAreaFinalCoordinates();
 
         xCurrent = xInit;
         yCurrent = yInit;
@@ -90,6 +87,22 @@ public class TextboxState implements IState {
         widthLine2TypeInFX = widthSecondLine;
         heightLine2TypeInFX = heightSecondLine;
     } // **** end TextboxState(Handler) constructor ****
+    private void initTextAreaInitialCoordinates() {
+        xInit = (handler.panelWidth/2) - xOffset;
+        yInit = (handler.panelHeight/2) + 20;
+        widthInit = 2 * xOffset;
+        heightInit = xOffset;
+
+        textAreaInitialCoordinates = new Rectangle(xInit, yInit, widthInit, heightInit);
+    }
+    private void initTextAreaFinalCoordinates() {
+        xFinal = 30;
+        yFinal = yInit;
+        widthFinal = handler.panelWidth - (2 * xFinal);
+        heightFinal = 9 * xOffset;
+
+        textAreaFinalCoordinates = new Rectangle(xFinal, yFinal, widthFinal, heightFinal);
+    }
 
     private int currentLine1Index = 0;
     private int currentLine2Index = 1;

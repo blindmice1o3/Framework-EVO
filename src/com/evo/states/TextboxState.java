@@ -16,25 +16,17 @@ public class TextboxState implements IState {
 
     private State currentState;
 
-    //MESSAGE //***Lines (firstLine and secondLine)*** //misc
+    // MESSAGE
     private String text;
+    private ArrayList<String> lines;    //each element is a line-length-chunk of text.
+
     private int widthLetter, heightLetter; //size of each letter.
-    //EACH ELEMENT IS A LINE-LENGTH-CHUNK OF THE String PASSED IN WHEN enter(Object[]) WAS CALLED.
-    private ArrayList<String> lines;
-
-
-    //Frame (and border)
-    //Text Area
     private int xOffset;
-    private int xInit, yInit;
-    private int xFinal, yFinal;
-    private int widthInit, heightInit;
-    private int widthFinal, heightFinal;
-    private int xCurrent, yCurrent, widthCurrent,heightCurrent;
-    //Frame (and border)
-    //Text Area
-    private Rectangle textAreaInitialCoordinates;
-    private Rectangle textAreaFinalCoordinates;
+
+    //Text Area (panel and border)
+    private TextArea textArea;
+
+
 
 
     //Lines (firstLine and secondLine)
@@ -57,17 +49,13 @@ public class TextboxState implements IState {
         heightLetter = 10;
         xOffset = 20;
 
-        initTextAreaInitialCoordinates();
-        initTextAreaFinalCoordinates();
+        textArea = new TextArea(xOffset);
 
-        xCurrent = xInit;
-        yCurrent = yInit;
-        widthCurrent = widthInit;
-        heightCurrent = heightInit;
 
-        xFirstLine = xFinal + xOffset;
-        yFirstLine = yFinal + xOffset;
-        widthFirstLine = widthFinal - (2*xOffset) -5; //-5 just to get a specific (tester) text to fit nicely.
+
+        xFirstLine = textArea.getxFinal() + xOffset;
+        yFirstLine = textArea.getyFinal() + xOffset;
+        widthFirstLine = textArea.getWidthFinal() - (2*xOffset) -5; //-5 just to get a specific (tester) text to fit nicely.
         heightFirstLine = heightLetter;
         //BELOW LOGIC is not correct.
         //heightFirstLine = (heightFinal - (2*(xOffset/2)) - 10) / 2;
@@ -87,22 +75,6 @@ public class TextboxState implements IState {
         widthLine2TypeInFX = widthSecondLine;
         heightLine2TypeInFX = heightSecondLine;
     } // **** end TextboxState(Handler) constructor ****
-    private void initTextAreaInitialCoordinates() {
-        xInit = (handler.panelWidth/2) - xOffset;
-        yInit = (handler.panelHeight/2) + 20;
-        widthInit = 2 * xOffset;
-        heightInit = xOffset;
-
-        textAreaInitialCoordinates = new Rectangle(xInit, yInit, widthInit, heightInit);
-    }
-    private void initTextAreaFinalCoordinates() {
-        xFinal = 30;
-        yFinal = yInit;
-        widthFinal = handler.panelWidth - (2 * xFinal);
-        heightFinal = 9 * xOffset;
-
-        textAreaFinalCoordinates = new Rectangle(xFinal, yFinal, widthFinal, heightFinal);
-    }
 
     private int currentLine1Index = 0;
     private int currentLine2Index = 1;
@@ -199,25 +171,27 @@ public class TextboxState implements IState {
             case ENTER:
                 //TODO: implement animationfx of textbox expanding (maybe have a bounce/over-shoot expansion size then small reduction to reach intended size).
                 //textbox-background's EXPAND-IN effect.
-                if (xCurrent > xFinal) {
-                    xCurrent = xCurrent - 5;
+                if (textArea.getxCurrent() > textArea.getxFinal()) {
+                    textArea.setxCurrent(textArea.getxCurrent() - 5);
                 } else {
-                    xCurrent = xFinal;              //check to make sure does NOT exceed MAX DIMENSION.
+                    textArea.setxCurrent(textArea.getxFinal()); //check to make sure does NOT exceed MAX DIMENSION.
                 }
-                if (widthCurrent < widthFinal) {
-                    widthCurrent = widthCurrent + (2 * 5);
+                if (textArea.getWidthCurrent() < textArea.getWidthFinal()) {
+                    textArea.setWidthCurrent(textArea.getWidthCurrent() + (2 * 5));
                 } else {
-                    widthCurrent = widthFinal;      //check to make sure does NOT exceed MAX DIMENSION.
+                    textArea.setWidthCurrent(textArea.getWidthFinal()); //check to make sure does NOT exceed MAX DIMENSION.
                 }
-                if (heightCurrent < heightFinal) {
-                    heightCurrent = heightCurrent + 3;
+                if (textArea.getHeightCurrent() < textArea.getHeightFinal()) {
+                    textArea.setHeightCurrent(textArea.getHeightCurrent() + 3);
                 } else {
-                    heightCurrent = heightFinal;    //check to make sure does NOT exceed MAX DIMENSION.
+                    textArea.setHeightCurrent(textArea.getHeightFinal()); //check to make sure does NOT exceed MAX DIMENSION.
                 }
 
                 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                 //CHANGE TO NEXT TextboxState.State
-                if ( (xCurrent == xFinal) && (widthCurrent == widthFinal) && (heightCurrent == heightFinal) ) {
+                if ( (textArea.getxCurrent() == textArea.getxFinal()) &&
+                        (textArea.getWidthCurrent() == textArea.getWidthFinal()) &&
+                        (textArea.getHeightCurrent() == textArea.getHeightFinal()) ) {
                     changeCurrentState(State.LINE_IN_ANIMATION);
                 }
                 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -313,23 +287,23 @@ public class TextboxState implements IState {
                 break;
             case PAGE_OUT_ANIMATION:
                 //TEXT_AREA SHRINKING EFFECT.
-                if (xCurrent < xInit) {
-                    xCurrent = xCurrent + 5;
+                if (textArea.getxCurrent() < textArea.getxInit()) {
+                    textArea.setxCurrent(textArea.getxCurrent() + 5);
                 }
-                if (widthCurrent > widthInit) {
-                    widthCurrent = widthCurrent - (2 * 5);
+                if (textArea.getWidthCurrent() > textArea.getWidthInit()) {
+                    textArea.setWidthCurrent(textArea.getWidthCurrent() - (2 * 5));
                 } else {
-                    widthCurrent = 0;   //when width shrink pass its INITIAL DIMENSION, set it to 0.
+                    textArea.setWidthCurrent(0); //when width shrink pass its INITIAL DIMENSION, set it to 0.
                 }
-                if (heightCurrent > heightInit) {
-                    heightCurrent = heightCurrent - 3;
+                if (textArea.getHeightCurrent() > textArea.getHeightInit()) {
+                    textArea.setHeightCurrent(textArea.getHeightCurrent() - 3);
                 } else {
-                    heightCurrent = 0;  //when height shrink pass its INITIAL DIMENSION, set it to 0.
+                    textArea.setHeightCurrent(0); //when height shrink pass its INITIAL DIMENSION, set it to 0.
                 }
 
                 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                 //CHANGE TO NEXT TextboxState.State.EXIT
-                if ( (widthCurrent == 0) && (heightCurrent == 0) ) {
+                if ( (textArea.getWidthCurrent() == 0) && (textArea.getHeightCurrent() == 0) ) {
                     changeCurrentState(State.EXIT);
                 }
                 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -370,10 +344,10 @@ public class TextboxState implements IState {
 
         //TEXT_AREA
         g.setColor(Color.BLUE);
-        g.fillRect(xCurrent, yCurrent, widthCurrent, heightCurrent);
+        g.fillRect(textArea.getxCurrent(), textArea.getyCurrent(), textArea.getWidthCurrent(), textArea.getHeightCurrent());
         //BORDER
         g.setColor(Color.YELLOW);
-        g.drawRect(xCurrent, yCurrent, widthCurrent, heightCurrent);
+        g.drawRect(textArea.getxCurrent(), textArea.getyCurrent(), textArea.getWidthCurrent(), textArea.getHeightCurrent());
 
         switch (currentState) {
             case ENTER:
@@ -409,8 +383,8 @@ public class TextboxState implements IState {
                     //blinking on-state
                     if (renderContinueIndicator) {
                         g.drawImage(Assets.pokeballToken,
-                                xFinal + widthFinal - (2 * widthLetter),
-                                yFinal + heightFinal - (2 * heightLetter),
+                                textArea.getxFinal() + textArea.getWidthFinal() - (2 * widthLetter),
+                                textArea.getyFinal() + textArea.getHeightFinal() - (2 * heightLetter),
                                 widthLetter,
                                 heightLetter,
                                 null);
@@ -418,8 +392,8 @@ public class TextboxState implements IState {
                     //blinking off-state
                     else {
                         g.setColor(Color.BLUE);
-                        g.fillRect(xFinal + widthFinal - (2 * widthLetter),
-                                yFinal + heightFinal - (2 * heightLetter),
+                        g.fillRect(textArea.getxFinal() + textArea.getWidthFinal() - (2 * widthLetter),
+                                textArea.getyFinal() + textArea.getHeightFinal() - (2 * heightLetter),
                                 widthLetter,
                                 heightLetter);
                     }
@@ -428,8 +402,8 @@ public class TextboxState implements IState {
                 else if ( xLine1TypeInFX >= (xFirstLine + (firstLine.length() * widthLetter)) ) {
                     //NON-blinking continue-indicator (the non-blinking version implies this is the last page).
                     g.drawImage(Assets.pokeballToken,
-                            xFinal + widthFinal - (2 * widthLetter),
-                            yFinal + heightFinal - (2 * heightLetter),
+                            textArea.getxFinal() + textArea.getWidthFinal() - (2 * widthLetter),
+                            textArea.getyFinal() + textArea.getHeightFinal() - (2 * heightLetter),
                             widthLetter,
                             heightLetter,
                             null);
@@ -467,10 +441,10 @@ public class TextboxState implements IState {
         //@@@@@@@@@@@@
 
         //RESET textbox-background to its initial dimension.
-        xCurrent = xInit;
-        yCurrent = yInit;
-        widthCurrent = widthInit;
-        heightCurrent = heightInit;
+        textArea.setxCurrent(textArea.getxInit());
+        textArea.setyCurrent(textArea.getyInit());
+        textArea.setWidthCurrent(textArea.getWidthInit());
+        textArea.setHeightCurrent(textArea.getHeightInit());
 
         //RESET type-in-fx rectangle (for firstLine) to cover the entire line.
         xLine1TypeInFX = xFirstLine;
@@ -506,5 +480,118 @@ public class TextboxState implements IState {
     public void exit() {
 
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ INNER-CLASSES @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ //
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    class TextArea {
+
+        private Rectangle textAreaInitialCoordinates;
+        private Rectangle textAreaFinalCoordinates;
+        private Rectangle textAreaCurrentCoordinates;
+        private int xInit, yInit, widthInit, heightInit;
+        private int xFinal, yFinal, widthFinal, heightFinal;
+        private int xCurrent, yCurrent, widthCurrent,heightCurrent;
+
+        public TextArea(int xOffset) {
+            initTextAreaInitialCoordinates(xOffset);
+            initTextAreaFinalCoordinates(xOffset);
+            initTextAreaCurrentCoordinates();
+        } // **** end TextArea(int) constructor ****
+
+        private void initTextAreaInitialCoordinates(int xOffset) {
+            xInit = (handler.panelWidth/2) - xOffset;
+            yInit = (handler.panelHeight/2) + 20;
+            widthInit = 2 * xOffset;
+            heightInit = xOffset;
+
+            textAreaInitialCoordinates = new Rectangle(xInit, yInit, widthInit, heightInit);
+        }
+
+        private void initTextAreaFinalCoordinates(int xOffset) {
+            xFinal = 30;
+            yFinal = yInit;
+            widthFinal = handler.panelWidth - (2 * xFinal);
+            heightFinal = 9 * xOffset;
+
+            textAreaFinalCoordinates = new Rectangle(xFinal, yFinal, widthFinal, heightFinal);
+        }
+
+        private void initTextAreaCurrentCoordinates() {
+            xCurrent = xInit;
+            yCurrent = yInit;
+            widthCurrent = widthInit;
+            heightCurrent = heightInit;
+
+            textAreaCurrentCoordinates = new Rectangle(xCurrent, yCurrent, widthCurrent, heightCurrent);
+        }
+
+        // GETTERS AND SETTERS
+
+        public void setxCurrent(int xCurrent) {
+            this.xCurrent = xCurrent;
+        }
+
+        public void setyCurrent(int yCurrent) {
+            this.yCurrent = yCurrent;
+        }
+
+        public void setWidthCurrent(int widthCurrent) {
+            this.widthCurrent = widthCurrent;
+        }
+
+        public void setHeightCurrent(int heightCurrent) {
+            this.heightCurrent = heightCurrent;
+        }
+
+        public int getxInit() {
+            return xInit;
+        }
+
+        public int getyInit() {
+            return yInit;
+        }
+
+        public int getWidthInit() {
+            return widthInit;
+        }
+
+        public int getHeightInit() {
+            return heightInit;
+        }
+
+        public int getxFinal() {
+            return xFinal;
+        }
+
+        public int getyFinal() {
+            return yFinal;
+        }
+
+        public int getWidthFinal() {
+            return widthFinal;
+        }
+
+        public int getHeightFinal() {
+            return heightFinal;
+        }
+
+        public int getxCurrent() {
+            return xCurrent;
+        }
+
+        public int getyCurrent() {
+            return yCurrent;
+        }
+
+        public int getWidthCurrent() {
+            return widthCurrent;
+        }
+
+        public int getHeightCurrent() {
+            return heightCurrent;
+        }
+
+    } // **** end TextArea inner-class ****
 
 }

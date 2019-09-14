@@ -3,44 +3,33 @@ package com.evo.states;
 import com.evo.Handler;
 import com.evo.gfx.Assets;
 import com.evo.gfx.FontGrabber;
-import com.sun.javafx.css.CssError;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class TextboxState implements IState {
 
     public enum State { ENTER, LINE_IN_ANIMATION, WAIT_FOR_INPUT, PAGE_OUT_ANIMATION, EXIT; }
+    public enum LineNumber { ONE, TWO; }
 
-    Handler handler;
+    private Handler handler;
 
     private State currentState;
 
-    //MESSAGE
+    // MESSAGE
     private String text;
-    private String firstLine;
-    private String secondLine;
-    private String[] textAfterLayout;
+    private ArrayList<String> lines;    //each element is a line-length-chunk of text.
 
-    //Frame (and border)
-    private int xOffset;
-    private int xInit, yInit;
-    private int xFinal, yFinal;
-    private int widthInit, heightInit;
-    private int widthFinal, heightFinal;
-    private int xCurrent, yCurrent, widthCurrent,heightCurrent;
-
-    //Text Area
     private int widthLetter, heightLetter; //size of each letter.
-    private int xFirstLine, yFirstLine, widthFirstLine, heightFirstLine;
-    private int xSecondLine, ySecondLine, widthSecondLine, heightSecondLine;
-    //Text Area - type-in effect
-    private int xLine1TypeInFX, yLine1TypeInFX, widthLine1TypeInFX, heightLine1TypeInFX;
-    private int xLine2TypeInFX, yLine2TypeInFX, widthLine2TypeInFX, heightLine2TypeInFX;
+    private int xOffset;
 
-    private ArrayList<String> lines;
+    // TEXT_AREA (panel and border)
+    private TextArea textArea;
+
+    // LINES
+    private Line firstLine;
+    private Line secondLine;
 
     public TextboxState(Handler handler) {
         lines = new ArrayList<String>();
@@ -52,48 +41,16 @@ public class TextboxState implements IState {
         heightLetter = 10;
         xOffset = 20;
 
-        xInit = (handler.panelWidth/2) - xOffset;
-        yInit = (handler.panelHeight/2) + 20;
-        widthInit = 2 * xOffset;
-        heightInit = xOffset;
+        textArea = new TextArea(xOffset);
 
-        xFinal = 30;
-        yFinal = yInit;
-        widthFinal = handler.panelWidth - (2 * xFinal);
-        heightFinal = 9 * xOffset;
-
-        xCurrent = xInit;
-        yCurrent = yInit;
-        widthCurrent = widthInit;
-        heightCurrent = heightInit;
-
-        xFirstLine = xFinal + xOffset;
-        yFirstLine = yFinal + xOffset;
-        widthFirstLine = widthFinal - (2*xOffset) -5; //-5 just to get a specific (tester) text to fit nicely.
-        heightFirstLine = heightLetter;
-        //BELOW LOGIC is not correct.
-        //heightFirstLine = (heightFinal - (2*(xOffset/2)) - 10) / 2;
-
-        xSecondLine = xFirstLine;
-        ySecondLine = yFirstLine + 20; //+20 for space between firstLine and secondLine.
-        widthSecondLine = widthFirstLine;
-        heightSecondLine = heightFirstLine;
-
-        xLine1TypeInFX = xFirstLine;
-        yLine1TypeInFX = yFirstLine;
-        widthLine1TypeInFX = widthFirstLine;
-        heightLine1TypeInFX = heightFirstLine;
-
-        xLine2TypeInFX = xSecondLine;
-        yLine2TypeInFX = ySecondLine;
-        widthLine2TypeInFX = widthSecondLine;
-        heightLine2TypeInFX = heightSecondLine;
+        firstLine = new Line(LineNumber.ONE, xOffset);
+        secondLine = new Line(LineNumber.TWO, xOffset);
     } // **** end TextboxState(Handler) constructor ****
 
     private int currentLine1Index = 0;
     private int currentLine2Index = 1;
     private void initTextLayout() {
-        int numberOfLetterPerLine = widthFirstLine / widthLetter;
+        int numberOfLetterPerLine = firstLine.getWidth() / widthLetter;
         System.out.println("NUMBER OF LETTERS PER LINE: " + numberOfLetterPerLine);
 
         //TODO: if the entire-text-to-be-displayed is less than one line, we'll end up with ZERO numberOfPages!!!
@@ -130,48 +87,16 @@ public class TextboxState implements IState {
         //    System.out.println(line);
         //}
 
-
-        /*
-
-        int numberOfLineToDisplay = (text.length() / numberOfLetterPerLine) + 1; //+1 possible lobed-off.
-        System.out.println("NUMBER OF LINES TO DISPLAY: " + numberOfLineToDisplay);
-
-        ////////////////////////////////////////////////////
-        textAfterLayout = new String[numberOfLineToDisplay];
-        ////////////////////////////////////////////////////
-
-        int indexText = 0;
-        for (int i = 0; i < numberOfLineToDisplay; i++) {
-            if (indexText+numberOfLetterPerLine < text.length()) {
-                textAfterLayout[i] = text.substring(indexText, indexText + numberOfLetterPerLine);
-                indexText = indexText + numberOfLetterPerLine;
-            } else {
-                textAfterLayout[i] = text.substring(indexText);
-            }
-        }
-
-        */
-
-        //initialize firstLine (and possibly secondLine) using currentLine#Index with textAfterLayout (each element in
+        //initialize message (and possibly secondLine) using currentLine#Index with textAfterLayout (each element in
         //this String array is a portion of the entire-text-to-be-displayed that will fit on one line).
-        firstLine = lines.get(currentLine1Index);
+        firstLine.setMessage( lines.get(currentLine1Index) );
         if (currentLine2Index < lines.size()) {
-            secondLine = lines.get(currentLine2Index);
+            secondLine.setMessage( lines.get(currentLine2Index) );
         }
         //secondLine does not exist.
         else {
-            secondLine = null;
+            secondLine.setMessage( "" );
         }
-        /*
-        firstLine = textAfterLayout[currentLine1Index];
-        if (currentLine2Index < textAfterLayout.length) {
-            secondLine = textAfterLayout[currentLine2Index];
-        }
-        //secondLine does not exist.
-        else {
-            secondLine = null;
-        }
-        */
     }
 
     private int continueIndicatorTicker = 0;
@@ -184,31 +109,28 @@ public class TextboxState implements IState {
         switch (currentState) {
             case ENTER:
                 //TODO: implement animationfx of textbox expanding (maybe have a bounce/over-shoot expansion size then small reduction to reach intended size).
-                //TEXT_AREA EXPANDING EFFECT.
-                if (xCurrent > xFinal) {
-                    xCurrent = xCurrent - 5;
+                //textbox-background's EXPAND-IN effect.
+                if (textArea.getxCurrent() > textArea.getxFinal()) {
+                    textArea.setxCurrent(textArea.getxCurrent() - 5);
+                } else {
+                    textArea.setxCurrent(textArea.getxFinal()); //check to make sure does NOT exceed MAX DIMENSION.
                 }
-                if (widthCurrent < widthFinal) {
-                    widthCurrent = widthCurrent + (2 * 5);
+                if (textArea.getWidthCurrent() < textArea.getWidthFinal()) {
+                    textArea.setWidthCurrent(textArea.getWidthCurrent() + (2 * 5));
+                } else {
+                    textArea.setWidthCurrent(textArea.getWidthFinal()); //check to make sure does NOT exceed MAX DIMENSION.
                 }
-                if (heightCurrent < heightFinal) {
-                    heightCurrent = heightCurrent + 3;
-                }
-
-                //CHECK TO MAKE SURE doesn't exceed MAX DIMENSION.
-                if (xCurrent < xFinal) {
-                    xCurrent = xFinal;
-                }
-                if (widthCurrent > widthFinal) {
-                    widthCurrent = widthFinal;
-                }
-                if (heightCurrent > heightFinal) {
-                    heightCurrent = heightFinal;
+                if (textArea.getHeightCurrent() < textArea.getHeightFinal()) {
+                    textArea.setHeightCurrent(textArea.getHeightCurrent() + 3);
+                } else {
+                    textArea.setHeightCurrent(textArea.getHeightFinal()); //check to make sure does NOT exceed MAX DIMENSION.
                 }
 
                 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                 //CHANGE TO NEXT TextboxState.State
-                if ( (xCurrent == xFinal) && (widthCurrent == widthFinal) && (heightCurrent == heightFinal) ) {
+                if ( (textArea.getxCurrent() == textArea.getxFinal()) &&
+                        (textArea.getWidthCurrent() == textArea.getWidthFinal()) &&
+                        (textArea.getHeightCurrent() == textArea.getHeightFinal()) ) {
                     changeCurrentState(State.LINE_IN_ANIMATION);
                 }
                 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -216,70 +138,78 @@ public class TextboxState implements IState {
                 break;
             case LINE_IN_ANIMATION:
                 //TODO: implement animationfx of line being "typed-in".
-                int textSpeed = 2; //actual in-game textSpeed.
-                //int textSpeed = 10; //developer-mode textSpeed.
+                //int textSpeed = 2; //actual in-game textSpeed.
+                int textSpeed = 10; //developer-mode textSpeed.
                 //reveal the lines of text by shrinking the covering-rectangle-that's-the-same-color-as-textbox-background.
-                if (widthLine1TypeInFX > 0) {
-                    xLine1TypeInFX += textSpeed;
-                    widthLine1TypeInFX -= textSpeed;
+                if (firstLine.getxTypeInFX() < (firstLine.getX() + (firstLine.getMessage().length() * widthLetter)) ) {
+                    firstLine.setxTypeInFX( firstLine.getxTypeInFX() + textSpeed );
+                    firstLine.setWidthTypeInFX( firstLine.getWidthTypeInFX() - textSpeed );
                 }
                 //TODO: sometimes there's only one line and we shouldn't wait for the revealing of the second line.
-                if ( (widthLine2TypeInFX > 0) && (widthLine1TypeInFX <= 0) && (secondLine != null) ) {
-                    xLine2TypeInFX += textSpeed;
-                    widthLine2TypeInFX -= textSpeed;
+                //does NOT equals null.
+                else if ( ( !secondLine.getMessage().equals( "" ) ) && (secondLine.getxTypeInFX() <
+                        (secondLine.getX() + (secondLine.getMessage().length() * widthLetter))) ) {
+                    secondLine.setxTypeInFX( secondLine.getxTypeInFX() + textSpeed );
+                    secondLine.setWidthTypeInFX( secondLine.getWidthTypeInFX() - textSpeed );
                 }
 
                 // @@@@@@@@@@@@@@@@@ ACTUALLY... just set currentState to State.WAIT_FOR_INPUT @@@@@@@@@@@@@@@@
-                if ( (widthLine2TypeInFX <= 0) && (widthLine1TypeInFX <= 0) ) {
+                //ending-situation where secondLine doesn't exist.
+                //does equals null.
+                if ( (secondLine.getMessage().equals( "" )) && (firstLine.getxTypeInFX() >=
+                        (firstLine.getxTypeInFX() + (firstLine.getMessage().length() * widthLetter))) ) {
+                    //else if ( (secondLine == null) && (widthTypeInFX <= 0) ) {
                     changeCurrentState(State.WAIT_FOR_INPUT);
                 }
-                //ending-situation where secondLine doesn't exist.
-                else if ( (secondLine == null) && (xLine1TypeInFX >= (firstLine.length()*widthLetter)) ) {
-                //else if ( (secondLine == null) && (widthLine1TypeInFX <= 0) ) {
+                //secondLine exist.
+                else if ( (firstLine.getxTypeInFX() >= (firstLine.getX() + (firstLine.getMessage().length() * widthLetter)))
+                        && (secondLine.getxTypeInFX() >= (secondLine.getX() + (secondLine.getMessage().length() * widthLetter))) ) {
                     changeCurrentState(State.WAIT_FOR_INPUT);
                 }
 
                 break;
             case WAIT_FOR_INPUT:
                 //CHECK IF THERE'S ANOTHER PAGE: so if, continue-indicator should blink on-and-off.
-                if (currentLine1Index+2 < lines.size()) {
+                if ( (currentLine1Index + 2) < lines.size() ) {
                     //////////////////////////
                     continueIndicatorTicker++;
                     //////////////////////////
 
                     //continueIndicatorTickerSpeed will determine when to alternate the on/off effect of what's rendered.
                     if (continueIndicatorTicker >= continueIndicatorTickerSpeed) {
-                        //resets the continueIndicatorTicker when its max is reached.
-                        continueIndicatorTicker = 0;
                         //alternate the continueIndicator's blinking effect.
                         renderContinueIndicator = !renderContinueIndicator;
+                        //resets the continueIndicatorTicker when its max is reached.
+                        continueIndicatorTicker = 0;
                     }
                 }
 
-                //a-button (if there's another page: set firstLine/secondLine to their next String from the array of lines).
+                //a-button (if there's another page: set message/secondLine to their next String from the array of lines).
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
-                    //IF THERE'S ANOTHER PAGE: increment the currentLine#Index and re-assign firstLine.
-                    if (currentLine1Index+2 < lines.size()) {
+                    //IF THERE'S ANOTHER PAGE: increment the currentLine#Index and re-assign message.
+                    if ( (currentLine1Index + 2) < lines.size() ) {
+                        System.out.println("TextboxState.tick(), switch.WAIT_FOR_INPUT: ArrayList<String> lines has size() == " + lines.size());
+
                         currentLine1Index = currentLine1Index + 2;
-                        firstLine = lines.get(currentLine1Index);
+                        firstLine.setMessage( lines.get(currentLine1Index) );
                         //CHECK IF ANOTHER secondLine exist.
-                        if (currentLine2Index+2 < lines.size()) {
+                        if ( (currentLine2Index + 2) < lines.size() ) {
                             currentLine2Index = currentLine2Index + 2;
-                            secondLine = lines.get(currentLine2Index);
+                            secondLine.setMessage( lines.get(currentLine2Index) );
                         } else {
-                            secondLine = null;
+                            secondLine.setMessage( "" );
                         }
 
                         //RESET values related to textbox's type-in effect.
-                        xLine1TypeInFX = xFirstLine;
-                        yLine1TypeInFX = yFirstLine;
-                        widthLine1TypeInFX = widthFirstLine;
-                        heightLine1TypeInFX = heightFirstLine;
+                        firstLine.setxTypeInFX( firstLine.getX() );
+                        firstLine.setyTypeInFX( firstLine.getY() );
+                        firstLine.setWidthTypeInFX( firstLine.getWidth() );
+                        firstLine.setHeightTypeInFX( firstLine.getHeight() );
 
-                        xLine2TypeInFX = xSecondLine;
-                        yLine2TypeInFX = ySecondLine;
-                        widthLine2TypeInFX = widthSecondLine;
-                        heightLine2TypeInFX = heightSecondLine;
+                        secondLine.setxTypeInFX( secondLine.getX() );
+                        secondLine.setyTypeInFX( secondLine.getY() );
+                        secondLine.setWidthTypeInFX( secondLine.getWidth() );
+                        secondLine.setHeightTypeInFX( secondLine.getHeight() );
 
                         renderContinueIndicator = false;
 
@@ -287,8 +217,9 @@ public class TextboxState implements IState {
                         changeCurrentState(State.LINE_IN_ANIMATION);
                         ////////////////////////////////////////////
                     } else {
-                        //if reached this line: firstLine's currentLine1Index+2 is too big (no more lines).
-                        secondLine = null;
+                        //if reached this line: message's currentLine1Index+2 is too big (no more lines).
+                        firstLine.setMessage( "" );
+                        secondLine.setMessage( "" );
 
                         ////////////////////////////////////////////
                         changeCurrentState(State.PAGE_OUT_ANIMATION);
@@ -299,27 +230,23 @@ public class TextboxState implements IState {
                 break;
             case PAGE_OUT_ANIMATION:
                 //TEXT_AREA SHRINKING EFFECT.
-                if (xCurrent < xInit) {
-                    xCurrent = xCurrent + 5;
+                if (textArea.getxCurrent() < textArea.getxInit()) {
+                    textArea.setxCurrent(textArea.getxCurrent() + 5);
                 }
-                if (widthCurrent > widthInit) {
-                    widthCurrent = widthCurrent - (2 * 5);
+                if (textArea.getWidthCurrent() > textArea.getWidthInit()) {
+                    textArea.setWidthCurrent(textArea.getWidthCurrent() - (2 * 5));
+                } else {
+                    textArea.setWidthCurrent(0); //when width shrink pass its INITIAL DIMENSION, set it to 0.
                 }
-                if (heightCurrent > heightInit) {
-                    heightCurrent = heightCurrent - 3;
-                }
-
-                //when width and height shrink pass their INITIAL DIMENSIONS, set them to 0.
-                if (widthCurrent < widthInit) {
-                    widthCurrent = 0;
-                }
-                if (heightCurrent < heightInit) {
-                    heightCurrent = 0;
+                if (textArea.getHeightCurrent() > textArea.getHeightInit()) {
+                    textArea.setHeightCurrent(textArea.getHeightCurrent() - 3);
+                } else {
+                    textArea.setHeightCurrent(0); //when height shrink pass its INITIAL DIMENSION, set it to 0.
                 }
 
                 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                 //CHANGE TO NEXT TextboxState.State.EXIT
-                if ( (widthCurrent == 0) && (heightCurrent == 0) ) {
+                if ( (textArea.getWidthCurrent() == 0) && (textArea.getHeightCurrent() == 0) ) {
                     changeCurrentState(State.EXIT);
                 }
                 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -360,46 +287,49 @@ public class TextboxState implements IState {
 
         //TEXT_AREA
         g.setColor(Color.BLUE);
-        g.fillRect(xCurrent, yCurrent, widthCurrent, heightCurrent);
+        g.fillRect(textArea.getxCurrent(), textArea.getyCurrent(), textArea.getWidthCurrent(), textArea.getHeightCurrent());
         //BORDER
         g.setColor(Color.YELLOW);
-        g.drawRect(xCurrent, yCurrent, widthCurrent, heightCurrent);
+        g.drawRect(textArea.getxCurrent(), textArea.getyCurrent(), textArea.getWidthCurrent(), textArea.getHeightCurrent());
 
         switch (currentState) {
             case ENTER:
+                //taken care of by TEXT_AREA and BORDER (outside of this switch-construct).
+                //it's outside so it can be redrawn for all cases.
 
                 break;
             case LINE_IN_ANIMATION:
-                //FIRST_LINE
-                FontGrabber.renderString(g, firstLine, xFirstLine, yFirstLine, widthLetter, heightLetter);
-                //SECOND_LINE
-                if (secondLine != null) {
-                    FontGrabber.renderString(g, secondLine, xSecondLine, ySecondLine, widthLetter, heightLetter);
+                //render: message
+                FontGrabber.renderString(g, firstLine.getMessage(), firstLine.getX(), firstLine.getY(), widthLetter, heightLetter);
+                //render: secondLine
+                //does NOT equals.
+                if ( !secondLine.getMessage().equals( "" ) ) {
+                    FontGrabber.renderString(g, secondLine.getMessage(), secondLine.getX(), secondLine.getY(), widthLetter, heightLetter);
                 }
 
-                //type-in effect.
-                //TODO: TESTING WITH BLACK INSTEAD OF BLUE
-                g.setColor(Color.BLUE);
-                //g.setColor(Color.BLACK);
-                g.fillRect(xLine1TypeInFX, yLine1TypeInFX, widthLine1TypeInFX, heightLine1TypeInFX);
-                g.fillRect(xLine2TypeInFX, yLine2TypeInFX, widthLine2TypeInFX, heightLine2TypeInFX);
+                //TYPE-IN EFFECT (rectangles that covers message and secondLine, and reveals them by shrinking)
+                //g.setColor(Color.BLUE);
+                g.setColor(Color.BLACK);
+                g.fillRect(firstLine.getxTypeInFX(), firstLine.getyTypeInFX(), firstLine.getWidthTypeInFX(), firstLine.getHeightTypeInFX());
+                g.fillRect(secondLine.getxTypeInFX(), secondLine.getyTypeInFX(), secondLine.getWidthTypeInFX(), secondLine.getHeightTypeInFX());
 
                 break;
             case WAIT_FOR_INPUT:
-                //render: firstLine
-                FontGrabber.renderString(g, firstLine, xFirstLine, yFirstLine, widthLetter, heightLetter);
+                //render: message
+                FontGrabber.renderString(g, firstLine.getMessage(), firstLine.getX(), firstLine.getY(), widthLetter, heightLetter);
 
                 //SECOND_LINE EXIST.
-                if (secondLine != null) {
+                //does NOT equals.
+                if ( !secondLine.getMessage().equals( "" ) ) {
                     //render: secondLine
-                    FontGrabber.renderString(g, secondLine, xSecondLine, ySecondLine, widthLetter, heightLetter);
+                    FontGrabber.renderString(g, secondLine.getMessage(), secondLine.getX(), secondLine.getY(), widthLetter, heightLetter);
 
                     // @@@@@ RENDER BLINKING continue-indicator @@@@@
                     //blinking on-state
                     if (renderContinueIndicator) {
                         g.drawImage(Assets.pokeballToken,
-                                xFinal + widthFinal - (2 * widthLetter),
-                                yFinal + heightFinal - (2 * heightLetter),
+                                textArea.getxFinal() + textArea.getWidthFinal() - (2 * widthLetter),
+                                textArea.getyFinal() + textArea.getHeightFinal() - (2 * heightLetter),
                                 widthLetter,
                                 heightLetter,
                                 null);
@@ -407,18 +337,18 @@ public class TextboxState implements IState {
                     //blinking off-state
                     else {
                         g.setColor(Color.BLUE);
-                        g.fillRect(xFinal + widthFinal - (2 * widthLetter),
-                                yFinal + heightFinal - (2 * heightLetter),
+                        g.fillRect(textArea.getxFinal() + textArea.getWidthFinal() - (2 * widthLetter),
+                                textArea.getyFinal() + textArea.getHeightFinal() - (2 * heightLetter),
                                 widthLetter,
                                 heightLetter);
                     }
                 }
                 //SECOND_LINE DOES not EXIST.
-                else if ( (secondLine == null) && (xLine1TypeInFX >= (firstLine.length()*widthLetter)) ) {
+                else if ( firstLine.getxTypeInFX() >= (firstLine.getX() + (firstLine.getMessage().length() * widthLetter)) ) {
                     //NON-blinking continue-indicator (the non-blinking version implies this is the last page).
                     g.drawImage(Assets.pokeballToken,
-                            xFinal + widthFinal - (2 * widthLetter),
-                            yFinal + heightFinal - (2 * heightLetter),
+                            textArea.getxFinal() + textArea.getWidthFinal() - (2 * widthLetter),
+                            textArea.getyFinal() + textArea.getHeightFinal() - (2 * heightLetter),
                             widthLetter,
                             heightLetter,
                             null);
@@ -426,12 +356,17 @@ public class TextboxState implements IState {
 
                 break;
             case PAGE_OUT_ANIMATION:
+                //taken care of by TEXT_AREA and BORDER (outside of this switch-construct).
+                //it's outside so it can be redrawn for all cases.
 
                 break;
             case EXIT:
+                //in State.EXIT, TextboxState.tick() will pop itself off StateManager.stateStack.
+                //which calls TextboxState.exit() (the exit() METHOD is currently empty).
 
                 break;
             default:
+                System.out.println("TextboxState.render(Graphics), switch-construct's default.");
                 break;
         }
     }
@@ -446,22 +381,26 @@ public class TextboxState implements IState {
         currentState = State.ENTER;
         ///////////////////////////
 
-        //RESET values related to textbox's initial dimension.
-        xCurrent = xInit;
-        yCurrent = yInit;
-        widthCurrent = widthInit;
-        heightCurrent = heightInit;
+        //@@@@@@@@@@@@
+        lines.clear();
+        //@@@@@@@@@@@@
 
-        //RESET values related to textbox's type-in effect.
-        xLine1TypeInFX = xFirstLine;
-        yLine1TypeInFX = yFirstLine;
-        widthLine1TypeInFX = widthFirstLine;
-        heightLine1TypeInFX = heightFirstLine;
+        //RESET textbox-background to its initial dimension.
+        textArea.setxCurrent(textArea.getxInit());
+        textArea.setyCurrent(textArea.getyInit());
+        textArea.setWidthCurrent(textArea.getWidthInit());
+        textArea.setHeightCurrent(textArea.getHeightInit());
 
-        xLine2TypeInFX = xSecondLine;
-        yLine2TypeInFX = ySecondLine;
-        widthLine2TypeInFX = widthSecondLine;
-        heightLine2TypeInFX = heightSecondLine;
+        //RESET type-in-fx rectangle (for message) to cover the entire line.
+        firstLine.setxTypeInFX( firstLine.getX() );
+        firstLine.setyTypeInFX( firstLine.getY() );
+        firstLine.setWidthTypeInFX( firstLine.getWidth() );
+        firstLine.setHeightTypeInFX( firstLine.getHeight() );
+        //RESET type-in-fx rectangle (for secondLine) to cover the entire line.
+        secondLine.setxTypeInFX( secondLine.getX() );
+        secondLine.setyTypeInFX( secondLine.getY() );
+        secondLine.setWidthTypeInFX( secondLine.getWidth() );
+        secondLine.setHeightTypeInFX( secondLine.getHeight() );
 
         //RESET continue-indicator variables.
         renderContinueIndicator = false;
@@ -470,6 +409,7 @@ public class TextboxState implements IState {
         currentLine1Index = 0;
         currentLine2Index = 1;
 
+        //@@@IF String WAS PASSED IN, split into line-length chunks and store those chunks in an ArrayList<String> lines.
         if (args != null) {
             if (args[0] instanceof String) {
                 text = (String)args[0];
@@ -485,5 +425,222 @@ public class TextboxState implements IState {
     public void exit() {
 
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ INNER-CLASSES @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ //
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    class TextArea {
+
+        protected Rectangle panelInitial;
+        protected Rectangle panelFinal;
+        protected Rectangle panelCurrent;
+
+        private int xInit, yInit, widthInit, heightInit;
+        private int xFinal, yFinal, widthFinal, heightFinal;
+        private int xCurrent, yCurrent, widthCurrent,heightCurrent;
+
+        public TextArea(int xOffset) {
+            initPanelInitialCoordinates(xOffset);
+            initPanelFinalCoordinates(xOffset);
+            initPanelCurrentCoordinates();
+        } // **** end TextArea(int) constructor ****
+
+        private void initPanelInitialCoordinates(int xOffset) {
+            xInit = (handler.panelWidth / 2) - xOffset;
+            yInit = (handler.panelHeight / 2) + 20;
+            widthInit = 2 * xOffset;
+            heightInit = xOffset;
+
+            panelInitial = new Rectangle(xInit, yInit, widthInit, heightInit);
+        }
+
+        private void initPanelFinalCoordinates(int xOffset) {
+            xFinal = 30;
+            yFinal = yInit;
+            widthFinal = handler.panelWidth - (2 * xFinal);
+            heightFinal = 9 * xOffset;
+
+            panelFinal = new Rectangle(xFinal, yFinal, widthFinal, heightFinal);
+        }
+
+        private void initPanelCurrentCoordinates() {
+            xCurrent = xInit;
+            yCurrent = yInit;
+            widthCurrent = widthInit;
+            heightCurrent = heightInit;
+
+            panelCurrent = new Rectangle(xCurrent, yCurrent, widthCurrent, heightCurrent);
+        }
+
+        // GETTERS AND SETTERS
+
+        public void setxCurrent(int xCurrent) {
+            this.xCurrent = xCurrent;
+        }
+
+        public void setyCurrent(int yCurrent) {
+            this.yCurrent = yCurrent;
+        }
+
+        public void setWidthCurrent(int widthCurrent) {
+            this.widthCurrent = widthCurrent;
+        }
+
+        public void setHeightCurrent(int heightCurrent) {
+            this.heightCurrent = heightCurrent;
+        }
+
+        public int getxInit() {
+            return xInit;
+        }
+
+        public int getyInit() {
+            return yInit;
+        }
+
+        public int getWidthInit() {
+            return widthInit;
+        }
+
+        public int getHeightInit() {
+            return heightInit;
+        }
+
+        public int getxFinal() {
+            return xFinal;
+        }
+
+        public int getyFinal() {
+            return yFinal;
+        }
+
+        public int getWidthFinal() {
+            return widthFinal;
+        }
+
+        public int getHeightFinal() {
+            return heightFinal;
+        }
+
+        public int getxCurrent() {
+            return xCurrent;
+        }
+
+        public int getyCurrent() {
+            return yCurrent;
+        }
+
+        public int getWidthCurrent() {
+            return widthCurrent;
+        }
+
+        public int getHeightCurrent() {
+            return heightCurrent;
+        }
+
+    } // **** end TextArea inner-class ****
+
+    class Line {
+
+        //message.
+        private String message;
+
+        //coordinates of line.
+        private int x, y, width, height;
+
+        //coordinates of type-in effect rectangle.
+        private int xTypeInFX, yTypeInFX, widthTypeInFX, heightTypeInFX;
+
+        public Line(LineNumber lineNumber, int xOffset) {
+            x = textArea.getxFinal() + xOffset;
+            y = textArea.getyFinal() + xOffset;
+            width = textArea.getWidthFinal() - (2*xOffset) -5; //-5 just to get a specific (tester) text to fit nicely.
+            height = heightLetter;
+
+            if (lineNumber == LineNumber.TWO) {
+                y = y + 20; //+20 for height of message AND space between message and secondLine.
+            }
+
+            xTypeInFX = x;
+            yTypeInFX = y;
+            widthTypeInFX = width;
+            heightTypeInFX = height;
+        } // **** end Line(LineNumber, int) constructor ****
+
+        //GETTERS AND SETTERS
+
+        public int getWidth() {
+            return width;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        public int getX() {
+            return x;
+        }
+
+        public void setX(int x) {
+            this.x = x;
+        }
+
+        public int getY() {
+            return y;
+        }
+
+        public void setY(int y) {
+            this.y = y;
+        }
+
+        public void setWidth(int width) {
+            this.width = width;
+        }
+
+        public int getHeight() {
+            return height;
+        }
+
+        public void setHeight(int height) {
+            this.height = height;
+        }
+
+        public int getxTypeInFX() {
+            return xTypeInFX;
+        }
+
+        public void setxTypeInFX(int xTypeInFX) {
+            this.xTypeInFX = xTypeInFX;
+        }
+
+        public int getyTypeInFX() {
+            return yTypeInFX;
+        }
+
+        public void setyTypeInFX(int yTypeInFX) {
+            this.yTypeInFX = yTypeInFX;
+        }
+
+        public int getWidthTypeInFX() {
+            return widthTypeInFX;
+        }
+
+        public void setWidthTypeInFX(int widthTypeInFX) {
+            this.widthTypeInFX = widthTypeInFX;
+        }
+
+        public int getHeightTypeInFX() {
+            return heightTypeInFX;
+        }
+
+        public void setHeightTypeInFX(int heightTypeInFX) {
+            this.heightTypeInFX = heightTypeInFX;
+        }
+
+    } // **** end Line inner-class ****
 
 }

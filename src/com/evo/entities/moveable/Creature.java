@@ -41,15 +41,20 @@ public abstract class Creature extends Entity {
             int tx = (int)((x + bounds.x + bounds.width + xMove)/ Tile.screenTileWidth);
 
             //check TOP-right and BOTTOM-right corners.
-            //if NO collision, change the Creature's x-coordinate value.
-            if (!collisionWithTile(tx, (int)((y + bounds.y)/Tile.screenTileHeight)) &&
-                    !collisionWithTile(tx, (int)((y + bounds.y + bounds.height)/Tile.screenTileHeight))) {
-                x += xMove;
-            }
-            //there was a COLLISION, Creature's future x-position is inside a tile, re-adjust it to JUST outside tile.
-            else {
-                //convert to pixel-coordinate by multiplying with Tile.screenTileWidth; minus 1 allows y-movement.
-                x = (tx * Tile.screenTileWidth) - bounds.x - bounds.width - 1;
+            //if within tiles (AND no-collision-with-solid), change the Creature's x-coordinate value.
+            if (isWithinTiles(tx, (int)((y + bounds.y)/Tile.screenTileHeight)) &&
+                    isWithinTiles(tx, (int)((y + bounds.y + bounds.height)/Tile.screenTileHeight))) {
+
+                if (!collisionWithTile(tx, (int) ((y + bounds.y) / Tile.screenTileHeight)) &&
+                        !collisionWithTile(tx, (int) ((y + bounds.y + bounds.height) / Tile.screenTileHeight))) {
+                    x += xMove;
+                }
+                //there was a COLLISION, Creature's future x-position is inside a tile, re-adjust it to JUST outside tile.
+                else {
+                    //convert to pixel-coordinate by multiplying with Tile.screenTileWidth; minus 1 allows y-movement.
+                    x = (tx * Tile.screenTileWidth) - bounds.x - bounds.width - 1;
+                }
+
             }
         }
         //moving LEFT (check left corners of Creature):
@@ -58,15 +63,20 @@ public abstract class Creature extends Entity {
             int tx = (int)((x + bounds.x + xMove)/Tile.screenTileWidth);
 
             //check TOP-left and BOTTOM-left corners.
-            //if NO collision, change the Creature's x-coordinate value.
-            if (!collisionWithTile(tx, (int)((y + bounds.y)/Tile.screenTileHeight)) &&
-                    !collisionWithTile(tx, (int)((y + bounds.y + bounds.height)/Tile.screenTileHeight))) {
-                x += xMove;
-            }
-            //there was a COLLISION, Creature's future x-position is inside a tile, re-adjust it to JUST outside tile.
-            else {
-                //convert to pixel-coordinate by multiplying with Tile.screenTileWidth.
-                x = (tx * Tile.screenTileWidth) + Tile.screenTileWidth - bounds.x;
+            //if within tiles (AND no-collision-with-solid), change the Creature's x-coordinate value.
+            if (isWithinTiles(tx, (int)((y + bounds.y)/Tile.screenTileHeight)) &&
+                    isWithinTiles(tx, (int)((y + bounds.y + bounds.height)/Tile.screenTileHeight))) {
+
+                if (!collisionWithTile(tx, (int) ((y + bounds.y) / Tile.screenTileHeight)) &&
+                        !collisionWithTile(tx, (int) ((y + bounds.y + bounds.height) / Tile.screenTileHeight))) {
+                    x += xMove;
+                }
+                //there was a COLLISION, Creature's future x-position is inside a tile, re-adjust it to JUST outside tile.
+                else {
+                    //convert to pixel-coordinate by multiplying with Tile.screenTileWidth.
+                    x = (tx * Tile.screenTileWidth) + Tile.screenTileWidth - bounds.x;
+                }
+
             }
         }
     }
@@ -78,15 +88,20 @@ public abstract class Creature extends Entity {
             int ty = (int)((y + bounds.y + bounds.height + yMove)/Tile.screenTileHeight);
 
             //check LEFT-bottom and RIGHT-bottom corners.
-            //if NO collision, change the Creature's y-coordinate value.
-            if (!collisionWithTile((int)((x + bounds.x)/Tile.screenTileWidth), ty) &&
-                    !collisionWithTile((int)((x + bounds.x + bounds.width)/Tile.screenTileWidth), ty)) {
-                y += yMove;
-            }
-            //there was a COLLISION, Creature's future y-position is inside a tile, re-adjust it to JUST outside tile.
-            else {
-                //convert to pixel-coordinate by multiplying with Tile.screenTileHeight; minus 1 allows x-movement.
-                y = (ty * Tile.screenTileHeight) - bounds.y - bounds.height - 1;
+            //if within tiles (AND no-collision-with-solid), change the Creature's y-coordinate value.
+            if (isWithinTiles((int)((x + bounds.x)/Tile.screenTileWidth), ty) &&
+                    isWithinTiles((int)((x + bounds.x + bounds.width)/Tile.screenTileWidth), ty)) {
+
+                if (!collisionWithTile((int) ((x + bounds.x) / Tile.screenTileWidth), ty) &&
+                        !collisionWithTile((int) ((x + bounds.x + bounds.width) / Tile.screenTileWidth), ty)) {
+                    y += yMove;
+                }
+                //there was a COLLISION, Creature's future y-position is inside a tile, re-adjust it to JUST outside tile.
+                else {
+                    //convert to pixel-coordinate by multiplying with Tile.screenTileHeight; minus 1 allows x-movement.
+                    y = (ty * Tile.screenTileHeight) - bounds.y - bounds.height - 1;
+                }
+
             }
         }
         //moving UP (check top corners of Creature):
@@ -95,15 +110,20 @@ public abstract class Creature extends Entity {
             int ty = (int)((y + bounds.y + yMove)/Tile.screenTileHeight);
 
             //check LEFT-top and RIGHT-top corners.
-            //if NO collision, change the Creature's y-coordinate value.
-            if (!collisionWithTile((int)((x + bounds.x)/Tile.screenTileWidth), ty) &&
-                    !collisionWithTile((int)((x + bounds.x + bounds.width)/Tile.screenTileWidth), ty)) {
-                y += yMove;
-            }
-            //there was a COLLISION, Creature's future y-position is inside a tile, re-adjust it to JUST outside tile.
-            else {
-                //convert to pixel-coordinate by multiplying with Tile.screenTileHeight.
-                y = (ty * Tile.screenTileHeight) + Tile.screenTileHeight - bounds.y;
+            //if within tiles (AND no-collision-with-solid), change the Creature's y-coordinate value.
+            if (isWithinTiles((int)((x + bounds.x)/Tile.screenTileWidth), ty) &&
+                    isWithinTiles((int)((x + bounds.x + bounds.width)/Tile.screenTileWidth), ty)) {
+
+                if (!collisionWithTile((int) ((x + bounds.x) / Tile.screenTileWidth), ty) &&
+                        !collisionWithTile((int) ((x + bounds.x + bounds.width) / Tile.screenTileWidth), ty)) {
+                    y += yMove;
+                }
+                //there was a COLLISION, Creature's future y-position is inside a tile, re-adjust it to JUST outside tile.
+                else {
+                    //convert to pixel-coordinate by multiplying with Tile.screenTileHeight.
+                    y = (ty * Tile.screenTileHeight) + Tile.screenTileHeight - bounds.y;
+                }
+
             }
         }
     }
@@ -112,6 +132,13 @@ public abstract class Creature extends Entity {
         GameStageState gameStageState = (GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE);
 
         return gameStageState.getCurrentGameStage().getTiles()[x][y].isSolid();
+    }
+
+    protected boolean isWithinTiles(int x, int y) {
+        GameStageState gameStageState = (GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE);
+
+        return (x >= 0 && x < gameStageState.getCurrentGameStage().getWidthInNumOfTile() &&
+                y >= 0 && y < gameStageState.getCurrentGameStage().getHeightInNumOfTile());
     }
 
     // GETTERS AND SETTERS

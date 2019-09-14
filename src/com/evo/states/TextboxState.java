@@ -18,8 +18,10 @@ public class TextboxState implements IState {
     private State currentState;
 
     // MESSAGE
-    private String text;
-    private ArrayList<String> lines;    //each element is a line-length-chunk of text.
+    private String textPassedIn;
+    private ArrayList<String> lines;    //each element is a line-length-chunk of textPassedIn.
+    private int currentLine1Index = 0;  //index of lines ArrayList<String>, used for assigning firstLine.message.
+    private int currentLine2Index = 1;  //index of lines ArrayList<String>, used for assigning secondLine.message.
 
     private int widthLetter, heightLetter; //size of each letter.
     private int xOffset;
@@ -47,17 +49,15 @@ public class TextboxState implements IState {
         secondLine = new Line(LineNumber.TWO, xOffset);
     } // **** end TextboxState(Handler) constructor ****
 
-    private int currentLine1Index = 0;
-    private int currentLine2Index = 1;
     private void initTextLayout() {
         int numberOfLetterPerLine = firstLine.getWidth() / widthLetter;
         System.out.println("NUMBER OF LETTERS PER LINE: " + numberOfLetterPerLine);
 
-        //TODO: if the entire-text-to-be-displayed is less than one line, we'll end up with ZERO numberOfPages!!!
-        //if it's at-least one-line worth of text, we'll be okay.
+        //TODO: if the entire-textPassedIn-to-be-displayed is less than one line, we'll end up with ZERO numberOfPages!!!
+        //if it's at-least one-line worth of textPassedIn, we'll be okay.
 
         StringBuilder sb = new StringBuilder();
-        String[] words = text.split(" ");
+        String[] words = textPassedIn.split(" ");
         int currentIndex = 0;
 
 
@@ -71,7 +71,7 @@ public class TextboxState implements IState {
                 sb.append(words[currentIndex]).append(" ");
                 currentIndex++;
             }
-            //store the line-worth of text into the lines ArrayList<String>.
+            //store the line-worth of textPassedIn into the lines ArrayList<String>.
             else {
                 lines.add(sb.toString());
                 sb.delete(0, sb.length());
@@ -88,7 +88,7 @@ public class TextboxState implements IState {
         //}
 
         //initialize message (and possibly secondLine) using currentLine#Index with textAfterLayout (each element in
-        //this String array is a portion of the entire-text-to-be-displayed that will fit on one line).
+        //this String array is a portion of the entire-textPassedIn-to-be-displayed that will fit on one line).
         firstLine.setMessage( lines.get(currentLine1Index) );
         if (currentLine2Index < lines.size()) {
             secondLine.setMessage( lines.get(currentLine2Index) );
@@ -140,7 +140,7 @@ public class TextboxState implements IState {
                 //TODO: implement animationfx of line being "typed-in".
                 //int textSpeed = 2; //actual in-game textSpeed.
                 int textSpeed = 10; //developer-mode textSpeed.
-                //reveal the lines of text by shrinking the covering-rectangle-that's-the-same-color-as-textbox-background.
+                //reveal the lines of textPassedIn by shrinking the covering-rectangle-that's-the-same-color-as-textbox-background.
                 if (firstLine.getxTypeInFX() < (firstLine.getX() + (firstLine.getMessage().length() * widthLetter)) ) {
                     firstLine.setxTypeInFX( firstLine.getxTypeInFX() + textSpeed );
                     firstLine.setWidthTypeInFX( firstLine.getWidthTypeInFX() - textSpeed );
@@ -412,7 +412,7 @@ public class TextboxState implements IState {
         //@@@IF String WAS PASSED IN, split into line-length chunks and store those chunks in an ArrayList<String> lines.
         if (args != null) {
             if (args[0] instanceof String) {
-                text = (String)args[0];
+                textPassedIn = (String)args[0];
                 /////////////////
                 initTextLayout();
                 /////////////////
@@ -554,7 +554,7 @@ public class TextboxState implements IState {
         public Line(LineNumber lineNumber, int xOffset) {
             x = textArea.getxFinal() + xOffset;
             y = textArea.getyFinal() + xOffset;
-            width = textArea.getWidthFinal() - (2*xOffset) -5; //-5 just to get a specific (tester) text to fit nicely.
+            width = textArea.getWidthFinal() - (2*xOffset) -5; //-5 just to get a specific (tester) textPassedIn to fit nicely.
             height = heightLetter;
 
             if (lineNumber == LineNumber.TWO) {

@@ -44,7 +44,7 @@ public abstract class Creature extends Entity {
             //if within tiles (AND no-collision-with-solid), change the Creature's x-coordinate value.
 
             //not moving off the edge of tiles.
-            if (isWithinRightEdgeOfMap(tx)) {
+            if (isWithinRightEdgeOfMap( (int)(x + bounds.x + bounds.width + xMove) )) {
 
                 if (!collisionWithTile(tx, (int) ((y + bounds.y) / Tile.screenTileHeight)) &&
                         !collisionWithTile(tx, (int) ((y + bounds.y + bounds.height) / Tile.screenTileHeight))) {
@@ -57,6 +57,10 @@ public abstract class Creature extends Entity {
                 }
 
             }
+            else {
+                x = (tx * Tile.screenTileWidth) - bounds.x - bounds.width - 1;
+            }
+
         }
         //moving LEFT (check left corners of Creature):
         else if (xMove < 0) {
@@ -67,7 +71,7 @@ public abstract class Creature extends Entity {
             //if within tiles (AND no-collision-with-solid), change the Creature's x-coordinate value.
 
             //not moving off the edge of tiles.
-            if (isWithinLeftEdgeOfMap(tx)) {    //TODO: CHECK LEFT EDGE OF MAP.
+            if (isWithinLeftEdgeOfMap( (int)(x + bounds.x + xMove) )) {    //TODO: CHECK LEFT EDGE OF MAP.
 
                 if (!collisionWithTile(tx, (int) ((y + bounds.y) / Tile.screenTileHeight)) &&
                         !collisionWithTile(tx, (int) ((y + bounds.y + bounds.height) / Tile.screenTileHeight))) {
@@ -79,14 +83,15 @@ public abstract class Creature extends Entity {
                     x = (tx * Tile.screenTileWidth) + Tile.screenTileWidth - bounds.x;  //COLLISION WITH TILE.
                 }
 
-            } else {                            //TODO: STILL NOT RIGHT.
+            }
+            else {                            //TODO: STILL NOT RIGHT.
                 x = 0;
             }
         }
     }
 
     private boolean isWithinRightEdgeOfMap(int xFutureRightCorner) {
-        int widthMapInPixel = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getTiles().length;
+        int widthMapInPixel = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getTiles().length * Tile.screenTileWidth;
 
         //System.out.println("Creature.isWithinRightEdgeOfMap(), widthMapInPixel: " + widthMapInPixel);
 
@@ -98,7 +103,7 @@ public abstract class Creature extends Entity {
     }
 
     private boolean isWithinBottomEdgeOfMap(int yFutureBottomCorner) {
-        int heightMapInPixel = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getTiles()[0].length;
+        int heightMapInPixel = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getTiles()[0].length * Tile.screenTileHeight;
 
         //System.out.println("Creature.isWithinBottomEdgeOfMap(), heightMapInPixel: " + heightMapInPixel);
 
@@ -113,13 +118,13 @@ public abstract class Creature extends Entity {
         //moving DOWN (check bottom corners of Creature):
         if (yMove > 0) {
             //future location (location trying to move into) (BOTTOM side of Creature).
-            int ty = (int)((y + bounds.y + bounds.height + yMove)/Tile.screenTileHeight);
+            int ty = (int)((y + bounds.y + bounds.height + yMove) / Tile.screenTileHeight);
 
             //check LEFT-bottom and RIGHT-bottom corners.
             //if within tiles (AND no-collision-with-solid), change the Creature's y-coordinate value.
 
             //not moving off the edge of tiles.
-            if (isWithinBottomEdgeOfMap(ty)) {
+            if (isWithinBottomEdgeOfMap( (int)(y + bounds.y + bounds.height + yMove) )) {
 
                 if (!collisionWithTile((int) ((x + bounds.x) / Tile.screenTileWidth), ty) &&
                         !collisionWithTile((int) ((x + bounds.x + bounds.width) / Tile.screenTileWidth), ty)) {
@@ -132,17 +137,20 @@ public abstract class Creature extends Entity {
                 }
 
             }
+            else {
+                y = (ty * Tile.screenTileHeight) - bounds.y - bounds.height - 1;
+            }
         }
         //moving UP (check top corners of Creature):
         else if (yMove < 0) {
             //future location (location trying to move into) (TOP side of Creature).
-            int ty = (int)((y + bounds.y + yMove)/Tile.screenTileHeight);
+            int ty = (int)((y + bounds.y + yMove) / Tile.screenTileHeight);
 
             //check LEFT-top and RIGHT-top corners.
             //if within tiles (AND no-collision-with-solid), change the Creature's y-coordinate value.
 
             //not moving off the edge of tiles.
-            if (isWithinTopEdgeOfMap(ty)) {
+            if (isWithinTopEdgeOfMap( (int)(y + bounds.y + yMove) )) {
 
                 if (!collisionWithTile((int) ((x + bounds.x) / Tile.screenTileWidth), ty) &&
                         !collisionWithTile((int) ((x + bounds.x + bounds.width) / Tile.screenTileWidth), ty)) {
@@ -154,6 +162,8 @@ public abstract class Creature extends Entity {
                     y = (ty * Tile.screenTileHeight) + Tile.screenTileHeight - bounds.y;    //COLLISION WITH TILE.
                 }
 
+            } else {
+                y = 0;
             }
         }
     }

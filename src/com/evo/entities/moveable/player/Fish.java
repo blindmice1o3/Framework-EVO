@@ -65,9 +65,9 @@ public class Fish extends Creature {
                 [0];
 */
 
-        bounds.x = 1;
+        bounds.x = 2;
         bounds.y = 1;
-        bounds.width = 30;
+        bounds.width = 28;
         bounds.height = 13;
     } // **** end Fish(Handler, float, float) constructor ****
 

@@ -25,11 +25,9 @@ public class HeadUpDisplay {
         while (it.hasNext()) {
             ComponentHUD componentHUD = it.next();
 
-            if (componentHUD.isTimerStarted()) {
-                ////////////////////
-                componentHUD.tick(timeElapsed);
-                ////////////////////
-            }
+            ////////////////////
+            componentHUD.tick(timeElapsed);
+            ////////////////////
 
             if (componentHUD.isTimerFinished()) {
                 it.remove();
@@ -40,11 +38,9 @@ public class HeadUpDisplay {
     public void render(Graphics g) {
         for (int i = 0; i < timedNumericIndicators.size(); i++) {
             ComponentHUD componentHUD = timedNumericIndicators.get(i);
-            if (componentHUD.isTimerStarted()) {
-                ///////////////////////
-                componentHUD.render(g);
-                ///////////////////////
-            }
+            ///////////////////////
+            componentHUD.render(g);
+            ///////////////////////
         }
 
         //hp and exp indicators.

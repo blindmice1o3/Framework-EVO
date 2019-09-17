@@ -94,7 +94,6 @@ public class SeaJelly extends Creature {
                     ComponentHUD damageHUD = new ComponentHUD(handler, ComponentHUD.ComponentType.DAMAGE, attackDamage, player);
                     GameStage gameStage = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage();
                     gameStage.getHeadUpDisplay().addTimedNumericIndicator(damageHUD);
-                    damageHUD.startRenderingToScreen();
                     ////////////////////////////////////////////////////////
                     player.hurt(attackDamage);
                     player.getFishStateManager().setCurrentActionState(FishStateManager.ActionState.HURT);

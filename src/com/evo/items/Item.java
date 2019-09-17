@@ -94,7 +94,6 @@ public class Item implements Serializable {
             //instantiate a reward, passing it rewardExperiencePoints and on-screen coordinates, add on rewardHealth.
             ComponentHUD hpHUD = new ComponentHUD(handler, ComponentHUD.ComponentType.HP, rewardHealth, player);
             gameStage.getHeadUpDisplay().addTimedNumericIndicator(hpHUD);
-            hpHUD.startRenderingToScreen();
             ////////////////////////////////////////////////////////
             player.setHealth( (player.getHealth() + rewardHealth) );
             //do NOT let eating meat items give player more health points than player's maximum health points.
@@ -106,7 +105,6 @@ public class Item implements Serializable {
             //exp
             ComponentHUD experienceHUD = new ComponentHUD(handler, ComponentHUD.ComponentType.EXP, rewardExperiencePoints, player);
             gameStage.getHeadUpDisplay().addTimedNumericIndicator(experienceHUD);
-            experienceHUD.startRenderingToScreen();
             ////////////////////////////////////////////////////////
             player.setExperiencePoints( (player.getExperiencePoints() + rewardExperiencePoints) );
             ////////////////////////////////////////////////////////

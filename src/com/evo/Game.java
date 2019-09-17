@@ -1,11 +1,9 @@
 package com.evo;
 
-import com.evo.game_stages.GameStage;
 import com.evo.gfx.Assets;
 import com.evo.gfx.GameCamera;
 import com.evo.input.KeyManager;
 import com.evo.serialize_deserialize.SaverAndLoader;
-import com.evo.states.GameStageState;
 import com.evo.states.StateManager;
 
 public class Game implements Runnable {
@@ -13,6 +11,9 @@ public class Game implements Runnable {
     //CONSTANTS
     public static final int WIDTH = 640;
     public static final int HEIGHT = 480;
+
+    //TIMING AND UPDATE_FREQUENCY
+    long timePrevious, timeNow, timeElapsed, timeLeft; // in milliseconds (for Thread.sleep() method)
     private static final int UPDATES_PER_SEC = 60;  // number of game update per second
     private static final long UPDATE_PERIOD_NSEC = 1000000000L / UPDATES_PER_SEC; // timeAllotted (in nanoseconds)
 
@@ -64,26 +65,23 @@ public class Game implements Runnable {
     }
 
     private void gameLoop() {
-        long timeBegin;
-        long timeElapsed;
-        long timeLeft; // in milliseconds (for Thread.sleep() method)
+        timePrevious = System.nanoTime();
 
         int tickCounter = 0;
         int secondCounter = 0;
         while(true) {
-            timeBegin = System.nanoTime();
+            timeNow = System.nanoTime();
+            timeElapsed = timeNow - timePrevious;
+            timePrevious = timeNow;
 
             // !!!!!GAME LOOP DOING WORK!!!!!
             //////////////////////////////////
-            tick();
+            tick(timeElapsed);
             render();
             //////////////////////////////////
 
             // CONSOLE OUTPUT to track number of seconds.
             tickCounter++;
-            //if (tickCounter < UPDATES_PER_SEC) {
-            //    System.out.println("tick: " + tickCounter);
-            //}
             if (tickCounter == UPDATES_PER_SEC) {
                 secondCounter++;
                 System.out.println("Game.gameLoop() - SECONDS: " + secondCounter);
@@ -92,9 +90,7 @@ public class Game implements Runnable {
             }
 
             // DELAY TIMER to provide the necessary delay to meet the target rate.
-            timeElapsed = System.nanoTime() - timeBegin;
             timeLeft = (UPDATE_PERIOD_NSEC - timeElapsed) / 1000000L; // in milliseconds (for Thread.sleep() method)
-
             // SET A MINIMUM.
             if (timeLeft < 10) {
                 timeLeft = 10;
@@ -116,12 +112,12 @@ public class Game implements Runnable {
 
     }
 
-    private void tick() {
+    private void tick(long timeElapsed) {
         //@@@@@@@@@@@@@@@@
         keyManager.tick();
         //@@@@@@@@@@@@@@@@
 
-        stateManager.tick();
+        stateManager.tick(timeElapsed);
     }
 
     private void render() {

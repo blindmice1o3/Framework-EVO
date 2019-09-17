@@ -30,7 +30,7 @@ public class IntroState implements IState {
     }
 
     @Override
-    public void tick() {
+    public void tick(long timeElapsed) {
         getInput();
 
         waveAnimation.tick();

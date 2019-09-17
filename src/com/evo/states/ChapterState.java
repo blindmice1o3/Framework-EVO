@@ -15,7 +15,7 @@ public class ChapterState implements IState {
     }
 
     @Override
-    public void tick() {
+    public void tick(long timeElapsed) {
         getInput();
     }
 

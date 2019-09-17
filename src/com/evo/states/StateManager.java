@@ -48,8 +48,8 @@ public class StateManager implements Serializable {
         //currentState = states.get(State.INTRO);
     }
 
-    public void tick() {
-        getTop().tick();
+    public void tick(long timeElapsed) {
+        getTop().tick(timeElapsed);
     }
 
     public void render(Graphics g) {

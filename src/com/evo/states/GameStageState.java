@@ -17,9 +17,10 @@ public class GameStageState implements IState {
     } // **** end GameStageState(Handler) constructor
 
     @Override
-    public void tick() {
+    public void tick(long timeElapsed) {
         getInput();
 
+        //TODO: use timeElapsed for objects that deals with TIMING!!!
         currentGameStage.tick();
     }
 

@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 public interface IState {
 
-    void tick();
+    void tick(long timeElapsed);
     void getInput();
     void render(Graphics g);
 

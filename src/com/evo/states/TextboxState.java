@@ -103,7 +103,7 @@ public class TextboxState implements IState {
     private int continueIndicatorTickerSpeed = 30;
     private boolean renderContinueIndicator = false;
     @Override
-    public void tick() {
+    public void tick(long elapsedTime) {
         getInput();
 
         switch (currentState) {

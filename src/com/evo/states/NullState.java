@@ -15,7 +15,7 @@ public class NullState implements IState {
     } // **** end NullState(handler) constructor ****
 
     @Override
-    public void tick() {
+    public void tick(long timeElapsed) {
         getInput();
 
     }

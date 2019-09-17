@@ -16,7 +16,7 @@ public class PauseState implements IState {
     } // **** end PauseState(Handler) constructor
 
     @Override
-    public void tick() {
+    public void tick(long timeElapsed) {
         getInput();
 
     }

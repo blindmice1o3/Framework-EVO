@@ -28,7 +28,7 @@ public class MainMenuState implements IState {
     } // **** end MainMenuState(Handler) constructor ****
 
     @Override
-    public void tick() {
+    public void tick(long timeElapsed) {
         getInput();
 
         switch (currentMenuSelection) {

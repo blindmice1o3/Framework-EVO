@@ -20,14 +20,14 @@ public class HeadUpDisplay {
         timedNumericIndicators = new ArrayList<ComponentHUD>();
     } // **** end HeadUpDisplay(Handler) constructor ****
 
-    public void tick() {
+    public void tick(long timeElapsed) {
         Iterator<ComponentHUD> it = timedNumericIndicators.iterator();
         while (it.hasNext()) {
             ComponentHUD componentHUD = it.next();
 
             if (componentHUD.isTimerStarted()) {
                 ////////////////////
-                componentHUD.tick();
+                componentHUD.tick(timeElapsed);
                 ////////////////////
             }
 

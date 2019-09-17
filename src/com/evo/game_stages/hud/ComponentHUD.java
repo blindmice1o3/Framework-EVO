@@ -17,7 +17,7 @@ public class ComponentHUD {
 
     protected boolean timerStarted, timerFinished;
 
-    protected long timeElapsed, timePrevious, timerTarget;
+    protected long timeElapsed, /*timePrevious,*/ timerTarget;
 
     public ComponentHUD(Handler handler, ComponentType componentType, int value, Entity entity) {
         this.handler = handler;
@@ -30,19 +30,25 @@ public class ComponentHUD {
         timerStarted = false;
         timerFinished = false;
 
-        timerTarget = 5000;
         timeElapsed = 0;
-        timePrevious = System.currentTimeMillis();
+        //timerTarget = 5000;
+        timerTarget = 5000000000L;      //TODO: timerTarget has to be in NANOSECOND now!!!!
+        //timeElapsed = 0;
+        //timePrevious = System.currentTimeMillis();
     } // **** end ComponentHUD(Handler, ComponentType, int, Entity) constructor ****
 
-    public void tick() {
+    public void tick(long timeElapsed) {
         if (timerStarted) {
-            long timeNow = System.currentTimeMillis();
+            //long timeNow = System.currentTimeMillis();
 
-            timeElapsed += (timeNow - timePrevious);
-            timePrevious = timeNow;
+            //timeElapsed += (timeNow - timePrevious);
+            //timePrevious = timeNow;
 
-            if (timeElapsed >= timerTarget) {
+            this.timeElapsed += timeElapsed;
+
+            System.out.println("ComponentHUD.tick(long), timeElapsed: " + this.timeElapsed + " | timerTarget: " + timerTarget);
+
+            if (this.timeElapsed >= timerTarget) {
                 timerFinished = true;
             }
         }
@@ -81,7 +87,7 @@ public class ComponentHUD {
     public void startRenderingToScreen() {
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         timerStarted = true;
-        timePrevious = System.currentTimeMillis();
+        //timePrevious = System.currentTimeMillis();
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     }
 

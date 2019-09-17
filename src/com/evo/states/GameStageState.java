@@ -21,7 +21,7 @@ public class GameStageState implements IState {
         getInput();
 
         //TODO: use timeElapsed for objects that deals with TIMING!!!
-        currentGameStage.tick();
+        currentGameStage.tick(timeElapsed);
     }
 
     @Override

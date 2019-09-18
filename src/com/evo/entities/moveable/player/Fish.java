@@ -31,11 +31,9 @@ public class Fish extends Creature {
     private Animation idleHeadAnimation, eatHeadAnimation, biteHeadAnimation, hurtHeadAnimation;
     private Animation currentHeadAnimation;
     private Animation currentBodyAnimation;
-    //private BufferedImage currentHeadImage;
-    //private BufferedImage currentBodyImage;
 
     //ATTACK TIMER
-    private long lastAttackTimer, attackCooldown = 800, attackTimer = attackCooldown;
+    private long attackCooldown = 800000000L, attackTimer = attackCooldown;
 
     public Fish(Handler handler, float x, float y) {
         super(handler, null, x, y,
@@ -74,7 +72,7 @@ public class Fish extends Creature {
     @Override
     public void initAnimations() {
         initHeadAnimations();
-        currentBodyAnimation = new Animation(600,
+        currentBodyAnimation = new Animation(600000000L,
                 Assets.tailOriginal[fishStateManager.getCurrentBodySize().ordinal()]
                         [fishStateManager.getCurrentBodyTexture().ordinal()]
                         [fishStateManager.getCurrentFinPectoral().ordinal()]
@@ -89,7 +87,7 @@ public class Fish extends Creature {
                 [fishStateManager.getCurrentJaws().ordinal()]
                 [FishStateManager.ActionState.EAT.ordinal()]
                 [0];
-        idleHeadAnimation = new Animation(400, idleFrames);
+        idleHeadAnimation = new Animation(400000000L, idleFrames);
 
         //for FishStateManager.ActionState.HURT
         BufferedImage[] hurtFrames = new BufferedImage[1];
@@ -98,7 +96,7 @@ public class Fish extends Creature {
                 [fishStateManager.getCurrentJaws().ordinal()]
                 [FishStateManager.ActionState.HURT.ordinal()]
                 [0];
-        hurtHeadAnimation = new Animation(400, hurtFrames);
+        hurtHeadAnimation = new Animation(400000000L, hurtFrames);
 
         //for FishStateManager.ActionState.EAT
         BufferedImage[] eatFrames = new BufferedImage[3];
@@ -117,7 +115,7 @@ public class Fish extends Creature {
                 [fishStateManager.getCurrentJaws().ordinal()]
                 [FishStateManager.ActionState.BITE.ordinal()]
                 [2];
-        eatHeadAnimation = new Animation(400, eatFrames);
+        eatHeadAnimation = new Animation(400000000L, eatFrames);
 
         //for FishStateManager.ActionState.BITE
         BufferedImage[] biteFrames = new BufferedImage[3];
@@ -136,7 +134,7 @@ public class Fish extends Creature {
                 [fishStateManager.getCurrentJaws().ordinal()]
                 [FishStateManager.ActionState.HURT.ordinal()]
                 [1];
-        biteHeadAnimation = new Animation(400, biteFrames);
+        biteHeadAnimation = new Animation(400000000L, biteFrames);
 
         /////////////////////////////////////////
         currentHeadAnimation = idleHeadAnimation;
@@ -146,7 +144,7 @@ public class Fish extends Creature {
     private int hurtTimer = 0;
     private int hurtTimerTarget = 20;
     @Override
-    public void tick() {
+    public void tick(long timeElapsed) {
         //HEAD ANIMATION
         switch (fishStateManager.getCurrentActionState()) {
             case HURT:
@@ -162,8 +160,7 @@ public class Fish extends Creature {
 
                 break;
             case BITE:
-                currentHeadAnimation = biteHeadAnimation;
-                currentHeadAnimation.tick();
+                currentHeadAnimation.tick(timeElapsed);
 
                 if (currentHeadAnimation.getIndex() == currentHeadAnimation.getFrames().length-1) {
                     //////////////////////////////////////////////////////////////////////////
@@ -173,8 +170,7 @@ public class Fish extends Creature {
 
                 break;
             case EAT:
-                currentHeadAnimation = eatHeadAnimation;
-                currentHeadAnimation.tick();
+                currentHeadAnimation.tick(timeElapsed);
 
                 if (currentHeadAnimation.getIndex() == currentHeadAnimation.getFrames().length-1) {
                     //////////////////////////////////////////////////////////////////////////
@@ -192,7 +188,7 @@ public class Fish extends Creature {
                 System.out.println("Fish.tick(), switch-construct's default.");
         }
         //BODY ANIMATION
-        currentBodyAnimation.tick();
+        currentBodyAnimation.tick(timeElapsed);
 
 /*
         currentHeadImage = Assets.eatFrames[fishStateManager.getCurrentBodySize().ordinal()]
@@ -208,21 +204,21 @@ public class Fish extends Creature {
 */
 
         // ATTACK COOLDOWN
-        tickAttackCooldown();
+        tickAttackCooldown(timeElapsed);
 
         // MOVEMENT
         getInput();
         move();
     }
 
-    private void tickAttackCooldown() {
-        attackTimer += System.currentTimeMillis() - lastAttackTimer;
-        lastAttackTimer = System.currentTimeMillis();
+    private void tickAttackCooldown(long timeElapsed) {
+        attackTimer += timeElapsed;
+        //attackTimer gets reset to 0 in getInput()'s attack-button pressed.
     }
 
     @Override
     public void die() {
-        System.out.println("You lose.");
+        System.out.println("Game over.");
     }
 
     public void getInput() {
@@ -253,19 +249,20 @@ public class Fish extends Creature {
         //x-button (eat).
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SPACE)) {
             //////////////////////////////////////////////////////////////////////////
+            currentHeadAnimation = eatHeadAnimation;
+            currentHeadAnimation.resetIndex();
             fishStateManager.setCurrentActionState(FishStateManager.ActionState.EAT);
-            //currentHeadAnimation = eatHeadAnimation;
             //////////////////////////////////////////////////////////////////////////
         }
         //a-button (bite).
         else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
-            //TODO: call tickAttackCooldown() here instead of tick()???
             if (attackTimer < attackCooldown) {
                 return;
             }
             //////////////////////////////////////////////////////////////////////////
+            currentHeadAnimation = biteHeadAnimation;
+            currentHeadAnimation.resetIndex();
             fishStateManager.setCurrentActionState(FishStateManager.ActionState.BITE);
-            //currentHeadAnimation = biteHeadAnimation;
             //////////////////////////////////////////////////////////////////////////
 
             //cb is "Collision Bounds", which is the collision rectangle of the player.
@@ -321,7 +318,7 @@ public class Fish extends Creature {
 
             //TODO: inefficient, (though unlikely) could be returning to an already-existing Animation object.
             initHeadAnimations();
-            currentBodyAnimation = new Animation(600,
+            currentBodyAnimation = new Animation(600000000L,
                     Assets.tailOriginal[fishStateManager.getCurrentBodySize().ordinal()]
                             [fishStateManager.getCurrentBodyTexture().ordinal()]
                             [fishStateManager.getCurrentFinPectoral().ordinal()]
@@ -339,7 +336,7 @@ public class Fish extends Creature {
 
             //TODO: inefficient, (though unlikely) could be returning to an already-existing Animation object.
             initHeadAnimations();
-            currentBodyAnimation = new Animation(600,
+            currentBodyAnimation = new Animation(600000000L,
                     Assets.tailOriginal[fishStateManager.getCurrentBodySize().ordinal()]
                             [fishStateManager.getCurrentBodyTexture().ordinal()]
                             [fishStateManager.getCurrentFinPectoral().ordinal()]
@@ -357,7 +354,7 @@ public class Fish extends Creature {
 
             //TODO: inefficient, (though unlikely) could be returning to an already-existing Animation object.
             initHeadAnimations();
-            currentBodyAnimation = new Animation(600,
+            currentBodyAnimation = new Animation(600000000L,
                     Assets.tailOriginal[fishStateManager.getCurrentBodySize().ordinal()]
                             [fishStateManager.getCurrentBodyTexture().ordinal()]
                             [fishStateManager.getCurrentFinPectoral().ordinal()]

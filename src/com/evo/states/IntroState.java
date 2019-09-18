@@ -18,7 +18,7 @@ public class IntroState implements IState {
     public IntroState(Handler handler) {
         this.handler = handler;
 
-        waveAnimation = new Animation(120, Assets.waveAnimationArray);
+        waveAnimation = new Animation(120000000L, Assets.waveAnimationArray);
 /*
         bodySizeIndex = 0;
         bodyTextureIndex = 0;
@@ -33,7 +33,7 @@ public class IntroState implements IState {
     public void tick(long timeElapsed) {
         getInput();
 
-        waveAnimation.tick();
+        waveAnimation.tick(timeElapsed);
         /////////////////////
         //fishInstance.tick();
         /////////////////////

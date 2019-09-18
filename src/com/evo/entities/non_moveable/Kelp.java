@@ -23,12 +23,12 @@ public class Kelp extends StaticEntity {
 
     @Override
     public void initAnimations() {
-        kelpAnimation = new Animation(500, Assets.kelpSolid);
+        kelpAnimation = new Animation(500000000L, Assets.kelpSolid);
     }
 
     @Override
-    public void tick() {
-        kelpAnimation.tick();
+    public void tick(long timeElapsed) {
+        kelpAnimation.tick(timeElapsed);
     }
 
     @Override

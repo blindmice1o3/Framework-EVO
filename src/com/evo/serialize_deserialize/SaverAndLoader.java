@@ -86,7 +86,7 @@ public class SaverAndLoader {
             ArrayList<Item> items = (ArrayList<Item>)objectInputStream.readObject();
 
             gameStageState.getCurrentGameStage().getPlayer().setFishStateManager(fishStateManager);
-            gameStageState.getCurrentGameStage().getPlayer().tick();
+            gameStageState.getCurrentGameStage().getPlayer().tick(0);
             gameStageState.getCurrentGameStage().getPlayer().setDirectionFacing(directionFacing);
             gameStageState.getCurrentGameStage().getPlayer().setX(x);
             gameStageState.getCurrentGameStage().getPlayer().setY(y);
@@ -106,8 +106,6 @@ public class SaverAndLoader {
             for (Item i : gameStageState.getCurrentGameStage().getItemManager().getItems()) {
                 if (i.getName().equals("Meat")) {
                     i.setTexture(Assets.meat);
-                    i.setExpirationPreviousTick(System.currentTimeMillis());
-                    //i.setExpirationElapsed(0);
                 }
 
                 i.setHandler(handler);

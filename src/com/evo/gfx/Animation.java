@@ -5,22 +5,24 @@ import java.io.Serializable;
 
 public class Animation implements Serializable {
 
-    private int speed, index;
-    private long lastTime, timer;
+    //TIMING
+    private long timer, speedInNanoSec;
+
+    //FRAMES
     private transient BufferedImage[] frames;
+    private int index;
 
-    public Animation(int speed, BufferedImage[] frames) {
-        this.speed = speed;
+    public Animation(long speedInNanoSec, BufferedImage[] frames) {
+        this.speedInNanoSec = speedInNanoSec;
         this.frames = frames;
+        timer = 0;
         index = 0;
-        lastTime = System.currentTimeMillis();
-    } // **** end Animation(int, BufferedImage[]) constructor ****
+    } // **** end Animation(long, BufferedImage[]) constructor ****
 
-    public void tick() {
-        timer += (System.currentTimeMillis() - lastTime);
-        lastTime = System.currentTimeMillis();
+    public void tick(long timeElapsed) {
+        timer += timeElapsed;
 
-        if (timer > speed) {
+        if (timer > speedInNanoSec) {
             index++;
             timer = 0;
 
@@ -38,12 +40,10 @@ public class Animation implements Serializable {
         index = 0;
     }
 
-    // GETTERS
+    // GETTERS AND SETTERS
 
     public int getIndex() { return index; }
 
     public BufferedImage[] getFrames() { return frames; }
-
-    public long getTimer() { return timer; }
 
 } // **** end Animation class ****

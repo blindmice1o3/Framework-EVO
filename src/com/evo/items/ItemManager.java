@@ -16,11 +16,11 @@ public class ItemManager {
         items = new ArrayList<Item>();
     } // **** end ItemManager(Handler) constructor
 
-    public void tick() {
+    public void tick(long timeElapsed) {
         Iterator<Item> it = items.iterator();
         while (it.hasNext()) {
             Item i = it.next();
-            i.tick();
+            i.tick(timeElapsed);
 
             if ( (i.isPickedUp()) || (i.isExpired()) ) {
                 it.remove();

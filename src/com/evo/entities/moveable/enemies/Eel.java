@@ -54,23 +54,23 @@ public class Eel extends Creature {
         patrolFrames[1] = Assets.eel[1];
         patrolFrames[2] = Assets.eel[2];
         patrolFrames[3] = Assets.eel[3];
-        patrolAnimation = new Animation(500, patrolFrames);
+        patrolAnimation = new Animation(500000000L, patrolFrames);
 
         //!!!RIGHT!!!-TURNING-LEFT
         BufferedImage[] turnFrames = new BufferedImage[1];
         turnFrames[0] = Assets.eel[4];
-        turnAnimation = new Animation(500, turnFrames);
+        turnAnimation = new Animation(500000000L, turnFrames);
 
         //LEFT
         BufferedImage[] attackFrames = new BufferedImage[2];
         attackFrames[0] = Assets.eel[4];
         attackFrames[1] = Assets.eel[5];
-        attackAnimation = new Animation(500, attackFrames);
+        attackAnimation = new Animation(500000000L, attackFrames);
 
         //LEFT
         BufferedImage[] hurtFrames = new BufferedImage[1];
         hurtFrames[0] = Assets.eel[6];
-        hurtAnimation = new Animation(500, hurtFrames);
+        hurtAnimation = new Animation(500000000L, hurtFrames);
     }
 
     @Override
@@ -86,12 +86,12 @@ public class Eel extends Creature {
 
     private int ticker = 0;
     @Override
-    public void tick() {
+    public void tick(long timeElapsed) {
         //ANIMATIONS
-        patrolAnimation.tick();
-        turnAnimation.tick();
-        attackAnimation.tick();
-        hurtAnimation.tick();
+        patrolAnimation.tick(timeElapsed);
+        turnAnimation.tick(timeElapsed);
+        attackAnimation.tick(timeElapsed);
+        hurtAnimation.tick(timeElapsed);
 
         //MOVEMENTS: reset future-change-in-position to 0.
         xMove = 0;

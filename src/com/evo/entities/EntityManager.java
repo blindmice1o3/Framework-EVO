@@ -34,12 +34,14 @@ public class EntityManager {
         addEntity(player);
     } // **** end EntityManager(Handler, Fish) constructor ****
 
-    public void tick() {
+    public void tick(long timeElapsed) {
         Iterator<Entity> it = entities.iterator();
         while (it.hasNext()) {
             Entity e = it.next();
 
-            e.tick();
+            ////////////////////
+            e.tick(timeElapsed);
+            ////////////////////
 
             ////////////////////////
             //check for active.

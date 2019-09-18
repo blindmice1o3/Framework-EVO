@@ -86,7 +86,7 @@ public class SaverAndLoader {
             ArrayList<Item> items = (ArrayList<Item>)objectInputStream.readObject();
 
             gameStageState.getCurrentGameStage().getPlayer().setFishStateManager(fishStateManager);
-            gameStageState.getCurrentGameStage().getPlayer().tick();
+            gameStageState.getCurrentGameStage().getPlayer().tick(0);
             gameStageState.getCurrentGameStage().getPlayer().setDirectionFacing(directionFacing);
             gameStageState.getCurrentGameStage().getPlayer().setX(x);
             gameStageState.getCurrentGameStage().getPlayer().setY(y);

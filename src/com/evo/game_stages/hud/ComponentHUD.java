@@ -36,7 +36,7 @@ public class ComponentHUD {
     public void tick(long timeElapsed) {
         this.timeElapsed += timeElapsed;
 
-        System.out.println("ComponentHUD.tick(long), timeElapsed: " + this.timeElapsed + " | timerTarget: " + timerTarget);
+        //System.out.println("ComponentHUD.tick(long), timeElapsed: " + this.timeElapsed + " | timerTarget: " + timerTarget);
 
         if (this.timeElapsed >= timerTarget) {
             timerFinished = true;
@@ -50,6 +50,7 @@ public class ComponentHUD {
                 g.drawString("+" + Integer.toString(value),
                         (int) (x - handler.getGameCamera().getxOffset()),
                         (int) (y - handler.getGameCamera().getyOffset()));
+
                 break;
             case EXP:
                 g.setColor(Color.WHITE);

@@ -52,18 +52,18 @@ public class SeaJelly extends Creature {
         idleFrames[0] = Assets.seaJelly[0];
         idleFrames[1] = Assets.seaJelly[1];
         idleFrames[2] = Assets.seaJelly[2];
-        idleAnimation = new Animation(500, idleFrames);
+        idleAnimation = new Animation(500000000L, idleFrames);
 
         BufferedImage[] attackFrames = new BufferedImage[4];
         attackFrames[0] = Assets.seaJelly[3];
         attackFrames[1] = Assets.seaJelly[4];
         attackFrames[2] = Assets.seaJelly[5];
         attackFrames[3] = Assets.seaJelly[6];
-        attackAnimation = new Animation(500, attackFrames);
+        attackAnimation = new Animation(500000000L, attackFrames);
 
         BufferedImage[] hurtFrames = new BufferedImage[1];
         hurtFrames[0] = Assets.seaJelly[7];
-        hurtAnimation = new Animation(500, hurtFrames);
+        hurtAnimation = new Animation(500000000L, hurtFrames);
     }
 
     @Override
@@ -113,11 +113,11 @@ public class SeaJelly extends Creature {
 
     private int ticker = 0;
     @Override
-    public void tick() {
+    public void tick(long timeElapsed) {
         //ANIMATIONS
-        idleAnimation.tick();
-        attackAnimation.tick();
-        hurtAnimation.tick();
+        idleAnimation.tick(timeElapsed);
+        attackAnimation.tick(timeElapsed);
+        hurtAnimation.tick(timeElapsed);
 
         //MOVEMENTS: reset future-change-in-position to 0.
         xMove = 0;

@@ -56,7 +56,7 @@ public class GameStage {
 
     public void tick(long timeElapsed) {
         itemManager.tick(timeElapsed);
-        entityManager.tick();
+        entityManager.tick(timeElapsed);
         headUpDisplay.tick(timeElapsed);
 
         handler.getGameCamera().centerOnEntity(entityManager.getPlayer());

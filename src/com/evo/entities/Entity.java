@@ -38,7 +38,7 @@ public abstract class Entity implements Serializable {
     } // **** end Entity(Handler, BufferedImage, float, float, int, int) constructor ****
 
     public abstract void initAnimations();
-    public abstract void tick();
+    public abstract void tick(long timeElapsed);
     public abstract void render(Graphics g);
     public abstract void die();
 

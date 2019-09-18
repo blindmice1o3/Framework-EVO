@@ -31,11 +31,9 @@ public class Fish extends Creature {
     private Animation idleHeadAnimation, eatHeadAnimation, biteHeadAnimation, hurtHeadAnimation;
     private Animation currentHeadAnimation;
     private Animation currentBodyAnimation;
-    //private BufferedImage currentHeadImage;
-    //private BufferedImage currentBodyImage;
 
     //ATTACK TIMER
-    private long lastAttackTimer, attackCooldown = 800, attackTimer = attackCooldown;
+    private long attackCooldown = 800000000L, attackTimer = attackCooldown;
 
     public Fish(Handler handler, float x, float y) {
         super(handler, null, x, y,
@@ -206,21 +204,21 @@ public class Fish extends Creature {
 */
 
         // ATTACK COOLDOWN
-        tickAttackCooldown();
+        tickAttackCooldown(timeElapsed);
 
         // MOVEMENT
         getInput();
         move();
     }
 
-    private void tickAttackCooldown() {
-        attackTimer += System.currentTimeMillis() - lastAttackTimer;
-        lastAttackTimer = System.currentTimeMillis();
+    private void tickAttackCooldown(long timeElapsed) {
+        attackTimer += timeElapsed;
+        //attackTimer gets reset to 0 in getInput()'s attack-button pressed.
     }
 
     @Override
     public void die() {
-        System.out.println("You lose.");
+        System.out.println("Game over.");
     }
 
     public void getInput() {

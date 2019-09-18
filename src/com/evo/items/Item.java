@@ -66,6 +66,7 @@ public class Item implements Serializable {
 
         checkExpiration(timeElapsed);
 
+        //TODO: move this functionality/check to player's getInput() for eating. Create eaten() method for Item class.
         checkEaten();
     }
 

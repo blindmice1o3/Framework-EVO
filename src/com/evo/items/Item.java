@@ -38,7 +38,7 @@ public class Item implements Serializable {
 
     //EXPIRATION
     protected boolean expired;
-    protected long expirationElapsed, expirationLimit, expirationPreviousTick;
+    protected long expirationElapsed, expirationLimit;
 
     public Item(BufferedImage texture, String name, int id) {
         this.texture = texture;
@@ -51,9 +51,9 @@ public class Item implements Serializable {
         rewardExperiencePoints = 10;
 
         expired = false;
-        expirationLimit = 9000; //milliseconds.
+        //expirationLimit = 9000; //milliseconds.
+        expirationLimit = 9000000000L; //nanoseconds.
         expirationElapsed = 0;
-        expirationPreviousTick = System.currentTimeMillis();
 
         //x and y are defaulting to 0 at the moment, they get set/initialize when setPosition() is called.
         bounds = new Rectangle(x, y, ITEMWIDTH, ITEMHEIGHT);
@@ -61,18 +61,16 @@ public class Item implements Serializable {
         items[id] = this;
     } // **** end Item(BufferedImage, String, int) constructor ****
 
-    public void tick() {
+    public void tick(long timeElapsed) {
         //TODO: move the meat instance's x, y coordinate values to produce a floating/bobbing-in-water visual fx.
 
-        checkExpiration();
+        checkExpiration(timeElapsed);
 
         checkEaten();
     }
 
-    private void checkExpiration() {
-        long expirationCurrentTick = System.currentTimeMillis();
-        expirationElapsed += expirationCurrentTick - expirationPreviousTick;
-        expirationPreviousTick = expirationCurrentTick;
+    private void checkExpiration(long timeElapsed) {
+        expirationElapsed += timeElapsed;
 
         //player didn't successfully EAT (intersecting bounds while eat-button pressed) within specified time limit.
         //Item is automatically removed from game.
@@ -217,7 +215,5 @@ public class Item implements Serializable {
     }
 
     public void setExpirationElapsed(long expirationElapsed) { this.expirationElapsed = expirationElapsed; }
-
-    public void setExpirationPreviousTick(long expirationPreviousTick) { this.expirationPreviousTick = expirationPreviousTick; }
 
 } // **** end Item class ****

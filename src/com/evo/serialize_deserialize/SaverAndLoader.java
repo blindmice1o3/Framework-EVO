@@ -106,8 +106,6 @@ public class SaverAndLoader {
             for (Item i : gameStageState.getCurrentGameStage().getItemManager().getItems()) {
                 if (i.getName().equals("Meat")) {
                     i.setTexture(Assets.meat);
-                    i.setExpirationPreviousTick(System.currentTimeMillis());
-                    //i.setExpirationElapsed(0);
                 }
 
                 i.setHandler(handler);

@@ -33,25 +33,31 @@ public class QuestLogState implements IState {
     @Override
     public void render(Graphics g) {
         //BACKGROUND PANEL
+        int xPanel = (handler.panelWidth/2)+25;
+        int yPanel = 25;
         g.setColor(Color.BLUE);
-        g.fillRect( (handler.panelWidth/2)+25, 25, (handler.panelWidth/2)-50, handler.panelHeight-50 );
+        g.fillRect( xPanel, yPanel, (handler.panelWidth/2)-50, handler.panelHeight-50 );
         //BORDER
         g.setColor(Color.YELLOW);
-        g.drawRect( (handler.panelWidth/2)+25, 25, (handler.panelWidth/2)-50, handler.panelHeight-50 );
+        g.drawRect( xPanel, yPanel, (handler.panelWidth/2)-50, handler.panelHeight-50 );
 
         //QUEST NAMES
         g.setColor(Color.BLACK);
-        int y = 25+15;
+        int xText = xPanel+15;
+        int yText = yPanel+15;
         ArrayList<Quest> quests = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer().getQuestManager().getQuests();
         if (quests.size() > 0) {
             for (int i = 0; i < quests.size(); i++) {
-                FontGrabber.renderString(g, quests.get(i).getThingBeingCounted(),
-                        (handler.panelWidth/2)+25+15, y, 10, 10);
-                y += 15;
+                FontGrabber.renderString(g, Integer.toString(quests.get(i).getCurrentCount()) +
+                                " of " + Integer.toString(quests.get(i).getRequiredCount()) +
+                                " " + quests.get(i).getThingBeingCounted(),
+                        xText, yText, 10, 10);
+                yText += 15;        //new line.
+                //xText = xPanel+15;  //carriage return.
             }
         } else {
-            FontGrabber.renderString(g, "currently not on any quest",
-                    (handler.panelWidth/2)+25+15, y, 10, 10);
+            FontGrabber.renderString(g, "not on any quest",
+                    xText, yText, 10, 10);
         }
     }
 

@@ -8,6 +8,8 @@ import com.evo.game_stages.GameStage;
 import com.evo.gfx.Animation;
 import com.evo.gfx.Assets;
 import com.evo.items.Item;
+import com.evo.quests.Quest;
+import com.evo.quests.QuestGiver;
 import com.evo.states.GameStageState;
 import com.evo.states.StateManager;
 import com.evo.tiles.Tile;
@@ -15,7 +17,8 @@ import com.evo.tiles.Tile;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Eel extends Creature {
+public class Eel extends Creature
+        implements QuestGiver {
 
     public enum State { PATROL, TURN, CHASE, ATTACK, HURT; }
     public enum MovementDirection { LEFT, RIGHT; }
@@ -73,15 +76,69 @@ public class Eel extends Creature {
         hurtAnimation = new Animation(500000000L, hurtFrames);
     }
 
+    private boolean questGiven = false;
     @Override
     public void hurt(int amount) {
         super.hurt(amount);
 
         ticker = 0;
         currentState = State.HURT;
+
+        if (!questGiven) {
+            String questMessage = "Ouch, you bit me! Tell you what, if you leave me alone and eat those damn photosynthesizers near the surface of the water column, I'll help you later.";
+            Object[] args = { questMessage };
+            handler.getStateManager().pushIState(StateManager.State.TEXTBOX, args);
+
+            //add quest to player's QuestManager.
+            ((GameStageState) handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().getPlayer().getQuestManager().addQuest(giveQuest());
+            questGiven = true;
+        } else {
+            if ( checkQuestCompletion() ) {
+                if ( ((GameStageState) handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().getPlayer().getQuestManager().findQuest("Kelp") != null ) {
+                    //set active to false.
+                    ((GameStageState) handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().getPlayer().getQuestManager().findQuest("Kelp").setActive(false);
+                }
+                giveReward();
+            } else {
+                String incompleteQuestMessage = "You haven't eaten enough of them dagnabit overgrown phytoplanktons, eat some more kelp before checking back!";
+                Object[] args = { incompleteQuestMessage };
+                handler.getStateManager().pushIState(StateManager.State.TEXTBOX, args);
+            }
+        }
     }
 
     //TODO: checkEntityCollisions(float, float)
+
+    @Override
+    public Quest giveQuest() {
+        Quest quest = new Quest(handler, "Kelp", 3);
+        quest.setActive(true);
+
+        return quest;
+    }
+
+    @Override
+    public boolean checkQuestCompletion() {
+        if ( ((GameStageState) handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().getPlayer().getQuestManager().findQuest("Kelp")
+                != null ) {
+            Quest kelpQuest = ((GameStageState) handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().getPlayer().getQuestManager().findQuest("Kelp");
+
+            if (kelpQuest.getCurrentCount() >= kelpQuest.getRequiredCount()) {
+                return true;
+            }
+        }
+
+        //if here, Quest requirements have not been met.
+        return false;
+    }
+
+    @Override
+    public void giveReward() {
+        //currently just a message to see if it's working, no real reward given.
+        String rewardForQuestCompletion = "You did it! Here's something for your efforts.";
+        Object[] args = { rewardForQuestCompletion };
+        handler.getStateManager().pushIState(StateManager.State.TEXTBOX, args);
+    }
 
 
     private int ticker = 0;

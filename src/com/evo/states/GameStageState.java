@@ -26,8 +26,14 @@ public class GameStageState implements IState {
 
     @Override
     public void getInput() {
+        //@@@@TESTING QuestLogState (KeyEvent.VK_L)@@@@
+        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_L)) {
+            handler.getStateManager().pushIState(StateManager.State.QUEST_LOG, null);
+        }
+        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
         //@@@@TESTING TextboxState (KeyEvent.VK_SLASH)@@@@
-        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SLASH)) {
+        else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SLASH)) {
             /////////////
             StringBuilder text = new StringBuilder(
                     "The sky above the port was the color of television, tuned to a dead channel. -William Gibson");

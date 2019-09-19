@@ -6,6 +6,7 @@ import com.evo.entities.Entity;
 import com.evo.entities.moveable.Creature;
 import com.evo.gfx.Animation;
 import com.evo.gfx.Assets;
+import com.evo.quests.QuestManager;
 import com.evo.states.GameStageState;
 import com.evo.states.StateManager;
 
@@ -17,6 +18,10 @@ import java.util.ArrayList;
 public class Fish extends Creature {
 
     public enum DirectionFacing { LEFT, RIGHT; }
+
+    //QUESTS
+    //TODO: make compatible with SaverAndLoader class (remove the transient keyword).
+    private transient QuestManager questManager;
 
     private FishStateManager fishStateManager;
     private DirectionFacing directionFacing;
@@ -41,6 +46,8 @@ public class Fish extends Creature {
                         + Assets.tailOriginal[0][0][0][0][0].getWidth(),
                 Assets.eatFrames[0][0][0][0][0].getHeight());
         System.out.println("Fish.constructor (width/height): " + width + "/" + height);
+
+        questManager = new QuestManager(handler);
 
         experiencePoints = 0;
         healthMax = DEFAULT_HEALTH;
@@ -494,6 +501,8 @@ public class Fish extends Creature {
     public void setHealthMax(int healthMax) {
         this.healthMax = healthMax;
     }
+
+    public QuestManager getQuestManager() { return questManager; }
 
     /*
     public BufferedImage getCurrentHeadImage() { return currentHeadImage; }

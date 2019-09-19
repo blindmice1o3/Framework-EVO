@@ -70,4 +70,14 @@ public class HeadUpDisplay {
         timedNumericIndicators.add(componentHUD);
     }
 
+    // GETTERS AND SETTERS
+
+    public ArrayList<ComponentHUD> getTimedNumericIndicators() {
+        return timedNumericIndicators;
+    }
+
+    public void setTimedNumericIndicators(ArrayList<ComponentHUD> timedNumericIndicators) {
+        this.timedNumericIndicators = timedNumericIndicators;
+    }
+
 } // **** end HeadUpDisplay class ****

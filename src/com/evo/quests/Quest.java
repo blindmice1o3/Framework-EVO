@@ -3,10 +3,12 @@ package com.evo.quests;
 import com.evo.Handler;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public class Quest {
+public class Quest
+        implements Serializable {
 
-    private Handler handler;
+    private transient Handler handler;
 
     //Status
     private boolean active;
@@ -60,6 +62,10 @@ public class Quest {
 
     public int getRequiredCount() {
         return requiredCount;
+    }
+
+    public void setHandler(Handler handler) {
+        this.handler = handler;
     }
 
 } // **** end Quest class ****

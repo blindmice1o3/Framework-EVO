@@ -6,8 +6,10 @@ import com.evo.entities.moveable.enemies.SeaJelly;
 import com.evo.entities.moveable.player.Fish;
 import com.evo.entities.moveable.player.FishStateManager;
 import com.evo.entities.non_moveable.Kelp;
+import com.evo.game_stages.hud.ComponentHUD;
 import com.evo.gfx.Assets;
 import com.evo.items.Item;
+import com.evo.quests.Quest;
 import com.evo.states.GameStageState;
 import com.evo.states.StateManager;
 
@@ -42,6 +44,9 @@ public class SaverAndLoader {
                 float y = gameStageState.getCurrentGameStage().getPlayer().getY();
                 ArrayList<Entity> entities = gameStageState.getCurrentGameStage().getEntityManager().getEntities();
                 ArrayList<Item> items = gameStageState.getCurrentGameStage().getItemManager().getItems();
+                ArrayList<ComponentHUD> timedNumericIndicators = gameStageState.getCurrentGameStage().getHeadUpDisplay().getTimedNumericIndicators();
+                ArrayList<Quest> quests = gameStageState.getCurrentGameStage().getPlayer().getQuestManager().getQuests();
+
 
                 objectOutputStream.writeObject(fishStateManager);
                 objectOutputStream.writeObject(directionFacing);
@@ -49,6 +54,8 @@ public class SaverAndLoader {
                 objectOutputStream.writeFloat(y);
                 objectOutputStream.writeObject(entities);
                 objectOutputStream.writeObject(items);
+                objectOutputStream.writeObject(timedNumericIndicators);
+                objectOutputStream.writeObject(quests);
                 ////////////////////////////////////////////////////////////////////
 
 
@@ -84,6 +91,9 @@ public class SaverAndLoader {
             float y = objectInputStream.readFloat();
             ArrayList<Entity> entities = (ArrayList<Entity>)objectInputStream.readObject();
             ArrayList<Item> items = (ArrayList<Item>)objectInputStream.readObject();
+            ArrayList<ComponentHUD> timedNumericIndicators = (ArrayList<ComponentHUD>)objectInputStream.readObject();
+            ArrayList<Quest> quests = (ArrayList<Quest>)objectInputStream.readObject();
+
 
             gameStageState.getCurrentGameStage().getPlayer().setFishStateManager(fishStateManager);
             gameStageState.getCurrentGameStage().getPlayer().tick(0);
@@ -92,6 +102,8 @@ public class SaverAndLoader {
             gameStageState.getCurrentGameStage().getPlayer().setY(y);
             gameStageState.getCurrentGameStage().getEntityManager().setEntities(entities);
             gameStageState.getCurrentGameStage().getItemManager().setItems(items);
+            gameStageState.getCurrentGameStage().getHeadUpDisplay().setTimedNumericIndicators(timedNumericIndicators);
+            gameStageState.getCurrentGameStage().getPlayer().getQuestManager().setQuests(quests);
 
             for (Entity e : gameStageState.getCurrentGameStage().getEntityManager().getEntities()) {
                 e.initAnimations();
@@ -100,6 +112,7 @@ public class SaverAndLoader {
 
                 if (e instanceof Fish) {
                     ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().setPlayer((Fish)e);
+                    ((Fish)e).getQuestManager().setHandler(handler);
                 }
             }
 
@@ -111,7 +124,16 @@ public class SaverAndLoader {
                 i.setHandler(handler);
             }
 
-            objectInputStream.close();
+            for (ComponentHUD componentHUD : gameStageState.getCurrentGameStage().getHeadUpDisplay().getTimedNumericIndicators()) {
+                componentHUD.setHandler(handler);
+            }
+
+            for (Quest quest : gameStageState.getCurrentGameStage().getEntityManager().getPlayer().getQuestManager().getQuests()) {
+                quest.setHandler(handler);
+            }
+
+
+                objectInputStream.close();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

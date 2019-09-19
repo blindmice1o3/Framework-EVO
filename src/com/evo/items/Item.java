@@ -13,7 +13,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
-public class Item implements Serializable {
+public class Item
+        implements Serializable {
 
     //HANDLER
     public static Item[] items = new Item[256];

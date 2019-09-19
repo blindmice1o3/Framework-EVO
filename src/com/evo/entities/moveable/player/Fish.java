@@ -21,7 +21,7 @@ public class Fish extends Creature {
 
     //QUESTS
     //TODO: make compatible with SaverAndLoader class (remove the transient keyword).
-    private transient QuestManager questManager;
+    private QuestManager questManager;
 
     private FishStateManager fishStateManager;
     private DirectionFacing directionFacing;

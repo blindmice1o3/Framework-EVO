@@ -9,7 +9,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
-public abstract class Entity implements Serializable {
+public abstract class Entity
+        implements Serializable {
 
     public static final int DEFAULT_HEALTH = 10;
 

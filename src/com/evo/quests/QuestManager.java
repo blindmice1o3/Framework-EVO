@@ -3,13 +3,14 @@ package com.evo.quests;
 import com.evo.Handler;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class QuestManager {
+public class QuestManager
+        implements Serializable {
 
-    private Handler handler;
-
+    private transient Handler handler;
     private ArrayList<Quest> quests;
 
     public QuestManager(Handler handler) {
@@ -52,6 +53,12 @@ public class QuestManager {
 
     public ArrayList<Quest> getQuests() {
         return quests;
+    }
+
+    public void setQuests(ArrayList<Quest> quests) { this.quests = quests; }
+
+    public void setHandler(Handler handler) {
+        this.handler = handler;
     }
 
 } // **** end QuestManager class ****

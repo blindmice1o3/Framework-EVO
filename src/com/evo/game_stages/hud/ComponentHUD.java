@@ -4,12 +4,14 @@ import com.evo.Handler;
 import com.evo.entities.Entity;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public class ComponentHUD {
+public class ComponentHUD
+        implements Serializable {
 
     public enum ComponentType { HP, EXP, DAMAGE; }
 
-    protected Handler handler;
+    protected transient Handler handler;
 
     protected float x, y;
     protected ComponentType currentComponentType;
@@ -96,6 +98,10 @@ public class ComponentHUD {
 
     public void setTimerFinished(boolean timerFinished) {
         this.timerFinished = timerFinished;
+    }
+
+    public void setHandler(Handler handler) {
+        this.handler = handler;
     }
 
 } // **** end ComponentHUD class ****

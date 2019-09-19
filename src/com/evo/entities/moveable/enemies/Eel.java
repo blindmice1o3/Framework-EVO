@@ -94,6 +94,10 @@ public class Eel extends Creature
             questGiven = true;
         } else {
             if ( checkQuestCompletion() ) {
+                if ( ((GameStageState) handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().getPlayer().getQuestManager().findQuest("Kelp") != null ) {
+                    //set active to false.
+                    ((GameStageState) handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().getPlayer().getQuestManager().findQuest("Kelp").setActive(false);
+                }
                 giveReward();
             } else {
                 String incompleteQuestMessage = "You haven't eaten enough of them dagnabit overgrown phytoplanktons, eat some more kelp before checking back!";

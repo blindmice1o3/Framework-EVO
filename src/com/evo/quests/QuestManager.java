@@ -4,6 +4,7 @@ import com.evo.Handler;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class QuestManager {
 
@@ -18,9 +19,13 @@ public class QuestManager {
     } // **** end QuestManager(Handler) constructor ****
 
     public void tick() {
-        for (Quest quest : quests) {
+        Iterator<Quest> it = quests.iterator();
+        while(it.hasNext()) {
+            Quest quest = it.next();
             if (quest.isActive()) {
                 quest.tick();
+            } else {
+                it.remove();
             }
         }
     }
@@ -41,6 +46,12 @@ public class QuestManager {
 
     public void addQuest(Quest quest) {
         quests.add(quest);
+    }
+
+    //GETTERS AND SETTERS
+
+    public ArrayList<Quest> getQuests() {
+        return quests;
     }
 
 } // **** end QuestManager class ****

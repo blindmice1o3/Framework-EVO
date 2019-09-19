@@ -216,6 +216,9 @@ public class Fish extends Creature {
         // MOVEMENT
         getInput();
         move();
+
+        // QUESTS
+        questManager.tick();
     }
 
     private void tickAttackCooldown(long timeElapsed) {

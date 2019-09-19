@@ -13,11 +13,11 @@ public class Quest {
     private int currentCount;
 
     //Quest Requirement
-    private String thingBeingCounted;
+    private String thingBeingCounted; //questName?
     private int requiredCount;
 
     //Quest Reward
-    private String reward = "Quest FINISHED!";
+    private String reward = "Quest FINISHED!"; //currently unused
 
     public Quest(Handler handler, String thingBeingCounted, int requiredCount) {
         this.handler = handler;

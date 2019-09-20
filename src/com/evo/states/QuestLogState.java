@@ -45,7 +45,7 @@ public class QuestLogState implements IState {
         g.setColor(Color.BLACK);
         int xText = xPanel+15;
         int yText = yPanel+15;
-        ArrayList<Quest> quests = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer().getQuestManager().getQuests();
+        ArrayList<Quest> quests = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getQuestManager().getQuests();
         if (quests.size() > 0) {
             for (int i = 0; i < quests.size(); i++) {
                 FontGrabber.renderString(g, Integer.toString(quests.get(i).getCurrentCount()) +

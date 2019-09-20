@@ -2,6 +2,7 @@ package com.evo.states;
 
 import com.evo.Handler;
 import com.evo.game_stages.GameStage;
+import com.evo.quests.QuestManager;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -9,10 +10,12 @@ import java.awt.event.KeyEvent;
 public class GameStageState implements IState {
 
     private Handler handler;
+    private QuestManager questManager;
     private GameStage currentGameStage;
 
     public GameStageState(Handler handler) {
         this.handler = handler;
+        questManager = new QuestManager(handler);
         currentGameStage = new GameStage(handler, "");
     } // **** end GameStageState(Handler) constructor
 
@@ -20,7 +23,10 @@ public class GameStageState implements IState {
     public void tick(long timeElapsed) {
         getInput();
 
-        //TODO: use timeElapsed for objects that deals with TIMING!!!
+        // QUESTS
+        questManager.tick();
+
+        // GAME_STAGES
         currentGameStage.tick(timeElapsed);
     }
 
@@ -80,6 +86,8 @@ public class GameStageState implements IState {
     }
 
     // GETTERS AND SETTERS
+
+    public QuestManager getQuestManager() { return questManager; }
 
     public GameStage getCurrentGameStage() { return currentGameStage; }
 

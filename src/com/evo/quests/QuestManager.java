@@ -3,12 +3,10 @@ package com.evo.quests;
 import com.evo.Handler;
 
 import java.awt.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class QuestManager
-        implements Serializable {
+public class QuestManager {
 
     private transient Handler handler;
     private ArrayList<Quest> quests;

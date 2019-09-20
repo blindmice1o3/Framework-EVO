@@ -89,14 +89,14 @@ public class Eel extends Creature
             Object[] args = { questMessage };
             handler.getStateManager().pushIState(StateManager.State.TEXTBOX, args);
 
-            //add quest to player's QuestManager.
-            ((GameStageState) handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().getPlayer().getQuestManager().addQuest(giveQuest());
+            //add quest to GameStageState.questManager.
+            ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getQuestManager().addQuest(giveQuest());
             questGiven = true;
         } else {
             if ( checkQuestCompletion() ) {
-                if ( ((GameStageState) handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().getPlayer().getQuestManager().findQuest("Kelp") != null ) {
+                if ( ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getQuestManager().findQuest("Kelp") != null ) {
                     //set active to false.
-                    ((GameStageState) handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().getPlayer().getQuestManager().findQuest("Kelp").setActive(false);
+                    ((GameStageState) handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getQuestManager().findQuest("Kelp").setActive(false);
                 }
                 giveReward();
             } else {
@@ -119,9 +119,9 @@ public class Eel extends Creature
 
     @Override
     public boolean checkQuestCompletion() {
-        if ( ((GameStageState) handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().getPlayer().getQuestManager().findQuest("Kelp")
+        if ( ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getQuestManager().findQuest("Kelp")
                 != null ) {
-            Quest kelpQuest = ((GameStageState) handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().getPlayer().getQuestManager().findQuest("Kelp");
+            Quest kelpQuest = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getQuestManager().findQuest("Kelp");
 
             if (kelpQuest.getCurrentCount() >= kelpQuest.getRequiredCount()) {
                 return true;

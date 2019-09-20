@@ -33,17 +33,17 @@ public class Kelp extends StaticEntity {
 
     @Override
     public void die() {
-        GameStage gameStage = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage();
-        gameStage.getItemManager().addItem( Item.meatItem.createNew((int)x, (int)y) );
+        GameStageState gameStageState = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE));
+        gameStageState.getCurrentGameStage().getItemManager().addItem( Item.meatItem.createNew((int)x, (int)y) );
 
         //TODO: new Quest feature.
-        if ( gameStage.getEntityManager().getPlayer().getQuestManager().findQuest("Kelp") != null ) {
-            gameStage.getEntityManager().getPlayer().getQuestManager().findQuest("Kelp").increaseCurrentCount();
+        if ( gameStageState.getQuestManager().findQuest("Kelp") != null ) {
+            gameStageState.getQuestManager().findQuest("Kelp").increaseCurrentCount();
 
             System.out.println("Kelp.die(), kelp quest is active: " +
-                    gameStage.getEntityManager().getPlayer().getQuestManager().findQuest("Kelp").getCurrentCount() +
+                    gameStageState.getQuestManager().findQuest("Kelp").getCurrentCount() +
                     " of " +
-                    gameStage.getEntityManager().getPlayer().getQuestManager().findQuest("Kelp").getRequiredCount());
+                    gameStageState.getQuestManager().findQuest("Kelp").getRequiredCount());
         }
     }
 

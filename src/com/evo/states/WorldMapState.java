@@ -1,6 +1,7 @@
 package com.evo.states;
 
 import com.evo.Handler;
+import com.evo.game_stages.GameStage;
 import com.evo.gfx.OverWorldCursor;
 import com.evo.gfx.Assets;
 
@@ -107,7 +108,14 @@ public class WorldMapState implements IState {
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
                     //TODO: depending on the value of index, connect to corresponding GameStageState's enum-blah-blah.
                     if (index != 0) {
-                        handler.getStateManager().pushIState(StateManager.State.GAME_STAGE, null);
+                        if (index == 1) {
+                            handler.getStateManager().pushIState(StateManager.State.GAME_STAGE, null);
+                        } else if (index == 2) {
+                            handler.getStateManager().pushIState(StateManager.State.GAME_STAGE, null);
+                            ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).setCurrentGameStage(
+                                    new GameStage(handler, "buying_lighter")
+                            );
+                        }
                     }
                     else {
                         //AUTOMATICALLY MOVES to next chapter and pushes IntroState onto the top of the stack.

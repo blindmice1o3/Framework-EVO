@@ -91,4 +91,6 @@ public class GameStageState implements IState {
 
     public GameStage getCurrentGameStage() { return currentGameStage; }
 
+    public void setCurrentGameStage(GameStage currentGameStage) { this.currentGameStage = currentGameStage; }
+
 } // **** end GameStageState class ****

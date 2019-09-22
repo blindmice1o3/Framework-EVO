@@ -99,11 +99,30 @@ public class GameStage {
 
                 break;
             case FROGGER:
+                //BACKGROUND: street (whole panel)
+                g.setColor(Color.BLACK);
+                g.fillRect(0, 0, handler.panelWidth, handler.panelHeight);
+                //BACKGROUND: water (panel's top half)
+                g.setColor(Color.BLUE);
+                g.fillRect(0, 0, handler.panelWidth, handler.panelHeight/2);
+                //BACKGROUND: winning row (panel's very top portion)
+                g.drawImage(Assets.winningRow, 0, 0,
+                        handler.panelWidth, Assets.winningRow.getHeight(),
+                        0, 0, Assets.winningRow.getWidth(), Assets.winningRow.getHeight(),
+                        null);
+                //BACKGROUND: starting row (panel's very bottom portion)
+                g.drawImage(Assets.startingRow, 0, handler.panelHeight-Assets.startingRow.getHeight(),
+                        handler.panelWidth, handler.panelHeight,
+                        0, 0, Assets.startingRow.getWidth(), Assets.startingRow.getHeight(),
+                        null);
+
+                /*
                 for (int y = 0; y < heightInNumOfTile; y++) {
                     for (int x = 0; x < widthInNumOfTile; x++) {
                         tiles[x][y].render(g, (x * Tile.screenTileWidth), (y * Tile.screenTileHeight));
                     }
                 }
+                */
 
                 break;
             default:
@@ -174,6 +193,12 @@ public class GameStage {
         System.out.println("number of tiles for GameStage(handler, FROGGER).heightInNumOfTile: " + heightInNumOfTile);
         tiles = new Tile[widthInNumOfTile][heightInNumOfTile];
 
+        for (int y = 0; y < heightInNumOfTile; y++) {
+            for (int x = 0; x < widthInNumOfTile; x++) {
+                tiles[x][y] = new Tile(null, false);
+            }
+        }
+        /*
         //WINNING ROW
         int widthWinningRow = Assets.winningRow.getWidth() / widthInNumOfTile;
         int heightWinningRow = Assets.winningRow.getHeight() / 2;
@@ -231,6 +256,8 @@ public class GameStage {
                 tiles[x][y] = new Tile(texture, false);
             }
         }
+        */
+
     }
 
     private void loadGameStageEVO() {

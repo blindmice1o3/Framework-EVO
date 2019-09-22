@@ -113,7 +113,7 @@ public class WorldMapState implements IState {
                         } else if (index == 2) {
                             handler.getStateManager().pushIState(StateManager.State.GAME_STAGE, null);
                             ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).setCurrentGameStage(
-                                    new GameStage(handler, "buying_lighter")
+                                    new GameStage(handler, GameStage.Identifier.FROGGER)
                             );
                         }
                     }

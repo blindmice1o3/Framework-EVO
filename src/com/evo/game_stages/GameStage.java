@@ -12,12 +12,16 @@ import com.evo.items.ItemManager;
 import com.evo.tiles.Tile;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class GameStage {
 
+    public enum Identifier { EVO, FROGGER; }
+
     private Handler handler;
+    private Identifier identifier;
 
     // TILES
     private int widthInNumOfTile, heightInNumOfTile; //(in numberOfTile) initialized by loadGameStage(String).
@@ -35,12 +39,14 @@ public class GameStage {
     private HeadUpDisplay headUpDisplay;
 
 
-    public GameStage(Handler handler, String path) {
+    public GameStage(Handler handler, Identifier identifier) {
         this.handler = handler;
+        this.identifier = identifier;
+
         entityManager = new EntityManager(handler, new Fish(handler, xSpawn, ySpawn));
         itemManager = new ItemManager(handler);
 
-        loadGameStage(path);
+        loadGameStage(identifier);
 
         entityManager.getPlayer().setSpeed(5);
 
@@ -63,29 +69,46 @@ public class GameStage {
     }
 
     public void render(Graphics g) {
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /* RENDERING EFFICIENCY (NOT RENDERING the entire tiles/map ANYMORE, JUST THE TILE SHOWING ON SCREEN) */
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //won't go into negative x values. (left end of screen). !!!HAD NEEDED 3X (see Tile.render(Graphics) method)!!!
-        int xStart = (int)Math.max(0, (handler.getGameCamera().getxOffset() / (Tile.screenTileWidth)));
+        //BACKGROUND (TILES)
+        switch (identifier) {
+            case EVO:
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
+                /* RENDERING EFFICIENCY (NOT RENDERING the entire tiles/map ANYMORE, JUST THE TILE SHOWING ON SCREEN) */
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
+                //won't go into negative x values. (left end of screen). !!!HAD NEEDED 3X (see Tile.render(Graphics) method)!!!
+                int xStart = (int)Math.max(0, (handler.getGameCamera().getxOffset() / (Tile.screenTileWidth)));
                 //0;
-        //won't go pass the end of the map/stage. (right end of screen). !!!HAD NEEDED 3X (see Tile.render(Graphics) method)!!!
-        int xEnd = (int)Math.min(widthInNumOfTile, ((handler.getGameCamera().getxOffset() + handler.panelWidth) / (Tile.screenTileWidth)) + 2);
+                //won't go pass the end of the map/stage. (right end of screen). !!!HAD NEEDED 3X (see Tile.render(Graphics) method)!!!
+                int xEnd = (int)Math.min(widthInNumOfTile, ((handler.getGameCamera().getxOffset() + handler.panelWidth) / (Tile.screenTileWidth)) + 2);
                 //widthInNumOfTile;
-        int yStart = (int)Math.max(0, (handler.getGameCamera().getyOffset() / (Tile.screenTileHeight)));
+                int yStart = (int)Math.max(0, (handler.getGameCamera().getyOffset() / (Tile.screenTileHeight)));
                 //0;
-        int yEnd = (int)Math.min(heightInNumOfTile, ((handler.getGameCamera().getyOffset() + handler.panelHeight) / (Tile.screenTileHeight)) + 2);
+                int yEnd = (int)Math.min(heightInNumOfTile, ((handler.getGameCamera().getyOffset() + handler.panelHeight) / (Tile.screenTileHeight)) + 2);
                 //heightInNumOfTile;
 
-        //BACKGROUND/TILES
-        for (int y = yStart; y < yEnd; y++) {
-            for (int x = xStart; x < xEnd; x++) {
-                //using the game camera's xOffset and yOffset
-                ///////////////////////////////////////////////////////////////////////////////
-                tiles[x][y].render( g, (int)((x*Tile.screenTileWidth) - handler.getGameCamera().getxOffset()),
-                        (int)((y*Tile.screenTileHeight) - handler.getGameCamera().getyOffset()) );
-                ///////////////////////////////////////////////////////////////////////////////
-            }
+                //BACKGROUND/TILES
+                for (int y = yStart; y < yEnd; y++) {
+                    for (int x = xStart; x < xEnd; x++) {
+                        //using the game camera's xOffset and yOffset
+                        ///////////////////////////////////////////////////////////////////////////////
+                        tiles[x][y].render( g, (int)((x*Tile.screenTileWidth) - handler.getGameCamera().getxOffset()),
+                                (int)((y*Tile.screenTileHeight) - handler.getGameCamera().getyOffset()) );
+                        ///////////////////////////////////////////////////////////////////////////////
+                    }
+                }
+
+                break;
+            case FROGGER:
+                for (int y = 0; y < heightInNumOfTile; y++) {
+                    for (int x = 0; x < widthInNumOfTile; x++) {
+                        tiles[x][y].render(g, (x * Tile.screenTileWidth), (y * Tile.screenTileHeight));
+                    }
+                }
+
+                break;
+            default:
+                System.out.println("GameStage.render(Graphics), switch construct's default.");
+                break;
         }
 
         //ITEMS
@@ -130,13 +153,13 @@ public class GameStage {
         return false;
     }
 
-    private void loadGameStage(String path) {
-        switch(path) {
-            case "":
-                loadGameStage001();
+    private void loadGameStage(Identifier identifier) {
+        switch(identifier) {
+            case EVO:
+                loadGameStageEVO();
                 break;
-            case "buying_lighter":
-                loadGameStage002();
+            case FROGGER:
+                loadGameStageFROGGER();
                 break;
             default:
                 System.out.println("GameStage.loadGameStage(String), switch-constructor's default.");
@@ -144,103 +167,77 @@ public class GameStage {
         }
     }
 
-    private void loadGameStage002() {
-        widthInNumOfTile = Assets.chapter1GameStage.getWidth() / Tile.TILE_WIDTH;
-        heightInNumOfTile = Assets.chapter1GameStage.getHeight() / Tile.TILE_HEIGHT;
-        System.out.println("number of tiles for GameStage.widthInNumOfTile: " + widthInNumOfTile);
-        System.out.println("number of tiles for GameStage.heightInNumOfTile: " + heightInNumOfTile);
-        //widthInNumOfTile = 192;
-        //heightInNumOfTile = 14;
+    private void loadGameStageFROGGER() {
+        widthInNumOfTile = (handler.panelWidth / Tile.TILE_WIDTH) + 1;
+        heightInNumOfTile = (handler.panelHeight / Tile.TILE_HEIGHT) + 1;
+        System.out.println("number of tiles for GameStage(handler, FROGGER).widthInNumOfTile: " + widthInNumOfTile);
+        System.out.println("number of tiles for GameStage(handler, FROGGER).heightInNumOfTile: " + heightInNumOfTile);
         tiles = new Tile[widthInNumOfTile][heightInNumOfTile];
 
-        ArrayList<BufferedImage> solidTileSearchTargets = new ArrayList<BufferedImage>();
-        solidTileSearchTargets.add(Assets.brickGreen);
-        solidTileSearchTargets.add(Assets.coinGameObject);
-        solidTileSearchTargets.add(Assets.coralPink1);
-        solidTileSearchTargets.add(Assets.coralPink2);
-        solidTileSearchTargets.add(Assets.coralPink3);
-
-
-        //check each pixels in the tile (16x16) within the 192tiles by 14tiles map.
-        for (int y = 0; y < heightInNumOfTile-1; y++) {
+        //WINNING ROW
+        int widthWinningRow = Assets.winningRow.getWidth() / widthInNumOfTile;
+        int heightWinningRow = Assets.winningRow.getHeight() / 2;
+        for (int y = 0; y < 2; y++) {
             for (int x = 0; x < widthInNumOfTile; x++) {
-
-                int xOffset = (x * Tile.TILE_WIDTH);
-                int yOffset = (y * Tile.TILE_HEIGHT)+8;
-                BufferedImage currentTile = Assets.chapter1GameStage.getSubimage(xOffset, yOffset,
-                        Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
-
-
-                //for each tile, check if it's one of the solidTileSearchTargets.
-                for (BufferedImage solidTileTarget : solidTileSearchTargets) {
-
-                    int xx = 0;
-                    int yy = 0;
-
-                    if (solidTileTarget == Assets.brickGreen) {
-                        xx = 0;
-                        yy = 0;
-                    } else {
-                        xx = 9;
-                        yy = 2;
-                    }
-
-                    //if it's the same, we have a SOLID tile.
-                    if (compareTwoSprites(solidTileTarget, currentTile, xx, yy)) {
-                        tiles[x][y] = new Tile(currentTile, true);
-                        break;
-                    }
-
-                    if ((tiles[x][y] == null) && (solidTileTarget == Assets.coralPink1)) {
-                        xx = 8;
-                        yy = 14;
-                        if (compareTwoSprites(solidTileTarget, currentTile, xx, yy)) {
-                            tiles[x][y] = new Tile(currentTile, true);
-                            break;
-                        }
-                    }
-                    if ((tiles[x][y] == null) && (solidTileTarget == Assets.coralPink1)) {
-                        xx = 8;
-                        yy = 15;
-                        if (compareTwoSprites(solidTileTarget, currentTile, xx, yy)) {
-                            tiles[x][y] = new Tile(currentTile, true);
-                            break;
-                        }
-                    }
-
-
-                }
-
-                if (tiles[x][y] == null) {
-                    tiles[x][y] = new Tile(currentTile, false);
-                }
-/*
-                //loading tiles of the middle of the map/stage
-                if ( (x != 0) && (x != widthInNumOfTile-1) && (y != 0) && (y != heightInNumOfTile-1) ) {
-                    //NOT solid tile.
-                    tiles[x][y] = new Tile(Assets.chapter1GameStage.getSubimage((x * Tile.TILE_WIDTH), 8+(y * Tile.TILE_HEIGHT),
-                            Tile.TILE_WIDTH, Tile.TILE_HEIGHT), false);
-                }
-                //loading tiles of the border row/column of the map/stage.
-                //!!!NOT GRABBING THE ORIGINAL Assets.chapter1GameStage background image for these tiles!!!
-                else {
-                    //SOLID tile.
-                    tiles[x][y] = new Tile(Assets.brickGreen, true);
-                }
-*/
+                BufferedImage texture = Assets.winningRow.getSubimage( (x * widthWinningRow), (y * heightWinningRow),
+                        widthWinningRow, heightWinningRow);
+                tiles[x][y] = new Tile(texture, false);
             }
         }
 
-        for (int x = 0; x < widthInNumOfTile; x++) {
-            tiles[x][heightInNumOfTile-1] = new Tile(Assets.brickGreen, true);
+        int numOfWaterAndRoadRows = (heightInNumOfTile - 3); //2 rows for winning row, 1 row for starting row.
+        int numOfWaterRows = 0;
+        int numOfRoadRows = 0;
+        if (numOfWaterAndRoadRows % 2 == 0) {
+            numOfWaterRows = numOfWaterAndRoadRows / 2;
+            numOfRoadRows = numOfWaterRows;
+        } else {
+            numOfWaterRows = numOfWaterAndRoadRows / 2;
+            numOfRoadRows = numOfWaterRows + 1;
+        }
+
+        BufferedImage textureWater = new BufferedImage(widthWinningRow, heightWinningRow, BufferedImage.TYPE_INT_RGB);
+        Graphics g = textureWater.getGraphics();
+        g.setColor(Color.BLUE);
+        g.fillRect(0, 0, textureWater.getWidth(), textureWater.getHeight());
+        //WATER
+        for (int y = 2; y < numOfWaterRows+2; y++) {
+            for (int x = 0; x < widthInNumOfTile; x++) {
+                tiles[x][y] = new Tile(textureWater, false);
+            }
+        }
+        g.dispose();
+
+        BufferedImage textureRoad = new BufferedImage(widthWinningRow, heightWinningRow, BufferedImage.TYPE_INT_RGB);
+        g = textureRoad.getGraphics();
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, textureRoad.getWidth(), textureRoad.getHeight());
+        //ROAD
+        for (int y = numOfWaterRows+2; y < numOfRoadRows+numOfWaterRows+2; y++) {
+            for (int x = 0; x < widthInNumOfTile; x++) {
+                tiles[x][y] = new Tile(textureRoad, false);
+            }
+        }
+        g.dispose();
+
+        BufferedImage texture;
+        //STARTING ROW
+        int widthStartingRow = Assets.startingRow.getWidth() / widthInNumOfTile;
+        int heightStartingRow = Assets.startingRow.getHeight() / 1;
+        for (int y = heightInNumOfTile-1; y < heightInNumOfTile; y++) {
+            for (int x = 0; x < widthInNumOfTile; x++) {
+                texture = Assets.startingRow.getSubimage( (x * widthStartingRow), 0,
+                        widthStartingRow, heightStartingRow);
+                tiles[x][y] = new Tile(texture, false);
+            }
         }
     }
 
-    private void loadGameStage001() {
+    private void loadGameStageEVO() {
         widthInNumOfTile = Assets.chapter1GameStage.getWidth() / Tile.TILE_WIDTH;
         heightInNumOfTile = Assets.chapter1GameStage.getHeight() / Tile.TILE_HEIGHT;
-        System.out.println("number of tiles for GameStage.widthInNumOfTile: " + widthInNumOfTile);
-        System.out.println("number of tiles for GameStage.heightInNumOfTile: " + heightInNumOfTile);
+        System.out.println("number of tiles for GameStage(handler, EVO).widthInNumOfTile: " + widthInNumOfTile);
+        System.out.println("number of tiles for GameStage(handler, EVO).heightInNumOfTile: " + heightInNumOfTile);
         //widthInNumOfTile = 192;
         //heightInNumOfTile = 14;
         tiles = new Tile[widthInNumOfTile][heightInNumOfTile];

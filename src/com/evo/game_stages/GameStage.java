@@ -187,8 +187,10 @@ public class GameStage {
     }
 
     private void loadGameStageFROGGER() {
-        widthInNumOfTile = (handler.panelWidth / Tile.TILE_WIDTH) + 1;
-        heightInNumOfTile = (handler.panelHeight / Tile.TILE_HEIGHT) + 1;
+        //widthInNumOfTile = (handler.panelWidth / Tile.TILE_WIDTH) + 1;
+        //heightInNumOfTile = (handler.panelHeight / Tile.TILE_HEIGHT) + 1;
+        widthInNumOfTile = (handler.panelWidth / Tile.screenTileWidth);
+        heightInNumOfTile = (handler.panelHeight / Tile.screenTileHeight);
         System.out.println("number of tiles for GameStage(handler, FROGGER).widthInNumOfTile: " + widthInNumOfTile);
         System.out.println("number of tiles for GameStage(handler, FROGGER).heightInNumOfTile: " + heightInNumOfTile);
         tiles = new Tile[widthInNumOfTile][heightInNumOfTile];

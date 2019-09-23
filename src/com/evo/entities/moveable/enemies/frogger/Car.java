@@ -11,7 +11,6 @@ public class Car extends Creature {
     public enum MovementDirection { LEFT, RIGHT; }
 
     private MovementDirection currentMovementDirection;
-    private boolean active;
 
     public Car(Handler handler, BufferedImage image, MovementDirection currentMovementDirection,
                float x, float y, int width, int height) {

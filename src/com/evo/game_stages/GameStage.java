@@ -132,6 +132,12 @@ public class GameStage {
 
                 break;
             case FROGGER:
+                if (entityManager.getEntities().size() < 2) {
+                    entityManager.addEntity(new Car(handler, Assets.carPinkLeft, Car.MovementDirection.LEFT,
+                            (widthInNumOfTile-1)*Tile.screenTileWidth, 15+handler.panelHeight-Assets.carPinkLeft.getHeight(),
+                            Tile.screenTileWidth, Tile.screenTileHeight));
+                }
+
                 handler.getGameCamera().centerOnEntity(entityManager.getPlayer());
 
                 break;

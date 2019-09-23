@@ -2,6 +2,10 @@ package com.evo.entities.moveable.enemies.frogger;
 
 import com.evo.Handler;
 import com.evo.entities.moveable.Creature;
+import com.evo.game_stages.GameStage;
+import com.evo.states.GameStageState;
+import com.evo.states.StateManager;
+import com.evo.tiles.Tile;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -29,10 +33,27 @@ public class Car extends Creature {
         xMove = 0;
         yMove = 0;
 
-        if (x > 0) {
-            xMove = -speed;
-        } else {
-            die();
+        switch (currentMovementDirection) {
+            case LEFT:
+                if (x > 0) {
+                    xMove = -speed;
+                } else {
+                    die();
+                }
+
+                break;
+            case RIGHT:
+                GameStage currentGameStage = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage();
+                if ( (x+width+1) < ((currentGameStage.getWidthInNumOfTile()) * Tile.screenTileWidth) ) {
+                    xMove = speed;
+                } else {
+                    die();
+                }
+
+                break;
+            default:
+                System.out.println("Car.tick(), switch construct's default.");
+                break;
         }
 
         move();

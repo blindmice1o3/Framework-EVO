@@ -1,6 +1,7 @@
 package com.evo.game_stages;
 
 import com.evo.Handler;
+import com.evo.entities.Entity;
 import com.evo.entities.EntityManager;
 import com.evo.entities.moveable.enemies.Eel;
 import com.evo.entities.moveable.enemies.SeaJelly;
@@ -96,6 +97,9 @@ public class GameStage {
                 //entityManager.addEntity(new Eel(handler,
                 //        Tile.screenTileWidth, handler.panelHeight-Assets.eel[0].getHeight(),
                 //        Eel.MovementDirection.RIGHT, widthInNumOfTile-2));
+                entityManager.addEntity(new Car(handler, Assets.carWhiteRight, Car.MovementDirection.RIGHT,
+                        0, 15+handler.panelHeight-Assets.carPinkLeft.getHeight()-Tile.screenTileHeight,
+                        Tile.screenTileWidth, Tile.screenTileHeight));
                 entityManager.addEntity(new Car(handler, Assets.carPinkLeft, Car.MovementDirection.LEFT,
                         (widthInNumOfTile-1)*Tile.screenTileWidth, 15+handler.panelHeight-Assets.carPinkLeft.getHeight(),
                         Tile.screenTileWidth, Tile.screenTileHeight));
@@ -121,6 +125,8 @@ public class GameStage {
         }
     }
 
+    int controllerCarColor = 0;
+    int numTypeOfCars = 2;
     public void tick(long timeElapsed) {
         itemManager.tick(timeElapsed);
         entityManager.tick(timeElapsed);
@@ -132,10 +138,53 @@ public class GameStage {
 
                 break;
             case FROGGER:
-                if (entityManager.getEntities().size() < 2) {
-                    entityManager.addEntity(new Car(handler, Assets.carPinkLeft, Car.MovementDirection.LEFT,
-                            (widthInNumOfTile-1)*Tile.screenTileWidth, 15+handler.panelHeight-Assets.carPinkLeft.getHeight(),
-                            Tile.screenTileWidth, Tile.screenTileHeight));
+                if (entityManager.getEntities().size() < 3) {
+                    controllerCarColor = (int)(Math.random()*numTypeOfCars)+1;
+                    System.out.println("controllerCarColor: " + controllerCarColor);
+                    int x = 0;
+                    int y = 0;
+                    int width = 0;
+                    int height = 0;
+
+                    switch (controllerCarColor) {
+                        case 1:
+                            x = 0;
+                            y = 15+handler.panelHeight-Assets.carPinkLeft.getHeight()-Tile.screenTileHeight;
+                            width = Tile.screenTileWidth;
+                            height = Tile.screenTileHeight;
+
+                            //checking for overlap before instantiating new Car.
+                            for (Entity e : entityManager.getEntities()) {
+                                if (e.getCollisionBounds(0, 0).intersects(new Rectangle(x, y, width, height))) {
+                                    return;
+                                }
+                            }
+
+                            //add new right Car instance.
+                            entityManager.addEntity(new Car(handler, Assets.carWhiteRight, Car.MovementDirection.RIGHT,
+                                    x, y, width, height));
+                            break;
+                        case 2:
+                            x = (widthInNumOfTile-1)*Tile.screenTileWidth;
+                            y = 15+handler.panelHeight-Assets.carPinkLeft.getHeight();
+                            width = Tile.screenTileWidth;
+                            height = Tile.screenTileHeight;
+
+                            //checking for overlap before instantiating new Car.
+                            for (Entity e : entityManager.getEntities()) {
+                                if (e.getCollisionBounds(0, 0).intersects(new Rectangle(x, y, width, height))) {
+                                    return;
+                                }
+                            }
+
+                            //add new left Car instance.
+                            entityManager.addEntity(new Car(handler, Assets.carPinkLeft, Car.MovementDirection.LEFT,
+                                    x, y, width, height));
+                            break;
+                        default:
+                            System.out.println("GameStage(Identifier.FROGGER).tick(), switch construct's default.");
+                            break;
+                    }
                 }
 
                 handler.getGameCamera().centerOnEntity(entityManager.getPlayer());

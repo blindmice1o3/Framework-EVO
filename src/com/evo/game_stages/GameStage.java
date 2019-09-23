@@ -23,7 +23,7 @@ public class GameStage {
     private Identifier identifier;
 
     // TILES
-    private int widthInNumOfTile, heightInNumOfTile; //(in numberOfTile) initialized by initTiles(String).
+    private int widthInNumOfTile, heightInNumOfTile; //(in numberOfTile) initialized by initTiles(Identifier).
     private Tile[][] tiles;
     // ENTITIES
     private float xSpawn, ySpawn;
@@ -166,6 +166,13 @@ public class GameStage {
                 //BACKGROUND: whole panel
                 g.drawImage(Assets.backgroundFrogger, 0, 0, handler.panelWidth, handler.panelHeight, null);
 
+                for (int x = 0; x < tiles.length; x++) {
+                    tiles[x][3].render( g, (x*Tile.screenTileWidth), (3*Tile.screenTileHeight));
+
+                    tiles[x][heightInNumOfTile-3].render( g, (x*Tile.screenTileWidth),
+                            ((heightInNumOfTile-3)*Tile.screenTileHeight));
+                }
+
                 break;
             default:
                 System.out.println("GameStage.render(Graphics), switch construct's default.");
@@ -225,7 +232,17 @@ public class GameStage {
 
         for (int y = 0; y < heightInNumOfTile; y++) {
             for (int x = 0; x < widthInNumOfTile; x++) {
-                tiles[x][y] = new Tile(null, false);
+                //TESTING (YES TEXTURE)... attempting to determine which row is associated with which street lane.
+                if ( (y == 3) && (x != 0) && (x != 6) && (x != (widthInNumOfTile-1)) ) {
+                    tiles[x][y] = new Tile(Assets.carPinkLeft, true);
+                }
+                else if ( (y == (heightInNumOfTile-3)) && (x != 0) && (x != 6) && (x != (widthInNumOfTile-1)) ) {
+                    tiles[x][y] = new Tile(Assets.logSmall, true);
+                }
+                //ALL TILES WALKABLE (NO TEXTURE).
+                else {
+                    tiles[x][y] = new Tile(null, false);
+                }
             }
         }
     }

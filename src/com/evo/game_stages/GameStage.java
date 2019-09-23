@@ -4,6 +4,7 @@ import com.evo.Handler;
 import com.evo.entities.EntityManager;
 import com.evo.entities.moveable.enemies.Eel;
 import com.evo.entities.moveable.enemies.SeaJelly;
+import com.evo.entities.moveable.enemies.frogger.Car;
 import com.evo.entities.moveable.player.Fish;
 import com.evo.entities.non_moveable.Kelp;
 import com.evo.game_stages.hud.HeadUpDisplay;
@@ -92,9 +93,12 @@ public class GameStage {
 
                 break;
             case FROGGER:
-                entityManager.addEntity(new Eel(handler,
-                        Tile.screenTileWidth, handler.panelHeight-Assets.eel[0].getHeight(),
-                        Eel.MovementDirection.RIGHT, widthInNumOfTile-2));
+                //entityManager.addEntity(new Eel(handler,
+                //        Tile.screenTileWidth, handler.panelHeight-Assets.eel[0].getHeight(),
+                //        Eel.MovementDirection.RIGHT, widthInNumOfTile-2));
+                entityManager.addEntity(new Car(handler, Assets.carPinkLeft, Car.MovementDirection.LEFT,
+                        (widthInNumOfTile-1)*Tile.screenTileWidth, 15+handler.panelHeight-Assets.carPinkLeft.getHeight(),
+                        Tile.screenTileWidth, Tile.screenTileHeight));
                 entityManager.getPlayer().setSpeed(3);
 
                 break;
@@ -257,17 +261,18 @@ public class GameStage {
                         Tile.screenTileWidth,
                         Tile.screenTileHeight
                 );
+
                 //TESTING (YES TEXTURE)... attempting to determine which row is associated with which street lane.
-                if ( (y == 3) && (x != 0) && (x != 6) && (x != (widthInNumOfTile-1)) ) {
-                    tiles[x][y] = new Tile(Assets.carPinkLeft, true);
-                }
-                else if ( (y == (heightInNumOfTile-3)) && (x != 0) && (x != 6) && (x != (widthInNumOfTile-1)) ) {
-                    tiles[x][y] = new Tile(Assets.logSmall, true);
-                }
-                //ALL TILES WALKABLE (NO TEXTURE).
-                else {
+                //if ( (y == 3) && (x != 0) && (x != 6) && (x != (widthInNumOfTile-1)) ) {
+                //    tiles[x][y] = new Tile(Assets.carPinkLeft, true);
+                //}
+                //else if ( (y == (heightInNumOfTile-3)) && (x != 0) && (x != 6) && (x != (widthInNumOfTile-1)) ) {
+                //    tiles[x][y] = new Tile(Assets.logSmall, true);
+                //}
+                ////ALL TILES WALKABLE (NO TEXTURE).
+                //else {
                     tiles[x][y] = new Tile(texture, false);
-                }
+                //}
             }
         }
     }

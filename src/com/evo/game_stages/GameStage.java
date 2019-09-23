@@ -12,7 +12,6 @@ import com.evo.items.ItemManager;
 import com.evo.tiles.Tile;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -24,41 +23,94 @@ public class GameStage {
     private Identifier identifier;
 
     // TILES
-    private int widthInNumOfTile, heightInNumOfTile; //(in numberOfTile) initialized by loadGameStage(String).
+    private int widthInNumOfTile, heightInNumOfTile; //(in numberOfTile) initialized by initTiles(String).
     private Tile[][] tiles;
-
     // ENTITIES
-    private float xSpawn = 310;
-    private float ySpawn = 200;
+    private float xSpawn, ySpawn;
     private EntityManager entityManager;
-
     // ITEMS
     private ItemManager itemManager;
-
     // HUD
     private HeadUpDisplay headUpDisplay;
-
 
     public GameStage(Handler handler, Identifier identifier) {
         this.handler = handler;
         this.identifier = identifier;
-
-        entityManager = new EntityManager(handler, new Fish(handler, xSpawn, ySpawn));
-        itemManager = new ItemManager(handler);
+        xSpawn = 310;
+        ySpawn = 200;
 
         loadGameStage(identifier);
+    } // **** end GameStage(Handler, Identifier) constructor ****
 
-        entityManager.getPlayer().setSpeed(5);
+    private void loadGameStage(Identifier identifier) {
+        initTiles(identifier);
+        initItemManager(identifier);
+        initEntityManager(identifier, new Fish(handler, xSpawn, ySpawn));
+        initHeadUpDisplay(identifier);
+    }
 
-        entityManager.addEntity(new Kelp(handler, Assets.kelpSolid[0], xSpawn-50, ySpawn-25));
-        entityManager.addEntity(new Kelp(handler, Assets.kelpSolid[0], xSpawn-63, ySpawn-25));
-        entityManager.addEntity(new Kelp(handler, Assets.kelpSolid[0], xSpawn-76, ySpawn-25));
+    private void initTiles(Identifier identifier) {
+        switch(identifier) {
+            case EVO:
+                initTilesEVO();
+                break;
+            case FROGGER:
+                initTilesFROGGER();
+                break;
+            default:
+                System.out.println("GameStage.initTiles(Identifier), switch-construct's default.");
+                break;
+        }
+    }
+    private void initItemManager(Identifier identifier) {
+        itemManager = new ItemManager(handler);
 
-        entityManager.addEntity(new SeaJelly(handler, xSpawn+50, ySpawn-50));
-        entityManager.addEntity(new Eel(handler, xSpawn+150, ((tiles[0].length-3)*Tile.screenTileHeight)+(Tile.screenTileHeight/2)+7));
+        switch (identifier) {
+            case EVO:
 
+                break;
+            case FROGGER:
+
+                break;
+            default:
+                System.out.println("GameStage.initItemManager(Identifier), switch-construct's default.");
+        }
+    }
+    private void initEntityManager(Identifier identifier, Fish player) {
+        entityManager = new EntityManager(handler, player);
+
+        switch (identifier) {
+            case EVO:
+                entityManager.addEntity(new Kelp(handler, Assets.kelpSolid[0], xSpawn-50, ySpawn-25));
+                entityManager.addEntity(new Kelp(handler, Assets.kelpSolid[0], xSpawn-63, ySpawn-25));
+                entityManager.addEntity(new Kelp(handler, Assets.kelpSolid[0], xSpawn-76, ySpawn-25));
+                entityManager.addEntity(new SeaJelly(handler, xSpawn+50, ySpawn-50));
+                entityManager.addEntity(new Eel(handler, xSpawn+150, ((tiles[0].length-3)*Tile.screenTileHeight)+(Tile.screenTileHeight/2)+7));
+                entityManager.getPlayer().setSpeed(5);
+
+                break;
+            case FROGGER:
+                entityManager.getPlayer().setSpeed(3);
+
+                break;
+            default:
+                System.out.println("GameStage.initEntityManager(Identifier, Fish), switch-construct's default.");
+        }
+    }
+    private void initHeadUpDisplay(Identifier identifier) {
         headUpDisplay = new HeadUpDisplay(handler);
-    } // **** end GameStage(Handler, String) constructor ****
+
+        switch (identifier) {
+            case EVO:
+
+                break;
+            case FROGGER:
+
+                break;
+            default:
+                System.out.println("GameStage.initHeadUpDisplay(Identifier), switch-construct's default.");
+        }
+    }
 
     public void tick(long timeElapsed) {
         itemManager.tick(timeElapsed);
@@ -114,32 +166,6 @@ public class GameStage {
                 //BACKGROUND: whole panel
                 g.drawImage(Assets.backgroundFrogger, 0, 0, handler.panelWidth, handler.panelHeight, null);
 
-                /*
-                g.setColor(Color.BLACK);
-                g.fillRect(0, 0, handler.panelWidth, handler.panelHeight);
-                //BACKGROUND: water (panel's top half)
-                g.setColor(Color.BLUE);
-                g.fillRect(0, 0, handler.panelWidth, handler.panelHeight/2);
-                //BACKGROUND: winning row (panel's very top portion)
-                g.drawImage(Assets.winningRow, 0, 0,
-                        handler.panelWidth, Assets.winningRow.getHeight(),
-                        0, 0, Assets.winningRow.getWidth(), Assets.winningRow.getHeight(),
-                        null);
-                //BACKGROUND: starting row (panel's very bottom portion)
-                g.drawImage(Assets.startingRow, 0, handler.panelHeight-Assets.startingRow.getHeight(),
-                        handler.panelWidth, handler.panelHeight,
-                        0, 0, Assets.startingRow.getWidth(), Assets.startingRow.getHeight(),
-                        null);
-                */
-
-                /*
-                for (int y = 0; y < heightInNumOfTile; y++) {
-                    for (int x = 0; x < widthInNumOfTile; x++) {
-                        tiles[x][y].render(g, (x * Tile.screenTileWidth), (y * Tile.screenTileHeight));
-                    }
-                }
-                */
-
                 break;
             default:
                 System.out.println("GameStage.render(Graphics), switch construct's default.");
@@ -188,23 +214,9 @@ public class GameStage {
         return false;
     }
 
-    private void loadGameStage(Identifier identifier) {
-        switch(identifier) {
-            case EVO:
-                loadGameStageEVO();
-                break;
-            case FROGGER:
-                loadGameStageFROGGER();
-                break;
-            default:
-                System.out.println("GameStage.loadGameStage(String), switch-constructor's default.");
-                break;
-        }
-    }
-
-    private void loadGameStageFROGGER() {
-        //widthInNumOfTile = (handler.panelWidth / Tile.TILE_WIDTH) + 1;
-        //heightInNumOfTile = (handler.panelHeight / Tile.TILE_HEIGHT) + 1;
+    private void initTilesFROGGER() {
+        //widthInNumOfTile = (handler.panelWidth / Tile.TILE_WIDTH);
+        //heightInNumOfTile = (handler.panelHeight / Tile.TILE_HEIGHT);
         widthInNumOfTile = (handler.panelWidth / Tile.screenTileWidth);
         heightInNumOfTile = (handler.panelHeight / Tile.screenTileHeight);
         System.out.println("number of tiles for GameStage(handler, FROGGER).widthInNumOfTile: " + widthInNumOfTile);
@@ -216,69 +228,9 @@ public class GameStage {
                 tiles[x][y] = new Tile(null, false);
             }
         }
-        /*
-        //WINNING ROW
-        int widthWinningRow = Assets.winningRow.getWidth() / widthInNumOfTile;
-        int heightWinningRow = Assets.winningRow.getHeight() / 2;
-        for (int y = 0; y < 2; y++) {
-            for (int x = 0; x < widthInNumOfTile; x++) {
-                BufferedImage texture = Assets.winningRow.getSubimage( (x * widthWinningRow), (y * heightWinningRow),
-                        widthWinningRow, heightWinningRow);
-                tiles[x][y] = new Tile(texture, false);
-            }
-        }
-
-        int numOfWaterAndRoadRows = (heightInNumOfTile - 3); //2 rows for winning row, 1 row for starting row.
-        int numOfWaterRows = 0;
-        int numOfRoadRows = 0;
-        if (numOfWaterAndRoadRows % 2 == 0) {
-            numOfWaterRows = numOfWaterAndRoadRows / 2;
-            numOfRoadRows = numOfWaterRows;
-        } else {
-            numOfWaterRows = numOfWaterAndRoadRows / 2;
-            numOfRoadRows = numOfWaterRows + 1;
-        }
-
-        BufferedImage textureWater = new BufferedImage(widthWinningRow, heightWinningRow, BufferedImage.TYPE_INT_RGB);
-        Graphics g = textureWater.getGraphics();
-        g.setColor(Color.BLUE);
-        g.fillRect(0, 0, textureWater.getWidth(), textureWater.getHeight());
-        //WATER
-        for (int y = 2; y < numOfWaterRows+2; y++) {
-            for (int x = 0; x < widthInNumOfTile; x++) {
-                tiles[x][y] = new Tile(textureWater, false);
-            }
-        }
-        g.dispose();
-
-        BufferedImage textureRoad = new BufferedImage(widthWinningRow, heightWinningRow, BufferedImage.TYPE_INT_RGB);
-        g = textureRoad.getGraphics();
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, textureRoad.getWidth(), textureRoad.getHeight());
-        //ROAD
-        for (int y = numOfWaterRows+2; y < numOfRoadRows+numOfWaterRows+2; y++) {
-            for (int x = 0; x < widthInNumOfTile; x++) {
-                tiles[x][y] = new Tile(textureRoad, false);
-            }
-        }
-        g.dispose();
-
-        BufferedImage texture;
-        //STARTING ROW
-        int widthStartingRow = Assets.startingRow.getWidth() / widthInNumOfTile;
-        int heightStartingRow = Assets.startingRow.getHeight() / 1;
-        for (int y = heightInNumOfTile-1; y < heightInNumOfTile; y++) {
-            for (int x = 0; x < widthInNumOfTile; x++) {
-                texture = Assets.startingRow.getSubimage( (x * widthStartingRow), 0,
-                        widthStartingRow, heightStartingRow);
-                tiles[x][y] = new Tile(texture, false);
-            }
-        }
-        */
-
     }
 
-    private void loadGameStageEVO() {
+    private void initTilesEVO() {
         widthInNumOfTile = Assets.chapter1GameStage.getWidth() / Tile.TILE_WIDTH;
         heightInNumOfTile = Assets.chapter1GameStage.getHeight() / Tile.TILE_HEIGHT;
         System.out.println("number of tiles for GameStage(handler, EVO).widthInNumOfTile: " + widthInNumOfTile);
@@ -303,7 +255,6 @@ public class GameStage {
                 int yOffset = (y * Tile.TILE_HEIGHT)+8;
                 BufferedImage currentTile = Assets.chapter1GameStage.getSubimage(xOffset, yOffset,
                         Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
-
 
                 //for each tile, check if it's one of the solidTileSearchTargets.
                 for (BufferedImage solidTileTarget : solidTileSearchTargets) {
@@ -342,26 +293,11 @@ public class GameStage {
                         }
                     }
 
-
                 }
 
                 if (tiles[x][y] == null) {
                     tiles[x][y] = new Tile(currentTile, false);
                 }
-/*
-                //loading tiles of the middle of the map/stage
-                if ( (x != 0) && (x != widthInNumOfTile-1) && (y != 0) && (y != heightInNumOfTile-1) ) {
-                    //NOT solid tile.
-                    tiles[x][y] = new Tile(Assets.chapter1GameStage.getSubimage((x * Tile.TILE_WIDTH), 8+(y * Tile.TILE_HEIGHT),
-                            Tile.TILE_WIDTH, Tile.TILE_HEIGHT), false);
-                }
-                //loading tiles of the border row/column of the map/stage.
-                //!!!NOT GRABBING THE ORIGINAL Assets.chapter1GameStage background image for these tiles!!!
-                else {
-                    //SOLID tile.
-                    tiles[x][y] = new Tile(Assets.brickGreen, true);
-                }
-*/
             }
         }
 

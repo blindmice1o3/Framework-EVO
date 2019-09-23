@@ -109,12 +109,15 @@ public class WorldMapState implements IState {
                     //TODO: depending on the value of index, connect to corresponding GameStageState's enum-blah-blah.
                     if (index != 0) {
                         if (index == 1) {
+                            ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).setCurrentGameStage(
+                                    new GameStage(handler, GameStage.Identifier.EVO)
+                            );
                             handler.getStateManager().pushIState(StateManager.State.GAME_STAGE, null);
                         } else if (index == 2) {
-                            handler.getStateManager().pushIState(StateManager.State.GAME_STAGE, null);
                             ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).setCurrentGameStage(
                                     new GameStage(handler, GameStage.Identifier.FROGGER)
                             );
+                            handler.getStateManager().pushIState(StateManager.State.GAME_STAGE, null);
                         }
                     }
                     else {

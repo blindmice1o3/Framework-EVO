@@ -123,6 +123,7 @@ public class GameStage {
 
                 break;
             case FROGGER:
+                handler.getGameCamera().centerOnEntity(entityManager.getPlayer());
 
                 break;
             default:
@@ -136,47 +137,59 @@ public class GameStage {
         //BACKGROUND (TILES)
         switch (identifier) {
             case EVO:
-                ////////////////////////////////////////////////////////////////////////////////////////////////////////
-                /* RENDERING EFFICIENCY (NOT RENDERING the entire tiles/map ANYMORE, JUST THE TILE SHOWING ON SCREEN) */
-                ////////////////////////////////////////////////////////////////////////////////////////////////////////
-                //won't go into negative x values. (left end of screen). !!!HAD NEEDED 3X (see Tile.render(Graphics) method)!!!
-                int xStart = (int)Math.max(0, (handler.getGameCamera().getxOffset() / (Tile.screenTileWidth)));
-                //0;
-                //won't go pass the end of the map/stage. (right end of screen). !!!HAD NEEDED 3X (see Tile.render(Graphics) method)!!!
-                int xEnd = (int)Math.min(widthInNumOfTile, ((handler.getGameCamera().getxOffset() + handler.panelWidth) / (Tile.screenTileWidth)) + 2);
-                //widthInNumOfTile;
-                int yStart = (int)Math.max(0, (handler.getGameCamera().getyOffset() / (Tile.screenTileHeight)));
-                //0;
-                int yEnd = (int)Math.min(heightInNumOfTile, ((handler.getGameCamera().getyOffset() + handler.panelHeight) / (Tile.screenTileHeight)) + 2);
-                //heightInNumOfTile;
-
-                //BACKGROUND/TILES
-                for (int y = yStart; y < yEnd; y++) {
-                    for (int x = xStart; x < xEnd; x++) {
-                        //using the game camera's xOffset and yOffset
-                        ///////////////////////////////////////////////////////////////////////////////
-                        tiles[x][y].render( g, (int)((x*Tile.screenTileWidth) - handler.getGameCamera().getxOffset()),
-                                (int)((y*Tile.screenTileHeight) - handler.getGameCamera().getyOffset()) );
-                        ///////////////////////////////////////////////////////////////////////////////
-                    }
-                }
 
                 break;
             case FROGGER:
                 //BACKGROUND: whole panel
-                g.drawImage(Assets.backgroundFrogger, 0, 0, handler.panelWidth, handler.panelHeight, null);
+                //g.drawImage(Assets.backgroundFrogger, 0, 0, handler.panelWidth, handler.panelHeight, null);
 
+                /*
+                for (int y = 0; y < heightInNumOfTile; y++) {
+                    for (int x = 0; x < widthInNumOfTile; x++) {
+                        tiles[x][y].render( g, (int)((x*Tile.screenTileWidth) - handler.getGameCamera().getxOffset()),
+                                (int)((y*Tile.screenTileHeight) - handler.getGameCamera().getyOffset()));
+                    }
+                }
+                */
+
+                /*
                 for (int x = 0; x < tiles.length; x++) {
                     tiles[x][3].render( g, (x*Tile.screenTileWidth), (3*Tile.screenTileHeight));
 
                     tiles[x][heightInNumOfTile-3].render( g, (x*Tile.screenTileWidth),
                             ((heightInNumOfTile-3)*Tile.screenTileHeight));
                 }
+                */
 
                 break;
             default:
                 System.out.println("GameStage.render(Graphics), switch construct's default.");
                 break;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /* RENDERING EFFICIENCY (NOT RENDERING the entire tiles/map ANYMORE, JUST THE TILE SHOWING ON SCREEN) */
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //won't go into negative x values. (left end of screen). !!!HAD NEEDED 3X (see Tile.render(Graphics) method)!!!
+        int xStart = (int)Math.max(0, (handler.getGameCamera().getxOffset() / (Tile.screenTileWidth)));
+        //0;
+        //won't go pass the end of the map/stage. (right end of screen). !!!HAD NEEDED 3X (see Tile.render(Graphics) method)!!!
+        int xEnd = (int)Math.min(widthInNumOfTile, ((handler.getGameCamera().getxOffset() + handler.panelWidth) / (Tile.screenTileWidth)) + 2);
+        //widthInNumOfTile;
+        int yStart = (int)Math.max(0, (handler.getGameCamera().getyOffset() / (Tile.screenTileHeight)));
+        //0;
+        int yEnd = (int)Math.min(heightInNumOfTile, ((handler.getGameCamera().getyOffset() + handler.panelHeight) / (Tile.screenTileHeight)) + 2);
+        //heightInNumOfTile;
+
+        //BACKGROUND/TILES
+        for (int y = yStart; y < yEnd; y++) {
+            for (int x = xStart; x < xEnd; x++) {
+                //using the game camera's xOffset and yOffset
+                ///////////////////////////////////////////////////////////////////////////////
+                tiles[x][y].render( g, (int)((x*Tile.screenTileWidth) - handler.getGameCamera().getxOffset()),
+                        (int)((y*Tile.screenTileHeight) - handler.getGameCamera().getyOffset()) );
+                ///////////////////////////////////////////////////////////////////////////////
+            }
         }
 
         //ITEMS
@@ -224,14 +237,21 @@ public class GameStage {
     private void initTilesFROGGER() {
         //widthInNumOfTile = (handler.panelWidth / Tile.TILE_WIDTH);
         //heightInNumOfTile = (handler.panelHeight / Tile.TILE_HEIGHT);
-        widthInNumOfTile = (handler.panelWidth / Tile.screenTileWidth);
-        heightInNumOfTile = (handler.panelHeight / Tile.screenTileHeight);
+        widthInNumOfTile = (Assets.backgroundFrogger.getWidth() / Tile.screenTileWidth);
+        heightInNumOfTile = (Assets.backgroundFrogger.getHeight() / Tile.screenTileHeight);
         System.out.println("number of tiles for GameStage(handler, FROGGER).widthInNumOfTile: " + widthInNumOfTile);
         System.out.println("number of tiles for GameStage(handler, FROGGER).heightInNumOfTile: " + heightInNumOfTile);
         tiles = new Tile[widthInNumOfTile][heightInNumOfTile];
 
         for (int y = 0; y < heightInNumOfTile; y++) {
             for (int x = 0; x < widthInNumOfTile; x++) {
+
+                BufferedImage texture = Assets.backgroundFrogger.getSubimage(
+                        (x * Tile.screenTileWidth),
+                        (y * Tile.screenTileHeight),
+                        Tile.screenTileWidth,
+                        Tile.screenTileHeight
+                );
                 //TESTING (YES TEXTURE)... attempting to determine which row is associated with which street lane.
                 if ( (y == 3) && (x != 0) && (x != 6) && (x != (widthInNumOfTile-1)) ) {
                     tiles[x][y] = new Tile(Assets.carPinkLeft, true);
@@ -241,7 +261,7 @@ public class GameStage {
                 }
                 //ALL TILES WALKABLE (NO TEXTURE).
                 else {
-                    tiles[x][y] = new Tile(null, false);
+                    tiles[x][y] = new Tile(texture, false);
                 }
             }
         }

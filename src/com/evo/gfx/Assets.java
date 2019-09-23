@@ -47,8 +47,9 @@ public class Assets {
     public static BufferedImage chapter1GameStage, brickGreen, coralPink1, coralPink2, coralPink3, coinGameObject;
 
     // GameStage("buying_lighter")
-    public static BufferedImage spriteSheetFrogger, winningRow, startingRow, logLarge, logMedium, logSmall, parrotRight,
-            carPinkLeft, carWhiteRight, carYellowLeft, seaLionRight, bigRigLeft;
+    public static BufferedImage spriteSheetFrogger, backgroundFrogger, winningRow, startingRow,
+            logLarge, logMedium, logSmall, parrotRight, carPinkLeft, carWhiteRight, carYellowLeft,
+            seaLionRight, bigRigLeft;
     public static BufferedImage[] frogRight, frogLeft, frogUp, frogDown, turtleLeft, crocRight, snowPlowRight,
             snakeLeft, frogNPCRight, frogNPCLeft;
 
@@ -68,8 +69,9 @@ public class Assets {
         spriteSheetChapter1Creatures = Utils.loadImage("/SNES - EVO Search for Eden - Chapter 1 Creatures.png");
         spriteSheetStartMenu = Utils.loadImage("/EVO_select_menu_English.png");
         spriteSheetFrogger = Utils.loadImage("/sprite sheet - frogger/33Hnhw9.png");
+        backgroundFrogger = Utils.loadImage("/sprite sheet - frogger/0Meo6sH.png");
 
-        // GameStage("buying_lighter")
+        // GameStage(Identifier.FROGGER)
         winningRow = spriteSheetFrogger.getSubimage(0, 55,  399,52);
         startingRow = spriteSheetFrogger.getSubimage(0, 119, 399, 34);
         logLarge = spriteSheetFrogger.getSubimage(7, 166, 177,21);

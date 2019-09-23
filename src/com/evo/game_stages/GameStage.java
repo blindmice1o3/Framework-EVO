@@ -65,7 +65,19 @@ public class GameStage {
         entityManager.tick(timeElapsed);
         headUpDisplay.tick(timeElapsed);
 
-        handler.getGameCamera().centerOnEntity(entityManager.getPlayer());
+        switch (identifier) {
+            case EVO:
+                handler.getGameCamera().centerOnEntity(entityManager.getPlayer());
+
+                break;
+            case FROGGER:
+
+                break;
+            default:
+                System.out.println("GameStage.tick(), switch construct's default.");
+
+                break;
+        }
     }
 
     public void render(Graphics g) {
@@ -99,7 +111,10 @@ public class GameStage {
 
                 break;
             case FROGGER:
-                //BACKGROUND: street (whole panel)
+                //BACKGROUND: whole panel
+                g.drawImage(Assets.backgroundFrogger, 0, 0, handler.panelWidth, handler.panelHeight, null);
+
+                /*
                 g.setColor(Color.BLACK);
                 g.fillRect(0, 0, handler.panelWidth, handler.panelHeight);
                 //BACKGROUND: water (panel's top half)
@@ -115,6 +130,7 @@ public class GameStage {
                         handler.panelWidth, handler.panelHeight,
                         0, 0, Assets.startingRow.getWidth(), Assets.startingRow.getHeight(),
                         null);
+                */
 
                 /*
                 for (int y = 0; y < heightInNumOfTile; y++) {

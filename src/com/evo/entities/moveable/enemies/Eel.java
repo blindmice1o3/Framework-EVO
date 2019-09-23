@@ -31,12 +31,12 @@ public class Eel extends Creature
     //ANIMATIONS
     private Animation patrolAnimation, turnAnimation, attackAnimation, hurtAnimation;
 
-    public Eel(Handler handler, float x, float y) {
+    public Eel(Handler handler, float x, float y, MovementDirection currentMovementDirection, int patrolLengthMax) {
         super(handler, null, x, y, Assets.eel[0].getWidth(), Assets.eel[0].getHeight());
 
         currentState = State.PATROL;
-        currentMovementDirection = MovementDirection.LEFT;
-        patrolLengthMax = 5;
+        this.currentMovementDirection = currentMovementDirection;
+        this.patrolLengthMax = patrolLengthMax;
         currentPatrolLength = 0;
         speed = 1;
 
@@ -47,7 +47,7 @@ public class Eel extends Creature
                 -detectionRadiusLength + (height/2), //NEGATIVE
                 2*detectionRadiusLength,
                 2*detectionRadiusLength);
-    } // **** end Eel(Handler, float, float) constructor
+    } // **** end Eel(Handler, float, float, MovementDirection, int) constructor
 
     @Override
     public void initAnimations() {

@@ -85,11 +85,16 @@ public class GameStage {
                 entityManager.addEntity(new Kelp(handler, Assets.kelpSolid[0], xSpawn-63, ySpawn-25));
                 entityManager.addEntity(new Kelp(handler, Assets.kelpSolid[0], xSpawn-76, ySpawn-25));
                 entityManager.addEntity(new SeaJelly(handler, xSpawn+50, ySpawn-50));
-                entityManager.addEntity(new Eel(handler, xSpawn+150, ((tiles[0].length-3)*Tile.screenTileHeight)+(Tile.screenTileHeight/2)+7));
+                entityManager.addEntity(new Eel( handler,
+                        xSpawn+150, ((tiles[0].length-3)*Tile.screenTileHeight)+(Tile.screenTileHeight/2)+7,
+                        Eel.MovementDirection.LEFT, 5 ));
                 entityManager.getPlayer().setSpeed(5);
 
                 break;
             case FROGGER:
+                entityManager.addEntity(new Eel(handler,
+                        Tile.screenTileWidth, handler.panelHeight-Assets.eel[0].getHeight(),
+                        Eel.MovementDirection.RIGHT, widthInNumOfTile-2));
                 entityManager.getPlayer().setSpeed(3);
 
                 break;

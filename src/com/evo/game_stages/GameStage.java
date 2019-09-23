@@ -127,6 +127,7 @@ public class GameStage {
 
     int controllerCarColor = 0;
     int numTypeOfCars = 2;
+    int chanceToInstantiate = 0;
     public void tick(long timeElapsed) {
         itemManager.tick(timeElapsed);
         entityManager.tick(timeElapsed);
@@ -138,52 +139,58 @@ public class GameStage {
 
                 break;
             case FROGGER:
-                if (entityManager.getEntities().size() < 3) {
-                    controllerCarColor = (int)(Math.random()*numTypeOfCars)+1;
-                    System.out.println("controllerCarColor: " + controllerCarColor);
-                    int x = 0;
-                    int y = 0;
-                    int width = 0;
-                    int height = 0;
+                if (entityManager.getEntities().size() < 6) {
+                    chanceToInstantiate = (int)(Math.random()*100)+1;
+                    System.out.println("chanceToInstantiate: " + chanceToInstantiate);
 
-                    switch (controllerCarColor) {
-                        case 1:
-                            x = 0;
-                            y = 15+handler.panelHeight-Assets.carPinkLeft.getHeight()-Tile.screenTileHeight;
-                            width = Tile.screenTileWidth;
-                            height = Tile.screenTileHeight;
+                    //ONLY INSTANTIATE 5% of the time TICK() IS CALLED.
+                    if (chanceToInstantiate <= 5) {
+                        controllerCarColor = (int) (Math.random() * numTypeOfCars) + 1;
+                        System.out.println("controllerCarColor: " + controllerCarColor);
+                        int x = 0;
+                        int y = 0;
+                        int width = 0;
+                        int height = 0;
 
-                            //checking for overlap before instantiating new Car.
-                            for (Entity e : entityManager.getEntities()) {
-                                if (e.getCollisionBounds(0, 0).intersects(new Rectangle(x, y, width, height))) {
-                                    return;
+                        switch (controllerCarColor) {
+                            case 1:
+                                x = 0;
+                                y = 15 + handler.panelHeight - Assets.carPinkLeft.getHeight() - Tile.screenTileHeight;
+                                width = Tile.screenTileWidth;
+                                height = Tile.screenTileHeight;
+
+                                //checking for overlap before instantiating new Car.
+                                for (Entity e : entityManager.getEntities()) {
+                                    if (e.getCollisionBounds(0, 0).intersects(new Rectangle(x, y, width, height))) {
+                                        return;
+                                    }
                                 }
-                            }
 
-                            //add new right Car instance.
-                            entityManager.addEntity(new Car(handler, Assets.carWhiteRight, Car.MovementDirection.RIGHT,
-                                    x, y, width, height));
-                            break;
-                        case 2:
-                            x = (widthInNumOfTile-1)*Tile.screenTileWidth;
-                            y = 15+handler.panelHeight-Assets.carPinkLeft.getHeight();
-                            width = Tile.screenTileWidth;
-                            height = Tile.screenTileHeight;
+                                //add new right Car instance.
+                                entityManager.addEntity(new Car(handler, Assets.carWhiteRight, Car.MovementDirection.RIGHT,
+                                        x, y, width, height));
+                                break;
+                            case 2:
+                                x = (widthInNumOfTile - 1) * Tile.screenTileWidth;
+                                y = 15 + handler.panelHeight - Assets.carPinkLeft.getHeight();
+                                width = Tile.screenTileWidth;
+                                height = Tile.screenTileHeight;
 
-                            //checking for overlap before instantiating new Car.
-                            for (Entity e : entityManager.getEntities()) {
-                                if (e.getCollisionBounds(0, 0).intersects(new Rectangle(x, y, width, height))) {
-                                    return;
+                                //checking for overlap before instantiating new Car.
+                                for (Entity e : entityManager.getEntities()) {
+                                    if (e.getCollisionBounds(0, 0).intersects(new Rectangle(x, y, width, height))) {
+                                        return;
+                                    }
                                 }
-                            }
 
-                            //add new left Car instance.
-                            entityManager.addEntity(new Car(handler, Assets.carPinkLeft, Car.MovementDirection.LEFT,
-                                    x, y, width, height));
-                            break;
-                        default:
-                            System.out.println("GameStage(Identifier.FROGGER).tick(), switch construct's default.");
-                            break;
+                                //add new left Car instance.
+                                entityManager.addEntity(new Car(handler, Assets.carPinkLeft, Car.MovementDirection.LEFT,
+                                        x, y, width, height));
+                                break;
+                            default:
+                                System.out.println("GameStage(Identifier.FROGGER).tick(), switch construct's default.");
+                                break;
+                        }
                     }
                 }
 

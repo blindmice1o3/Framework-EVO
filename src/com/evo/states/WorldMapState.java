@@ -17,7 +17,7 @@ public class WorldMapState implements IState {
     public final double X_CONVERSION_FACTOR;
     public final double Y_CONVERSION_FACTOR;
 
-    private Object[] stages;
+    private GameStage[] gameStages;
     private OverWorldCursor overWorldCursor;
     private int index;
 
@@ -28,7 +28,13 @@ public class WorldMapState implements IState {
         System.out.println("WorldMapState.X_CONVERSION_FACTOR: " + X_CONVERSION_FACTOR);
         System.out.println("WorldMapState.Y_CONVERSION_FACTOR: " + Y_CONVERSION_FACTOR);
 
-        stages = new Object[7];
+        /////////////////////////////////////////////////////////////////////
+        gameStages = new GameStage[7];
+        gameStages[0] = null; //index 0 does NOT load a GameStage, it changes to next Chapter.
+        gameStages[1] = new GameStage(handler, GameStage.Identifier.EVO);
+        gameStages[2] = new GameStage(handler, GameStage.Identifier.FROGGER);
+        /////////////////////////////////////////////////////////////////////
+
         overWorldCursor = new OverWorldCursor(handler, Assets.upOverworld0, 0, 0);
         overWorldCursor.setWidth( (int)(overWorldCursor.getWidth() * X_CONVERSION_FACTOR) );
         overWorldCursor.setHeight( (int)(overWorldCursor.getHeight() * Y_CONVERSION_FACTOR) );
@@ -110,12 +116,12 @@ public class WorldMapState implements IState {
                     if (index != 0) {
                         if (index == 1) {
                             ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).setCurrentGameStage(
-                                    new GameStage(handler, GameStage.Identifier.EVO)
+                                    gameStages[index]
                             );
                             handler.getStateManager().pushIState(StateManager.State.GAME_STAGE, null);
                         } else if (index == 2) {
                             ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).setCurrentGameStage(
-                                    new GameStage(handler, GameStage.Identifier.FROGGER)
+                                    gameStages[index]
                             );
                             handler.getStateManager().pushIState(StateManager.State.GAME_STAGE, null);
                         }
@@ -130,7 +136,7 @@ public class WorldMapState implements IState {
                 else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_W)) {
                     index++;
 
-                    if (index > (stages.length - 1)) {
+                    if (index > (gameStages.length - 1)) {
                         index = 0;
                     }
                 }
@@ -139,7 +145,7 @@ public class WorldMapState implements IState {
                     index--;
 
                     if (index < 0) {
-                        index = (stages.length - 1);
+                        index = (gameStages.length - 1);
                     }
                 }
 

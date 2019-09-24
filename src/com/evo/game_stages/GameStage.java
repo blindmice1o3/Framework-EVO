@@ -11,6 +11,7 @@ import com.evo.entities.non_moveable.Kelp;
 import com.evo.game_stages.hud.HeadUpDisplay;
 import com.evo.gfx.Assets;
 import com.evo.items.ItemManager;
+import com.evo.states.StateManager;
 import com.evo.tiles.Tile;
 
 import java.awt.*;
@@ -128,6 +129,21 @@ public class GameStage {
     int controllerCarColor = 0;
     int numTypeOfCars = 2;
     int chanceToInstantiate = 0;
+
+    private void checkWinningState() {
+        int x = 0;
+        int y = 0;
+        int width = widthInNumOfTile*Tile.screenTileWidth;
+        int height = 3*Tile.screenTileHeight;
+
+        Rectangle winningRectangle = new Rectangle(x, y, width, height);
+
+        if (winningRectangle.contains(entityManager.getPlayer().getCollisionBounds(0, 0))) {
+            String winningText = "CONGRATULATIONS!";
+            Object[] args = { winningText };
+            handler.getStateManager().pushIState(StateManager.State.TEXTBOX, args);
+        }
+    }
     public void tick(long timeElapsed) {
         itemManager.tick(timeElapsed);
         entityManager.tick(timeElapsed);
@@ -139,6 +155,8 @@ public class GameStage {
 
                 break;
             case FROGGER:
+                checkWinningState();
+
                 if (entityManager.getEntities().size() < 6) {
                     chanceToInstantiate = (int)(Math.random()*100)+1;
                     System.out.println("chanceToInstantiate: " + chanceToInstantiate);

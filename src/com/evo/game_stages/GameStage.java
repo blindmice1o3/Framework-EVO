@@ -6,7 +6,9 @@ import com.evo.entities.EntityManager;
 import com.evo.entities.moveable.enemies.Eel;
 import com.evo.entities.moveable.enemies.SeaJelly;
 import com.evo.entities.moveable.enemies.frogger.Car;
+import com.evo.entities.moveable.enemies.frogger.Frog;
 import com.evo.entities.moveable.player.Fish;
+import com.evo.entities.moveable.player.IPlayable;
 import com.evo.entities.non_moveable.Kelp;
 import com.evo.game_stages.hud.HeadUpDisplay;
 import com.evo.gfx.Assets;
@@ -39,8 +41,6 @@ public class GameStage {
     public GameStage(Handler handler, Identifier identifier) {
         this.handler = handler;
         this.identifier = identifier;
-        xSpawn = 310;
-        ySpawn = 200;
 
         loadGameStage(identifier);
     } // **** end GameStage(Handler, Identifier) constructor ****
@@ -48,7 +48,7 @@ public class GameStage {
     private void loadGameStage(Identifier identifier) {
         initTiles(identifier);
         initItemManager(identifier);
-        initEntityManager(identifier, new Fish(handler, xSpawn, ySpawn));
+        initEntityManager(identifier);
         initHeadUpDisplay(identifier);
     }
 
@@ -79,11 +79,11 @@ public class GameStage {
                 System.out.println("GameStage.initItemManager(Identifier), switch-construct's default.");
         }
     }
-    private void initEntityManager(Identifier identifier, Fish player) {
-        entityManager = new EntityManager(handler, player);
-
+    private void initEntityManager(Identifier identifier) {
         switch (identifier) {
             case EVO:
+                entityManager = new EntityManager( handler, new Fish(handler, xSpawn, ySpawn) );
+
                 entityManager.addEntity(new Kelp(handler, Assets.kelpSolid[0], xSpawn-50, ySpawn-25));
                 entityManager.addEntity(new Kelp(handler, Assets.kelpSolid[0], xSpawn-63, ySpawn-25));
                 entityManager.addEntity(new Kelp(handler, Assets.kelpSolid[0], xSpawn-76, ySpawn-25));
@@ -91,10 +91,12 @@ public class GameStage {
                 entityManager.addEntity(new Eel( handler,
                         xSpawn+150, ((tiles[0].length-3)*Tile.screenTileHeight)+(Tile.screenTileHeight/2)+7,
                         Eel.MovementDirection.LEFT, 5 ));
-                entityManager.getPlayer().setSpeed(5);
 
                 break;
             case FROGGER:
+                entityManager = new EntityManager( handler, new Frog(handler, null,
+                        xSpawn, ySpawn, Tile.screenTileWidth, Tile.screenTileHeight));
+
                 //entityManager.addEntity(new Eel(handler,
                 //        Tile.screenTileWidth, handler.panelHeight-Assets.eel[0].getHeight(),
                 //        Eel.MovementDirection.RIGHT, widthInNumOfTile-2));
@@ -104,7 +106,6 @@ public class GameStage {
                 entityManager.addEntity(new Car(handler, Assets.carPinkLeft, Car.MovementDirection.LEFT,
                         (widthInNumOfTile-1)*Tile.screenTileWidth, 15+handler.panelHeight-Assets.carPinkLeft.getHeight(),
                         Tile.screenTileWidth, Tile.screenTileHeight));
-                entityManager.getPlayer().setSpeed(3);
 
                 break;
             default:
@@ -137,8 +138,9 @@ public class GameStage {
         int height = 3*Tile.screenTileHeight;
 
         Rectangle winningRectangle = new Rectangle(x, y, width, height);
+        Rectangle playerCollisionBounds = ((Entity)entityManager.getPlayer()).getCollisionBounds(0, 0);
 
-        if (winningRectangle.contains(entityManager.getPlayer().getCollisionBounds(0, 0))) {
+        if (winningRectangle.contains(playerCollisionBounds)) {
             String winningText = "CONGRATULATIONS!";
             Object[] args = { winningText };
             handler.getStateManager().pushIState(StateManager.State.TEXTBOX, args);
@@ -151,7 +153,7 @@ public class GameStage {
 
         switch (identifier) {
             case EVO:
-                handler.getGameCamera().centerOnEntity(entityManager.getPlayer());
+                handler.getGameCamera().centerOnEntity( (Entity)entityManager.getPlayer() );
 
                 break;
             case FROGGER:
@@ -212,7 +214,7 @@ public class GameStage {
                     }
                 }
 
-                handler.getGameCamera().centerOnEntity(entityManager.getPlayer());
+                handler.getGameCamera().centerOnEntity( (Entity)entityManager.getPlayer() );
 
                 break;
             default:
@@ -332,6 +334,12 @@ public class GameStage {
         System.out.println("number of tiles for GameStage(handler, FROGGER).heightInNumOfTile: " + heightInNumOfTile);
         tiles = new Tile[widthInNumOfTile][heightInNumOfTile];
 
+
+        //initializing spawning coordinate.
+        xSpawn = (widthInNumOfTile/2)*Tile.screenTileWidth;
+        ySpawn = (heightInNumOfTile-2)*Tile.screenTileHeight;
+
+
         for (int y = 0; y < heightInNumOfTile; y++) {
             for (int x = 0; x < widthInNumOfTile; x++) {
 
@@ -365,6 +373,12 @@ public class GameStage {
         //widthInNumOfTile = 192;
         //heightInNumOfTile = 14;
         tiles = new Tile[widthInNumOfTile][heightInNumOfTile];
+
+
+        //initializing spawning coordinate.
+        xSpawn = 310;
+        ySpawn = 200;
+
 
         ArrayList<BufferedImage> solidTileSearchTargets = new ArrayList<BufferedImage>();
         solidTileSearchTargets.add(Assets.brickGreen);
@@ -443,10 +457,12 @@ public class GameStage {
 
     public HeadUpDisplay getHeadUpDisplay() { return headUpDisplay; }
 
-    public Fish getPlayer() { return entityManager.getPlayer(); }
+    public IPlayable getPlayer() { return entityManager.getPlayer(); }
 
     public int getWidthInNumOfTile() { return widthInNumOfTile; }
 
     public int getHeightInNumOfTile() { return heightInNumOfTile; }
+
+    public Identifier getIdentifier() { return identifier; }
 
 } // **** end GameStage class ****

@@ -84,7 +84,7 @@ public class Car extends Creature {
             //check EACH entity to see if their collision bounds INTERSECTS with yours.
             if (e.getCollisionBounds(0f, 0f).intersects(getCollisionBounds(xOffset, yOffset))) {
                 //@@@IF COLLISION WITH PLAYER, SET ACTIVE TO false.@@@
-                if (e instanceof Fish) {
+                if (e instanceof Frog) {
                     if (attackTimer < attackCooldown) {
                         return true;
                     }
@@ -96,7 +96,6 @@ public class Car extends Creature {
                     ////////////////////////////////////////////////////////
 
                     e.hurt(attackDamage);
-                    ((Fish)e).getFishStateManager().setCurrentActionState(FishStateManager.ActionState.HURT);
                     //IF HERE: we've attacked, must reset the attackTimer.
                     attackTimer = 0;
                     //////////////////////////////////////////////////////////////////////////

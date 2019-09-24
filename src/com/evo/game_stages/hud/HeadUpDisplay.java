@@ -2,6 +2,7 @@ package com.evo.game_stages.hud;
 
 import com.evo.Handler;
 import com.evo.entities.moveable.player.Fish;
+import com.evo.entities.moveable.player.IPlayable;
 import com.evo.states.GameStageState;
 import com.evo.states.StateManager;
 
@@ -48,7 +49,7 @@ public class HeadUpDisplay {
     }
 
     private void renderHUD(Graphics g) {
-        Fish player = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
+        IPlayable player = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
         /* TOP OF SCREEN */
         //HP BAR
         g.setColor(Color.BLACK);

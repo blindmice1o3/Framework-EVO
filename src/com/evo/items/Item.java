@@ -1,6 +1,7 @@
 package com.evo.items;
 
 import com.evo.Handler;
+import com.evo.entities.Entity;
 import com.evo.entities.moveable.player.Fish;
 import com.evo.entities.moveable.player.FishStateManager;
 import com.evo.game_stages.GameStage;
@@ -84,7 +85,10 @@ public class Item
 
     private void checkEaten() {
         GameStage gameStage = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage();
-        Fish player = gameStage.getPlayer();
+        Fish player = null;
+        if (gameStage.getPlayer() instanceof Fish) {
+            player = (Fish)gameStage.getPlayer();
+        }
 
         //player's in eating state AND intersects this item: it should create then give a Reward, and be removed from game.
         if ( (player.getCollisionBounds(0, 0).intersects(bounds)) &&

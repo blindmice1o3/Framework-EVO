@@ -14,7 +14,8 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Fish extends Creature {
+public class Fish extends Creature
+        implements IPlayable {
 
     public enum DirectionFacing { LEFT, RIGHT; }
 
@@ -42,11 +43,11 @@ public class Fish extends Creature {
                 Assets.eatFrames[0][0][0][0][0].getHeight());
         System.out.println("Fish.constructor (width/height): " + width + "/" + height);
 
+        fishStateManager = new FishStateManager();
+
+        directionFacing = DirectionFacing.RIGHT;
         experiencePoints = 0;
         healthMax = DEFAULT_HEALTH;
-
-        fishStateManager = new FishStateManager();
-        directionFacing = DirectionFacing.RIGHT;
 
         initAnimations();
 
@@ -67,6 +68,8 @@ public class Fish extends Creature {
         bounds.y = 1;
         bounds.width = 28;
         bounds.height = 13;
+
+        speed = 5;
     } // **** end Fish(Handler, float, float) constructor ****
 
     @Override
@@ -218,7 +221,7 @@ public class Fish extends Creature {
 
     @Override
     public void die() {
-        System.out.println("Game over.");
+        System.out.println("Fish.die()... game session is over.");
     }
 
     public void getInput() {

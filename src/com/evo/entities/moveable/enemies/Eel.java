@@ -2,6 +2,7 @@ package com.evo.entities.moveable.enemies;
 
 import com.evo.Handler;
 import com.evo.Utils;
+import com.evo.entities.Entity;
 import com.evo.entities.moveable.Creature;
 import com.evo.entities.moveable.player.Fish;
 import com.evo.game_stages.GameStage;
@@ -196,7 +197,7 @@ public class Eel extends Creature
                 break;
             case CHASE:
                 //TESTING checkDetectionCollisions(float, float)
-                Fish player = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
+                Entity player = (Entity)((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
                 //player is beyond detection range.
                 if ( (Math.abs(player.getX() - x) > detectionRadiusLength) ||
                         (Math.abs(player.getY() - y) > detectionRadiusLength) ) {
@@ -344,7 +345,7 @@ public class Eel extends Creature
     }
 
     private boolean checkDetectionCollisions(float xOffset, float yOffset) {
-        Fish player = ((GameStageState) handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().getPlayer();
+        Entity player = (Entity)((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().getPlayer();
 
         if (player.getCollisionBounds(0f, 0f).intersects(getDetectionRectangle(xOffset, yOffset))) {
             return true;

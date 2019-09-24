@@ -491,14 +491,4 @@ public class Fish extends Creature {
         return healthMax;
     }
 
-    public void setHealthMax(int healthMax) {
-        this.healthMax = healthMax;
-    }
-
-/*
-    public BufferedImage getCurrentHeadImage() { return currentHeadImage; }
-
-    public BufferedImage getCurrentBodyImage() { return currentBodyImage; }
-*/
-
 } // **** end Fish class ****

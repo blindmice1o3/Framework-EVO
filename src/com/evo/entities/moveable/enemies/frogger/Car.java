@@ -99,7 +99,10 @@ public class Car extends Creature {
                     ((Fish)e).getFishStateManager().setCurrentActionState(FishStateManager.ActionState.HURT);
                     //IF HERE: we've attacked, must reset the attackTimer.
                     attackTimer = 0;
-
+                    //////////////////////////////////////////////////////////////////////////
+                    //RETURN if there is collision BECAUSE CAN ONLY HURT 1 ENTITY AT A TIME.//
+                    //////////////////////////////////////////////////////////////////////////
+                    return true;
                     //e.setActive(false);
                     //e.die();
                 }

@@ -68,18 +68,22 @@ public class Frog extends Creature
         //up
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_W)) {
             yMove = -speed;
+            directionFacing = DirectionFacing.UP;
         }
         //down
         else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_S)) {
             yMove = speed;
+            directionFacing = DirectionFacing.DOWN;
         }
         //left
         else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_A)) {
             xMove = -speed;
+            directionFacing = DirectionFacing.LEFT;
         }
         //right
         else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_D)) {
             xMove = speed;
+            directionFacing = DirectionFacing.RIGHT;
         }
     }
 
@@ -111,10 +115,11 @@ public class Frog extends Creature
         }
 
         g.drawImage(currentFrame,
-                (int) (x - handler.getGameCamera().getxOffset()),
-                (int) (y - handler.getGameCamera().getyOffset()),
-                width,
-                height,
+                (int)(x - handler.getGameCamera().getxOffset()),
+                (int)(y - handler.getGameCamera().getyOffset()),
+                (int)(x - handler.getGameCamera().getxOffset() + width),
+                (int)(y - handler.getGameCamera().getyOffset() + height),
+                0, 0, currentFrame.getWidth(), currentFrame.getHeight(),
                 null);
     }
 

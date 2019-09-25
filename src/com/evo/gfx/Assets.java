@@ -84,12 +84,12 @@ public class Assets {
         seaLionRight = spriteSheetFrogger.getSubimage(116, 271, 32, 18);
         bigRigLeft = spriteSheetFrogger.getSubimage(106, 302, 46, 18);
 
-        frogLeft = new BufferedImage[2];
-        frogLeft[0] = spriteSheetFrogger.getSubimage(13, 334, 17, 23);
-        frogLeft[1] = spriteSheetFrogger.getSubimage(43, 335, 25, 22);
         frogRight = new BufferedImage[2];
-        frogRight[0] = spriteSheetFrogger.getSubimage(83, 335, 17, 23);
-        frogRight[1] = spriteSheetFrogger.getSubimage(112, 338, 25, 22);
+        frogRight[0] = spriteSheetFrogger.getSubimage(13, 334, 17, 23);
+        frogRight[1] = spriteSheetFrogger.getSubimage(43, 335, 25, 22);
+        frogLeft = new BufferedImage[2];
+        frogLeft[0] = spriteSheetFrogger.getSubimage(83, 335, 17, 23);
+        frogLeft[1] = spriteSheetFrogger.getSubimage(112, 338, 25, 22);
         frogUp = new BufferedImage[2];
         frogUp[0] = spriteSheetFrogger.getSubimage(12, 369, 23, 17);
         frogUp[1] = spriteSheetFrogger.getSubimage(46, 366, 22, 25);

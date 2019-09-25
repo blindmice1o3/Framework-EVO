@@ -225,39 +225,6 @@ public class GameStage {
     }
 
     public void render(Graphics g) {
-        //BACKGROUND (TILES)
-        switch (identifier) {
-            case EVO:
-
-                break;
-            case FROGGER:
-                //BACKGROUND: whole panel
-                //g.drawImage(Assets.backgroundFrogger, 0, 0, handler.panelWidth, handler.panelHeight, null);
-
-                /*
-                for (int y = 0; y < heightInNumOfTile; y++) {
-                    for (int x = 0; x < widthInNumOfTile; x++) {
-                        tiles[x][y].render( g, (int)((x*Tile.screenTileWidth) - handler.getGameCamera().getxOffset()),
-                                (int)((y*Tile.screenTileHeight) - handler.getGameCamera().getyOffset()));
-                    }
-                }
-                */
-
-                /*
-                for (int x = 0; x < tiles.length; x++) {
-                    tiles[x][3].render( g, (x*Tile.screenTileWidth), (3*Tile.screenTileHeight));
-
-                    tiles[x][heightInNumOfTile-3].render( g, (x*Tile.screenTileWidth),
-                            ((heightInNumOfTile-3)*Tile.screenTileHeight));
-                }
-                */
-
-                break;
-            default:
-                System.out.println("GameStage.render(Graphics), switch construct's default.");
-                break;
-        }
-
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         /* RENDERING EFFICIENCY (NOT RENDERING the entire tiles/map ANYMORE, JUST THE TILE SHOWING ON SCREEN) */
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -281,6 +248,29 @@ public class GameStage {
                         (int)((y*Tile.screenTileHeight) - handler.getGameCamera().getyOffset()) );
                 ///////////////////////////////////////////////////////////////////////////////
             }
+        }
+
+        //TILES
+        switch (identifier) {
+            case EVO:
+
+                break;
+            case FROGGER:
+                for (int y = 0; y < (heightInNumOfTile/2); y++) {
+                    for (int x = 0; x < widthInNumOfTile; x++) {
+                        Tile tile = tiles[x][y];
+
+                        g.setColor(Color.YELLOW);
+                        g.drawRect((int)((x*Tile.screenTileWidth) - handler.getGameCamera().getxOffset()),
+                                (int)((y*Tile.screenTileHeight) - handler.getGameCamera().getyOffset()),
+                                Tile.screenTileWidth, Tile.screenTileHeight);
+                    }
+                }
+
+                break;
+            default:
+                System.out.println("GameStage.render(Graphics), switch construct's default.");
+                break;
         }
 
         //ITEMS

@@ -60,7 +60,8 @@ public class Frog extends Creature
         move();
     }
 
-    private void getInput() {
+    @Override
+    public void getInput() {
         //reset future-move
         xMove = 0;
         yMove = 0;

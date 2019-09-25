@@ -224,6 +224,7 @@ public class Fish extends Creature
         System.out.println("Fish.die()... game session is over.");
     }
 
+    @Override
     public void getInput() {
         // MOVEMENT
         xMove = 0;

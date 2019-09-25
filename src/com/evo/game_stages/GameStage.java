@@ -10,9 +10,11 @@ import com.evo.entities.moveable.enemies.frogger.Frog;
 import com.evo.entities.moveable.player.Fish;
 import com.evo.entities.moveable.player.IPlayable;
 import com.evo.entities.non_moveable.Kelp;
+import com.evo.game_stages.hud.ComponentHUD;
 import com.evo.game_stages.hud.HeadUpDisplay;
 import com.evo.gfx.Assets;
 import com.evo.items.ItemManager;
+import com.evo.states.GameStageState;
 import com.evo.states.StateManager;
 import com.evo.tiles.Tile;
 
@@ -38,11 +40,17 @@ public class GameStage {
     // HUD
     private HeadUpDisplay headUpDisplay;
 
+    //drowning timer
+    private long drowningCooldown, drowningTimer;
+
     public GameStage(Handler handler, Identifier identifier) {
         this.handler = handler;
         this.identifier = identifier;
 
         loadGameStage(identifier);
+
+        drowningCooldown = 800000000L;
+        drowningTimer = drowningCooldown;
     } // **** end GameStage(Handler, Identifier) constructor ****
 
     private void loadGameStage(Identifier identifier) {
@@ -127,10 +135,6 @@ public class GameStage {
         }
     }
 
-    int controllerCarColor = 0;
-    int numTypeOfCars = 2;
-    int chanceToInstantiate = 0;
-
     private void checkWinningState() {
         int x = 0;
         int y = 0;
@@ -146,6 +150,60 @@ public class GameStage {
             handler.getStateManager().pushIState(StateManager.State.TEXTBOX, args);
         }
     }
+
+    private boolean isPlayerStandingOnEntity() {
+        Rectangle playerBounds = ((Frog)entityManager.getPlayer()).getCollisionBounds(0,0);
+
+        for (Entity e : entityManager.getEntities()) {
+            //if it's the player, move on to the next Entity instance.
+            if (e instanceof IPlayable) {
+                continue;
+            }
+
+            //player is standing on a river entity, NOT DROWNING.
+            Rectangle riverEntityBounds = e.getCollisionBounds(0, 0);
+            if (playerBounds.intersects(riverEntityBounds)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    private void checkPlayerDrowning() {
+        //TODO: check if intersects with player, if so, call player's hurt().
+        //TODO: OR have player check intersects with water/river tile whenever move() called.
+
+        //water/river tiles.
+        if ( (((Frog)entityManager.getPlayer()).getY() / Tile.screenTileHeight) < 7 ) {
+            //TODO: check all entities to see if they intersects frog, otherwise frog is in water and we call hurt().
+            if ( isPlayerStandingOnEntity() ) {
+                return;
+            }
+            //CALL HURT() (player is in water and not standing on an entity).
+            else {
+                if (drowningTimer < drowningCooldown) {
+                    return;
+                }
+
+                Frog player = (Frog)entityManager.getPlayer();
+                int damage = 1;
+                ComponentHUD damageHUD = new ComponentHUD(handler, ComponentHUD.ComponentType.DAMAGE, damage, player);
+                headUpDisplay.addTimedNumericIndicator(damageHUD);
+
+                player.hurt(damage);
+                drowningTimer = 0;
+            }
+        }
+
+    }
+    private void tickDrowningCooldown(long timeElapsed) {
+        drowningTimer += timeElapsed;
+        //drowningTimer gets reset to 0 in checkPlayerDrowning().
+    }
+
+    int controllerCarColor = 0;
+    int numTypeOfCars = 2;
+    int chanceToInstantiate = 0;
     public void tick(long timeElapsed) {
         itemManager.tick(timeElapsed);
         entityManager.tick(timeElapsed);
@@ -158,6 +216,10 @@ public class GameStage {
                 break;
             case FROGGER:
                 checkWinningState();
+
+                //WATER/RIVER damage-to-player
+                tickDrowningCooldown(timeElapsed);
+                checkPlayerDrowning();
 
                 if (entityManager.getEntities().size() < 6) {
                     chanceToInstantiate = (int)(Math.random()*100)+1;
@@ -326,8 +388,8 @@ public class GameStage {
 
 
         //initializing spawning coordinate.
-        xSpawn = (widthInNumOfTile/2)*Tile.screenTileWidth;
-        ySpawn = (heightInNumOfTile-2)*Tile.screenTileHeight;
+        xSpawn = (widthInNumOfTile / 2) * Tile.screenTileWidth;
+        ySpawn = (heightInNumOfTile - 2) * Tile.screenTileHeight;
 
 
         for (int y = 0; y < heightInNumOfTile; y++) {
@@ -340,19 +402,11 @@ public class GameStage {
                         Tile.screenTileHeight
                 );
 
-                //TESTING (YES TEXTURE)... attempting to determine which row is associated with which street lane.
-                //if ( (y == 3) && (x != 0) && (x != 6) && (x != (widthInNumOfTile-1)) ) {
-                //    tiles[x][y] = new Tile(Assets.carPinkLeft, true);
-                //}
-                //else if ( (y == (heightInNumOfTile-3)) && (x != 0) && (x != 6) && (x != (widthInNumOfTile-1)) ) {
-                //    tiles[x][y] = new Tile(Assets.logSmall, true);
-                //}
-                ////ALL TILES WALKABLE (NO TEXTURE).
-                //else {
-                    tiles[x][y] = new Tile(texture, false);
-                //}
+                tiles[x][y] = new Tile(texture, false);
+
             }
         }
+
     }
 
     private void initTilesEVO() {

@@ -1,6 +1,7 @@
 package com.evo.states;
 
 import com.evo.Handler;
+import com.evo.game_stages.GameStage;
 import com.evo.gfx.OverWorldCursor;
 import com.evo.gfx.Assets;
 
@@ -206,6 +207,18 @@ public class MainMenuState implements IState {
 
                 break;
             case CAPABILITY:
+                //repaint the render(Graphics) of the IState that is just below the top of the stack.
+                handler.getStateManager().getStatesStack().get(handler.getStateManager().getStatesStack().size()-2).render(g);
+
+
+                Graphics2D g2d = (Graphics2D)g;
+                float opacity = 0.7f;
+
+                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
+                /////////////////////////////////////////////////////////////////////////////////////////////////////
+                g2d.drawImage(Assets.mainMenuCapability, 0, 1, handler.panelWidth, (handler.panelHeight/3), null);
+                /////////////////////////////////////////////////////////////////////////////////////////////////////
+                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
 
                 break;
             case RECORD_OF_EVOLUTION:

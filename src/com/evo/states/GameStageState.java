@@ -16,7 +16,7 @@ public class GameStageState implements IState {
     public GameStageState(Handler handler) {
         this.handler = handler;
         questManager = new QuestManager(handler);
-        currentGameStage = new GameStage(handler, "");
+        currentGameStage = new GameStage(handler, GameStage.Identifier.EVO);
     } // **** end GameStageState(Handler) constructor
 
     @Override
@@ -90,5 +90,7 @@ public class GameStageState implements IState {
     public QuestManager getQuestManager() { return questManager; }
 
     public GameStage getCurrentGameStage() { return currentGameStage; }
+
+    public void setCurrentGameStage(GameStage currentGameStage) { this.currentGameStage = currentGameStage; }
 
 } // **** end GameStageState class ****

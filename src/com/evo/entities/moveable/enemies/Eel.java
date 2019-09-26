@@ -2,6 +2,7 @@ package com.evo.entities.moveable.enemies;
 
 import com.evo.Handler;
 import com.evo.Utils;
+import com.evo.entities.Entity;
 import com.evo.entities.moveable.Creature;
 import com.evo.entities.moveable.player.Fish;
 import com.evo.game_stages.GameStage;
@@ -31,12 +32,12 @@ public class Eel extends Creature
     //ANIMATIONS
     private Animation patrolAnimation, turnAnimation, attackAnimation, hurtAnimation;
 
-    public Eel(Handler handler, float x, float y) {
+    public Eel(Handler handler, float x, float y, MovementDirection currentMovementDirection, int patrolLengthMax) {
         super(handler, null, x, y, Assets.eel[0].getWidth(), Assets.eel[0].getHeight());
 
         currentState = State.PATROL;
-        currentMovementDirection = MovementDirection.LEFT;
-        patrolLengthMax = 5;
+        this.currentMovementDirection = currentMovementDirection;
+        this.patrolLengthMax = patrolLengthMax;
         currentPatrolLength = 0;
         speed = 1;
 
@@ -47,7 +48,7 @@ public class Eel extends Creature
                 -detectionRadiusLength + (height/2), //NEGATIVE
                 2*detectionRadiusLength,
                 2*detectionRadiusLength);
-    } // **** end Eel(Handler, float, float) constructor
+    } // **** end Eel(Handler, float, float, MovementDirection, int) constructor
 
     @Override
     public void initAnimations() {
@@ -196,7 +197,7 @@ public class Eel extends Creature
                 break;
             case CHASE:
                 //TESTING checkDetectionCollisions(float, float)
-                Fish player = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
+                Entity player = (Entity)((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
                 //player is beyond detection range.
                 if ( (Math.abs(player.getX() - x) > detectionRadiusLength) ||
                         (Math.abs(player.getY() - y) > detectionRadiusLength) ) {
@@ -344,7 +345,7 @@ public class Eel extends Creature
     }
 
     private boolean checkDetectionCollisions(float xOffset, float yOffset) {
-        Fish player = ((GameStageState) handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().getPlayer();
+        Entity player = (Entity)((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().getPlayer();
 
         if (player.getCollisionBounds(0f, 0f).intersects(getDetectionRectangle(xOffset, yOffset))) {
             return true;

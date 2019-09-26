@@ -1,7 +1,9 @@
 package com.evo.entities;
 
 import com.evo.Handler;
+import com.evo.entities.moveable.enemies.frogger.Frog;
 import com.evo.entities.moveable.player.Fish;
+import com.evo.entities.moveable.player.IPlayable;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ import java.util.Iterator;
 public class EntityManager {
 
     private Handler handler;
-    private Fish player;
+    private IPlayable player;
     private ArrayList<Entity> entities;
 
     private Comparator<Entity> renderSorter = new Comparator<Entity>() {
@@ -27,12 +29,17 @@ public class EntityManager {
     };
 
 
-    public EntityManager(Handler handler, Fish player) {
+    public EntityManager(Handler handler, IPlayable player) {
         this.handler = handler;
         this.player = player;
         entities = new ArrayList<Entity>();
-        addEntity(player);
-    } // **** end EntityManager(Handler, Fish) constructor ****
+
+        if (player instanceof Fish) {
+            addEntity( (Fish)player );
+        } else if (player instanceof Frog) {
+            addEntity( (Frog)player );
+        }
+    } // **** end EntityManager(Handler, IPlayable) constructor ****
 
     public void tick(long timeElapsed) {
         Iterator<Entity> it = entities.iterator();
@@ -83,7 +90,7 @@ public class EntityManager {
         this.handler = handler;
     }
 
-    public Fish getPlayer() {
+    public IPlayable getPlayer() {
         return player;
     }
 

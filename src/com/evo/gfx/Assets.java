@@ -43,8 +43,15 @@ public class Assets {
     // BACKGROUND - MainMenuState
     public static BufferedImage mainMenu;
 
-    // BACKGROUND - GameStageState
+    // GameStage("") - BACKGROUND
     public static BufferedImage chapter1GameStage, brickGreen, coralPink1, coralPink2, coralPink3, coinGameObject;
+
+    // GameStage("buying_lighter")
+    public static BufferedImage spriteSheetFrogger, backgroundFrogger, winningRow, startingRow,
+            logLarge, logMedium, logSmall, parrotRight, carPinkLeft, carWhiteRight, carYellowLeft,
+            seaLionRight, bigRigLeft;
+    public static BufferedImage[] frogRight, frogLeft, frogUp, frogDown, turtleLeft, crocRight, snowPlowRight,
+            snakeLeft, frogNPCRight, frogNPCLeft;
 
     // ENTITIES.NON_MOVEABLE - Chapter 1: KELP
     public static BufferedImage[] kelpSolid;
@@ -61,6 +68,59 @@ public class Assets {
         spriteSheetChapterIntroAndWorldMap = Utils.loadImage("/SNES - EVO Search for Eden - Maps & Chapter Images.png");
         spriteSheetChapter1Creatures = Utils.loadImage("/SNES - EVO Search for Eden - Chapter 1 Creatures.png");
         spriteSheetStartMenu = Utils.loadImage("/EVO_select_menu_English.png");
+        spriteSheetFrogger = Utils.loadImage("/sprite sheet - frogger/33Hnhw9.png");
+        backgroundFrogger = Utils.loadImage("/sprite sheet - frogger/0Meo6sH.png");
+
+        // GameStage(Identifier.FROGGER)
+        winningRow = spriteSheetFrogger.getSubimage(0, 55,  399,52);
+        startingRow = spriteSheetFrogger.getSubimage(0, 119, 399, 34);
+        logLarge = spriteSheetFrogger.getSubimage(7, 166, 177,21);
+        logMedium = spriteSheetFrogger.getSubimage(7, 198, 116, 21);
+        logSmall = spriteSheetFrogger.getSubimage(7, 230, 84, 21);
+        parrotRight = spriteSheetFrogger.getSubimage(140, 236, 16, 16);
+        carPinkLeft = spriteSheetFrogger.getSubimage(10, 267, 28, 20);
+        carWhiteRight = spriteSheetFrogger.getSubimage(46, 265, 24, 24);
+        carYellowLeft = spriteSheetFrogger.getSubimage(82, 264, 24, 26);
+        seaLionRight = spriteSheetFrogger.getSubimage(116, 271, 32, 18);
+        bigRigLeft = spriteSheetFrogger.getSubimage(106, 302, 46, 18);
+
+        frogRight = new BufferedImage[2];
+        frogRight[0] = spriteSheetFrogger.getSubimage(13, 334, 17, 23);
+        frogRight[1] = spriteSheetFrogger.getSubimage(43, 335, 25, 22);
+        frogLeft = new BufferedImage[2];
+        frogLeft[0] = spriteSheetFrogger.getSubimage(83, 335, 17, 23);
+        frogLeft[1] = spriteSheetFrogger.getSubimage(112, 338, 25, 22);
+        frogUp = new BufferedImage[2];
+        frogUp[0] = spriteSheetFrogger.getSubimage(12, 369, 23, 17);
+        frogUp[1] = spriteSheetFrogger.getSubimage(46, 366, 22, 25);
+        frogDown = new BufferedImage[2];
+        frogDown[0] = spriteSheetFrogger.getSubimage(80, 369, 23, 17);
+        frogDown[1] = spriteSheetFrogger.getSubimage(114, 366, 22, 25);
+        turtleLeft = new BufferedImage[5];
+        turtleLeft[0] = spriteSheetFrogger.getSubimage(15, 406, 31, 22);
+        turtleLeft[1] = spriteSheetFrogger.getSubimage(54, 407, 31, 22);
+        turtleLeft[2] = spriteSheetFrogger.getSubimage(94, 408, 29, 19);
+        turtleLeft[3] = spriteSheetFrogger.getSubimage(134, 408, 29, 21);
+        turtleLeft[4] = spriteSheetFrogger.getSubimage(179, 408, 26, 21);
+        crocRight = new BufferedImage[2];
+        crocRight[0] = spriteSheetFrogger.getSubimage(156, 332, 89, 29);
+        crocRight[1] = spriteSheetFrogger.getSubimage(156, 373, 89, 21);
+        snowPlowRight = new BufferedImage[3];
+        snowPlowRight[0] = spriteSheetFrogger.getSubimage(11, 301, 23, 21);
+        snowPlowRight[1] = spriteSheetFrogger.getSubimage(42, 301, 23, 21);
+        snowPlowRight[2] = spriteSheetFrogger.getSubimage(73, 301, 23, 21);
+        snakeLeft = new BufferedImage[4];
+        snakeLeft[0] = spriteSheetFrogger.getSubimage(184, 226, 38, 10);
+        snakeLeft[1] = spriteSheetFrogger.getSubimage(185, 251, 37, 13);
+        snakeLeft[2] = spriteSheetFrogger.getSubimage(184, 276, 38, 16);
+        snakeLeft[3] = spriteSheetFrogger.getSubimage(185, 304, 37, 13);
+        frogNPCRight = new BufferedImage[2];
+        frogNPCRight[0] = spriteSheetFrogger.getSubimage(236, 407, 20, 24);
+        frogNPCRight[1] = spriteSheetFrogger.getSubimage(270, 409, 27, 24);
+        frogNPCLeft = new BufferedImage[2];
+        frogNPCLeft[0] = spriteSheetFrogger.getSubimage(315, 407, 19, 24);
+        frogNPCLeft[1] = spriteSheetFrogger.getSubimage(348, 409, 28, 23);
+
 
         // ENTITIES.MOVEABLE - Chapter 1: FISH HEAD (AND ATTACHMENTS)
         eatFrames = new BufferedImage[FishStateManager.BodySize.values().length]

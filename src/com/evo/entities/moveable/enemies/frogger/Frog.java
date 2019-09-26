@@ -1,10 +1,13 @@
 package com.evo.entities.moveable.enemies.frogger;
 
 import com.evo.Handler;
+import com.evo.entities.Entity;
 import com.evo.entities.moveable.Creature;
 import com.evo.entities.moveable.player.IPlayable;
 import com.evo.gfx.Animation;
 import com.evo.gfx.Assets;
+import com.evo.states.GameStageState;
+import com.evo.states.StateManager;
 import com.evo.tiles.Tile;
 
 import java.awt.*;
@@ -27,8 +30,8 @@ public class Frog extends Creature
     //ANIMATIONS
     private Animation upAnimation, downAnimation, leftAnimation, rightAnimation;
 
-    public Frog(Handler handler, BufferedImage image, float x, float y, int width, int height) {
-        super(handler, image, x, y, width, height);
+    public Frog(Handler handler, float x, float y) {
+        super(handler, null, x, y, Tile.screenTileWidth, Tile.screenTileHeight);
 
         directionFacing = DirectionFacing.UP;
         experiencePoints = 0;
@@ -37,7 +40,7 @@ public class Frog extends Creature
         initAnimations();
 
         speed = Tile.screenTileWidth;
-    } // **** end Frog(Handler, BufferedImage, float, float, int, int) constructor ****
+    } // **** end Frog(Handler, float, float) constructor ****
 
     @Override
     public void initAnimations() {
@@ -58,6 +61,30 @@ public class Frog extends Creature
         //MOVEMENT
         getInput();
         move();
+    }
+
+    @Override
+    public boolean checkEntityCollisions(float xOffset, float yOffset) {
+        for (Entity e : ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getEntityManager().getEntities()) {
+            //if the entity calling checkEntityCollisions(float, float) finds ITSELF in the collection, skip by continue.
+            if (e.equals(this)) {
+                continue;
+            }
+
+            //check EACH entity to see if their collision bounds INTERSECTS with yours.
+            if (e.getCollisionBounds(0f, 0f).intersects(getCollisionBounds(xOffset, yOffset))) {
+                //Frog can walk on Log instances.
+                ////////////////////////
+                if (e instanceof Log) {
+                    return false;
+                } else {
+                    return true;
+                }
+                ////////////////////////
+            }
+        }
+
+        return false;
     }
 
     @Override

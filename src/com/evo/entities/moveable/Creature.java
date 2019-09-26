@@ -90,7 +90,7 @@ public abstract class Creature extends Entity {
         }
     }
 
-    private boolean isWithinRightEdgeOfMap(int xFutureRightCorner) {
+    protected boolean isWithinRightEdgeOfMap(int xFutureRightCorner) {
         int widthMapInPixel = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getTiles().length * Tile.screenTileWidth;
 
         //System.out.println("Creature.isWithinRightEdgeOfMap(), widthMapInPixel: " + widthMapInPixel);

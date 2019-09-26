@@ -7,6 +7,7 @@ import com.evo.entities.moveable.enemies.Eel;
 import com.evo.entities.moveable.enemies.SeaJelly;
 import com.evo.entities.moveable.enemies.frogger.Car;
 import com.evo.entities.moveable.enemies.frogger.Frog;
+import com.evo.entities.moveable.enemies.frogger.Log;
 import com.evo.entities.moveable.player.Fish;
 import com.evo.entities.moveable.player.IPlayable;
 import com.evo.entities.non_moveable.Kelp;
@@ -14,7 +15,6 @@ import com.evo.game_stages.hud.ComponentHUD;
 import com.evo.game_stages.hud.HeadUpDisplay;
 import com.evo.gfx.Assets;
 import com.evo.items.ItemManager;
-import com.evo.states.GameStageState;
 import com.evo.states.StateManager;
 import com.evo.tiles.Tile;
 
@@ -102,18 +102,20 @@ public class GameStage {
 
                 break;
             case FROGGER:
-                entityManager = new EntityManager( handler, new Frog(handler, null,
-                        xSpawn, ySpawn, Tile.screenTileWidth, Tile.screenTileHeight));
+                entityManager = new EntityManager( handler, new Frog(handler, xSpawn, ySpawn) );
 
-                //entityManager.addEntity(new Eel(handler,
-                //        Tile.screenTileWidth, handler.panelHeight-Assets.eel[0].getHeight(),
-                //        Eel.MovementDirection.RIGHT, widthInNumOfTile-2));
                 entityManager.addEntity(new Car(handler, Assets.carWhiteRight, Car.MovementDirection.RIGHT,
                         0, 15+handler.panelHeight-Assets.carPinkLeft.getHeight()-Tile.screenTileHeight,
                         Tile.screenTileWidth, Tile.screenTileHeight));
                 entityManager.addEntity(new Car(handler, Assets.carPinkLeft, Car.MovementDirection.LEFT,
                         (widthInNumOfTile-1)*Tile.screenTileWidth, 15+handler.panelHeight-Assets.carPinkLeft.getHeight(),
                         Tile.screenTileWidth, Tile.screenTileHeight));
+                entityManager.addEntity(new Log(handler, 0,
+                        (4*Tile.screenTileHeight), Log.Size.SMALL, Log.MovementDirection.RIGHT));
+                entityManager.addEntity(new Log(handler, (widthInNumOfTile - 1)*Tile.screenTileWidth,
+                        (5*Tile.screenTileHeight), Log.Size.LARGE, Log.MovementDirection.LEFT));
+                entityManager.addEntity(new Log(handler, 0,
+                        (6*Tile.screenTileHeight), Log.Size.MEDIUM, Log.MovementDirection.RIGHT));
 
                 break;
             default:
@@ -161,9 +163,11 @@ public class GameStage {
             }
 
             //player is standing on a river entity, NOT DROWNING.
-            Rectangle riverEntityBounds = e.getCollisionBounds(0, 0);
-            if (playerBounds.intersects(riverEntityBounds)) {
-                return true;
+            if (e instanceof Log) {
+                Rectangle riverEntityBounds = e.getCollisionBounds(0, 0);
+                if (playerBounds.intersects(riverEntityBounds)) {
+                    return true;
+                }
             }
         }
 
@@ -201,8 +205,9 @@ public class GameStage {
         //drowningTimer gets reset to 0 in checkPlayerDrowning().
     }
 
-    int controllerCarColor = 0;
+    int controllerForNextEntityInstantiation = 0;
     int numTypeOfCars = 2;
+    int numTypeOfRiverEntities = 3;
     int chanceToInstantiate = 0;
     public void tick(long timeElapsed) {
         itemManager.tick(timeElapsed);
@@ -221,20 +226,20 @@ public class GameStage {
                 tickDrowningCooldown(timeElapsed);
                 checkPlayerDrowning();
 
-                if (entityManager.getEntities().size() < 6) {
+                if (entityManager.getEntities().size() < 8) {
                     chanceToInstantiate = (int)(Math.random()*100)+1;
                     System.out.println("chanceToInstantiate: " + chanceToInstantiate);
 
                     //ONLY INSTANTIATE 5% of the time TICK() IS CALLED.
                     if (chanceToInstantiate <= 5) {
-                        controllerCarColor = (int) (Math.random() * numTypeOfCars) + 1;
-                        System.out.println("controllerCarColor: " + controllerCarColor);
+                        controllerForNextEntityInstantiation = (int) (Math.random() * (numTypeOfCars+numTypeOfRiverEntities)) + 1;
+                        System.out.println("controllerForNextEntityInstantiation: " + controllerForNextEntityInstantiation);
                         int x = 0;
                         int y = 0;
                         int width = 0;
                         int height = 0;
 
-                        switch (controllerCarColor) {
+                        switch (controllerForNextEntityInstantiation) {
                             case 1:
                                 x = 0;
                                 y = 15 + handler.panelHeight - Assets.carPinkLeft.getHeight() - Tile.screenTileHeight;
@@ -251,6 +256,7 @@ public class GameStage {
                                 //add new right Car instance.
                                 entityManager.addEntity(new Car(handler, Assets.carWhiteRight, Car.MovementDirection.RIGHT,
                                         x, y, width, height));
+
                                 break;
                             case 2:
                                 x = (widthInNumOfTile - 1) * Tile.screenTileWidth;
@@ -268,6 +274,61 @@ public class GameStage {
                                 //add new left Car instance.
                                 entityManager.addEntity(new Car(handler, Assets.carPinkLeft, Car.MovementDirection.LEFT,
                                         x, y, width, height));
+
+                                break;
+                            case 3:
+                                //Log.Size.SMALL
+                                x = 0;
+                                y = (4*Tile.screenTileHeight);
+                                width = Assets.logSmall.getWidth();
+                                height = Tile.screenTileHeight;
+
+                                //checking for overlap before instantiating new Log.
+                                for (Entity e : entityManager.getEntities()) {
+                                    if (e.getCollisionBounds(0, 0).intersects(new Rectangle(x, y, width, height))) {
+                                        return;
+                                    }
+                                }
+
+                                //add new Log instance (Size.SMALL).
+                                entityManager.addEntity(new Log(handler, x, y, Log.Size.SMALL, Log.MovementDirection.RIGHT));
+
+                                break;
+                            case 4:
+                                //Log.Size.LARGE
+                                x = (widthInNumOfTile - 1) * Tile.screenTileWidth;;
+                                y = (5*Tile.screenTileHeight);
+                                width = Assets.logLarge.getWidth();
+                                height = Tile.screenTileHeight;
+
+                                //checking for overlap before instantiating new Log.
+                                for (Entity e : entityManager.getEntities()) {
+                                    if (e.getCollisionBounds(0, 0).intersects(new Rectangle(x, y, width, height))) {
+                                        return;
+                                    }
+                                }
+
+                                //add new Log instance (Size.LARGE).
+                                entityManager.addEntity(new Log(handler, x, y, Log.Size.LARGE, Log.MovementDirection.LEFT));
+
+                                break;
+                            case 5:
+                                //Log.Size.MEDIUM
+                                x = 0;
+                                y = (6*Tile.screenTileHeight);
+                                width = Assets.logMedium.getWidth();
+                                height = Tile.screenTileHeight;
+
+                                //checking for overlap before instantiating new Log.
+                                for (Entity e : entityManager.getEntities()) {
+                                    if (e.getCollisionBounds(0, 0).intersects(new Rectangle(x, y, width, height))) {
+                                        return;
+                                    }
+                                }
+
+                                //add new Log instance (Size.MEDIUM).
+                                entityManager.addEntity(new Log(handler, x, y, Log.Size.MEDIUM, Log.MovementDirection.RIGHT));
+
                                 break;
                             default:
                                 System.out.println("GameStage(Identifier.FROGGER).tick(), switch construct's default.");
@@ -312,7 +373,14 @@ public class GameStage {
             }
         }
 
-        //TILES
+        //ITEMS
+        itemManager.render(g);
+
+        //ENTITIES
+        entityManager.render(g);
+
+
+        //SPECIALS (GRID_LINES AND PLAYER)
         switch (identifier) {
             case EVO:
 
@@ -329,17 +397,14 @@ public class GameStage {
                     }
                 }
 
+                ((Frog)entityManager.getPlayer()).render(g);
+
                 break;
             default:
                 System.out.println("GameStage.render(Graphics), switch construct's default.");
                 break;
         }
 
-        //ITEMS
-        itemManager.render(g);
-
-        //ENTITIES
-        entityManager.render(g);
 
         //HUD
         headUpDisplay.render(g);

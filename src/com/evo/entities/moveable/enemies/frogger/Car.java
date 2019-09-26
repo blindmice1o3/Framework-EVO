@@ -3,8 +3,6 @@ package com.evo.entities.moveable.enemies.frogger;
 import com.evo.Handler;
 import com.evo.entities.Entity;
 import com.evo.entities.moveable.Creature;
-import com.evo.entities.moveable.player.Fish;
-import com.evo.entities.moveable.player.FishStateManager;
 import com.evo.game_stages.GameStage;
 import com.evo.game_stages.hud.ComponentHUD;
 import com.evo.states.GameStageState;
@@ -25,7 +23,6 @@ public class Car extends Creature {
                float x, float y, int width, int height) {
         super(handler, image, x, y, width, height);
         this.currentMovementDirection = currentMovementDirection;
-        active = true;
 
         attackCooldown = 800000000L;
         attackTimer = attackCooldown;
@@ -43,7 +40,7 @@ public class Car extends Creature {
 
         switch (currentMovementDirection) {
             case LEFT:
-                if (x > 0) {
+                if ( (x-speed) > 0 ) {
                     xMove = -speed;
                 } else {
                     active = false;
@@ -52,7 +49,7 @@ public class Car extends Creature {
                 break;
             case RIGHT:
                 GameStage currentGameStage = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage();
-                if ( (x+width+1) < ((currentGameStage.getWidthInNumOfTile()) * Tile.screenTileWidth) ) {
+                if ( (x+width+speed) < ((currentGameStage.getWidthInNumOfTile())*Tile.screenTileWidth) ) {
                     xMove = speed;
                 } else {
                     active = false;

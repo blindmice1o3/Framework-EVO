@@ -94,7 +94,7 @@ public class EntityManager {
         return player;
     }
 
-    public void setPlayer(Fish player) {
+    public void setPlayer(IPlayable player) {
         this.player = player;
     }
 

@@ -104,7 +104,13 @@ public class Log extends Creature {
                 //Frog can walk on Log instances.
                 ////////////////////////
                 if (e instanceof Frog) {
+                    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                    e.setX( (e.getX() + xOffset) );
+                    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+                    //@@@@@@@@@@%
                     return false;
+                    //@@@@@@@@@@@
                 } else {
                     return true;
                 }

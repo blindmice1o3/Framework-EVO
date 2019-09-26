@@ -21,6 +21,7 @@ import com.evo.tiles.Tile;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class GameStage {
 
@@ -110,6 +111,9 @@ public class GameStage {
                 entityManager.addEntity(new Car(handler, Assets.carPinkLeft, Car.MovementDirection.LEFT,
                         (widthInNumOfTile-1)*Tile.screenTileWidth, 15+handler.panelHeight-Assets.carPinkLeft.getHeight(),
                         Tile.screenTileWidth, Tile.screenTileHeight));
+                Log fastLog = new Log(handler, 0, (3*Tile.screenTileHeight), Log.Size.SMALL, Log.MovementDirection.LEFT);
+                fastLog.setSpeed(2);
+                entityManager.addEntity(fastLog);
                 entityManager.addEntity(new Log(handler, 0,
                         (4*Tile.screenTileHeight), Log.Size.SMALL, Log.MovementDirection.RIGHT));
                 entityManager.addEntity(new Log(handler, (widthInNumOfTile - 1)*Tile.screenTileWidth,
@@ -146,10 +150,27 @@ public class GameStage {
         Rectangle winningRectangle = new Rectangle(x, y, width, height);
         Rectangle playerCollisionBounds = ((Entity)entityManager.getPlayer()).getCollisionBounds(0, 0);
 
-        if (winningRectangle.contains(playerCollisionBounds)) {
+        if (winningRectangle.intersects(playerCollisionBounds)) {
+            ////////////////////////////////////////////////////////////////////////
+            ((Entity)entityManager.getPlayer()).setActive(false);
+            if (headUpDisplay.getTimedNumericIndicators().size() > 0) {
+                Iterator<ComponentHUD> it = headUpDisplay.getTimedNumericIndicators().iterator();
+                while(it.hasNext()) {
+                    it.next();
+                    it.remove();
+                }
+            }
             String winningText = "CONGRATULATIONS!";
             Object[] args = { winningText };
             handler.getStateManager().pushIState(StateManager.State.TEXTBOX, args);
+            ////////////////////////////////////////////////////////////////////////
+
+            /////////////////////////////////////////////////////////////////////////////
+            Frog player = new Frog(handler, xSpawn, ySpawn);
+            entityManager.addEntity(player);
+            entityManager.setPlayer(player);
+            handler.getGameCamera().centerOnEntity( (Entity)entityManager.getPlayer() );
+            /////////////////////////////////////////////////////////////////////////////
         }
     }
 
@@ -178,25 +199,23 @@ public class GameStage {
         //TODO: OR have player check intersects with water/river tile whenever move() called.
 
         //water/river tiles.
-        if ( (((Frog)entityManager.getPlayer()).getY() / Tile.screenTileHeight) < 7 ) {
-            //TODO: check all entities to see if they intersects frog, otherwise frog is in water and we call hurt().
-            if ( isPlayerStandingOnEntity() ) {
+        //TODO: check all entities to see if they intersects frog, otherwise frog is in water and we call hurt().
+        if (isPlayerStandingOnEntity()) {
+            return;
+        }
+        //CALL HURT() (player is in water and not standing on an entity).
+        else {
+            if (drowningTimer < drowningCooldown) {
                 return;
             }
-            //CALL HURT() (player is in water and not standing on an entity).
-            else {
-                if (drowningTimer < drowningCooldown) {
-                    return;
-                }
 
-                Frog player = (Frog)entityManager.getPlayer();
-                int damage = 1;
-                ComponentHUD damageHUD = new ComponentHUD(handler, ComponentHUD.ComponentType.DAMAGE, damage, player);
-                headUpDisplay.addTimedNumericIndicator(damageHUD);
+            Frog player = (Frog) entityManager.getPlayer();
+            int damage = 1;
+            ComponentHUD damageHUD = new ComponentHUD(handler, ComponentHUD.ComponentType.DAMAGE, damage, player);
+            headUpDisplay.addTimedNumericIndicator(damageHUD);
 
-                player.hurt(damage);
-                drowningTimer = 0;
-            }
+            player.hurt(damage);
+            drowningTimer = 0;
         }
 
     }
@@ -207,7 +226,7 @@ public class GameStage {
 
     int controllerForNextEntityInstantiation = 0;
     int numTypeOfCars = 2;
-    int numTypeOfRiverEntities = 3;
+    int numTypeOfRiverEntities = 4;
     int chanceToInstantiate = 0;
     public void tick(long timeElapsed) {
         itemManager.tick(timeElapsed);
@@ -220,13 +239,17 @@ public class GameStage {
 
                 break;
             case FROGGER:
-                checkWinningState();
+                if ( (((Entity)entityManager.getPlayer()).getY()/Tile.screenTileHeight) < 3 ) {
+                    checkWinningState();
+                }
 
                 //WATER/RIVER damage-to-player
                 tickDrowningCooldown(timeElapsed);
-                checkPlayerDrowning();
+                if ( (((Frog)entityManager.getPlayer()).getY() / Tile.screenTileHeight) < 7 ) {
+                    checkPlayerDrowning();
+                }
 
-                if (entityManager.getEntities().size() < 8) {
+                if (entityManager.getEntities().size() < 12) {
                     chanceToInstantiate = (int)(Math.random()*100)+1;
                     System.out.println("chanceToInstantiate: " + chanceToInstantiate);
 
@@ -278,6 +301,26 @@ public class GameStage {
                                 break;
                             case 3:
                                 //Log.Size.SMALL
+                                x = (widthInNumOfTile - 1) * Tile.screenTileWidth;;
+                                y = (3*Tile.screenTileHeight);
+                                width = Assets.logSmall.getWidth();
+                                height = Tile.screenTileHeight;
+
+                                //checking for overlap before instantiating new Log.
+                                for (Entity e : entityManager.getEntities()) {
+                                    if (e.getCollisionBounds(0, 0).intersects(new Rectangle(x, y, width, height))) {
+                                        return;
+                                    }
+                                }
+
+                                //add new Log instance (FAST!!! Size.SMALL).
+                                Log fastLog = new Log(handler, x, y, Log.Size.SMALL, Log.MovementDirection.LEFT);
+                                fastLog.setSpeed(2);
+                                entityManager.addEntity(fastLog);
+
+                                break;
+                            case 4:
+                                //Log.Size.SMALL
                                 x = 0;
                                 y = (4*Tile.screenTileHeight);
                                 width = Assets.logSmall.getWidth();
@@ -294,7 +337,7 @@ public class GameStage {
                                 entityManager.addEntity(new Log(handler, x, y, Log.Size.SMALL, Log.MovementDirection.RIGHT));
 
                                 break;
-                            case 4:
+                            case 5:
                                 //Log.Size.LARGE
                                 x = (widthInNumOfTile - 1) * Tile.screenTileWidth;;
                                 y = (5*Tile.screenTileHeight);
@@ -312,7 +355,7 @@ public class GameStage {
                                 entityManager.addEntity(new Log(handler, x, y, Log.Size.LARGE, Log.MovementDirection.LEFT));
 
                                 break;
-                            case 5:
+                            case 6:
                                 //Log.Size.MEDIUM
                                 x = 0;
                                 y = (6*Tile.screenTileHeight);

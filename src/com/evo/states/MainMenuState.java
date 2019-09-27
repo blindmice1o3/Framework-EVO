@@ -1,7 +1,9 @@
 package com.evo.states;
 
 import com.evo.Handler;
+import com.evo.entities.moveable.player.FishStateManager;
 import com.evo.game_stages.GameStage;
+import com.evo.gfx.FontGrabber;
 import com.evo.gfx.OverWorldCursor;
 import com.evo.gfx.Assets;
 import com.evo.tiles.Tile;
@@ -12,11 +14,13 @@ import java.awt.event.KeyEvent;
 public class MainMenuState implements IState {
 
     public enum MenuList { EVOLUTION, CAPABILITY, RECORD_OF_EVOLUTION, MAIN; }
+    public enum IndexCapabilityMenu { JAWS, BODY, HANDS_AND_FEET; }
 
     private Handler handler;
     private OverWorldCursor overWorldCursor;
 
     private MenuList currentMenuSelection;
+    private IndexCapabilityMenu currentIndexCapabilityMenu;
     private int index;
 
     public MainMenuState(Handler handler) {
@@ -26,6 +30,7 @@ public class MainMenuState implements IState {
         overWorldCursor.setHeight( (Assets.leftOverworld0.getHeight() / 2) );
 
         currentMenuSelection = MenuList.MAIN;
+        currentIndexCapabilityMenu = IndexCapabilityMenu.JAWS;
         index = 0;
     } // **** end MainMenuState(Handler) constructor ****
 
@@ -40,20 +45,20 @@ public class MainMenuState implements IState {
                 break;
             case CAPABILITY:
                 //determines yellow-border's on-screen location based on selected index.
-                switch (index) {
-                    case 0:
+                switch (currentIndexCapabilityMenu) {
+                    case JAWS:
                         xYellowBorder = 13;
                         yYellowBorder = 55;
                         widthYellowBorder = 100;
                         heightYellowBorder = 40;
                         break;
-                    case 1:
+                    case BODY:
                         xYellowBorder = 373;
                         yYellowBorder = 55;
                         widthYellowBorder = 100;
                         heightYellowBorder = 40;
                         break;
-                    case 2:
+                    case HANDS_AND_FEET:
                         xYellowBorder = 478;
                         yYellowBorder = 55;
                         widthYellowBorder = 142;
@@ -132,20 +137,20 @@ public class MainMenuState implements IState {
             case CAPABILITY:
                 //a-button (open menu list for selected index).
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
-                    switch (index) {
-                        case 0:
+                    switch ( currentIndexCapabilityMenu ) {
+                        case JAWS:
 
                             System.out.println("MainMenuState.getInput(): MenuList.CAPABILITY's switch-construct's case 0 (Jaws).");
                             currentMenuSelection = MenuList.MAIN;
                             index = 0;
                             break;
-                        case 1:
+                        case BODY:
 
                             System.out.println("MainMenuState.getInput(): MenuList.CAPABILITY's switch-construct's case 1 (Body).");
                             currentMenuSelection = MenuList.MAIN;
                             index = 0;
                             break;
-                        case 2:
+                        case HANDS_AND_FEET:
                             System.out.println("MainMenuState.getInput(): MenuList.CAPABILITY's switch-construct's case 2 (Hands & Feet).");
                             currentMenuSelection = MenuList.MAIN;
                             index = 0;
@@ -164,18 +169,28 @@ public class MainMenuState implements IState {
 
                 //right-button
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_D)) {
-                    index++;
-
-                    if (index > 2) {
-                        index = 0;
+                    //we were at the end of the list, must set back to front of list.
+                    if ( currentIndexCapabilityMenu.ordinal() == (IndexCapabilityMenu.values().length-1) ) {
+                        currentIndexCapabilityMenu =
+                                IndexCapabilityMenu.values()[ 0 ];
+                    }
+                    //otherwise, just increment the currentIndexCapabilityMenu to the next enum.
+                    else {
+                        currentIndexCapabilityMenu =
+                                IndexCapabilityMenu.values()[ (currentIndexCapabilityMenu.ordinal() + 1) ];
                     }
                 }
                 //left-button
                 else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_A)) {
-                    index--;
-
-                    if (index < 0) {
-                        index = 2;
+                    //we were at the front of the list, must set currentIndexCapabilityMenu to last enum of list.
+                    if ( currentIndexCapabilityMenu.ordinal() == 0 ) {
+                        currentIndexCapabilityMenu =
+                                IndexCapabilityMenu.values()[ (IndexCapabilityMenu.values().length-1) ];
+                    }
+                    //otherwise, just decrement the currentIndexCapabilityMenu.
+                    else {
+                        currentIndexCapabilityMenu =
+                                IndexCapabilityMenu.values()[ (currentIndexCapabilityMenu.ordinal() - 1) ];
                     }
                 }
 
@@ -304,6 +319,34 @@ public class MainMenuState implements IState {
                     g.drawRect(x, y, width, height);
                 }
                 /////////////////////////////////////////////////////////////////////////////////
+
+                int y = 1 + (handler.panelHeight/3) + 10;
+                switch (currentIndexCapabilityMenu) {
+                    case JAWS:
+                        for (FishStateManager.Jaws jaws : FishStateManager.Jaws.values()) {
+                            FontGrabber.renderString(g, jaws.toString(), 15, y, 10, 10);
+                            y = y + 15;
+                        }
+
+                        break;
+                    case BODY:
+                        for (FishStateManager.BodySize bodySize : FishStateManager.BodySize.values()) {
+                            FontGrabber.renderString(g, bodySize.toString(), 15, y, 10, 10);
+                            y = y + 15;
+                        }
+
+                        break;
+                    case HANDS_AND_FEET:
+                        for (FishStateManager.BodyTexture bodyTexture : FishStateManager.BodyTexture.values()) {
+                            FontGrabber.renderString(g, bodyTexture.toString(), 15, y, 10, 10);
+                            y = y + 15;
+                        }
+
+                        break;
+                    default:
+                        System.out.println("MainMenuState.render(Graphics), switch-constructor(currentIndexCapabilityMenu)'s default");
+                        break;
+                }
 
                 break;
             case RECORD_OF_EVOLUTION:

@@ -135,30 +135,72 @@ public class MainMenuState implements IState {
 
                 break;
             case CAPABILITY:
+                switch ( currentIndexCapabilityMenu ) {
+                    case JAWS:
+                        //down-button
+                        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_S)) {
+                            index++;
+
+                            if ( index > (FishStateManager.Jaws.values().length-1) ) {
+                                index = 0;
+                            }
+                        }
+                        //up-button
+                        else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_W)) {
+                            index--;
+
+                            if ( index < 0 ) {
+                                index = (FishStateManager.Jaws.values().length-1);
+                            }
+                        }
+
+                        break;
+                    case BODY:
+                        //down-button
+                        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_S)) {
+                            index++;
+
+                            if ( index > (FishStateManager.BodySize.values().length-1) ) {
+                                index = 0;
+                            }
+                        }
+                        //up-button
+                        else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_W)) {
+                            index--;
+
+                            if ( index < 0 ) {
+                                index = (FishStateManager.BodySize.values().length-1);
+                            }
+                        }
+
+                        break;
+                    case HANDS_AND_FEET:
+                        //down-button
+                        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_S)) {
+                            index++;
+
+                            if ( index > (FishStateManager.BodyTexture.values().length-1) ) {
+                                index = 0;
+                            }
+                        }
+                        //up-button
+                        else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_W)) {
+                            index--;
+
+                            if ( index < 0 ) {
+                                index = (FishStateManager.BodyTexture.values().length-1);
+                            }
+                        }
+
+                        break;
+                    default:
+                        System.out.println("MainMenuState.getInput(): switch-construct.CAPABILITY's switch's default.");
+                        break;
+                }
+
                 //a-button (open menu list for selected index).
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
-                    switch ( currentIndexCapabilityMenu ) {
-                        case JAWS:
 
-                            System.out.println("MainMenuState.getInput(): MenuList.CAPABILITY's switch-construct's case 0 (Jaws).");
-                            currentMenuSelection = MenuList.MAIN;
-                            index = 0;
-                            break;
-                        case BODY:
-
-                            System.out.println("MainMenuState.getInput(): MenuList.CAPABILITY's switch-construct's case 1 (Body).");
-                            currentMenuSelection = MenuList.MAIN;
-                            index = 0;
-                            break;
-                        case HANDS_AND_FEET:
-                            System.out.println("MainMenuState.getInput(): MenuList.CAPABILITY's switch-construct's case 2 (Hands & Feet).");
-                            currentMenuSelection = MenuList.MAIN;
-                            index = 0;
-                            break;
-                        default:
-                            System.out.println("MainMenuState.getInput(): switch-construct.CAPABILITY's switch's default.");
-                            break;
-                    }
                 }
 
                 //b-button (return to MenuList.MAIN).
@@ -179,6 +221,10 @@ public class MainMenuState implements IState {
                         currentIndexCapabilityMenu =
                                 IndexCapabilityMenu.values()[ (currentIndexCapabilityMenu.ordinal() + 1) ];
                     }
+
+                    //////////
+                    index = 0;
+                    //////////
                 }
                 //left-button
                 else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_A)) {
@@ -192,6 +238,10 @@ public class MainMenuState implements IState {
                         currentIndexCapabilityMenu =
                                 IndexCapabilityMenu.values()[ (currentIndexCapabilityMenu.ordinal() - 1) ];
                     }
+
+                    //////////
+                    index = 0;
+                    //////////
                 }
 
                 break;
@@ -320,25 +370,47 @@ public class MainMenuState implements IState {
                 }
                 /////////////////////////////////////////////////////////////////////////////////
 
+                int x = 15;
                 int y = 1 + (handler.panelHeight/3) + 10;
                 switch (currentIndexCapabilityMenu) {
                     case JAWS:
                         for (FishStateManager.Jaws jaws : FishStateManager.Jaws.values()) {
-                            FontGrabber.renderString(g, jaws.toString(), 15, y, 10, 10);
+                            FontGrabber.renderString(g, jaws.toString(), x, y, 10, 10);
+
+                            if (jaws.ordinal() == index) {
+                                overWorldCursor.setX(x-10);
+                                overWorldCursor.setY(y+3);
+                                overWorldCursor.render(g);
+                            }
+
                             y = y + 15;
                         }
 
                         break;
                     case BODY:
                         for (FishStateManager.BodySize bodySize : FishStateManager.BodySize.values()) {
-                            FontGrabber.renderString(g, bodySize.toString(), 15, y, 10, 10);
+                            FontGrabber.renderString(g, bodySize.toString(), x, y, 10, 10);
+
+                            if (bodySize.ordinal() == index) {
+                                overWorldCursor.setX(x-10);
+                                overWorldCursor.setY(y+3);
+                                overWorldCursor.render(g);
+                            }
+
                             y = y + 15;
                         }
 
                         break;
                     case HANDS_AND_FEET:
                         for (FishStateManager.BodyTexture bodyTexture : FishStateManager.BodyTexture.values()) {
-                            FontGrabber.renderString(g, bodyTexture.toString(), 15, y, 10, 10);
+                            FontGrabber.renderString(g, bodyTexture.toString(), x, y, 10, 10);
+
+                            if (bodyTexture.ordinal() == index) {
+                                overWorldCursor.setX(x-10);
+                                overWorldCursor.setY(y+3);
+                                overWorldCursor.render(g);
+                            }
+
                             y = y + 15;
                         }
 

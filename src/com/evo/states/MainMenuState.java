@@ -4,6 +4,7 @@ import com.evo.Handler;
 import com.evo.game_stages.GameStage;
 import com.evo.gfx.OverWorldCursor;
 import com.evo.gfx.Assets;
+import com.evo.tiles.Tile;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -28,6 +29,7 @@ public class MainMenuState implements IState {
         index = 0;
     } // **** end MainMenuState(Handler) constructor ****
 
+    int xYellowBorder, yYellowBorder, widthYellowBorder, heightYellowBorder;
     @Override
     public void tick(long timeElapsed) {
         getInput();
@@ -37,6 +39,34 @@ public class MainMenuState implements IState {
 
                 break;
             case CAPABILITY:
+                //determines yellow-border's on-screen location based on selected index.
+                switch (index) {
+                    case 0:
+                        xYellowBorder = 13;
+                        yYellowBorder = 55;
+                        widthYellowBorder = 100;
+                        heightYellowBorder = 40;
+                        break;
+                    case 1:
+                        xYellowBorder = 373;
+                        yYellowBorder = 55;
+                        widthYellowBorder = 100;
+                        heightYellowBorder = 40;
+                        break;
+                    case 2:
+                        xYellowBorder = 478;
+                        yYellowBorder = 55;
+                        widthYellowBorder = 142;
+                        heightYellowBorder = 40;
+                        break;
+                    default:
+                        System.out.println("MainMenuState.tick(): switch-construct.CAPABILITY's switch's default.");
+                        xYellowBorder = 0;
+                        yYellowBorder = 0;
+                        widthYellowBorder = handler.panelWidth;
+                        heightYellowBorder = handler.panelHeight;
+                        break;
+                }
 
                 break;
             case RECORD_OF_EVOLUTION:
@@ -94,16 +124,59 @@ public class MainMenuState implements IState {
             case EVOLUTION:
                 //b-button (return to MenuList.MAIN).
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
-                    index = 0;
                     currentMenuSelection = MenuList.MAIN;
+                    index = 0;
                 }
 
                 break;
             case CAPABILITY:
+                //a-button (open menu list for selected index).
+                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
+                    switch (index) {
+                        case 0:
+
+                            System.out.println("MainMenuState.getInput(): MenuList.CAPABILITY's switch-construct's case 0 (Jaws).");
+                            currentMenuSelection = MenuList.MAIN;
+                            index = 0;
+                            break;
+                        case 1:
+
+                            System.out.println("MainMenuState.getInput(): MenuList.CAPABILITY's switch-construct's case 1 (Body).");
+                            currentMenuSelection = MenuList.MAIN;
+                            index = 0;
+                            break;
+                        case 2:
+                            System.out.println("MainMenuState.getInput(): MenuList.CAPABILITY's switch-construct's case 2 (Hands & Feet).");
+                            currentMenuSelection = MenuList.MAIN;
+                            index = 0;
+                            break;
+                        default:
+                            System.out.println("MainMenuState.getInput(): switch-construct.CAPABILITY's switch's default.");
+                            break;
+                    }
+                }
+
                 //b-button (return to MenuList.MAIN).
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
-                    index = 0;
                     currentMenuSelection = MenuList.MAIN;
+                    index = 0;
+                }
+
+                //right-button
+                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_D)) {
+                    index++;
+
+                    if (index > 2) {
+                        index = 0;
+                    }
+                }
+                //left-button
+                else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_A)) {
+                    index--;
+
+                    if (index < 0) {
+                        index = 2;
+                    }
                 }
 
                 break;
@@ -210,15 +283,27 @@ public class MainMenuState implements IState {
                 //repaint the render(Graphics) of the IState that is just below the top of the stack.
                 handler.getStateManager().getStatesStack().get(handler.getStateManager().getStatesStack().size()-2).render(g);
 
-
+                /////////////////////////////////////////////////////////////////////////////////////////////////////
                 Graphics2D g2d = (Graphics2D)g;
                 float opacity = 0.7f;
 
                 g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
-                /////////////////////////////////////////////////////////////////////////////////////////////////////
                 g2d.drawImage(Assets.mainMenuCapability, 0, 1, handler.panelWidth, (handler.panelHeight/3), null);
-                /////////////////////////////////////////////////////////////////////////////////////////////////////
                 g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+                /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                /////////////////////////////////////////////////////////////////////////////////
+                int borderSize = 5;
+                g.setColor(Color.YELLOW);
+                for (int i = 0; i < borderSize; i++) {
+                    int x = xYellowBorder + i;
+                    int y = yYellowBorder + i;
+                    int width = widthYellowBorder - (2*i);
+                    int height = heightYellowBorder - (2*i);
+
+                    g.drawRect(x, y, width, height);
+                }
+                /////////////////////////////////////////////////////////////////////////////////
 
                 break;
             case RECORD_OF_EVOLUTION:

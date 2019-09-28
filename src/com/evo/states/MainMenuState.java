@@ -167,6 +167,15 @@ public class MainMenuState implements IState {
                                     Object[] args = { alreadyEquipped };
                                     handler.getStateManager().pushIState( StateManager.State.TEXTBOX, args );
                                 }
+                                //not enough experience points to buy element at current index.
+                                else if (player.getExperiencePoints() < FishStateManager.Jaws.values()[index].getCost()) {
+                                    String notEnoughExpPoints = "Not enough experience points to buy FishStateManager.Jaws." +
+                                            FishStateManager.Jaws.values()[index] + ". You need " +
+                                            (FishStateManager.Jaws.values()[index].getCost() - player.getExperiencePoints()) +
+                                            " more experience points.";
+                                    Object[] args = { notEnoughExpPoints };
+                                    handler.getStateManager().pushIState( StateManager.State.TEXTBOX, args );
+                                }
                                 //check if player have enough experience points.
                                 else if (player.getExperiencePoints() >= FishStateManager.Jaws.values()[index].getCost()) {
                                     String confirmation = "Would you like to buy FishStateManager.Jaws." +
@@ -207,6 +216,15 @@ public class MainMenuState implements IState {
                                     String alreadyEquipped = "Already equipped (comma) can NOT buy FishStateManager.BodySize." +
                                             FishStateManager.BodySize.values()[index] + " (exclaimation mark)";
                                     Object[] args = { alreadyEquipped };
+                                    handler.getStateManager().pushIState( StateManager.State.TEXTBOX, args );
+                                }
+                                //not enough experience points to buy element at current index.
+                                else if (player.getExperiencePoints() < FishStateManager.BodySize.values()[index].getCost()) {
+                                    String notEnoughExpPoints = "Not enough experience points to buy FishStateManager.BodySize." +
+                                            FishStateManager.BodySize.values()[index] + ". You need " +
+                                            (FishStateManager.BodySize.values()[index].getCost() - player.getExperiencePoints()) +
+                                            " more experience points.";
+                                    Object[] args = { notEnoughExpPoints };
                                     handler.getStateManager().pushIState( StateManager.State.TEXTBOX, args );
                                 }
                                 //check if player have enough experience points.
@@ -251,6 +269,15 @@ public class MainMenuState implements IState {
                                     Object[] args = { alreadyEquipped };
                                     handler.getStateManager().pushIState( StateManager.State.TEXTBOX, args );
                                 }
+                                //not enough experience points to buy element at current index.
+                                else if (player.getExperiencePoints() < FishStateManager.BodyTexture.values()[index].getCost()) {
+                                    String notEnoughExpPoints = "Not enough experience points to buy FishStateManager.BodyTexture." +
+                                            FishStateManager.BodyTexture.values()[index] + ". You need " +
+                                            (FishStateManager.BodyTexture.values()[index].getCost() - player.getExperiencePoints()) +
+                                            " more experience points.";
+                                    Object[] args = { notEnoughExpPoints };
+                                    handler.getStateManager().pushIState( StateManager.State.TEXTBOX, args );
+                                }
                                 //check if player have enough experience points.
                                 else if (player.getExperiencePoints() >= FishStateManager.BodyTexture.values()[index].getCost()) {
                                     String confirmation = "Would you like to buy FishStateManager.BodyTexture." +
@@ -258,6 +285,9 @@ public class MainMenuState implements IState {
                                             FishStateManager.BodyTexture.values()[index].getCost() + " experience points (question mark)";
                                     Object[] args = { confirmation };
                                     handler.getStateManager().pushIState( StateManager.State.TEXTBOX, args );
+
+                                    //TODO: need a ConfirmationState pushed on top of StateManager.statesStack.
+                                    //TODO: deduct player's experience points and update FishStateManager's currentXXX.
                                 }
                             }
                         }

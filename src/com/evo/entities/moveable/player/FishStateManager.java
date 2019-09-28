@@ -33,7 +33,7 @@ public class FishStateManager implements Serializable {
 
     //HEAD
     public enum Jaws {
-        ORIGINAL(10), KURASELACHES(200), ZINICHTHY(800)/*, SWORDFISH*/;
+        ORIGINAL(10), KURASELACHES(200), ZINICHTHY(8000)/*, SWORDFISH*/;
 
         Jaws(int cost) {
             this.cost = cost;

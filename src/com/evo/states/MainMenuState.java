@@ -4,6 +4,7 @@ import com.evo.Handler;
 import com.evo.entities.moveable.player.Fish;
 import com.evo.entities.moveable.player.FishStateManager;
 import com.evo.game_stages.GameStage;
+import com.evo.gfx.Animation;
 import com.evo.gfx.FontGrabber;
 import com.evo.gfx.OverWorldCursor;
 import com.evo.gfx.Assets;
@@ -23,6 +24,7 @@ public class MainMenuState implements IState {
     private MenuList currentMenuSelection;
     private IndexCapabilityMenu currentIndexCapabilityMenu;
     private int index;
+    private boolean yesConfirm;
 
     public MainMenuState(Handler handler) {
         this.handler = handler;
@@ -33,6 +35,7 @@ public class MainMenuState implements IState {
         currentMenuSelection = MenuList.MAIN;
         currentIndexCapabilityMenu = IndexCapabilityMenu.JAWS;
         index = 0;
+        yesConfirm = false;
     } // **** end MainMenuState(Handler) constructor ****
 
     int xYellowBorder, yYellowBorder, widthYellowBorder, heightYellowBorder;
@@ -116,8 +119,14 @@ public class MainMenuState implements IState {
 
                 break;
             case CONFIRMATION:
-                //TODO: MainMenuState(MenuList.CONFIRMATION).tick().
-                //set overWorldCursor's x and y (to indicate: yes and no, respectively).
+                //TODO: set overWorldCursor's x and y values to indicate yes and no confirm-options.
+                if (yesConfirm) {
+                    overWorldCursor.setX(33);
+                    overWorldCursor.setY((handler.panelHeight/2)+150+18);
+                } else {
+                    overWorldCursor.setX(83);
+                    overWorldCursor.setY((handler.panelHeight/2)+150+18);
+                }
 
                 break;
             default:
@@ -177,11 +186,16 @@ public class MainMenuState implements IState {
                                 }
                                 //check if player have enough experience points.
                                 else if (player.getExperiencePoints() >= FishStateManager.Jaws.values()[index].getCost()) {
+                                    /*
                                     String confirmation = "Would you like to buy FishStateManager.Jaws." +
                                             FishStateManager.Jaws.values()[index] + " for " +
                                             FishStateManager.Jaws.values()[index].getCost() + " experience points (question mark)";
                                     Object[] args = { confirmation };
                                     handler.getStateManager().pushIState( StateManager.State.TEXTBOX, args );
+                                    */
+
+                                    //TODO: CONFIRMATION.
+                                    currentMenuSelection = MenuList.CONFIRMATION;
                                 }
                             }
                         }
@@ -228,11 +242,16 @@ public class MainMenuState implements IState {
                                 }
                                 //check if player have enough experience points.
                                 else if (player.getExperiencePoints() >= FishStateManager.BodySize.values()[index].getCost()) {
+                                    /*
                                     String confirmation = "Would you like to buy FishStateManager.BodySize." +
                                             FishStateManager.BodySize.values()[index] + " for " +
                                             FishStateManager.BodySize.values()[index].getCost() + " experience points (question mark)";
                                     Object[] args = { confirmation };
                                     handler.getStateManager().pushIState( StateManager.State.TEXTBOX, args );
+                                    */
+
+                                    //TODO: CONFIRMATION.
+                                    currentMenuSelection = MenuList.CONFIRMATION;
                                 }
                             }
                         }
@@ -279,14 +298,19 @@ public class MainMenuState implements IState {
                                 }
                                 //check if player have enough experience points.
                                 else if (player.getExperiencePoints() >= FishStateManager.BodyTexture.values()[index].getCost()) {
+                                    /*
                                     String confirmation = "Would you like to buy FishStateManager.BodyTexture." +
                                             FishStateManager.BodyTexture.values()[index] + " for " +
                                             FishStateManager.BodyTexture.values()[index].getCost() + " experience points (question mark)";
                                     Object[] args = { confirmation };
                                     handler.getStateManager().pushIState( StateManager.State.TEXTBOX, args );
+                                    */
 
                                     //TODO: need a ConfirmationState pushed on top of StateManager.statesStack.
                                     //TODO: deduct player's experience points and update FishStateManager's currentXXX.
+
+                                    //TODO: CONFIRMATION.
+                                    currentMenuSelection = MenuList.CONFIRMATION;
                                 }
                             }
                         }
@@ -435,7 +459,73 @@ public class MainMenuState implements IState {
 
                 break;
             case CONFIRMATION:
-                //TODO: MainMenuState(MenuList.CONFIRMATION).getInput().
+                //right-button
+                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_D)) {
+                    yesConfirm = !yesConfirm;
+                }
+                //left-button
+                else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_A)) {
+                    yesConfirm = !yesConfirm;
+                }
+                //b-button
+                else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
+                    currentMenuSelection = MenuList.EVOLUTION;
+                }
+                //a-button
+                else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
+                    //TODO: buying implementation.
+                    if (yesConfirm) {
+                        if ( ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer() instanceof Fish) {
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            Fish player = (Fish)((GameStageState) handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
+
+                            //upgrade body part (buying feature).
+                            int expCost = 0;
+                            switch (currentIndexCapabilityMenu) {
+                                case JAWS:
+                                    player.getFishStateManager().setCurrentJaws( (FishStateManager.Jaws.values()[index]) );
+                                    System.out.println("setJaws: " + (FishStateManager.Jaws.values()[index]).toString());
+                                    expCost = FishStateManager.Jaws.values()[index].getCost();
+
+                                    break;
+                                case BODY:
+                                    player.getFishStateManager().setCurrentBodySize( (FishStateManager.BodySize.values()[index]) );
+                                    System.out.println("setBodySize: " + (FishStateManager.BodySize.values()[index]).toString());
+                                    expCost = FishStateManager.BodySize.values()[index].getCost();
+
+                                    break;
+                                case HANDS_AND_FEET:
+                                    player.getFishStateManager().setCurrentBodyTexture( (FishStateManager.BodyTexture.values()[index]) );
+                                    System.out.println("setBodyTexture: " + (FishStateManager.BodyTexture.values()[index]).toString());
+                                    expCost = FishStateManager.BodyTexture.values()[index].getCost();
+
+                                    break;
+                                default:
+                                    System.out.println("MainMenuState(MenuList.CONFIRMATION).getInput() switch(IndexCapabilityMenu)'s default.");
+                                    break;
+                            }
+                            ///////////////////////////////////////////////////////////////////////////////
+                            player.initHeadAnimations();
+                            player.setCurrentBodyAnimation( new Animation(600000000L,
+                                    Assets.tailOriginal[player.getFishStateManager().getCurrentBodySize().ordinal()]
+                                            [player.getFishStateManager().getCurrentBodyTexture().ordinal()]
+                                            [player.getFishStateManager().getCurrentFinPectoral().ordinal()]
+                                            [player.getFishStateManager().getCurrentTail().ordinal()]) );
+                            ///////////////////////////////////////////////////////////////////////////////
+                            //deduct experience points
+                            player.setExperiencePoints( (player.getExperiencePoints() - expCost) );
+
+                            currentMenuSelection = MenuList.MAIN;
+                            index = 0;
+                            handler.getStateManager().popIState();
+                            //////////////////////////////////////////////////////////////////////////////////////
+                        } else {
+                            System.out.println("PLAYER IS NOT A FISH INSTANCE!!!");
+                        }
+                    } else {
+                        currentMenuSelection = MenuList.EVOLUTION;
+                    }
+                }
 
                 break;
             default:
@@ -559,7 +649,35 @@ public class MainMenuState implements IState {
 
                 break;
             case CONFIRMATION:
-                //TODO: MainMenuState(MenuList.CONFIRMATION).render(Graphics).
+                //background textbox.
+                g.setColor(Color.GRAY);
+                g.fillRect(30, (handler.panelHeight/2)+150,
+                        Assets.mainMenu.getWidth()+10, 30);
+                //text.
+                g.setColor(Color.WHITE);
+                String confirmationMessage = null;
+                switch (currentIndexCapabilityMenu) {
+                    case JAWS:
+                        confirmationMessage = "Spend " + FishStateManager.Jaws.values()[index].getCost() +
+                                " experience point(s) for " + FishStateManager.Jaws.values()[index] + " Jaws?";
+                        break;
+                    case BODY:
+                        confirmationMessage = "Spend " + FishStateManager.BodySize.values()[index].getCost() +
+                                " experience point(s) for " + FishStateManager.BodySize.values()[index] + " BodySize?";
+                        break;
+                    case HANDS_AND_FEET:
+                        confirmationMessage = "Spend " + FishStateManager.BodyTexture.values()[index].getCost() +
+                                " experience point(s) for " + FishStateManager.BodyTexture.values()[index] + " BodyTexture?";
+                        break;
+                    default:
+                        System.out.println("MainMenuState(MenuList.CONFIRMATION).render(Graphics) switch(IndexCapabilityMenu)'s default.");
+                        break;
+                }
+                g.drawString(confirmationMessage, 30+3, (handler.panelHeight/2)+150+11);
+                g.drawString("yes", 43, (handler.panelHeight/2)+150+25);
+                g.drawString("no", 93, (handler.panelHeight/2)+150+25);
+                //cursor image: leftOverworld0.
+                overWorldCursor.render(g);
 
                 break;
             default:

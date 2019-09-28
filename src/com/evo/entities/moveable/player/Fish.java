@@ -82,7 +82,7 @@ public class Fish extends Creature
                         [fishStateManager.getCurrentTail().ordinal()]);
     }
 
-    private void initHeadAnimations() {
+    public void initHeadAnimations() {
         //for FishStateManager.ActionState.NONE
         BufferedImage[] idleFrames = new BufferedImage[1];
         idleFrames[0] = Assets.eatFrames[fishStateManager.getCurrentBodySize().ordinal()]
@@ -493,6 +493,10 @@ public class Fish extends Creature
 
     public int getHealthMax() {
         return healthMax;
+    }
+
+    public void setCurrentBodyAnimation(Animation bodyAnimation) {
+        currentBodyAnimation = bodyAnimation;
     }
 
 } // **** end Fish class ****

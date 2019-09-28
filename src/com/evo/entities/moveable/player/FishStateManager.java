@@ -10,11 +10,38 @@ public class FishStateManager implements Serializable {
     public enum ActionState { EAT, BITE, HURT, NONE; }
 
     //BODY SIZE and BODY TEXTURE determine the images of HEAD and BODY to use.
-    public enum BodySize { DECREASE, INCREASE; }
-    public enum BodyTexture { SLICK, SCALY, SHELL; }
+    public enum BodySize {
+        DECREASE(200), INCREASE(400);
+
+        BodySize(int cost) {
+            this.cost = cost;
+        }
+
+        private int cost;
+        public int getCost() { return cost; }
+    }
+    public enum BodyTexture {
+        SLICK(200), SCALY(300), SHELL(600);
+
+        BodyTexture(int cost) {
+            this.cost = cost;
+        }
+
+        private int cost;
+        public int getCost() { return cost; }
+    }
 
     //HEAD
-    public enum Jaws { ORIGINAL, KURASELACHES, ZINICHTHY/*, SWORDFISH*/; }
+    public enum Jaws {
+        ORIGINAL(10), KURASELACHES(200), ZINICHTHY(800)/*, SWORDFISH*/;
+
+        Jaws(int cost) {
+            this.cost = cost;
+        }
+
+        private int cost;
+        public int getCost() { return cost; }
+    }
     //HEAD-ATTACHMENT
     public enum Horn { ORIGINAL, SPIRALED, ANGLER, SWORDFISH, NONE; }
 

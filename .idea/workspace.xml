@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2bcc4a98-1f2c-4e1b-a19b-f51f53d66850" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/states/MainMenuState.class" afterPath="$PROJECT_DIR$/out/production/Framework-EVO/com/evo/states/MainMenuState.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/entities/moveable/player/Fish.java" afterPath="$PROJECT_DIR$/src/com/evo/entities/moveable/player/Fish.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/entities/moveable/player/FishStateManager.java" afterPath="$PROJECT_DIR$/src/com/evo/entities/moveable/player/FishStateManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/states/MainMenuState.java" afterPath="$PROJECT_DIR$/src/com/evo/states/MainMenuState.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -25,21 +25,9 @@
       <file leaf-file-name="GameStage.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/evo/game_stages/GameStage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="236" column="21" lean-forward="true" selection-start-line="236" selection-start-column="21" selection-end-line="236" selection-end-column="21" />
+            <state relative-caret-position="309">
+              <caret line="611" column="21" lean-forward="false" selection-start-line="611" selection-start-column="21" selection-end-line="611" selection-end-column="21" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Frog.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/evo/entities/moveable/enemies/frogger/Frog.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="41" column="36" lean-forward="false" selection-start-line="41" selection-start-column="36" selection-end-line="41" selection-end-column="36" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -87,8 +75,18 @@
       <file leaf-file-name="MainMenuState.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/evo/states/MainMenuState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="381" column="58" lean-forward="true" selection-start-line="381" selection-start-column="58" selection-end-line="381" selection-end-column="58" />
+            <state relative-caret-position="119">
+              <caret line="165" column="105" lean-forward="false" selection-start-line="165" selection-start-column="105" selection-end-line="165" selection-end-column="105" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StateManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/evo/states/StateManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="62" column="27" lean-forward="true" selection-start-line="62" selection-start-column="27" selection-end-line="62" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -97,8 +95,8 @@
       <file leaf-file-name="Fish.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/evo/entities/moveable/player/Fish.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="311" column="19" lean-forward="true" selection-start-line="311" selection-start-column="19" selection-end-line="311" selection-end-column="19" />
+            <state relative-caret-position="340">
+              <caret line="48" column="30" lean-forward="false" selection-start-line="48" selection-start-column="30" selection-end-line="48" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -107,9 +105,16 @@
       <file leaf-file-name="FishStateManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/evo/entities/moveable/player/FishStateManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="22" column="69" lean-forward="true" selection-start-line="22" selection-start-column="69" selection-end-line="22" selection-end-column="69" />
-              <folding />
+            <state relative-caret-position="255">
+              <caret line="23" column="42" lean-forward="false" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
+              <folding>
+                <element signature="e#444#445#0" expanded="true" />
+                <element signature="e#484#485#0" expanded="true" />
+                <element signature="e#670#671#0" expanded="true" />
+                <element signature="e#710#711#0" expanded="true" />
+                <element signature="e#922#923#0" expanded="true" />
+                <element signature="e#962#963#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -150,7 +155,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/evo/entities/moveable/fish/FishStateManager.java" />
         <option value="$PROJECT_DIR$/src/com/evo/entities/moveable/OverWorldCursor.java" />
         <option value="$PROJECT_DIR$/src/com/evo/gfx/OverWorldCursor.java" />
         <option value="$PROJECT_DIR$/src/com/evo/input/KeyManager.java" />
@@ -191,7 +195,6 @@
         <option value="$PROJECT_DIR$/src/com/evo/entities/moveable/enemies/Eel.java" />
         <option value="$PROJECT_DIR$/src/com/evo/serialize_deserialize/SaverAndLoader.java" />
         <option value="$PROJECT_DIR$/src/com/evo/entities/moveable/player/IPlayable.java" />
-        <option value="$PROJECT_DIR$/src/com/evo/entities/moveable/player/Fish.java" />
         <option value="$PROJECT_DIR$/src/com/evo/entities/moveable/Creature.java" />
         <option value="$PROJECT_DIR$/src/com/evo/entities/moveable/enemies/frogger/Car.java" />
         <option value="$PROJECT_DIR$/src/com/evo/entities/EntityManager.java" />
@@ -200,6 +203,8 @@
         <option value="$PROJECT_DIR$/src/com/evo/entities/moveable/enemies/frogger/Log.java" />
         <option value="$PROJECT_DIR$/src/com/evo/states/GameStageState.java" />
         <option value="$PROJECT_DIR$/src/com/evo/gfx/Assets.java" />
+        <option value="$PROJECT_DIR$/src/com/evo/entities/moveable/player/Fish.java" />
+        <option value="$PROJECT_DIR$/src/com/evo/entities/moveable/player/FishStateManager.java" />
         <option value="$PROJECT_DIR$/src/com/evo/states/MainMenuState.java" />
       </list>
     </option>
@@ -773,13 +778,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/evo/states/StateManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="43" column="64" lean-forward="true" selection-start-line="43" selection-start-column="64" selection-end-line="43" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_92/src.zip!/java/io/ObjectOutputStream.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="61">
@@ -1022,14 +1020,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/evo/game_stages/GameStage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="236" column="21" lean-forward="true" selection-start-line="236" selection-start-column="21" selection-end-line="236" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/evo/states/GameStageState.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
@@ -1040,24 +1030,47 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/evo/entities/moveable/player/Fish.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="311" column="19" lean-forward="true" selection-start-line="311" selection-start-column="19" selection-end-line="311" selection-end-column="19" />
+        <state relative-caret-position="340">
+          <caret line="48" column="30" lean-forward="false" selection-start-line="48" selection-start-column="30" selection-end-line="48" selection-end-column="30" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/evo/entities/moveable/player/FishStateManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="22" column="69" lean-forward="true" selection-start-line="22" selection-start-column="69" selection-end-line="22" selection-end-column="69" />
+        <state relative-caret-position="255">
+          <caret line="23" column="42" lean-forward="false" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
+          <folding>
+            <element signature="e#444#445#0" expanded="true" />
+            <element signature="e#484#485#0" expanded="true" />
+            <element signature="e#670#671#0" expanded="true" />
+            <element signature="e#710#711#0" expanded="true" />
+            <element signature="e#922#923#0" expanded="true" />
+            <element signature="e#962#963#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/evo/game_stages/GameStage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="611" column="21" lean-forward="false" selection-start-line="611" selection-start-column="21" selection-end-line="611" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/evo/states/StateManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="62" column="27" lean-forward="true" selection-start-line="62" selection-start-column="27" selection-end-line="62" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/evo/states/MainMenuState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="381" column="58" lean-forward="true" selection-start-line="381" selection-start-column="58" selection-end-line="381" selection-end-column="58" />
+        <state relative-caret-position="119">
+          <caret line="165" column="105" lean-forward="false" selection-start-line="165" selection-start-column="105" selection-end-line="165" selection-end-column="105" />
           <folding />
         </state>
       </provider>

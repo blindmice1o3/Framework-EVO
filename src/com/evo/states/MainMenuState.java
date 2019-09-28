@@ -1,6 +1,7 @@
 package com.evo.states;
 
 import com.evo.Handler;
+import com.evo.entities.moveable.player.Fish;
 import com.evo.entities.moveable.player.FishStateManager;
 import com.evo.game_stages.GameStage;
 import com.evo.gfx.FontGrabber;
@@ -154,6 +155,29 @@ public class MainMenuState implements IState {
                             }
                         }
 
+                        //a-button (execute buying).
+                        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
+                            if ( ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer() instanceof Fish) {
+                                Fish player = (Fish)((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
+
+                                //check if player already have this choice currently equipped.
+                                if (player.getFishStateManager().getCurrentJaws() == FishStateManager.Jaws.values()[index]) {
+                                    String alreadyEquipped = "Already equipped (comma) can NOT buy FishStateManager.Jaws." +
+                                            FishStateManager.Jaws.values()[index] + " (exclaimation mark)";
+                                    Object[] args = { alreadyEquipped };
+                                    handler.getStateManager().pushIState( StateManager.State.TEXTBOX, args );
+                                }
+                                //check if player have enough experience points.
+                                else if (player.getExperiencePoints() >= FishStateManager.Jaws.values()[index].getCost()) {
+                                    String confirmation = "Would you like to buy FishStateManager.Jaws." +
+                                            FishStateManager.Jaws.values()[index] + " for " +
+                                            FishStateManager.Jaws.values()[index].getCost() + " experience points (question mark)";
+                                    Object[] args = { confirmation };
+                                    handler.getStateManager().pushIState( StateManager.State.TEXTBOX, args );
+                                }
+                            }
+                        }
+
                         break;
                     case BODY:
                         //down-button
@@ -170,6 +194,29 @@ public class MainMenuState implements IState {
 
                             if ( index < 0 ) {
                                 index = (FishStateManager.BodySize.values().length-1);
+                            }
+                        }
+
+                        //a-button (execute buying).
+                        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
+                            if ( ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer() instanceof Fish) {
+                                Fish player = (Fish)((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
+
+                                //check if player already have this choice currently equipped.
+                                if (player.getFishStateManager().getCurrentBodySize() == FishStateManager.BodySize.values()[index]) {
+                                    String alreadyEquipped = "Already equipped (comma) can NOT buy FishStateManager.BodySize." +
+                                            FishStateManager.BodySize.values()[index] + " (exclaimation mark)";
+                                    Object[] args = { alreadyEquipped };
+                                    handler.getStateManager().pushIState( StateManager.State.TEXTBOX, args );
+                                }
+                                //check if player have enough experience points.
+                                else if (player.getExperiencePoints() >= FishStateManager.BodySize.values()[index].getCost()) {
+                                    String confirmation = "Would you like to buy FishStateManager.BodySize." +
+                                            FishStateManager.BodySize.values()[index] + " for " +
+                                            FishStateManager.BodySize.values()[index].getCost() + " experience points (question mark)";
+                                    Object[] args = { confirmation };
+                                    handler.getStateManager().pushIState( StateManager.State.TEXTBOX, args );
+                                }
                             }
                         }
 
@@ -192,15 +239,33 @@ public class MainMenuState implements IState {
                             }
                         }
 
+                        //a-button (execute buying).
+                        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
+                            if ( ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer() instanceof Fish) {
+                                Fish player = (Fish)((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
+
+                                //check if player already have this choice currently equipped.
+                                if (player.getFishStateManager().getCurrentBodyTexture() == FishStateManager.BodyTexture.values()[index]) {
+                                    String alreadyEquipped = "Already equipped (comma) can NOT buy FishStateManager.BodyTexture. " +
+                                            FishStateManager.BodyTexture.values()[index] + " (exclaimation mark)";
+                                    Object[] args = { alreadyEquipped };
+                                    handler.getStateManager().pushIState( StateManager.State.TEXTBOX, args );
+                                }
+                                //check if player have enough experience points.
+                                else if (player.getExperiencePoints() >= FishStateManager.BodyTexture.values()[index].getCost()) {
+                                    String confirmation = "Would you like to buy FishStateManager.BodyTexture." +
+                                            FishStateManager.BodyTexture.values()[index] + " for " +
+                                            FishStateManager.BodyTexture.values()[index].getCost() + " experience points (question mark)";
+                                    Object[] args = { confirmation };
+                                    handler.getStateManager().pushIState( StateManager.State.TEXTBOX, args );
+                                }
+                            }
+                        }
+
                         break;
                     default:
                         System.out.println("MainMenuState.getInput(): switch-construct.CAPABILITY's switch's default.");
                         break;
-                }
-
-                //a-button (open menu list for selected index).
-                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
-
                 }
 
                 //b-button (return to MenuList.MAIN).
@@ -346,7 +411,7 @@ public class MainMenuState implements IState {
                 break;
             case CAPABILITY:
                 //repaint the render(Graphics) of the IState that is just below the top of the stack.
-                handler.getStateManager().getStatesStack().get(handler.getStateManager().getStatesStack().size()-2).render(g);
+                handler.getStateManager().getState(StateManager.State.GAME_STAGE).render(g);
 
                 /////////////////////////////////////////////////////////////////////////////////////////////////////
                 Graphics2D g2d = (Graphics2D)g;
@@ -376,6 +441,8 @@ public class MainMenuState implements IState {
                     case JAWS:
                         for (FishStateManager.Jaws jaws : FishStateManager.Jaws.values()) {
                             FontGrabber.renderString(g, jaws.toString(), x, y, 10, 10);
+                            FontGrabber.renderString(g, Integer.toString( jaws.getCost() ),
+                                    x+(jaws.toString().length()*10)+10, y, 10, 10);
 
                             if (jaws.ordinal() == index) {
                                 overWorldCursor.setX(x-10);
@@ -390,6 +457,8 @@ public class MainMenuState implements IState {
                     case BODY:
                         for (FishStateManager.BodySize bodySize : FishStateManager.BodySize.values()) {
                             FontGrabber.renderString(g, bodySize.toString(), x, y, 10, 10);
+                            FontGrabber.renderString(g, Integer.toString( bodySize.getCost() ),
+                                    x+(bodySize.toString().length()*10)+10, y, 10, 10);
 
                             if (bodySize.ordinal() == index) {
                                 overWorldCursor.setX(x-10);
@@ -404,6 +473,8 @@ public class MainMenuState implements IState {
                     case HANDS_AND_FEET:
                         for (FishStateManager.BodyTexture bodyTexture : FishStateManager.BodyTexture.values()) {
                             FontGrabber.renderString(g, bodyTexture.toString(), x, y, 10, 10);
+                            FontGrabber.renderString(g, Integer.toString( bodyTexture.getCost() ),
+                                    x+(bodyTexture.toString().length()*10)+10, y, 10, 10);
 
                             if (bodyTexture.ordinal() == index) {
                                 overWorldCursor.setX(x-10);
@@ -453,14 +524,12 @@ public class MainMenuState implements IState {
 
     @Override
     public void enter(Object[] args) {
-        currentMenuSelection = MenuList.MAIN;
-        index = 0;
+
     }
 
     @Override
     public void exit() {
-        currentMenuSelection = MenuList.MAIN;
-        index = 0;
+
     }
 
 } // **** end MainMenuState class ****

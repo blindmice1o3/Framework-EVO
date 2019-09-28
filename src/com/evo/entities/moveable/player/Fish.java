@@ -46,7 +46,7 @@ public class Fish extends Creature
         fishStateManager = new FishStateManager();
 
         directionFacing = DirectionFacing.RIGHT;
-        experiencePoints = 0;
+        experiencePoints = 3000;
         healthMax = DEFAULT_HEALTH;
 
         initAnimations();

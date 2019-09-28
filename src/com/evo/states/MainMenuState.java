@@ -14,7 +14,7 @@ import java.awt.event.KeyEvent;
 
 public class MainMenuState implements IState {
 
-    public enum MenuList { EVOLUTION, CAPABILITY, RECORD_OF_EVOLUTION, MAIN; }
+    public enum MenuList { EVOLUTION, CAPABILITY, RECORD_OF_EVOLUTION, MAIN, CONFIRMATION; }
     public enum IndexCapabilityMenu { JAWS, BODY, HANDS_AND_FEET; }
 
     private Handler handler;
@@ -42,11 +42,8 @@ public class MainMenuState implements IState {
 
         switch (currentMenuSelection) {
             case EVOLUTION:
-
-                break;
-            case CAPABILITY:
-                //determines yellow-border's on-screen location based on selected index.
                 switch (currentIndexCapabilityMenu) {
+                    //determines yellow-border's on-screen location based on selected index.
                     case JAWS:
                         xYellowBorder = 13;
                         yYellowBorder = 55;
@@ -75,8 +72,12 @@ public class MainMenuState implements IState {
                 }
 
                 break;
+            case CAPABILITY:
+                //TODO: MainMenuState(MenuList.CAPABILITY).tick().
+
+                break;
             case RECORD_OF_EVOLUTION:
-                //determines cursor's on-screen location based on selected index.
+                //determines cursor's on-screen location (to indicate: yes or no) based on selected index.
                 switch (index) {
                     case 0:
                         overWorldCursor.setX(33);
@@ -93,7 +94,8 @@ public class MainMenuState implements IState {
 
                 break;
             case MAIN:
-                //determines cursor's on-screen location based on selected index.
+                //determines cursor's on-screen location (to indicate: Evolution, Capability, or Record of Evolution)
+                //based on selected index.
                 switch (index) {
                     case 0:
                         overWorldCursor.setX(23);
@@ -113,6 +115,11 @@ public class MainMenuState implements IState {
                 }
 
                 break;
+            case CONFIRMATION:
+                //TODO: MainMenuState(MenuList.CONFIRMATION).tick().
+                //set overWorldCursor's x and y (to indicate: yes and no, respectively).
+
+                break;
             default:
                 System.out.println("MainMenuState.tick(): switch's default.");
                 break;
@@ -128,14 +135,6 @@ public class MainMenuState implements IState {
 
         switch (currentMenuSelection) {
             case EVOLUTION:
-                //b-button (return to MenuList.MAIN).
-                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
-                    currentMenuSelection = MenuList.MAIN;
-                    index = 0;
-                }
-
-                break;
-            case CAPABILITY:
                 switch ( currentIndexCapabilityMenu ) {
                     case JAWS:
                         //down-button
@@ -340,6 +339,14 @@ public class MainMenuState implements IState {
                 }
 
                 break;
+            case CAPABILITY:
+                //b-button (return to MenuList.MAIN).
+                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
+                    currentMenuSelection = MenuList.MAIN;
+                    index = 0;
+                }
+
+                break;
             case RECORD_OF_EVOLUTION:
                 //a-button (either SAVES game or set currentMenuSelection to MenuList.MAIN).
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_COMMA)) {
@@ -413,18 +420,22 @@ public class MainMenuState implements IState {
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_S)) {
                     index++;
 
-                    //minus 2 because MenuList.MAIN doesn't count as a menu selection choice.
-                    if (index > MenuList.values().length-2) {
+                    //minus 2 extra because MAIN and CONFIRMATION do NOT count as a menu selection choice.
+                    if ( index > ((MenuList.values().length-1)-1-1) ) {
                         index = 0;
                     }
                 } else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_W)) {
                     index--;
 
                     if (index < 0) {
-                        //minus 2 because MenuList.MAIN doesn't count as a menu selection choice.
-                        index = MenuList.values().length-2;
+                        //minus 2 extra because MAIN and CONFIRMATION do NOT count as a menu selection choice.
+                        index = ((MenuList.values().length-1)-1-1);
                     }
                 }
+
+                break;
+            case CONFIRMATION:
+                //TODO: MainMenuState(MenuList.CONFIRMATION).getInput().
 
                 break;
             default:
@@ -437,9 +448,6 @@ public class MainMenuState implements IState {
     public void render(Graphics g) {
         switch (currentMenuSelection) {
             case EVOLUTION:
-
-                break;
-            case CAPABILITY:
                 //repaint the render(Graphics) of the IState that is just below the top of the stack.
                 handler.getStateManager().getState(StateManager.State.GAME_STAGE).render(g);
 
@@ -522,6 +530,10 @@ public class MainMenuState implements IState {
                 }
 
                 break;
+            case CAPABILITY:
+                //TODO: MainMenuState(MenuList.CAPABILITY).render(Graphics).
+
+                break;
             case RECORD_OF_EVOLUTION:
                 //background textbox.
                 g.setColor(Color.GRAY);
@@ -544,6 +556,10 @@ public class MainMenuState implements IState {
                 g.drawImage(Assets.mainMenu, 20, 20, null);
                 //cursor image: leftOverworld0.
                 overWorldCursor.render(g);
+
+                break;
+            case CONFIRMATION:
+                //TODO: MainMenuState(MenuList.CONFIRMATION).render(Graphics).
 
                 break;
             default:

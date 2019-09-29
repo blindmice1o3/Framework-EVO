@@ -364,6 +364,66 @@ public class Fish extends Creature
                             [fishStateManager.getCurrentFinPectoral().ordinal()]
                             [fishStateManager.getCurrentTail().ordinal()]);
         }
+        //TAIL
+        else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_V)) {
+            int currentTailOrdinal = fishStateManager.getCurrentTail().ordinal();
+            FishStateManager.Tail[] tails = FishStateManager.Tail.values();
+
+            if ((currentTailOrdinal+1) < tails.length) {
+                fishStateManager.setCurrentTail(tails[currentTailOrdinal + 1]);
+            } else {
+                fishStateManager.setCurrentTail(tails[0]);
+            }
+
+            //TODO: inefficient, (though unlikely) could be returning to an already-existing Animation object.
+            initHeadAnimations();
+            switch (fishStateManager.getCurrentTail()) {
+                case ORIGINAL:
+                    currentBodyAnimation = new Animation(600000000L,
+                            Assets.tailOriginal[fishStateManager.getCurrentBodySize().ordinal()]
+                                    [fishStateManager.getCurrentBodyTexture().ordinal()]
+                                    [fishStateManager.getCurrentFinPectoral().ordinal()]
+                                    [fishStateManager.getCurrentTail().ordinal()]);
+
+                    break;
+                case COELAFISH:
+                    currentBodyAnimation = new Animation(600000000L,
+                            Assets.tailCoelafish[fishStateManager.getCurrentBodySize().ordinal()]
+                                    [fishStateManager.getCurrentBodyTexture().ordinal()]
+                                    [fishStateManager.getCurrentFinPectoral().ordinal()]
+                                    [fishStateManager.getCurrentTail().ordinal()]);
+
+                    break;
+                case TERATISU:
+                    currentBodyAnimation = new Animation(600000000L,
+                            Assets.tailTeratisu[fishStateManager.getCurrentBodySize().ordinal()]
+                                    [fishStateManager.getCurrentBodyTexture().ordinal()]
+                                    [fishStateManager.getCurrentFinPectoral().ordinal()]
+                                    [fishStateManager.getCurrentTail().ordinal()]);
+
+                    break;
+                case ZINICHTHY:
+                    currentBodyAnimation = new Animation(600000000L,
+                            Assets.tailZinichthy[fishStateManager.getCurrentBodySize().ordinal()]
+                                    [fishStateManager.getCurrentBodyTexture().ordinal()]
+                                    [fishStateManager.getCurrentFinPectoral().ordinal()]
+                                    [fishStateManager.getCurrentTail().ordinal()]);
+
+                    break;
+                case KURASELACHE:
+                    currentBodyAnimation = new Animation(600000000L,
+                            Assets.tailKuraselache[fishStateManager.getCurrentBodySize().ordinal()]
+                                    [fishStateManager.getCurrentBodyTexture().ordinal()]
+                                    [fishStateManager.getCurrentFinPectoral().ordinal()]
+                                    [fishStateManager.getCurrentTail().ordinal()]);
+
+                    break;
+                default:
+                    System.out.println("Fish.getInput() KeyEvent.VK_V switch-construct's default.");
+                    break;
+            }
+
+        }
 
     }
 

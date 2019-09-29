@@ -517,6 +517,8 @@ public class MainMenuState implements IState {
 
                             currentMenuSelection = MenuList.MAIN;
                             index = 0;
+                            currentIndexCapabilityMenu = IndexCapabilityMenu.JAWS;
+
                             handler.getStateManager().popIState();
                             //////////////////////////////////////////////////////////////////////////////////////
                         } else {

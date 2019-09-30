@@ -9,7 +9,18 @@ public class FishStateManager implements Serializable {
     //ACTION STATES
     public enum ActionState { EAT, BITE, HURT, NONE; }
 
-    //BODY SIZE and BODY TEXTURE determine the images of HEAD and BODY to use.
+    //BODY
+    //BODY TEXTURE and BODY SIZE determine the images of HEAD and BODY to use.
+    public enum BodyTexture {
+        SLICK(200), SCALY(300), SHELL(600);
+
+        BodyTexture(int cost) {
+            this.cost = cost;
+        }
+
+        private int cost;
+        public int getCost() { return cost; }
+    }
     public enum BodySize {
         DECREASE(200), INCREASE(400);
 
@@ -20,12 +31,18 @@ public class FishStateManager implements Serializable {
         private int cost;
         public int getCost() { return cost; }
     }
-    public enum BodyTexture {
-        SLICK(200), SCALY(300), SHELL(600);
+    public enum FinPectoral {
+        ORIGINAL(200), COELAFISH(300), TACKLE(400);
 
-        BodyTexture(int cost) {
-            this.cost = cost;
-        }
+        FinPectoral(int cost) { this.cost = cost; }
+
+        private int cost;
+        public int getCost() { return cost; }
+    }
+    public enum Tail {
+        ORIGINAL(100), COELAFISH(150), TERATISU(200), ZINICHTHY(300), KURASELACHE(400);
+
+        Tail(int cost) { this.cost = cost; }
 
         private int cost;
         public int getCost() { return cost; }
@@ -45,9 +62,6 @@ public class FishStateManager implements Serializable {
     //HEAD-ATTACHMENT
     public enum Horn { ORIGINAL, SPIRALED, ANGLER, SWORDFISH, NONE; }
 
-    //BODY
-    public enum FinPectoral { ORIGINAL, COELAFISH, TACKLE; }
-    public enum Tail { ORIGINAL, COELAFISH, TERATISU, ZINICHTHY, KURASELACHE; }
     //BODY-ATTACHMENT
     public enum FinDorsal { ORIGINAL, SAILING, KURASELACHE; }
 

@@ -50,7 +50,7 @@ public class FishStateManager implements Serializable {
 
     //HEAD
     public enum Jaws {
-        ORIGINAL(10, 0), KURASELACHES(200, 2), ZINICHTHY(8000, 4)/*, SWORDFISH*/;
+        ORIGINAL(10, 0), KURASELACHES(3000, 2), ZINICHTHY(300, 4)/*, SWORDFISH*/;
 
         Jaws(int cost, int damageBiteBonus) {
             this.cost = cost;
@@ -70,7 +70,7 @@ public class FishStateManager implements Serializable {
 
     ////////////////////////////////////////////////////////////
 
-    public static final int BASE_BITE = 1, BASE_STRENGTH = 1, BASE_KICK = 0, BASE_HORN = 0,
+    public static final int BASE_BITE = 1, BASE_STRENGTH = 1, BASE_KICK = 0, BASE_STRIKE = 0, BASE_HORN = 0,
             BASE_DEFENSE = 0, BASE_AGILITY = 4, BASE_JUMP = 1;
 
     //INSTANCE FIELDS
@@ -107,6 +107,7 @@ public class FishStateManager implements Serializable {
         damageBite = BASE_BITE;
         damageStrength = BASE_STRENGTH;
         damageKick = BASE_KICK;
+        damageStrike = BASE_STRIKE;
         damageHorn = BASE_HORN;
         defense = BASE_DEFENSE;
         agility = BASE_AGILITY;
@@ -114,6 +115,23 @@ public class FishStateManager implements Serializable {
     } // **** end FishStateManager() constructor ****
 
     ////////////////////////////////////////////////////////////
+    //TODO: update BONUSES from the new body part.
+    public void setCurrentJaws(Jaws currentJaws) {
+        this.currentJaws = currentJaws;
+        damageBite = BASE_BITE + currentJaws.getDamageBiteBonus();
+    }
+
+    public void setCurrentBodyTexture(BodyTexture currentBodyTexture) { this.currentBodyTexture = currentBodyTexture; }
+
+    public void setCurrentBodySize(BodySize currentBodySize) { this.currentBodySize = currentBodySize; }
+
+    public void setCurrentFinPectoral(FinPectoral currentFinPectoral) { this.currentFinPectoral = currentFinPectoral; }
+
+    public void setCurrentTail(Tail currentTail) { this.currentTail = currentTail; }
+
+    public void setCurrentFinDorsal(FinDorsal currentFinDorsal) { this.currentFinDorsal = currentFinDorsal; }
+
+    public void setCurrentHorn(Horn currentHorn) { this.currentHorn = currentHorn; }
 
     // GETTERS AND SETTERS
     public ActionState getCurrentActionState() {
@@ -122,47 +140,33 @@ public class FishStateManager implements Serializable {
 
     public void setCurrentActionState(ActionState currentActionState) { this.currentActionState = currentActionState; }
 
-    public BodySize getCurrentBodySize() {
-        return currentBodySize;
+    public Jaws getCurrentJaws() {
+        return currentJaws;
     }
-
-    public void setCurrentBodySize(BodySize currentBodySize) { this.currentBodySize = currentBodySize; }
 
     public BodyTexture getCurrentBodyTexture() {
         return currentBodyTexture;
     }
 
-    public void setCurrentBodyTexture(BodyTexture currentBodyTexture) { this.currentBodyTexture = currentBodyTexture; }
-
-    public Jaws getCurrentJaws() {
-        return currentJaws;
+    public BodySize getCurrentBodySize() {
+        return currentBodySize;
     }
-
-    public void setCurrentJaws(Jaws currentJaws) { this.currentJaws = currentJaws; }
-
-    public Horn getCurrentHorn() {
-        return currentHorn;
-    }
-
-    public void setCurrentHorn(Horn currentHorn) { this.currentHorn = currentHorn; }
 
     public FinPectoral getCurrentFinPectoral() {
         return currentFinPectoral;
     }
 
-    public void setCurrentFinPectoral(FinPectoral currentFinPectoral) { this.currentFinPectoral = currentFinPectoral; }
-
     public Tail getCurrentTail() {
         return currentTail;
     }
-
-    public void setCurrentTail(Tail currentTail) { this.currentTail = currentTail; }
 
     public FinDorsal getCurrentFinDorsal() {
         return currentFinDorsal;
     }
 
-    public void setCurrentFinDorsal(FinDorsal currentFinDorsal) { this.currentFinDorsal = currentFinDorsal; }
+    public Horn getCurrentHorn() {
+        return currentHorn;
+    }
 
     public int getDamageBite() {
         return damageBite;

@@ -604,6 +604,7 @@ public class MainMenuState implements IState {
                             int expCost = 0;
                             switch (currentIndexEvolutionMenu) {
                                 case JAWS:
+                                    //upgrade jaws.
                                     player.getFishStateManager().setCurrentJaws( (FishStateManager.Jaws.values()[index]) );
                                     System.out.println("setJaws: " + (FishStateManager.Jaws.values()[index]).toString());
                                     expCost = FishStateManager.Jaws.values()[index].getCost();

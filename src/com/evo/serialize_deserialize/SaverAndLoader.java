@@ -99,6 +99,7 @@ public class SaverAndLoader {
                 ArrayList<ComponentHUD> timedNumericIndicators = (ArrayList<ComponentHUD>) objectInputStream.readObject();
                 ArrayList<Quest> quests = (ArrayList<Quest>) objectInputStream.readObject();
 
+                fishStateManager.setHandler(handler);
 
                 ((Fish)currentGameStage.getPlayer()).setFishStateManager(fishStateManager);
                 ((Fish)currentGameStage.getPlayer()).tick(0);

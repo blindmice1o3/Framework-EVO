@@ -1,8 +1,16 @@
 package com.evo.entities.moveable.player;
 
+import com.evo.Handler;
+import com.evo.states.GameStageState;
+import com.evo.states.StateManager;
+
 import java.io.Serializable;
 
-public class FishStateManager implements Serializable {
+public class FishStateManager
+        implements Serializable {
+
+    public static final int BASE_BITE = 1, BASE_STRENGTH = 1, BASE_KICK = 0, BASE_STRIKE = 0, BASE_HORN = 0,
+            BASE_DEFENSE = 0, BASE_AGILITY = 4, BASE_JUMP = 1;
 
     ////////////////////////////////////////////////////////////
 
@@ -12,40 +20,65 @@ public class FishStateManager implements Serializable {
     //BODY
     //BODY TEXTURE and BODY SIZE determine the images of HEAD and BODY to use.
     public enum BodyTexture {
-        SLICK(200), SCALY(300), SHELL(600);
+        SLICK(200, 0), SCALY(300, 2), SHELL(600, 4);
 
-        BodyTexture(int cost) {
+        BodyTexture(int cost, int defenseBonus) {
             this.cost = cost;
+            this.defenseBonus = defenseBonus;
         }
-
         private int cost;
+        private int defenseBonus;
         public int getCost() { return cost; }
+        public int getDefenseBonus() { return defenseBonus; }
     }
     public enum BodySize {
-        DECREASE(200), INCREASE(400);
+        DECREASE(200, -10, -1, -1, 3), INCREASE(400, 10, 1, 1, -3);
 
-        BodySize(int cost) {
+        BodySize(int cost, int healthMaxBonus, int strengthBonus, int defenseBonus, int agilityBonus) {
             this.cost = cost;
+            this.healthMaxBonus = healthMaxBonus;
+            this.strengthBonus = strengthBonus;
+            this.defenseBonus = defenseBonus;
+            this.agilityBonus = agilityBonus;
         }
-
         private int cost;
+        private int healthMaxBonus, strengthBonus, defenseBonus, agilityBonus;
         public int getCost() { return cost; }
+        public int getHealthMaxBonus() { return healthMaxBonus; }
+        public int getStrengthBonus() { return strengthBonus; }
+        public int getDefenseBonus() { return defenseBonus; }
+        public int getAgilityBonus() { return agilityBonus; }
     }
     public enum FinPectoral {
-        ORIGINAL(200), COELAFISH(300), TACKLE(400);
+        ORIGINAL(200, 0, 0), COELAFISH(300, 1, 2), TACKLE(400, 2, 3);
 
-        FinPectoral(int cost) { this.cost = cost; }
-
+        FinPectoral(int cost, int strengthBonus, int agilityBonus) {
+            this.cost = cost;
+            this.strengthBonus = strengthBonus;
+            this.agilityBonus = agilityBonus;
+        }
         private int cost;
+        private int strengthBonus, agilityBonus;
         public int getCost() { return cost; }
+        public int getStrengthBonus() { return strengthBonus; }
+        public int getAgilityBonus() { return agilityBonus; }
     }
     public enum Tail {
-        ORIGINAL(100), COELAFISH(150), TERATISU(200), ZINICHTHY(300), KURASELACHE(400);
+        ORIGINAL(100, 0, 0, 0), COELAFISH(150, 3, 1, 1), TERATISU(200, 5, 2, 2),
+        ZINICHTHY(300,7, 3, 3), KURASELACHE(400, 15, 4, 4);
 
-        Tail(int cost) { this.cost = cost; }
-
+        Tail(int cost, int healthMaxBonus, int agilityBonus, int jumpBonus) {
+            this.cost = cost;
+            this.healthMaxBonus = healthMaxBonus;
+            this.agilityBonus = agilityBonus;
+            this.jumpBonus = jumpBonus;
+        }
         private int cost;
+        private int healthMaxBonus, agilityBonus, jumpBonus;
         public int getCost() { return cost; }
+        public int getHealthMaxBonus() { return healthMaxBonus; }
+        public int getAgilityBonus() { return agilityBonus; }
+        public int getJumpBonus() { return jumpBonus; }
     }
 
     //HEAD
@@ -56,7 +89,6 @@ public class FishStateManager implements Serializable {
             this.cost = cost;
             this.damageBiteBonus = damageBiteBonus;
         }
-
         private int cost;
         private int damageBiteBonus;
         public int getCost() { return cost; }
@@ -70,10 +102,9 @@ public class FishStateManager implements Serializable {
 
     ////////////////////////////////////////////////////////////
 
-    public static final int BASE_BITE = 1, BASE_STRENGTH = 1, BASE_KICK = 0, BASE_STRIKE = 0, BASE_HORN = 0,
-            BASE_DEFENSE = 0, BASE_AGILITY = 4, BASE_JUMP = 1;
-
     //INSTANCE FIELDS
+    private transient Handler handler;
+
     private ActionState currentActionState;
 
     private BodySize currentBodySize;
@@ -91,7 +122,9 @@ public class FishStateManager implements Serializable {
     ////////////////////////////////////////////////////////////
 
     //CONSTRUCTOR with default values.
-    public FishStateManager() {
+    public FishStateManager(Handler handler) {
+        this.handler = handler;
+
         currentActionState = ActionState.NONE;
 
         currentBodySize = BodySize.DECREASE;
@@ -112,7 +145,7 @@ public class FishStateManager implements Serializable {
         defense = BASE_DEFENSE;
         agility = BASE_AGILITY;
         jump = BASE_JUMP;
-    } // **** end FishStateManager() constructor ****
+    } // **** end FishStateManager(Handler) constructor ****
 
     ////////////////////////////////////////////////////////////
     //TODO: update BONUSES from the new body part.
@@ -121,19 +154,43 @@ public class FishStateManager implements Serializable {
         damageBite = BASE_BITE + currentJaws.getDamageBiteBonus();
     }
 
-    public void setCurrentBodyTexture(BodyTexture currentBodyTexture) { this.currentBodyTexture = currentBodyTexture; }
+    public void setCurrentBodyTexture(BodyTexture currentBodyTexture) {
+        this.currentBodyTexture = currentBodyTexture;
+        defense = BASE_DEFENSE + currentBodyTexture.getDefenseBonus() + currentBodySize.getDefenseBonus();
+    }
 
-    public void setCurrentBodySize(BodySize currentBodySize) { this.currentBodySize = currentBodySize; }
+    public void setCurrentBodySize(BodySize currentBodySize) {
+        this.currentBodySize = currentBodySize;
+        IPlayable player = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
 
-    public void setCurrentFinPectoral(FinPectoral currentFinPectoral) { this.currentFinPectoral = currentFinPectoral; }
+        player.setHealthMax( 20 + currentBodySize.getHealthMaxBonus() + currentTail.getHealthMaxBonus() );
+        damageStrength = BASE_STRENGTH + currentBodySize.getStrengthBonus() + currentFinPectoral.getStrengthBonus();
+        defense = BASE_DEFENSE + currentBodyTexture.getDefenseBonus() + currentBodySize.getDefenseBonus();
+        agility = BASE_AGILITY + currentBodySize.getAgilityBonus() + currentFinPectoral.getAgilityBonus() + currentTail.getAgilityBonus();
+    }
 
-    public void setCurrentTail(Tail currentTail) { this.currentTail = currentTail; }
+    public void setCurrentFinPectoral(FinPectoral currentFinPectoral) {
+        this.currentFinPectoral = currentFinPectoral;
+        damageStrength = BASE_STRENGTH + currentBodySize.getStrengthBonus() + currentFinPectoral.getStrengthBonus();
+        agility = BASE_AGILITY + currentBodySize.getAgilityBonus() + currentFinPectoral.getAgilityBonus() + currentTail.getAgilityBonus();
+    }
+
+    public void setCurrentTail(Tail currentTail) {
+        this.currentTail = currentTail;
+        IPlayable player = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
+
+        player.setHealthMax( 20 + currentBodySize.getHealthMaxBonus() + currentTail.getHealthMaxBonus() );
+        agility = BASE_AGILITY + currentBodySize.getAgilityBonus() + currentFinPectoral.getAgilityBonus() + currentTail.getAgilityBonus();
+        jump = BASE_JUMP + currentTail.getJumpBonus();
+    }
 
     public void setCurrentFinDorsal(FinDorsal currentFinDorsal) { this.currentFinDorsal = currentFinDorsal; }
 
     public void setCurrentHorn(Horn currentHorn) { this.currentHorn = currentHorn; }
 
     // GETTERS AND SETTERS
+    public void setHandler(Handler handler) { this.handler = handler; }
+
     public ActionState getCurrentActionState() {
         return currentActionState;
     }

@@ -48,7 +48,7 @@ public class Fish extends Creature
 
         currentForm = Form.FISH;
 
-        fishStateManager = new FishStateManager();
+        fishStateManager = new FishStateManager(handler);
 
         directionFacing = DirectionFacing.RIGHT;
         experiencePoints = 2000;
@@ -576,13 +576,13 @@ public class Fish extends Creature
         this.experiencePoints = experiencePoints;
     }
 
+    @Override
     public int getHealthMax() {
         return healthMax;
     }
 
-    public void setCurrentBodyAnimation(Animation bodyAnimation) {
-        currentBodyAnimation = bodyAnimation;
-    }
+    @Override
+    public void setHealthMax(int healthMax) { this.healthMax = healthMax; }
 
     public Form getCurrentForm() { return currentForm; }
 

@@ -50,14 +50,17 @@ public class FishStateManager implements Serializable {
 
     //HEAD
     public enum Jaws {
-        ORIGINAL(10), KURASELACHES(200), ZINICHTHY(8000)/*, SWORDFISH*/;
+        ORIGINAL(10, 0), KURASELACHES(200, 2), ZINICHTHY(8000, 4)/*, SWORDFISH*/;
 
-        Jaws(int cost) {
+        Jaws(int cost, int damageBiteBonus) {
             this.cost = cost;
+            this.damageBiteBonus = damageBiteBonus;
         }
 
         private int cost;
+        private int damageBiteBonus;
         public int getCost() { return cost; }
+        public int getDamageBiteBonus() { return damageBiteBonus; }
     }
     //HEAD-ATTACHMENT
     public enum Horn { ORIGINAL, SPIRALED, ANGLER, SWORDFISH, NONE; }
@@ -66,6 +69,9 @@ public class FishStateManager implements Serializable {
     public enum FinDorsal { ORIGINAL, SAILING, KURASELACHE; }
 
     ////////////////////////////////////////////////////////////
+
+    public static final int BASE_BITE = 1, BASE_STRENGTH = 1, BASE_KICK = 0, BASE_HORN = 0,
+            BASE_DEFENSE = 0, BASE_AGILITY = 4, BASE_JUMP = 1;
 
     //INSTANCE FIELDS
     private ActionState currentActionState;
@@ -80,6 +86,8 @@ public class FishStateManager implements Serializable {
     private Tail currentTail;
     private FinDorsal currentFinDorsal;
 
+    private int damageBite, damageStrength, damageKick, damageStrike, damageHorn,
+            defense, agility, jump;
     ////////////////////////////////////////////////////////////
 
     //CONSTRUCTOR with default values.
@@ -95,6 +103,14 @@ public class FishStateManager implements Serializable {
         currentFinPectoral = FinPectoral.ORIGINAL;
         currentTail = Tail.ORIGINAL;
         currentFinDorsal = FinDorsal.ORIGINAL;
+
+        damageBite = BASE_BITE;
+        damageStrength = BASE_STRENGTH;
+        damageKick = BASE_KICK;
+        damageHorn = BASE_HORN;
+        defense = BASE_DEFENSE;
+        agility = BASE_AGILITY;
+        jump = BASE_JUMP;
     } // **** end FishStateManager() constructor ****
 
     ////////////////////////////////////////////////////////////
@@ -147,5 +163,37 @@ public class FishStateManager implements Serializable {
     }
 
     public void setCurrentFinDorsal(FinDorsal currentFinDorsal) { this.currentFinDorsal = currentFinDorsal; }
+
+    public int getDamageBite() {
+        return damageBite;
+    }
+
+    public int getDamageStrength() {
+        return damageStrength;
+    }
+
+    public int getDamageKick() {
+        return damageKick;
+    }
+
+    public int getDamageStrike() {
+        return damageStrike;
+    }
+
+    public int getDamageHorn() {
+        return damageHorn;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public int getAgility() {
+        return agility;
+    }
+
+    public int getJump() {
+        return jump;
+    }
 
 } // **** end FishStateManager class ****

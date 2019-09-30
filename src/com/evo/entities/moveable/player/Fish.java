@@ -17,9 +17,12 @@ import java.util.ArrayList;
 public class Fish extends Creature
         implements IPlayable {
 
+    public enum Form { FISH, AMPHIBIAN, REPTILE, BIRD, MAMMAL; /*mammal: BIPEDAL vs QUADRUPEDAL*/ }
     public enum DirectionFacing { LEFT, RIGHT; }
 
     private FishStateManager fishStateManager;
+
+    private Form currentForm;
     private DirectionFacing directionFacing;
 
     //EXPERIENCE POINTS
@@ -43,11 +46,16 @@ public class Fish extends Creature
                 Assets.eatFrames[0][0][0][0][0].getHeight());
         System.out.println("Fish.constructor (width/height): " + width + "/" + height);
 
+        currentForm = Form.FISH;
+
         fishStateManager = new FishStateManager();
 
         directionFacing = DirectionFacing.RIGHT;
         experiencePoints = 3000;
-        healthMax = DEFAULT_HEALTH;
+        ///////////////
+        healthMax = 20;
+        ///////////////
+        health = healthMax;
 
         initAnimations();
 
@@ -575,5 +583,7 @@ public class Fish extends Creature
     public void setCurrentBodyAnimation(Animation bodyAnimation) {
         currentBodyAnimation = bodyAnimation;
     }
+
+    public Form getCurrentForm() { return currentForm; }
 
 } // **** end Fish class ****

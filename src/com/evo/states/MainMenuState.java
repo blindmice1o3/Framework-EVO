@@ -3,17 +3,67 @@ package com.evo.states;
 import com.evo.Handler;
 import com.evo.entities.moveable.player.Fish;
 import com.evo.entities.moveable.player.FishStateManager;
+import com.evo.entities.moveable.player.IPlayable;
 import com.evo.gfx.FontGrabber;
 import com.evo.gfx.OverWorldCursor;
 import com.evo.gfx.Assets;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainMenuState implements IState {
 
     public enum MenuList { EVOLUTION, CAPABILITY, RECORD_OF_EVOLUTION, MAIN, CONFIRMATION; }
     public enum IndexEvolutionMenu { JAWS, BODY, HANDS_AND_FEET, TAIL; }
+    public enum PlayerStatsKey {
+        CLASSIFICATION, HIT_POINT_MAX, BITING, STRENGTH, KICK, STRIKE, HORN, DEFENSE_POWER, AGILITY, JUMPING_ABILITY;
+
+        @Override
+        public String toString() {
+            String returner = null;
+
+            switch (this) {
+                case CLASSIFICATION:
+                    returner = "Classification";
+                    break;
+                case HIT_POINT_MAX:
+                    returner = "Hit Point Max";
+                    break;
+                case BITING:
+                    returner = "Biting";
+                    break;
+                case STRENGTH:
+                    returner = "Strength";
+                    break;
+                case KICK:
+                    returner = "Kick";
+                    break;
+                case STRIKE:
+                    returner = "Strike";
+                    break;
+                case HORN:
+                    returner = "Horn";
+                    break;
+                case DEFENSE_POWER:
+                    returner = "Defense Power";
+                    break;
+                case AGILITY:
+                    returner = "Agility";
+                    break;
+                case JUMPING_ABILITY:
+                    returner = "Jumping Ability";
+                    break;
+                default:
+                    System.out.println("MainMenuState.PlayerStatsKey.toString() switch's default.");
+                    returner = "";
+                    break;
+            }
+
+            return returner;
+        }
+    }
 
     private Handler handler;
     private OverWorldCursor overWorldCursor;
@@ -146,6 +196,49 @@ public class MainMenuState implements IState {
 
         switch (currentMenuSelection) {
             case EVOLUTION:
+                //b-button (return to MenuList.MAIN).
+                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
+                    currentMenuSelection = MenuList.MAIN;
+                    index = 0;
+                }
+
+                //right-button
+                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_D)) {
+                    //we were at the end of the list, must set back to front of list.
+                    if ( currentIndexEvolutionMenu.ordinal() == (IndexEvolutionMenu.values().length-1) ) {
+                        currentIndexEvolutionMenu =
+                                IndexEvolutionMenu.values()[ 0 ];
+                    }
+                    //otherwise, just increment the currentIndexEvolutionMenu to the next enum.
+                    else {
+                        currentIndexEvolutionMenu =
+                                IndexEvolutionMenu.values()[ (currentIndexEvolutionMenu.ordinal() + 1) ];
+                    }
+
+                    //////////
+                    index = 0;
+                    //////////
+                }
+                //left-button
+                else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_A)) {
+                    //we were at the front of the list, must set currentIndexEvolutionMenu to last enum of list.
+                    if ( currentIndexEvolutionMenu.ordinal() == 0 ) {
+                        currentIndexEvolutionMenu =
+                                IndexEvolutionMenu.values()[ (IndexEvolutionMenu.values().length-1) ];
+                    }
+                    //otherwise, just decrement the currentIndexEvolutionMenu.
+                    else {
+                        currentIndexEvolutionMenu =
+                                IndexEvolutionMenu.values()[ (currentIndexEvolutionMenu.ordinal() - 1) ];
+                    }
+
+                    //////////
+                    index = 0;
+                    //////////
+                }
+
+
+
                 switch (currentIndexEvolutionMenu) {
                     case JAWS:
                         //down-button
@@ -386,46 +479,7 @@ public class MainMenuState implements IState {
                         break;
                 }
 
-                //b-button (return to MenuList.MAIN).
-                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) {
-                    currentMenuSelection = MenuList.MAIN;
-                    index = 0;
-                }
 
-                //right-button
-                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_D)) {
-                    //we were at the end of the list, must set back to front of list.
-                    if ( currentIndexEvolutionMenu.ordinal() == (IndexEvolutionMenu.values().length-1) ) {
-                        currentIndexEvolutionMenu =
-                                IndexEvolutionMenu.values()[ 0 ];
-                    }
-                    //otherwise, just increment the currentIndexEvolutionMenu to the next enum.
-                    else {
-                        currentIndexEvolutionMenu =
-                                IndexEvolutionMenu.values()[ (currentIndexEvolutionMenu.ordinal() + 1) ];
-                    }
-
-                    //////////
-                    index = 0;
-                    //////////
-                }
-                //left-button
-                else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_A)) {
-                    //we were at the front of the list, must set currentIndexEvolutionMenu to last enum of list.
-                    if ( currentIndexEvolutionMenu.ordinal() == 0 ) {
-                        currentIndexEvolutionMenu =
-                                IndexEvolutionMenu.values()[ (IndexEvolutionMenu.values().length-1) ];
-                    }
-                    //otherwise, just decrement the currentIndexEvolutionMenu.
-                    else {
-                        currentIndexEvolutionMenu =
-                                IndexEvolutionMenu.values()[ (currentIndexEvolutionMenu.ordinal() - 1) ];
-                    }
-
-                    //////////
-                    index = 0;
-                    //////////
-                }
 
                 break;
             case CAPABILITY:
@@ -736,6 +790,58 @@ public class MainMenuState implements IState {
                 break;
             case CAPABILITY:
                 //TODO: MainMenuState(MenuList.CAPABILITY).render(Graphics).
+                int xTextBox = (handler.panelWidth/2)+25;
+                int yTextBox = 40;
+                int widthTextBox = (handler.panelWidth/2)-50;
+                int heightTextBox = (handler.panelHeight)-80;
+
+                //background textbox.
+                g.setColor(Color.GRAY);
+                g.fillRect(xTextBox, yTextBox, widthTextBox, heightTextBox);
+
+                IPlayable iPlayable = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
+                if (iPlayable instanceof Fish) {
+                    Fish player = (Fish)iPlayable;
+                    //////////////////////////////////////
+                    Map<PlayerStatsKey, String> playerStats = new HashMap<PlayerStatsKey, String>();
+                    playerStats.put( PlayerStatsKey.CLASSIFICATION, player.getCurrentForm().toString() );
+                    playerStats.put( PlayerStatsKey.HIT_POINT_MAX, Integer.toString(player.getHealthMax()) );
+                    playerStats.put( PlayerStatsKey.BITING, Integer.toString(player.getFishStateManager().getDamageBite()) );
+                    playerStats.put( PlayerStatsKey.STRENGTH, Integer.toString(player.getFishStateManager().getDamageStrength()) );
+                    playerStats.put( PlayerStatsKey.KICK, Integer.toString(player.getFishStateManager().getDamageKick()) );
+                    playerStats.put( PlayerStatsKey.STRIKE, Integer.toString(player.getFishStateManager().getDamageStrike()) );
+                    playerStats.put( PlayerStatsKey.HORN, Integer.toString(player.getFishStateManager().getDamageHorn()) );
+                    playerStats.put( PlayerStatsKey.DEFENSE_POWER, Integer.toString(player.getFishStateManager().getDefense()) );
+                    playerStats.put( PlayerStatsKey.AGILITY, Integer.toString(player.getFishStateManager().getAgility()) );
+                    playerStats.put( PlayerStatsKey.JUMPING_ABILITY, Integer.toString(player.getFishStateManager().getJump()) );
+                    //////////////////////////////////////
+
+                    //text.
+                    int xStringKey = xTextBox + 25;
+                    int yString = yTextBox + 25;
+                    int xStringValue = handler.panelWidth - 80;
+
+                    g.setColor(Color.WHITE);
+                    for (int i = 0; i < PlayerStatsKey.values().length; i++) {
+                        //CLASSIFICATION (Fish.Form.FISH).
+                        if (i == 0) {
+                            g.drawString(PlayerStatsKey.values()[i].toString() + ": ", xStringKey, yString);
+                            //do NOT add "P".
+                            g.drawString( playerStats.get(PlayerStatsKey.values()[i]), xStringValue, yString);
+                            //one-regular-new-line AND one-EXTRA-new-line.
+                            yString += (15+15);
+                        }
+                        //POINTS (NUMERIC VALUES).
+                        else {
+                            g.drawString(PlayerStatsKey.values()[i].toString() + ": ", xStringKey, yString);
+                            //add "P".
+                            g.drawString(playerStats.get(PlayerStatsKey.values()[i]) + "P", xStringValue, yString);
+                            //just one-regular-new-line.
+                            yString += 15;
+                        }
+                    }
+
+                }
 
                 break;
             case RECORD_OF_EVOLUTION:

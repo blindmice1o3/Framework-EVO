@@ -32,7 +32,7 @@ public class FishStateManager
         public int getDefenseBonus() { return defenseBonus; }
     }
     public enum BodySize {
-        DECREASE(200, -10, -1, -1, 3), INCREASE(400, 10, 1, 1, -3);
+        DECREASE(200, 0, 0, 0, 0), INCREASE(400, 10, 1, 1, -3);
 
         BodySize(int cost, int healthMaxBonus, int strengthBonus, int defenseBonus, int agilityBonus) {
             this.cost = cost;
@@ -149,46 +149,20 @@ public class FishStateManager
 
     ////////////////////////////////////////////////////////////
     //TODO: update BONUSES from the new body part.
-    public void setCurrentJaws(Jaws currentJaws) {
-        this.currentJaws = currentJaws;
+    public void updatePlayerStats() {
+        IPlayable player = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
+
+        player.setHealthMax( 20 + currentBodySize.getHealthMaxBonus() + currentTail.getHealthMaxBonus() );
         damageBite = BASE_BITE + currentJaws.getDamageBiteBonus();
-    }
-
-    public void setCurrentBodyTexture(BodyTexture currentBodyTexture) {
-        this.currentBodyTexture = currentBodyTexture;
-        defense = BASE_DEFENSE + currentBodyTexture.getDefenseBonus() + currentBodySize.getDefenseBonus();
-    }
-
-    public void setCurrentBodySize(BodySize currentBodySize) {
-        this.currentBodySize = currentBodySize;
-        IPlayable player = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
-
-        player.setHealthMax( 20 + currentBodySize.getHealthMaxBonus() + currentTail.getHealthMaxBonus() );
         damageStrength = BASE_STRENGTH + currentBodySize.getStrengthBonus() + currentFinPectoral.getStrengthBonus();
         defense = BASE_DEFENSE + currentBodyTexture.getDefenseBonus() + currentBodySize.getDefenseBonus();
-        agility = BASE_AGILITY + currentBodySize.getAgilityBonus() + currentFinPectoral.getAgilityBonus() + currentTail.getAgilityBonus();
-    }
-
-    public void setCurrentFinPectoral(FinPectoral currentFinPectoral) {
-        this.currentFinPectoral = currentFinPectoral;
-        damageStrength = BASE_STRENGTH + currentBodySize.getStrengthBonus() + currentFinPectoral.getStrengthBonus();
-        agility = BASE_AGILITY + currentBodySize.getAgilityBonus() + currentFinPectoral.getAgilityBonus() + currentTail.getAgilityBonus();
-    }
-
-    public void setCurrentTail(Tail currentTail) {
-        this.currentTail = currentTail;
-        IPlayable player = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
-
-        player.setHealthMax( 20 + currentBodySize.getHealthMaxBonus() + currentTail.getHealthMaxBonus() );
         agility = BASE_AGILITY + currentBodySize.getAgilityBonus() + currentFinPectoral.getAgilityBonus() + currentTail.getAgilityBonus();
         jump = BASE_JUMP + currentTail.getJumpBonus();
     }
-
-    public void setCurrentFinDorsal(FinDorsal currentFinDorsal) { this.currentFinDorsal = currentFinDorsal; }
-
-    public void setCurrentHorn(Horn currentHorn) { this.currentHorn = currentHorn; }
+    //TODO: USE THE new bonus values TO ACTUALLY CHANGE the damage-dealt-by-player, speed-of-player, defense-against-damage-taken-by-player, etc.
 
     // GETTERS AND SETTERS
+
     public void setHandler(Handler handler) { this.handler = handler; }
 
     public ActionState getCurrentActionState() {
@@ -224,6 +198,30 @@ public class FishStateManager
     public Horn getCurrentHorn() {
         return currentHorn;
     }
+
+    public void setCurrentJaws(Jaws currentJaws) {
+        this.currentJaws = currentJaws;
+    }
+
+    public void setCurrentBodyTexture(BodyTexture currentBodyTexture) {
+        this.currentBodyTexture = currentBodyTexture;
+    }
+
+    public void setCurrentBodySize(BodySize currentBodySize) {
+        this.currentBodySize = currentBodySize;
+    }
+
+    public void setCurrentFinPectoral(FinPectoral currentFinPectoral) {
+        this.currentFinPectoral = currentFinPectoral;
+    }
+
+    public void setCurrentTail(Tail currentTail) {
+        this.currentTail = currentTail;
+    }
+
+    public void setCurrentFinDorsal(FinDorsal currentFinDorsal) { this.currentFinDorsal = currentFinDorsal; }
+
+    public void setCurrentHorn(Horn currentHorn) { this.currentHorn = currentHorn; }
 
     public int getDamageBite() {
         return damageBite;

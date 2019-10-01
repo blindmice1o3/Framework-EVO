@@ -639,6 +639,7 @@ public class MainMenuState implements IState {
 
                             /////////////////////////////////////
                             player.updateHeadAndTailAnimations();
+                            player.updatePlayerStats();
                             /////////////////////////////////////
 
                             //deduct experience points

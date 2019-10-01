@@ -91,11 +91,8 @@ public class SeaJelly extends Creature {
                     currentState = State.ATTACK;
 
                     //TODO: RENDERING DAMAGE-DEALT-TO-PLAYER TO SCREEN (using Reward/RewardManager FOR NOW).
-                    ComponentHUD damageHUD = new ComponentHUD(handler, ComponentHUD.ComponentType.DAMAGE, attackDamage, player);
-                    GameStage gameStage = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage();
-                    gameStage.getHeadUpDisplay().addTimedNumericIndicator(damageHUD);
                     ////////////////////////////////////////////////////////
-                    player.hurt(attackDamage);
+                    player.takeDamage(attackDamage);
                     player.getFishStateManager().setCurrentActionState(FishStateManager.ActionState.HURT);
                     //TODO: move player.setCurrentHeadAnimation = hurtHeadAnimation to Fish.tick().
                     ////////////////////////////////////////////////////////

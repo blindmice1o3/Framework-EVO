@@ -4,6 +4,8 @@ import com.evo.Handler;
 import com.evo.Utils;
 import com.evo.entities.Entity;
 import com.evo.entities.moveable.Creature;
+import com.evo.game_stages.GameStage;
+import com.evo.game_stages.hud.ComponentHUD;
 import com.evo.gfx.Animation;
 import com.evo.gfx.Assets;
 import com.evo.states.GameStageState;
@@ -17,9 +19,12 @@ import java.util.ArrayList;
 public class Fish extends Creature
         implements IPlayable {
 
+    public enum Form { FISH, AMPHIBIAN, REPTILE, BIRD, MAMMAL; /*mammal: BIPEDAL vs QUADRUPEDAL*/ }
     public enum DirectionFacing { LEFT, RIGHT; }
 
     private FishStateManager fishStateManager;
+
+    private Form currentForm;
     private DirectionFacing directionFacing;
 
     //EXPERIENCE POINTS
@@ -36,6 +41,9 @@ public class Fish extends Creature
     //ATTACK TIMER
     private long attackCooldown = 800000000L, attackTimer = attackCooldown;
 
+    private int damageBite;
+    private int armor;
+
     public Fish(Handler handler, float x, float y) {
         super(handler, null, x, y,
                 Assets.eatFrames[0][0][0][0][0].getWidth()
@@ -43,11 +51,16 @@ public class Fish extends Creature
                 Assets.eatFrames[0][0][0][0][0].getHeight());
         System.out.println("Fish.constructor (width/height): " + width + "/" + height);
 
-        fishStateManager = new FishStateManager();
+        currentForm = Form.FISH;
+
+        fishStateManager = new FishStateManager(handler);
 
         directionFacing = DirectionFacing.RIGHT;
-        experiencePoints = 3000;
-        healthMax = DEFAULT_HEALTH;
+        experiencePoints = 2000;
+        ///////////////
+        healthMax = 20;
+        ///////////////
+        health = healthMax;
 
         initAnimations();
 
@@ -69,7 +82,9 @@ public class Fish extends Creature
         bounds.width = 28;
         bounds.height = 13;
 
-        speed = 5;
+        speed = fishStateManager.getAgility();
+        damageBite = fishStateManager.getDamageBite();
+        armor = fishStateManager.getDefense();
     } // **** end Fish(Handler, float, float) constructor ****
 
     @Override
@@ -173,6 +188,20 @@ public class Fish extends Creature
         /////////////////////////////////////////
         currentHeadAnimation = idleHeadAnimation;
         /////////////////////////////////////////
+    }
+
+    public void takeDamage(int incomingDamage) {
+        ///////////////////////////////////////
+        int netDamage = incomingDamage - armor;
+        ///////////////////////////////////////
+
+        if (netDamage > 0) {
+            hurt(netDamage);
+
+            ComponentHUD damageHUD = new ComponentHUD(handler, ComponentHUD.ComponentType.DAMAGE, netDamage, this);
+            GameStage gameStage = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage();
+            gameStage.getHeadUpDisplay().addTimedNumericIndicator(damageHUD);
+        }
     }
 
     private int hurtTimer = 0;
@@ -330,7 +359,9 @@ public class Fish extends Creature
 
                 //if there is a collision between the entity and the player's attack rectangle, hurt the entity.
                 if (e.getCollisionBounds(0, 0).intersects(ar)) {
-                    e.hurt(1);
+                    ///////////////////
+                    e.hurt(damageBite);
+                    ///////////////////
 
                     //////////////////////////////////////////////////////////////////////////
                     //RETURN if there is collision BECAUSE CAN ONLY HURT 1 ENTITY AT A TIME.//
@@ -354,7 +385,7 @@ public class Fish extends Creature
 
             //TODO: inefficient, (though unlikely) could be returning to an already-existing Animation object.
             updateHeadAndTailAnimations();
-
+            updatePlayerStats();
         }
         else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_X)) {
 
@@ -369,7 +400,7 @@ public class Fish extends Creature
 
             //TODO: inefficient, (though unlikely) could be returning to an already-existing Animation object.
             initHeadAnimations();
-
+            updatePlayerStats();
         }
         else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_C)) {
 
@@ -384,7 +415,7 @@ public class Fish extends Creature
 
             //TODO: inefficient, (though unlikely) could be returning to an already-existing Animation object.
             updateHeadAndTailAnimations();
-
+            updatePlayerStats();
         }
         //TAIL
         else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_V)) {
@@ -400,9 +431,20 @@ public class Fish extends Creature
 
             //TODO: inefficient, (though unlikely) could be returning to an already-existing Animation object.
             updateHeadAndTailAnimations();
-
+            updatePlayerStats();
         }
 
+    }
+
+    public void updatePlayerStats() {
+        //refresh bonuses-based-on-body-parts and takes care of refreshing healthMax.
+        fishStateManager.updatePlayerStats();
+
+        damageBite = fishStateManager.getDamageBite();
+        //TODO: damageStrength.
+        armor = fishStateManager.getDefense();
+        speed = fishStateManager.getAgility();
+        //TODO: jump.
     }
 
     public void updateHeadAndTailAnimations() {
@@ -568,12 +610,14 @@ public class Fish extends Creature
         this.experiencePoints = experiencePoints;
     }
 
+    @Override
     public int getHealthMax() {
         return healthMax;
     }
 
-    public void setCurrentBodyAnimation(Animation bodyAnimation) {
-        currentBodyAnimation = bodyAnimation;
-    }
+    @Override
+    public void setHealthMax(int healthMax) { this.healthMax = healthMax; }
+
+    public Form getCurrentForm() { return currentForm; }
 
 } // **** end Fish class ****

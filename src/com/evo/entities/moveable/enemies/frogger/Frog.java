@@ -168,4 +168,7 @@ public class Frog extends Creature
         return healthMax;
     }
 
+    @Override
+    public void setHealthMax(int healthMax) { this.healthMax = healthMax; }
+
 } // **** end Frog class ****

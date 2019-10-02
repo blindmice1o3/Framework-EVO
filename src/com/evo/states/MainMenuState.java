@@ -734,6 +734,7 @@ public class MainMenuState implements IState {
                             if (jaws.ordinal() == index) {
                                 overWorldCursor.render(g);
 
+                                //TODO: display selected body-part bonuses.
                                 renderBonusesFromJaws(g);
                             }
 
@@ -754,6 +755,7 @@ public class MainMenuState implements IState {
                                     overWorldCursor.render(g);
 
                                     //TODO: display selected body-part bonuses.
+
                                 }
                             }
 
@@ -771,6 +773,7 @@ public class MainMenuState implements IState {
                                     overWorldCursor.render(g);
 
                                     //TODO: display selected body-part bonuses.
+
                                 }
                             }
 
@@ -788,6 +791,7 @@ public class MainMenuState implements IState {
                                 overWorldCursor.render(g);
 
                                 //TODO: display selected body-part bonuses.
+                                renderBonusesFromHandsAndFeet(g);
                             }
 
                             y = y + 15;
@@ -804,6 +808,7 @@ public class MainMenuState implements IState {
                                 overWorldCursor.render(g);
 
                                 //TODO: display selected body-part bonuses.
+                                renderBonusesFromTail(g);
                             }
 
                             y = y + 15;
@@ -892,9 +897,104 @@ public class MainMenuState implements IState {
         }
     }
 
+    private void renderBonusesFromTail(Graphics g) {
+        int xStringBonuses = handler.panelWidth - 75;
+        int yStringBonuses = yPlayerStatsBox + 24 + 30; //+30 to skip 2 lines for PlayerStatsKey.CLASSIFICATION.
+
+        Fish player = (Fish)((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
+        //i starting at 1 because PlayerStatsKey.CLASSIFICATION  was accounted for when initializing yStringBonuses.
+        for (int i = 1; i < PlayerStatsKey.values().length; i++) {
+            //PlayerStats beginning with PlayerStatsKey.Hit_Point_Max.
+            if (i == PlayerStatsKey.HIT_POINT_MAX.ordinal()) {
+                int newHitPointMax = FishStateManager.Tail.values()[index].getHealthMaxBonus() -
+                        player.getFishStateManager().getCurrentTail().getHealthMaxBonus();
+                if (newHitPointMax > 0) {
+                    g.setColor(Color.GREEN);
+                    g.drawString("+" + newHitPointMax, xStringBonuses, yStringBonuses);
+                } else if (newHitPointMax < 0) {
+                    g.setColor(Color.RED);
+                    g.drawString(Integer.toString(newHitPointMax), xStringBonuses, yStringBonuses);
+                } else if (newHitPointMax == 0) {
+                    g.setColor(Color.YELLOW);
+                    g.drawString(Integer.toString(newHitPointMax), xStringBonuses, yStringBonuses);
+                }
+            } else if (i == PlayerStatsKey.AGILITY.ordinal()) {
+                int newAgility = FishStateManager.Tail.values()[index].getAgilityBonus() -
+                        player.getFishStateManager().getCurrentTail().getAgilityBonus();
+                if (newAgility > 0) {
+                    g.setColor(Color.GREEN);
+                    g.drawString("+" + newAgility, xStringBonuses, yStringBonuses);
+                } else if (newAgility < 0) {
+                    g.setColor(Color.RED);
+                    g.drawString(Integer.toString(newAgility), xStringBonuses, yStringBonuses);
+                } else if (newAgility == 0) {
+                    g.setColor(Color.YELLOW);
+                    g.drawString(Integer.toString(newAgility), xStringBonuses, yStringBonuses);
+                }
+            } else if (i == PlayerStatsKey.JUMPING_ABILITY.ordinal()) {
+                int newJump = FishStateManager.Tail.values()[index].getJumpBonus() -
+                        player.getFishStateManager().getCurrentTail().getJumpBonus();
+                if (newJump > 0) {
+                    g.setColor(Color.GREEN);
+                    g.drawString("+" + newJump, xStringBonuses, yStringBonuses);
+                } else if (newJump < 0) {
+                    g.setColor(Color.RED);
+                    g.drawString(Integer.toString(newJump), xStringBonuses, yStringBonuses);
+                } else if (newJump == 0) {
+                    g.setColor(Color.YELLOW);
+                    g.drawString(Integer.toString(newJump), xStringBonuses, yStringBonuses);
+                }
+            }
+
+            //just one-regular-new-line.
+            yStringBonuses += 15;
+        }
+    }
+
+    private void renderBonusesFromHandsAndFeet(Graphics g) {
+        int xStringBonuses = handler.panelWidth - 75;
+        int yStringBonuses = yPlayerStatsBox + 24 + 30; //+30 to skip 2 lines for PlayerStatsKey.CLASSIFICATION.
+
+        Fish player = (Fish)((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
+        //i starting at 1 because PlayerStatsKey.CLASSIFICATION  was accounted for when initializing yStringBonuses.
+        for (int i = 1; i < PlayerStatsKey.values().length; i++) {
+            //PlayerStats beginning with PlayerStatsKey.Hit_Point_Max.
+            if (i == PlayerStatsKey.STRENGTH.ordinal()) {
+                int newStrength = FishStateManager.FinPectoral.values()[index].getStrengthBonus() -
+                        player.getFishStateManager().getCurrentFinPectoral().getStrengthBonus();
+                if (newStrength > 0) {
+                    g.setColor(Color.GREEN);
+                    g.drawString("+" + newStrength, xStringBonuses, yStringBonuses);
+                } else if (newStrength < 0) {
+                    g.setColor(Color.RED);
+                    g.drawString(Integer.toString(newStrength), xStringBonuses, yStringBonuses);
+                } else if (newStrength == 0) {
+                    g.setColor(Color.YELLOW);
+                    g.drawString(Integer.toString(newStrength), xStringBonuses, yStringBonuses);
+                }
+            } else if (i == PlayerStatsKey.AGILITY.ordinal()) {
+                int newAgility = FishStateManager.FinPectoral.values()[index].getAgilityBonus() -
+                        player.getFishStateManager().getCurrentFinPectoral().getAgilityBonus();
+                if (newAgility > 0) {
+                    g.setColor(Color.GREEN);
+                    g.drawString("+" + newAgility, xStringBonuses, yStringBonuses);
+                } else if (newAgility < 0) {
+                    g.setColor(Color.RED);
+                    g.drawString(Integer.toString(newAgility), xStringBonuses, yStringBonuses);
+                } else if (newAgility == 0) {
+                    g.setColor(Color.YELLOW);
+                    g.drawString(Integer.toString(newAgility), xStringBonuses, yStringBonuses);
+                }
+            }
+
+            //just one-regular-new-line.
+            yStringBonuses += 15;
+        }
+    }
+
     private void renderBonusesFromJaws(Graphics g) {
-        int xStringBonuses = handler.panelWidth - 80;
-        int yStringBonuses = yPlayerStatsBox + 25 + 30; //+30 to skip 2 lines for PlayerStatsKey.CLASSIFICATION.
+        int xStringBonuses = handler.panelWidth - 75;
+        int yStringBonuses = yPlayerStatsBox + 24 + 30; //+30 to skip 2 lines for PlayerStatsKey.CLASSIFICATION.
 
         Fish player = (Fish)((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
         //i starting at 1 because PlayerStatsKey.CLASSIFICATION  was accounted for when initializing yStringBonuses.
@@ -914,6 +1014,7 @@ public class MainMenuState implements IState {
                     g.drawString(Integer.toString(newDamage), xStringBonuses, yStringBonuses);
                 }
             }
+
             //just one-regular-new-line.
             yStringBonuses += 15;
         }

@@ -685,11 +685,11 @@ public class MainMenuState implements IState {
                 float opacity = 0.7f;
 
                 g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
-                g2d.drawImage(Assets.mainMenuCapability, 0, 1, handler.panelWidth, (handler.panelHeight/3), null);
+                g2d.drawImage(Assets.mainMenuEVOLUTION, 0, 1, handler.panelWidth, (handler.panelHeight/3), null);
                 g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
                 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                /////////////////////////////////////////////////////////////////////////////////
+                ////////////////////YELLOW_BORDER_IndexEvolutionMenu/////////////////////////////
                 int borderSize = 5;
                 g.setColor(Color.YELLOW);
                 for (int i = 0; i < borderSize; i++) {
@@ -702,8 +702,22 @@ public class MainMenuState implements IState {
                 }
                 /////////////////////////////////////////////////////////////////////////////////
 
+
+
+                //TODO: refactor the following into something more maintainable.
+                //@@@@@@@@@@@@@BOTTOM_RIGHT_MenuList.CAPABILITY-WITH-BONUSES-IN-Color.GREEN@@@@@@@@@@@@@@@@@
+                currentMenuSelection = MenuList.CAPABILITY;
+                render(g);
+                currentMenuSelection = MenuList.EVOLUTION;
+
+                int yStringBonuses = (1+(handler.panelHeight/3)+10) + 25;
+                int xStringBonuses = handler.panelWidth - 80;
+                //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+
                 int x = 15;
-                int y = 1 + (handler.panelHeight/3) + 10;
+                int y = 1+(handler.panelHeight/3)+10;
                 switch (currentIndexEvolutionMenu) {
                     case JAWS:
                         for (FishStateManager.Jaws jaws : FishStateManager.Jaws.values()) {
@@ -715,6 +729,37 @@ public class MainMenuState implements IState {
                                 overWorldCursor.setX(x-10);
                                 overWorldCursor.setY(y+3);
                                 overWorldCursor.render(g);
+
+                                ////////////////BONUSES///////////////
+                                Fish player = (Fish)((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
+                                for (int i = 0; i < PlayerStatsKey.values().length; i++) {
+                                    //CLASSIFICATION (Fish.Form.FISH).
+                                    if (i == 0) {
+                                        //one-regular-new-line AND one-EXTRA-new-line.
+                                        yStringBonuses += (15+15);
+                                    }
+                                    //POINTS (NUMERIC VALUES).
+                                    else {
+                                        if (i == PlayerStatsKey.BITING.ordinal()) {
+                                            int newDamage = jaws.getDamageBiteBonus() - player.getFishStateManager().getCurrentJaws().getDamageBiteBonus();
+                                            if (newDamage > 0) {
+                                                g.setColor(Color.GREEN);
+                                                g.drawString("+" + newDamage, xStringBonuses, yStringBonuses);
+                                            } else if (newDamage < 0) {
+                                                g.setColor(Color.RED);
+                                                g.drawString(Integer.toString(newDamage), xStringBonuses, yStringBonuses);
+                                            } else if (newDamage == 0) {
+                                                g.setColor(Color.YELLOW);
+                                                g.drawString(Integer.toString(newDamage), xStringBonuses, yStringBonuses);
+                                            }
+                                        }
+                                        //just one-regular-new-line.
+                                        yStringBonuses += 15;
+                                    }
+                                }
+                                //reset yStringBonuses to top of MenuList.CAPABILITY's rectangle/background-panel.
+                                yStringBonuses = (1+(handler.panelHeight/3)+10) + 25;
+                                //////////////////////////////////////
                             }
 
                             y = y + 15;
@@ -798,10 +843,10 @@ public class MainMenuState implements IState {
                 break;
             case CAPABILITY:
                 //TODO: MainMenuState(MenuList.CAPABILITY).render(Graphics).
-                int xTextBox = (handler.panelWidth/2)+25;
-                int yTextBox = 40;
-                int widthTextBox = (handler.panelWidth/2)-50;
-                int heightTextBox = (handler.panelHeight)-80;
+                int xTextBox = (handler.panelWidth/2) + 25;
+                int yTextBox = 1+(handler.panelHeight/3)+10;
+                int widthTextBox = (handler.panelWidth/2) - 50;
+                int heightTextBox = (handler.panelHeight) - yTextBox - 20;
 
                 //background textbox.
                 g.setColor(Color.GRAY);
@@ -827,7 +872,7 @@ public class MainMenuState implements IState {
                     //text.
                     int xStringKey = xTextBox + 25;
                     int yString = yTextBox + 25;
-                    int xStringValue = handler.panelWidth - 80;
+                    int xStringValue = handler.panelWidth - 100;
 
                     g.setColor(Color.WHITE);
                     for (int i = 0; i < PlayerStatsKey.values().length; i++) {

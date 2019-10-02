@@ -41,7 +41,7 @@ public class Assets {
     public static BufferedImage[][][][] tailOriginal, tailCoelafish, tailTeratisu, tailZinichthy, tailKuraselache;
 
     // BACKGROUND - MainMenuState
-    public static BufferedImage mainMenu, mainMenuCapability;
+    public static BufferedImage mainMenu, mainMenuEVOLUTION;
 
     // GameStage("") - BACKGROUND
     public static BufferedImage chapter1GameStage, brickGreen, coralPink1, coralPink2, coralPink3, coinGameObject;
@@ -346,7 +346,7 @@ public class Assets {
 
         // BACKGROUND - MainMenuState
         mainMenu = spriteSheetStartMenu.getSubimage(6, 11, 128, 52);
-        mainMenuCapability = Utils.loadImage("/MainMenuState's CAPABILITY.png");
+        mainMenuEVOLUTION = Utils.loadImage("/MainMenuState_MenuList-EVOLUTION.png");
 
 
         // BACKGROUND - GameStageState

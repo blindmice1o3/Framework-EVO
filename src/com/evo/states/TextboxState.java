@@ -272,10 +272,12 @@ public class TextboxState implements IState {
             handler.getStateManager().pushIState(StateManager.State.PAUSE, null);
         }
         //b-button or temporary textbox-button (KeyEvent.VK_SLASH) (will pop TextboxState off stack).
+        //@@@@TESTING TextboxState (KeyEvent.VK_SLASH)@@@@
         else if ( (handler.getKeyManager().keyJustPressed(KeyEvent.VK_PERIOD)) ||
                 (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SLASH)) ) {
             handler.getStateManager().popIState();
         }
+        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     }
 
 

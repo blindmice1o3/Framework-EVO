@@ -36,7 +36,15 @@ public class GameStageState implements IState {
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_L)) {
             handler.getStateManager().pushIState(StateManager.State.QUEST_LOG, null);
         }
-        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+        //@@@@TESTING MainMenuState.MenuList.CAPABILITY (KeyEvent.VK_K)@@@@
+        else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_K)) {
+            handler.getStateManager().pushIState(StateManager.State.MAIN_MENU, null);
+            //set MenuList.CAPABILITY.
+            ((MainMenuState)handler.getStateManager().getState(StateManager.State.MAIN_MENU)).setCurrentMenuSelection(MainMenuState.MenuList.CAPABILITY);
+        }
+        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
         //@@@@TESTING TextboxState (KeyEvent.VK_SLASH)@@@@
         else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SLASH)) {

@@ -25,9 +25,11 @@ public class QuestLogState implements IState {
 
     @Override
     public void getInput() {
+        //@@@@TESTING QuestLogState (KeyEvent.VK_L)@@@@
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_L)) {
             handler.getStateManager().popIState();
         }
+        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     }
 
     @Override

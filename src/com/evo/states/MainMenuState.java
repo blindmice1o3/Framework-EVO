@@ -490,6 +490,12 @@ public class MainMenuState implements IState {
                     currentMenuSelection = MenuList.MAIN;
                     index = 0;
                 }
+                //@@@@TESTING MainMenuState.MenuList.CAPABILITY (KeyEvent.VK_K)@@@@
+                else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_K)) {
+                    currentMenuSelection = MenuList.MAIN;
+                    handler.getStateManager().popIState();
+                }
+                //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
                 break;
             case RECORD_OF_EVOLUTION:
@@ -926,6 +932,12 @@ public class MainMenuState implements IState {
     @Override
     public void exit() {
 
+    }
+
+    // GETTERS AND SETTERS
+
+    public void setCurrentMenuSelection(MenuList menuSelection) {
+        currentMenuSelection = menuSelection;
     }
 
 } // **** end MainMenuState class ****

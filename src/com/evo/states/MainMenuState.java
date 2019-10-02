@@ -720,12 +720,7 @@ public class MainMenuState implements IState {
                 //TODO: refactor the following into something more maintainable.
                 //@@@@@@@@@@@@@BOTTOM_RIGHT_MenuList.CAPABILITY-WITH-BONUSES-IN-Color.GREEN@@@@@@@@@@@@@@@@@
                 renderCapability(g);
-
-                int xStringBonuses = handler.panelWidth - 80;
-                int yStringBonuses = yPlayerStatsBox + 25;
                 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-
 
                 int x = 15;
                 int y = yPlayerStatsBox;
@@ -737,41 +732,9 @@ public class MainMenuState implements IState {
                                     x+(jaws.toString().length()*10)+10, y, 10, 10);
 
                             if (jaws.ordinal() == index) {
-                                //TODO: try commenting-out the setter calls and see if tick() had taken care of it already.
-                                //overWorldCursor.setX(x-10);
-                                //overWorldCursor.setY(y+3);
                                 overWorldCursor.render(g);
 
-                                ////////////////BONUSES///////////////
-                                Fish player = (Fish)((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
-                                for (int i = 0; i < PlayerStatsKey.values().length; i++) {
-                                    //CLASSIFICATION (Fish.Form.FISH).
-                                    if (i == 0) {
-                                        //one-regular-new-line AND one-EXTRA-new-line.
-                                        yStringBonuses += (15+15);
-                                    }
-                                    //POINTS (NUMERIC VALUES).
-                                    else {
-                                        if (i == PlayerStatsKey.BITING.ordinal()) {
-                                            int newDamage = jaws.getDamageBiteBonus() - player.getFishStateManager().getCurrentJaws().getDamageBiteBonus();
-                                            if (newDamage > 0) {
-                                                g.setColor(Color.GREEN);
-                                                g.drawString("+" + newDamage, xStringBonuses, yStringBonuses);
-                                            } else if (newDamage < 0) {
-                                                g.setColor(Color.RED);
-                                                g.drawString(Integer.toString(newDamage), xStringBonuses, yStringBonuses);
-                                            } else if (newDamage == 0) {
-                                                g.setColor(Color.YELLOW);
-                                                g.drawString(Integer.toString(newDamage), xStringBonuses, yStringBonuses);
-                                            }
-                                        }
-                                        //just one-regular-new-line.
-                                        yStringBonuses += 15;
-                                    }
-                                }
-                                //reset yStringBonuses to top of MenuList.CAPABILITY's rectangle/background-panel.
-                                yStringBonuses = (1+(handler.panelHeight/3)+10) + 25;
-                                //////////////////////////////////////
+                                renderBonusesFromJaws(g);
                             }
 
                             y = y + 15;
@@ -788,9 +751,9 @@ public class MainMenuState implements IState {
                             //BODY_TEXTURE
                             if (index <= (FishStateManager.BodyTexture.values().length-1)) {
                                 if (bodyTexture.ordinal() == index) {
-                                    //overWorldCursor.setX(x - 10);
-                                    //overWorldCursor.setY(y + 3);
                                     overWorldCursor.render(g);
+
+                                    //TODO: display selected body-part bonuses.
                                 }
                             }
 
@@ -805,9 +768,9 @@ public class MainMenuState implements IState {
                             //BODY_SIZE
                             if (index > (FishStateManager.BodyTexture.values().length-1)) {
                                 if (bodySize.ordinal() == (index-(FishStateManager.BodyTexture.values().length))) {
-                                    //overWorldCursor.setX(x - 10);
-                                    //overWorldCursor.setY(y + 3);
                                     overWorldCursor.render(g);
+
+                                    //TODO: display selected body-part bonuses.
                                 }
                             }
 
@@ -822,9 +785,9 @@ public class MainMenuState implements IState {
                                     x+(finPectoral.toString().length()*10)+10, y, 10, 10);
 
                             if (finPectoral.ordinal() == index) {
-                                //overWorldCursor.setX(x-10);
-                                //overWorldCursor.setY(y+3);
                                 overWorldCursor.render(g);
+
+                                //TODO: display selected body-part bonuses.
                             }
 
                             y = y + 15;
@@ -838,9 +801,9 @@ public class MainMenuState implements IState {
                                     x+(tail.toString().length()*10)+10, y, 10, 10);
 
                             if (tail.ordinal() == index) {
-                                //overWorldCursor.setX(x-10);
-                                //overWorldCursor.setY(y+3);
                                 overWorldCursor.render(g);
+
+                                //TODO: display selected body-part bonuses.
                             }
 
                             y = y + 15;
@@ -926,6 +889,33 @@ public class MainMenuState implements IState {
             default:
                 System.out.println("MainMenuState.render(Graphics): switch's default.");
                 break;
+        }
+    }
+
+    private void renderBonusesFromJaws(Graphics g) {
+        int xStringBonuses = handler.panelWidth - 80;
+        int yStringBonuses = yPlayerStatsBox + 25 + 30; //+30 to skip 2 lines for PlayerStatsKey.CLASSIFICATION.
+
+        Fish player = (Fish)((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
+        //i starting at 1 because PlayerStatsKey.CLASSIFICATION  was accounted for when initializing yStringBonuses.
+        for (int i = 1; i < PlayerStatsKey.values().length; i++) {
+            //PlayerStats beginning with PlayerStatsKey.Hit_Point_Max.
+            if (i == PlayerStatsKey.BITING.ordinal()) {
+                int newDamage = FishStateManager.Jaws.values()[index].getDamageBiteBonus() -
+                        player.getFishStateManager().getCurrentJaws().getDamageBiteBonus();
+                if (newDamage > 0) {
+                    g.setColor(Color.GREEN);
+                    g.drawString("+" + newDamage, xStringBonuses, yStringBonuses);
+                } else if (newDamage < 0) {
+                    g.setColor(Color.RED);
+                    g.drawString(Integer.toString(newDamage), xStringBonuses, yStringBonuses);
+                } else if (newDamage == 0) {
+                    g.setColor(Color.YELLOW);
+                    g.drawString(Integer.toString(newDamage), xStringBonuses, yStringBonuses);
+                }
+            }
+            //just one-regular-new-line.
+            yStringBonuses += 15;
         }
     }
 

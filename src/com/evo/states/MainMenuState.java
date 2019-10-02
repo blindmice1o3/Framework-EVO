@@ -73,6 +73,11 @@ public class MainMenuState implements IState {
     private int index;
     private boolean yesConfirm;
 
+    private int xPlayerStatsBox;
+    private int yPlayerStatsBox;
+    private int widthPlayerStatsBox;
+    private int heightPlayerStatsBox;
+
     public MainMenuState(Handler handler) {
         this.handler = handler;
         overWorldCursor = new OverWorldCursor(handler, Assets.leftOverworld0, 23, 31);
@@ -83,6 +88,11 @@ public class MainMenuState implements IState {
         currentIndexEvolutionMenu = IndexEvolutionMenu.JAWS;
         index = 0;
         yesConfirm = false;
+
+        xPlayerStatsBox = (handler.panelWidth/2) + 25;
+        yPlayerStatsBox = 1+(handler.panelHeight/3)+10;
+        widthPlayerStatsBox = (handler.panelWidth/2) - 50;
+        heightPlayerStatsBox = (handler.panelHeight) - yPlayerStatsBox - 20;
     } // **** end MainMenuState(Handler) constructor ****
 
     int xYellowBorder, yYellowBorder, widthYellowBorder, heightYellowBorder;
@@ -126,6 +136,9 @@ public class MainMenuState implements IState {
                         heightYellowBorder = handler.panelHeight;
                         break;
                 }
+
+                overWorldCursor.setX(5);
+                overWorldCursor.setY(yPlayerStatsBox+3+(index*15));
 
                 break;
             case CAPABILITY:
@@ -708,14 +721,14 @@ public class MainMenuState implements IState {
                 //@@@@@@@@@@@@@BOTTOM_RIGHT_MenuList.CAPABILITY-WITH-BONUSES-IN-Color.GREEN@@@@@@@@@@@@@@@@@
                 renderCapability(g);
 
-                int yStringBonuses = (1+(handler.panelHeight/3)+10) + 25;
                 int xStringBonuses = handler.panelWidth - 80;
+                int yStringBonuses = yPlayerStatsBox + 25;
                 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 
                 int x = 15;
-                int y = 1+(handler.panelHeight/3)+10;
+                int y = yPlayerStatsBox;
                 switch (currentIndexEvolutionMenu) {
                     case JAWS:
                         for (FishStateManager.Jaws jaws : FishStateManager.Jaws.values()) {
@@ -724,8 +737,9 @@ public class MainMenuState implements IState {
                                     x+(jaws.toString().length()*10)+10, y, 10, 10);
 
                             if (jaws.ordinal() == index) {
-                                overWorldCursor.setX(x-10);
-                                overWorldCursor.setY(y+3);
+                                //TODO: try commenting-out the setter calls and see if tick() had taken care of it already.
+                                //overWorldCursor.setX(x-10);
+                                //overWorldCursor.setY(y+3);
                                 overWorldCursor.render(g);
 
                                 ////////////////BONUSES///////////////
@@ -774,8 +788,8 @@ public class MainMenuState implements IState {
                             //BODY_TEXTURE
                             if (index <= (FishStateManager.BodyTexture.values().length-1)) {
                                 if (bodyTexture.ordinal() == index) {
-                                    overWorldCursor.setX(x - 10);
-                                    overWorldCursor.setY(y + 3);
+                                    //overWorldCursor.setX(x - 10);
+                                    //overWorldCursor.setY(y + 3);
                                     overWorldCursor.render(g);
                                 }
                             }
@@ -791,8 +805,8 @@ public class MainMenuState implements IState {
                             //BODY_SIZE
                             if (index > (FishStateManager.BodyTexture.values().length-1)) {
                                 if (bodySize.ordinal() == (index-(FishStateManager.BodyTexture.values().length))) {
-                                    overWorldCursor.setX(x - 10);
-                                    overWorldCursor.setY(y + 3);
+                                    //overWorldCursor.setX(x - 10);
+                                    //overWorldCursor.setY(y + 3);
                                     overWorldCursor.render(g);
                                 }
                             }
@@ -808,8 +822,8 @@ public class MainMenuState implements IState {
                                     x+(finPectoral.toString().length()*10)+10, y, 10, 10);
 
                             if (finPectoral.ordinal() == index) {
-                                overWorldCursor.setX(x-10);
-                                overWorldCursor.setY(y+3);
+                                //overWorldCursor.setX(x-10);
+                                //overWorldCursor.setY(y+3);
                                 overWorldCursor.render(g);
                             }
 
@@ -824,8 +838,8 @@ public class MainMenuState implements IState {
                                     x+(tail.toString().length()*10)+10, y, 10, 10);
 
                             if (tail.ordinal() == index) {
-                                overWorldCursor.setX(x-10);
-                                overWorldCursor.setY(y+3);
+                                //overWorldCursor.setX(x-10);
+                                //overWorldCursor.setY(y+3);
                                 overWorldCursor.render(g);
                             }
 
@@ -916,14 +930,9 @@ public class MainMenuState implements IState {
     }
 
     private void renderCapability(Graphics g) {
-        int xTextBox = (handler.panelWidth/2) + 25;
-        int yTextBox = 1+(handler.panelHeight/3)+10;
-        int widthTextBox = (handler.panelWidth/2) - 50;
-        int heightTextBox = (handler.panelHeight) - yTextBox - 20;
-
         //background textbox.
         g.setColor(Color.GRAY);
-        g.fillRect(xTextBox, yTextBox, widthTextBox, heightTextBox);
+        g.fillRect(xPlayerStatsBox, yPlayerStatsBox, widthPlayerStatsBox, heightPlayerStatsBox);
 
         IPlayable iPlayable = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
         if (iPlayable instanceof Fish) {
@@ -943,8 +952,8 @@ public class MainMenuState implements IState {
             //////////////////////////////////////
 
             //text.
-            int xStringKey = xTextBox + 25;
-            int yString = yTextBox + 25;
+            int xStringKey = xPlayerStatsBox + 25;
+            int yString = yPlayerStatsBox + 25;
             int xStringValue = handler.panelWidth - 100;
 
             g.setColor(Color.WHITE);

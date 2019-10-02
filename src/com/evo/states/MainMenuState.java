@@ -706,9 +706,7 @@ public class MainMenuState implements IState {
 
                 //TODO: refactor the following into something more maintainable.
                 //@@@@@@@@@@@@@BOTTOM_RIGHT_MenuList.CAPABILITY-WITH-BONUSES-IN-Color.GREEN@@@@@@@@@@@@@@@@@
-                currentMenuSelection = MenuList.CAPABILITY;
-                render(g);
-                currentMenuSelection = MenuList.EVOLUTION;
+                renderCapability(g);
 
                 int yStringBonuses = (1+(handler.panelHeight/3)+10) + 25;
                 int xStringBonuses = handler.panelWidth - 80;
@@ -842,59 +840,7 @@ public class MainMenuState implements IState {
 
                 break;
             case CAPABILITY:
-                //TODO: MainMenuState(MenuList.CAPABILITY).render(Graphics).
-                int xTextBox = (handler.panelWidth/2) + 25;
-                int yTextBox = 1+(handler.panelHeight/3)+10;
-                int widthTextBox = (handler.panelWidth/2) - 50;
-                int heightTextBox = (handler.panelHeight) - yTextBox - 20;
-
-                //background textbox.
-                g.setColor(Color.GRAY);
-                g.fillRect(xTextBox, yTextBox, widthTextBox, heightTextBox);
-
-                IPlayable iPlayable = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
-                if (iPlayable instanceof Fish) {
-                    Fish player = (Fish)iPlayable;
-                    //////////////////////////////////////
-                    Map<PlayerStatsKey, String> playerStats = new HashMap<PlayerStatsKey, String>();
-                    playerStats.put( PlayerStatsKey.CLASSIFICATION, player.getCurrentForm().toString() );
-                    playerStats.put( PlayerStatsKey.HIT_POINT_MAX, Integer.toString(player.getHealthMax()) );
-                    playerStats.put( PlayerStatsKey.BITING, Integer.toString(player.getFishStateManager().getDamageBite()) );
-                    playerStats.put( PlayerStatsKey.STRENGTH, Integer.toString(player.getFishStateManager().getDamageStrength()) );
-                    playerStats.put( PlayerStatsKey.KICK, Integer.toString(player.getFishStateManager().getDamageKick()) );
-                    playerStats.put( PlayerStatsKey.STRIKE, Integer.toString(player.getFishStateManager().getDamageStrike()) );
-                    playerStats.put( PlayerStatsKey.HORN, Integer.toString(player.getFishStateManager().getDamageHorn()) );
-                    playerStats.put( PlayerStatsKey.DEFENSE_POWER, Integer.toString(player.getFishStateManager().getDefense()) );
-                    playerStats.put( PlayerStatsKey.AGILITY, Integer.toString(player.getFishStateManager().getAgility()) );
-                    playerStats.put( PlayerStatsKey.JUMPING_ABILITY, Integer.toString(player.getFishStateManager().getJump()) );
-                    //////////////////////////////////////
-
-                    //text.
-                    int xStringKey = xTextBox + 25;
-                    int yString = yTextBox + 25;
-                    int xStringValue = handler.panelWidth - 100;
-
-                    g.setColor(Color.WHITE);
-                    for (int i = 0; i < PlayerStatsKey.values().length; i++) {
-                        //CLASSIFICATION (Fish.Form.FISH).
-                        if (i == 0) {
-                            g.drawString(PlayerStatsKey.values()[i].toString() + ": ", xStringKey, yString);
-                            //do NOT add "P".
-                            g.drawString( playerStats.get(PlayerStatsKey.values()[i]), xStringValue, yString);
-                            //one-regular-new-line AND one-EXTRA-new-line.
-                            yString += (15+15);
-                        }
-                        //POINTS (NUMERIC VALUES).
-                        else {
-                            g.drawString(PlayerStatsKey.values()[i].toString() + ": ", xStringKey, yString);
-                            //add "P".
-                            g.drawString(playerStats.get(PlayerStatsKey.values()[i]) + "P", xStringValue, yString);
-                            //just one-regular-new-line.
-                            yString += 15;
-                        }
-                    }
-
-                }
+                renderCapability(g);
 
                 break;
             case RECORD_OF_EVOLUTION:
@@ -966,6 +912,61 @@ public class MainMenuState implements IState {
             default:
                 System.out.println("MainMenuState.render(Graphics): switch's default.");
                 break;
+        }
+    }
+
+    private void renderCapability(Graphics g) {
+        int xTextBox = (handler.panelWidth/2) + 25;
+        int yTextBox = 1+(handler.panelHeight/3)+10;
+        int widthTextBox = (handler.panelWidth/2) - 50;
+        int heightTextBox = (handler.panelHeight) - yTextBox - 20;
+
+        //background textbox.
+        g.setColor(Color.GRAY);
+        g.fillRect(xTextBox, yTextBox, widthTextBox, heightTextBox);
+
+        IPlayable iPlayable = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
+        if (iPlayable instanceof Fish) {
+            Fish player = (Fish)iPlayable;
+            //////////////////////////////////////
+            Map<PlayerStatsKey, String> playerStats = new HashMap<PlayerStatsKey, String>();
+            playerStats.put( PlayerStatsKey.CLASSIFICATION, player.getCurrentForm().toString() );
+            playerStats.put( PlayerStatsKey.HIT_POINT_MAX, Integer.toString(player.getHealthMax()) );
+            playerStats.put( PlayerStatsKey.BITING, Integer.toString(player.getFishStateManager().getDamageBite()) );
+            playerStats.put( PlayerStatsKey.STRENGTH, Integer.toString(player.getFishStateManager().getDamageStrength()) );
+            playerStats.put( PlayerStatsKey.KICK, Integer.toString(player.getFishStateManager().getDamageKick()) );
+            playerStats.put( PlayerStatsKey.STRIKE, Integer.toString(player.getFishStateManager().getDamageStrike()) );
+            playerStats.put( PlayerStatsKey.HORN, Integer.toString(player.getFishStateManager().getDamageHorn()) );
+            playerStats.put( PlayerStatsKey.DEFENSE_POWER, Integer.toString(player.getFishStateManager().getDefense()) );
+            playerStats.put( PlayerStatsKey.AGILITY, Integer.toString(player.getFishStateManager().getAgility()) );
+            playerStats.put( PlayerStatsKey.JUMPING_ABILITY, Integer.toString(player.getFishStateManager().getJump()) );
+            //////////////////////////////////////
+
+            //text.
+            int xStringKey = xTextBox + 25;
+            int yString = yTextBox + 25;
+            int xStringValue = handler.panelWidth - 100;
+
+            g.setColor(Color.WHITE);
+            for (int i = 0; i < PlayerStatsKey.values().length; i++) {
+                //CLASSIFICATION (Fish.Form.FISH).
+                if (i == 0) {
+                    g.drawString(PlayerStatsKey.values()[i].toString() + ": ", xStringKey, yString);
+                    //do NOT add "P".
+                    g.drawString( playerStats.get(PlayerStatsKey.values()[i]), xStringValue, yString);
+                    //one-regular-new-line AND one-EXTRA-new-line.
+                    yString += (15+15);
+                }
+                //POINTS (NUMERIC VALUES).
+                else {
+                    g.drawString(PlayerStatsKey.values()[i].toString() + ": ", xStringKey, yString);
+                    //add "P".
+                    g.drawString(playerStats.get(PlayerStatsKey.values()[i]) + "P", xStringValue, yString);
+                    //just one-regular-new-line.
+                    yString += 15;
+                }
+            }
+
         }
     }
 

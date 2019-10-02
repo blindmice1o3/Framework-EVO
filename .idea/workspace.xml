@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2bcc4a98-1f2c-4e1b-a19b-f51f53d66850" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/res/MainMenuState's CAPABILITY.png" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/gfx/Assets.java" afterPath="$PROJECT_DIR$/src/com/evo/gfx/Assets.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/evo/states/MainMenuState.java" afterPath="$PROJECT_DIR$/src/com/evo/states/MainMenuState.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -26,8 +24,8 @@
       <file leaf-file-name="MainMenuState.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/evo/states/MainMenuState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="749" column="88" lean-forward="false" selection-start-line="749" selection-start-column="88" selection-end-line="749" selection-end-column="88" />
+            <state relative-caret-position="170">
+              <caret line="708" column="36" lean-forward="false" selection-start-line="708" selection-start-column="36" selection-end-line="708" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -955,8 +953,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/evo/states/MainMenuState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="749" column="88" lean-forward="false" selection-start-line="749" selection-start-column="88" selection-end-line="749" selection-end-column="88" />
+        <state relative-caret-position="170">
+          <caret line="708" column="36" lean-forward="false" selection-start-line="708" selection-start-column="36" selection-end-line="708" selection-end-column="36" />
           <folding />
         </state>
       </provider>

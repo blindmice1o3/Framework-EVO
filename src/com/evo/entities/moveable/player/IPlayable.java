@@ -6,5 +6,6 @@ public interface IPlayable {
     int getHealthMax();
     void setHealthMax(int healthMax);
     int getHealth();
+    void setHealth(int health);
     int getExperiencePoints();
 }

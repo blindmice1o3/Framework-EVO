@@ -52,10 +52,16 @@ public class HeadUpDisplay {
         IPlayable player = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
         /* TOP OF SCREEN */
         //HP BAR
+        //TODO: make the hud's hp bar use a percentage-based system so the width won't change when healthMax changes.
+        int currentHealthPercent = (int)(((float)player.getHealth() / (float)player.getHealthMax()) * 100);
+        System.out.println("currentHealthPercent: " + currentHealthPercent);
+
         g.setColor(Color.BLACK);
-        g.fillRect(28, 11, 10*(player.getHealthMax()) +4, 12);
+        g.fillRect(28, 11, 104, 12);
+        //g.fillRect(28, 11, 10*(player.getHealthMax()) +4, 12);
         g.setColor(Color.GREEN);
-        g.fillRect(30, 13, 10*player.getHealth(), 8);
+        //g.fillRect(30, 13, 10*player.getHealth(), 8);
+        g.fillRect(30, 13, currentHealthPercent, 8);
 
         //HP
         g.setColor(Color.GREEN);

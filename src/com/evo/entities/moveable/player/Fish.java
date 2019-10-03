@@ -602,6 +602,7 @@ public class Fish extends Creature
 
     public void setFishStateManager(FishStateManager fishStateManager) { this.fishStateManager = fishStateManager; }
 
+    @Override
     public int getExperiencePoints() {
         return experiencePoints;
     }

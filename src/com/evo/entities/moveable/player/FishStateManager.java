@@ -153,6 +153,7 @@ public class FishStateManager
         IPlayable player = ((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
 
         player.setHealthMax( 20 + currentBodySize.getHealthMaxBonus() + currentTail.getHealthMaxBonus() );
+        player.setHealth( player.getHealthMax() );
         damageBite = BASE_BITE + currentJaws.getDamageBiteBonus();
         damageStrength = BASE_STRENGTH + currentBodySize.getStrengthBonus() + currentFinPectoral.getStrengthBonus();
         defense = BASE_DEFENSE + currentBodyTexture.getDefenseBonus() + currentBodySize.getDefenseBonus();

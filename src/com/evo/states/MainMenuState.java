@@ -755,7 +755,7 @@ public class MainMenuState implements IState {
                                     overWorldCursor.render(g);
 
                                     //TODO: display selected body-part bonuses.
-
+                                    renderBonusesFromBodyTexture(g);
                                 }
                             }
 
@@ -773,7 +773,7 @@ public class MainMenuState implements IState {
                                     overWorldCursor.render(g);
 
                                     //TODO: display selected body-part bonuses.
-
+                                    renderBonusesFromBodySize(g);
                                 }
                             }
 
@@ -894,6 +894,101 @@ public class MainMenuState implements IState {
             default:
                 System.out.println("MainMenuState.render(Graphics): switch's default.");
                 break;
+        }
+    }
+
+    private void renderBonusesFromBodyTexture(Graphics g) {
+        int xStringBonuses = handler.panelWidth - 75;
+        int yStringBonuses = yPlayerStatsBox + 24 + 30; //+30 to skip 2 lines for PlayerStatsKey.CLASSIFICATION.
+
+        Fish player = (Fish)((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
+        //i starting at 1 because PlayerStatsKey.CLASSIFICATION  was accounted for when initializing yStringBonuses.
+        for (int i = 1; i < PlayerStatsKey.values().length; i++) {
+            //PlayerStats beginning with PlayerStatsKey.Hit_Point_Max.
+            if (i == PlayerStatsKey.DEFENSE_POWER.ordinal()) {
+                int newDefense = FishStateManager.BodyTexture.values()[index].getDefenseBonus() -
+                        player.getFishStateManager().getCurrentBodyTexture().getDefenseBonus();
+                if (newDefense > 0) {
+                    g.setColor(Color.GREEN);
+                    g.drawString("+" + newDefense, xStringBonuses, yStringBonuses);
+                } else if (newDefense < 0) {
+                    g.setColor(Color.RED);
+                    g.drawString(Integer.toString(newDefense), xStringBonuses, yStringBonuses);
+                } else if (newDefense == 0) {
+                    g.setColor(Color.YELLOW);
+                    g.drawString(Integer.toString(newDefense), xStringBonuses, yStringBonuses);
+                }
+            }
+
+            //just one-regular-new-line.
+            yStringBonuses += 15;
+        }
+    }
+
+    private void renderBonusesFromBodySize(Graphics g) {
+        int xStringBonuses = handler.panelWidth - 75;
+        int yStringBonuses = yPlayerStatsBox + 24 + 30; //+30 to skip 2 lines for PlayerStatsKey.CLASSIFICATION.
+
+        Fish player = (Fish)((GameStageState)handler.getStateManager().getState(StateManager.State.GAME_STAGE)).getCurrentGameStage().getPlayer();
+        //i starting at 1 because PlayerStatsKey.CLASSIFICATION  was accounted for when initializing yStringBonuses.
+        for (int i = 1; i < PlayerStatsKey.values().length; i++) {
+            //PlayerStats beginning with PlayerStatsKey.Hit_Point_Max.
+            if (i == PlayerStatsKey.HIT_POINT_MAX.ordinal()) {
+                int newHitPointMax = FishStateManager.BodySize.values()[index-(FishStateManager.BodyTexture.values().length)].getHealthMaxBonus() -
+                        player.getFishStateManager().getCurrentBodySize().getHealthMaxBonus();
+                if (newHitPointMax > 0) {
+                    g.setColor(Color.GREEN);
+                    g.drawString("+" + newHitPointMax, xStringBonuses, yStringBonuses);
+                } else if (newHitPointMax < 0) {
+                    g.setColor(Color.RED);
+                    g.drawString(Integer.toString(newHitPointMax), xStringBonuses, yStringBonuses);
+                } else if (newHitPointMax == 0) {
+                    g.setColor(Color.YELLOW);
+                    g.drawString(Integer.toString(newHitPointMax), xStringBonuses, yStringBonuses);
+                }
+            } else if (i == PlayerStatsKey.STRENGTH.ordinal()) {
+                int newStrength = FishStateManager.BodySize.values()[index-(FishStateManager.BodyTexture.values().length)].getStrengthBonus() -
+                        player.getFishStateManager().getCurrentBodySize().getStrengthBonus();
+                if (newStrength > 0) {
+                    g.setColor(Color.GREEN);
+                    g.drawString("+" + newStrength, xStringBonuses, yStringBonuses);
+                } else if (newStrength < 0) {
+                    g.setColor(Color.RED);
+                    g.drawString(Integer.toString(newStrength), xStringBonuses, yStringBonuses);
+                } else if (newStrength == 0) {
+                    g.setColor(Color.YELLOW);
+                    g.drawString(Integer.toString(newStrength), xStringBonuses, yStringBonuses);
+                }
+            } else if (i == PlayerStatsKey.DEFENSE_POWER.ordinal()) {
+                int newDefense = FishStateManager.BodySize.values()[index-(FishStateManager.BodyTexture.values().length)].getDefenseBonus() -
+                        player.getFishStateManager().getCurrentBodySize().getDefenseBonus();
+                if (newDefense > 0) {
+                    g.setColor(Color.GREEN);
+                    g.drawString("+" + newDefense, xStringBonuses, yStringBonuses);
+                } else if (newDefense < 0) {
+                    g.setColor(Color.RED);
+                    g.drawString(Integer.toString(newDefense), xStringBonuses, yStringBonuses);
+                } else if (newDefense == 0) {
+                    g.setColor(Color.YELLOW);
+                    g.drawString(Integer.toString(newDefense), xStringBonuses, yStringBonuses);
+                }
+            } else if (i == PlayerStatsKey.AGILITY.ordinal()) {
+                int newAgility = FishStateManager.BodySize.values()[index-(FishStateManager.BodyTexture.values().length)].getAgilityBonus() -
+                        player.getFishStateManager().getCurrentBodySize().getAgilityBonus();
+                if (newAgility > 0) {
+                    g.setColor(Color.GREEN);
+                    g.drawString("+" + newAgility, xStringBonuses, yStringBonuses);
+                } else if (newAgility < 0) {
+                    g.setColor(Color.RED);
+                    g.drawString(Integer.toString(newAgility), xStringBonuses, yStringBonuses);
+                } else if (newAgility == 0) {
+                    g.setColor(Color.YELLOW);
+                    g.drawString(Integer.toString(newAgility), xStringBonuses, yStringBonuses);
+                }
+            }
+
+            //just one-regular-new-line.
+            yStringBonuses += 15;
         }
     }
 
